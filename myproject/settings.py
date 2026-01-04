@@ -81,6 +81,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8000',
     'https://secure.payu.in',
     'https://sandboxsecure.payu.in',
+    'http://13.60.54.224/,
 ]
 CSRF_COOKIE_HTTPONLY = False
 CSRF_USE_SESSIONS = False
