@@ -141,8 +141,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'mcqwave',
         'USER': 'postgres',
-        'PASSWORD':'postgresmcqwave',
-        'HOST':'database.cd84saeowy0p.eu-north-1.rds.amazonaws.com',
+        'PASSWORD':'newmcqwave',
+        'HOST':'database.cniscoecu7dp.eu-north-1.rds.amazonaws.com',
         'PORT':''
     }
 }
