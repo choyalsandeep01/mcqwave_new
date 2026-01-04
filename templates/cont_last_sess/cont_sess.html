@@ -1,0 +1,92 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Continue Last Session{% endblock title %}
+
+{% block content %}
+<link rel="stylesheet" href="/media/css/cont_sess.css">
+
+<h2>Continue to Last Session</h2>
+<div class="table-container">
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Selections</th>
+                <th>Mode</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for test in unsubmitted_tests %}
+            <tr>
+             
+                <td><span class="local-time" 
+                    data-utc-time="{{ test.created_at|date:'c' }}">
+              </span></td>
+                <td>
+                    <button class="toggle-button" onclick="toggleMenu({{ test.id }})">
+                        View Selections
+                    </button>
+                    <div class="selection-menu" id="menu-{{ test.id }}">
+                        <div class="menu-content">
+                            <ul class="selection-list">
+                                {% for selection in test.selections %}
+                                <li>{{ selection }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+                <td>{{test.mode}}</td>
+                <td>
+                    <button class="continue-button" onclick="continueTest('{{ test.test_id }}')">Continue Test</button>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3" class="no-tests">No unsubmitted tests found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+  {% include 'ads/banner_ad.html' %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const timeElements = document.querySelectorAll('.local-time');
+        
+        timeElements.forEach(element => {
+            const utcTime = element.getAttribute('data-utc-time');
+            const date = new Date(utcTime);
+            const formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear().toString().slice(-2)}`;
+            const formattedTime = date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+            
+            element.textContent = `${formattedDate} ${formattedTime}`;
+        });
+    });
+    </script>
+<script>
+    function toggleMenu(id) {
+        const menu = document.getElementById(`menu-${id}`);
+        menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function continueTest(testId) {
+        window.location.href = `/mcqs/restest/${testId}`;
+    }
+</script>
+{% endblock %}
+
+{% block pp %}
+<li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">
+        <i class="fas fa-user-circle profile-icon"></i>
+        {{ user.username }}
+    </a>
+    <div class="dropdown-content">
+        <a href="#">Settings</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+</li>
+{% endblock %}

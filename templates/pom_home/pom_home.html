@@ -1,0 +1,99 @@
+{% extends 'base/base.html' %}
+
+{% block title %}MCQwave Analytics Dashboard{% endblock title %}
+
+{% block content %}
+<link rel="stylesheet" href="/media/css/pomegranate/pom_home.css">
+
+<div class="analytics-dashboard">
+    <div class="dashboard-header">
+        <div class="header-content">
+            <div class="header-icon">
+                <img src="/media/photos/pom_home/pom.png" alt="Pomegranate Analytics" class="pom-icon">
+            </div>
+            <h1 class="dashboard-title">POMEGRANATE Analytics</h1>
+            <p class="dashboard-subtitle">Comprehensive AI based performance insights </p>
+        </div>
+    </div>
+
+    <div class="dashboard-content">
+        <div class="analytics-grid">
+            <!-- Curated MCQs Section -->
+            <div class="analytics-section">
+                <div class="section-header">
+                    <div class="section-icon curated">
+                        <i class="fas fa-chart-line nfas"></i>
+                    </div>
+                    <div class="section-info">
+                        <h3>Curated MCQs Practice Analytics</h3>
+                        <p>Analyze your performance in curated question sets</p>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button class="action-btn" onclick="window.location.href='pomegranate_overall/';">
+                        <i class="fas fa-globe-americas nfas"></i>
+                        <span>Overall</span>
+                    </button>
+                    <button class="action-btn" onclick="window.location.href='pomegranate_sub/';">
+                        <i class="fas fa-layer-group nfas"></i>
+                        <span>Subject-Wise</span>
+                    </button>
+                    <button class="action-btn" onclick="window.location.href='custome_ana/';">
+                        <i class="fas fa-sliders-h nfas"></i>
+                        <span>Custom</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- PYQs Section -->
+            <div class="analytics-section">
+                <div class="section-header">
+                    <div class="section-icon pyq">
+                        <i class="fas fa-history nfas"></i>
+                    </div>
+                    <div class="section-info">
+                        <h3>PYQs Practice Analytics</h3>
+                        <p>Track your progress with previous year questions</p>
+                    </div>
+                </div>
+                <div class="pyq-content">
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <i class="fas fa-calendar-alt nfas"></i>
+                            <span>Year-wise Performance</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-percentage nfas"></i>
+                            <span>Accuracy Trends</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-clock nfas"></i>
+                            <span>Time Analysis</span>
+                        </div>
+                    </div>
+                    <button class="action-btn" onclick="window.location.href='/pyqs/analytics/';">
+                        <i class="fas fa-rocket nfas"></i>
+                        <span>Analysis</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        
+    </div>
+</div>
+
+{% endblock %}
+
+{% block pp %}
+<li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">
+        <i class="fas fa-user-circle profile-icon "></i>
+        {{ user.username }}
+    </a>
+    <div class="dropdown-content">
+        <a href="#">Settings</a>
+        <a href={% url 'logout' %}>Logout</a>
+    </div>
+</li>
+{% endblock %}

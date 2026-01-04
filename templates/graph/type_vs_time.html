@@ -1,0 +1,296 @@
+{% extends 'base/base.html' %}
+{% block title %}POMEGRANATE-Type vs Time{% endblock title %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #f4f6f9;
+    }
+    
+    .container-fluid {
+        padding: 2rem;
+    }
+    
+    .card {
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 1.5rem;
+        transition: transform 0.3s ease;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .card-header {
+        background-color: #ff4d70 !important;
+        color: white !important;
+        padding: 1rem 1.5rem;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+    }
+    
+    .card-header h4 {
+        font-weight: 600;
+        margin-bottom: 0;
+    }
+    
+    .chart-container {
+        height: 500px;
+        width: 100%;
+    }
+    
+    .table {
+        margin-bottom: 0;
+    }
+    
+    .table thead {
+        background-color: #f8f9fa;
+    }
+    
+    .table th {
+        font-weight: 600;
+        color: #495057;
+        vertical-align: middle;
+        border-bottom: 2px solid #dee2e6;
+    }
+    
+    .table td {
+        vertical-align: middle;
+        color: #212529;
+    }
+    
+    .table-hover tbody tr:hover {
+        background-color: rgba(74, 108, 247, 0.05);
+        transition: background-color 0.3s ease;
+    }
+    
+    @media (max-width: 768px) {
+        .container-fluid {
+            padding: 1rem;
+        }
+    
+        .chart-container {
+            height: 300px;
+        }
+    
+        .table-responsive {
+            font-size: 0.9rem;
+        }
+    }
+    
+    .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+    }
+    
+    .table {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 1rem;
+    }
+    
+    .table th, .table td {
+        padding: 0.75rem;
+        vertical-align: middle;
+        white-space: nowrap;
+        text-align: center;
+    }
+    
+    .table th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+        color: #495057;
+        border-bottom: 2px solid #dee2e6;
+    }
+    
+    .table-bordered {
+        border: 1px solid #dee2e6;
+    }
+    
+    .table-bordered th, 
+    .table-bordered td {
+        border: 1px solid #dee2e6;
+    }
+    
+    @media (max-width: 768px) {
+        .table th, .table td {
+            padding: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+    }
+    
+    .table-responsive {
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: #4a6cf7 #e9ecef;
+    }
+    
+    .table-responsive::-webkit-scrollbar {
+        height: 8px;
+        width: 8px;
+    }
+    
+    .table-responsive::-webkit-scrollbar-thumb {
+        background-color: #4a6cf7;
+        border-radius: 4px;
+    }
+    
+    .table-responsive::-webkit-scrollbar-track {
+        background-color: #e9ecef;
+    }
+</style>
+
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Total Questions and Average Time per Type</h4>
+                </div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="questionsVsTimeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Question Type</th>
+                                    <th>Total Questions</th>
+                                    <th>Faced</th>
+                                    <th>Average Time (seconds)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in chart_data %}
+                                <tr>
+                                    <td>{{ item.label }}</td>
+                                    <td>{{ item.total_questions }}</td>
+                                    <td>{{ item.attempted }}</td>
+                                    <td>{{ item.avg_time|floatformat:2 }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('questionsVsTimeChart').getContext('2d');
+
+    const labels = {{ labels|safe }};
+    const totalQuestions = {{ total_questions|safe }};
+    const avgTimes = {{ avg_times|safe }};
+
+    const data = {
+        labels: labels,
+        datasets: [
+            {
+                label: 'Total Questions',
+                data: totalQuestions,
+                type: 'bar',
+                backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1,
+                yAxisID: 'y1',
+            },
+            {
+                label: 'Average Time Spent (seconds)',
+                data: avgTimes,
+                borderColor: 'rgba(255, 206, 86, 1)',
+                backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                tension: 0.4,
+                pointBackgroundColor: 'rgba(255, 206, 86, 1)',
+                pointRadius: 5,
+                yAxisID: 'y2',
+            }
+        ]
+    };
+
+    const options = {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            x: {
+                title: {
+                    display: true,
+                    text: 'Question Types',
+                    font: { size: 14 }
+                }
+            },
+            y1: {
+                beginAtZero: true,
+                position: 'left',
+                title: {
+                    display: true,
+                    text: 'Total Questions',
+                    font: { size: 14 }
+                }
+            },
+            y2: {
+                beginAtZero: true,
+                position: 'right',
+                title: {
+                    display: true,
+                    text: 'Average Time (seconds)',
+                    font: { size: 14 }
+                }
+            }
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        return `${context.dataset.label}: ${context.formattedValue}`;
+                    }
+                }
+            },
+            legend: {
+                display: true,
+                labels: { font: { size: 14 } }
+            }
+        }
+    };
+
+    const questionsVsTimeChart = new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: options
+    });
+</script>
+{% endblock %}
+{%block pp%}
+
+<li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">
+      
+        <i class="fas fa-user-circle profile-icon"></i>
+      
+      {{ user.username }}
+      
+    </a>
+    <div class="dropdown-content">
+      <a href="#">Settings</a>
+      <a href={% url 'logout' %}>Logout</a>
+    </div>
+  </li>
+
+
+{%endblock%} 

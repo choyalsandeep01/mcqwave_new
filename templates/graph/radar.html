@@ -1,0 +1,323 @@
+{% extends 'base/base.html' %}
+{% block title %}POMEGRANATE-Radar{% endblock title %}
+
+{% block content %}
+<style>
+    :root {
+        --primary-color: #DC143C;
+        --secondary-color: #f15474;
+        --background-light: #f4f6f9;
+        --text-dark: #333;
+        --card-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        scroll-behavior: smooth;
+    }
+    
+    body {
+        
+        flex-direction: column;
+        background-color: var(--background-light);
+    }
+
+    .page-container {
+        flex-direction: column;
+        min-height: 100vh;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 40px;
+    }
+
+    .page-header {
+        background-color: var(--primary-color);
+        color: white;
+        text-align: center;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        box-shadow: var(--card-shadow);
+    }
+
+    .page-header h1 {
+        font-weight: 600;
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .page-header p {
+        font-size: 1rem;
+        opacity: 0.8;
+    }
+
+    .content-wrapper {
+        flex: 1 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .radar-container {
+        width: 100%;
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: var(--card-shadow);
+        padding: 25px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        transition: transform 0.3s ease;
+    }
+
+    .radar-container:hover {
+        transform: translateY(-5px);
+    }
+
+    .chart-wrapper {
+        position: relative;
+        width: 100%;
+        height: 500px;
+    }
+
+    .radar-legend {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        max-height: 200px;
+        overflow-y: auto;
+        padding: 15px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+    }
+
+    .radar-legend span {
+        display: inline-flex;
+        align-items: center;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 0.9em;
+        transition: background-color 0.3s ease;
+        cursor: default;
+    }
+
+    .radar-legend span:hover {
+        background-color: rgba(220, 20, 60, 0.1);
+    }
+
+    @media (max-width: 768px) {
+        .page-header h1 {
+            font-size: 1.5rem;
+        }
+
+        .chart-wrapper {
+            height: 400px;
+        }
+
+        .radar-legend {
+            max-height: 150px;
+        }
+        
+        .page-container {
+            
+            padding: 0 10px;
+        }
+    
+    }
+
+    @media (max-width: 480px) {
+        .chart-wrapper {
+            height: 300px;
+        }
+
+        .radar-legend {
+            max-height: 100px;
+        }
+
+        .radar-legend span {
+            font-size: 0.8em;
+            padding: 3px 8px;
+        }
+        
+    }
+</style>
+
+<div class="page-container">
+    <div class="page-header">
+        <h1>Performance Radar Analysis</h1>
+        <p>Comprehensive overview of your performance across different topics</p>
+    </div>
+
+    <div class="content-wrapper">
+        <div class="radar-container">
+            <div class="chart-wrapper">
+                <canvas id="radarChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Pass chart data to JavaScript -->
+<script id="chartLabels" type="application/json">{{ labels|safe }}</script>
+<script id="chartData" type="application/json">{{ data|safe }}</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const radarCtx = document.getElementById('radarChart').getContext('2d');
+        
+        const labelsElement = document.getElementById('chartLabels').textContent.trim();
+        const dataElement = document.getElementById('chartData').textContent.trim();
+        
+        const labels = labelsElement ? JSON.parse(labelsElement) : [];
+        const data = dataElement ? JSON.parse(dataElement) : [];
+        
+        // Intelligent label truncation
+        const truncatedLabels = labels.map(label => {
+            if (label.length <= 4) return label;
+            
+            if (label.includes(' ')) {
+                return label.split(' ')
+                    .map(word => word[0])
+                    .join('')
+                    .substring(0, 4)
+                    .toUpperCase();
+            }
+            
+            return label.substring(0, 4);
+        });
+        
+        // Dynamic color generation
+        const dynamicColors = truncatedLabels.map((_, index) => 
+            `hsl(${(index * 360) / truncatedLabels.length}, 70%, 50%)`
+        );
+        
+        const radarChart = new Chart(radarCtx, {
+            type: 'radar',
+            data: {
+                labels: truncatedLabels,
+                datasets: [{
+                    label: 'Performance',
+                    data: data,
+                    backgroundColor: dynamicColors.map(color => color.replace('50%)', '80%)')),
+                    borderColor: dynamicColors,
+                    borderWidth: 2,
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                layout: {
+                    padding: 10
+                },
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        angleLines: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        },
+                        pointLabels: {
+                            font: {
+                                size: 10
+                            }
+                        },
+                        ticks: {
+                            stepSize: 20,
+                            backdropColor: 'transparent',
+                            font: {
+                                size: 10
+                            }
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 100
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                return labels[tooltipItems[0].dataIndex];
+                            },
+                            label: function(tooltipItem) {
+                                return `Performance: ${tooltipItem.raw}%`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Create a legend with full names
+        const legendContainer = document.createElement('div');
+        legendContainer.classList.add('radar-legend');
+        
+        labels.forEach((label, index) => {
+            const legendItem = document.createElement('span');
+            const color = dynamicColors[index];
+            
+            // Create a wrapper for the text to ensure proper contrast
+            const textWrapper = document.createElement('span');
+            textWrapper.textContent = `${label}: ${data[index]}%`;
+            textWrapper.style.color = '#333'; // Dark text color for better readability
+            textWrapper.style.backgroundColor = 'white'; // White background for text
+            textWrapper.style.padding = '2px 6px';
+            textWrapper.style.borderRadius = '3px';
+            textWrapper.style.display = 'inline-block';
+            
+            // Style the legend item
+            legendItem.style.backgroundColor = color + '15'; // Very light background
+            legendItem.style.border = `2px solid ${color}`; // Colored border
+            legendItem.style.display = 'inline-flex';
+            legendItem.style.alignItems = 'center';
+            legendItem.style.padding = '3px';
+            legendItem.style.borderRadius = '5px';
+            
+            // Add a color indicator
+            const colorIndicator = document.createElement('span');
+            colorIndicator.style.width = '12px';
+            colorIndicator.style.height = '12px';
+            colorIndicator.style.backgroundColor = color;
+            colorIndicator.style.borderRadius = '50%';
+            colorIndicator.style.marginRight = '6px';
+            colorIndicator.style.display = 'inline-block';
+            
+            legendItem.appendChild(colorIndicator);
+            legendItem.appendChild(textWrapper);
+            legendContainer.appendChild(legendItem);
+        });
+    
+        // Append legend directly after the chart wrapper
+        document.querySelector('.chart-wrapper').after(legendContainer);
+    });
+</script>
+{% endblock %}
+{%block pp%}
+
+<li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">
+      
+        <i class="fas fa-user-circle profile-icon"></i>
+      
+      {{ user.username }}
+      
+    </a>
+    <div class="dropdown-content">
+      <a href="#">Settings</a>
+      <a href={% url 'logout' %}>Logout</a>
+    </div>
+  </li>
+
+
+{%endblock%} 

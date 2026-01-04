@@ -1,0 +1,285 @@
+{% extends 'base/base.html' %}
+{% block title %}POMEGRANATE-{{ subject}}{% endblock title %}
+
+{% block content %}
+
+  <link rel="stylesheet" href="/media/css/pomegranate/pom_sub_ana.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <div class="container">
+    <h1 class="page-title">Subject-wise Analysis</h1>
+
+    <!-- Section 1: Performance Over Time -->
+    <section class="graph-section">
+      <h2>Performance Over Time</h2>
+      <div class="graph-container">
+        <canvas id="performanceOverTime"></canvas>
+      </div>
+    </section>
+
+    <hr>
+
+    <!-- Section 2: Attempts by Question Type -->
+    <section class="graph-section">
+      <h2>Attempts by Question Type</h2>
+      <div class="graph-container">
+        <canvas id="attemptsByType"></canvas>
+      </div>
+      <div class="graph-container" id="accuracyTypeChartContainer" style="display:none;">
+        <canvas id="accuracyTypeChart"></canvas>
+      </div>
+    </section>
+
+    <hr>
+
+    <!-- Section 3: Attempts by Difficulty Level -->
+    <section class="graph-section">
+      <h2>Attempts by Difficulty Level</h2>
+      <div class="graph-container">
+        <canvas id="attemptsByDifficulty"></canvas>
+      </div>
+      <div class="graph-container" id="accuracyDifficultyChartContainer" style="display:none;">
+        <canvas id="accuracyDifficultyChart"></canvas>
+      </div>
+    </section>
+
+    <hr>
+
+    <!-- Section 4: Average Time per Question -->
+    <section class="graph-section">
+      <h2>Average Time per Question</h2>
+      <div class="graph-container">
+        <canvas id="averageTimeChart"></canvas>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+
+    let accuracyChartType = null;
+let accuracyChartDifficulty = null;
+
+// Graph 1: Performance Over Time (Line Chart)
+document.addEventListener('DOMContentLoaded', function() {
+    const performanceData = {{ performance_data|safe }};
+    
+    const labels = performanceData.map(data => data.label);
+    const accuracies = performanceData.map(data => data.accuracy);
+
+    const ctx = document.getElementById('performanceOverTime').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Accuracy (%)',
+                data: accuracies,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 2,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            }
+        }
+    });
+});
+const attemptsDataDifficulty = {{ attempts_data_difficulty|safe }};
+const correctDataDifficulty = {{ correct_data_difficulty|safe }};
+const attemptsDataType = {{ attempts_data_type|safe }};
+const correctDataType = {{ correct_data_type|safe }};
+// Graph 2: Attempts by Question Type (Pie Chart)
+const ctx3 = document.getElementById('attemptsByDifficulty').getContext('2d');
+    const chartDifficulty = new Chart(ctx3, {
+        type: 'pie',
+        data: {
+            labels: ['Easy', 'Medium', 'Tough'],
+            datasets: [{
+                label: 'Attempts by Difficulty Level',
+                data: attemptsDataDifficulty,
+                backgroundColor: ['#36a2eb', '#ffcd56', '#ff6384'], // Base colors
+                borderColor: ['#36a2eb', '#ffcd56', '#ff6384'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            onClick: function(event, chartElement) {
+                if (chartElement.length) {
+                    const index = chartElement[0].index;
+                    updateAccuracyChart('accuracyDifficultyChart', attemptsDataDifficulty[index], correctDataDifficulty[index], 'accuracyDifficultyChart');
+                    document.getElementById('accuracyDifficultyChartContainer').style.display = 'block';
+                    document.getElementById('accuracyTypeChartContainer').style.display = 'none';
+                }
+            }
+        }
+    });
+// Graph 3: Attempts by Difficulty Level (Pie Chart)
+const ctx4 = document.getElementById('attemptsByType').getContext('2d');
+    const chartType = new Chart(ctx4, {
+        type: 'pie',
+        data: {
+            labels: ['General', 'Clinical', 'Image'],
+            datasets: [{
+                label: 'Attempts by MCQ Type',
+                data: attemptsDataType,
+                backgroundColor: ['#ff9f40', '#4bc0c0', '#9966ff'], // Base colors
+                borderColor: ['#ff9f40', '#4bc0c0', '#9966ff'],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            onClick: function(event, chartElement) {
+                if (chartElement.length) {
+                    const index = chartElement[0].index;
+                    updateAccuracyChart('accuracyTypeChart', attemptsDataType[index], correctDataType[index], 'accuracyTypeChart');
+                    document.getElementById('accuracyTypeChartContainer').style.display = 'block';
+                    document.getElementById('accuracyDifficultyChartContainer').style.display = 'none';
+                }
+            }
+        }
+    });
+// Function to update the Accuracy Chart
+function updateAccuracyChart(chartId, attempted, correct, chartInstance) {
+    // Destroy the existing chart if it exists
+    if (chartInstance === 'accuracyTypeChart' && window.accuracyChartType) {
+        window.accuracyChartType.destroy();
+    } else if (chartInstance === 'accuracyDifficultyChart' && window.accuracyChartDifficulty) {
+        window.accuracyChartDifficulty.destroy();
+    }
+
+    const ctx = document.getElementById(chartId).getContext('2d');
+    const chartData = {
+        labels: ['Attempted', 'Correct'],
+        datasets: [{
+            label: 'Attempts vs Correct',
+            data: [attempted, correct],
+            backgroundColor: ['#36a2eb', '#ff6384'],
+            borderColor: ['#36a2eb', '#ff6384'],
+            borderWidth: 1
+        }]
+    };
+
+    const newChart = new Chart(ctx, {
+        type: 'bar',
+        data: chartData,
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: Math.max(attempted, correct) + 10 // Adjusting max for clarity
+                }
+            }
+        }
+    });
+
+    // Assign to the global variable to track the charts
+    if (chartInstance === 'accuracyTypeChart') {
+        window.accuracyChartType = newChart;
+    } else if (chartInstance === 'accuracyDifficultyChart') {
+        window.accuracyChartDifficulty = newChart;
+    }
+}
+// Graph 4: Average Time per Question vs Type and Difficulty (Line Chart)
+// Graph 4: Average Time per Question vs Type and Difficulty (Line Chart)
+const ctx5 = document.getElementById('averageTimeChart').getContext('2d');
+    const averageTimeChart = new Chart(ctx5, {
+        type: 'line',
+        data: {
+            labels: ['Gen', 'Image', 'Clinical'], // X-axis labels for the first dataset (question types)
+            datasets: [
+                {
+                    label: 'Average Time by Question Type (Seconds)',
+                    data: {{ average_time_type|safe }},  // Dynamically inject data from Django for question types
+                    borderColor: '#36a2eb',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    fill: true,
+                    tension: 0.4, // Smooth curve
+                },
+                {
+                    label: 'Average Time by Difficulty (Seconds)',
+                    data: {{ average_time_difficulty|safe }}, // Dynamically inject data from Django for difficulty levels
+                    borderColor: '#ff6384',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    fill: true,
+                    tension: 0.4, // Smooth curve
+                    xAxisID: 'x-difficulty', // Custom x-axis for the second dataset
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Question Type',
+                    },
+                    ticks: {
+                        autoSkip: false,
+                    }
+                },
+                'x-difficulty': { // Custom x-axis for difficulty
+                    position: 'bottom',
+                    title: {
+                        display: true,
+                        text: 'Difficulty Level',
+                    },
+                    type: 'category',
+                    labels: ['Easy', 'Medium', 'Tough'], // X-axis labels for the second dataset
+                    ticks: {
+                        autoSkip: false,
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Average Time (Seconds)',
+                    },
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 15,
+                    }
+                }
+            },
+            layout: {
+                padding: {
+                    top: 20,
+                    bottom: 20
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                }
+            }
+        }
+    });
+
+  </script>
+  {% endblock %}
+
+  {% block pp %}
+    <li class="dropdown">
+      <a href="javascript:void(0)" class="dropbtn">
+        <i class="fas fa-user-circle profile-icon"></i>
+        {{ user.username }}
+      </a>
+      <div class="dropdown-content">
+        <a href="#">Settings</a>
+        <a href="{% url 'logout' %}">Logout</a>
+      </div>
+    </li>
+  {% endblock %}

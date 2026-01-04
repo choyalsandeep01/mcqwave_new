@@ -1,0 +1,15 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Error - MCQwave{% endblock title %}
+
+{% block content %}
+<div class="container" style="max-width: 600px; margin: 50px auto; text-align: center;">
+    <div style="background: #fee; border: 1px solid #fcc; border-radius: 8px; padding: 30px;">
+        <h2 style="color: #c33; margin-bottom: 20px;">⚠️ Error</h2>
+        <p style="font-size: 1.1em; margin-bottom: 20px;">{{ error }}</p>
+        <a href="{% url 'pyqs:home' %}" class="btn btn-primary">
+            ← Back to Practice Selection
+        </a>
+    </div>
+</div>
+{% endblock %}

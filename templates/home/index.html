@@ -1,0 +1,4433 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Home{% endblock title %}
+
+
+
+{% block content %}
+<style>
+   
+    
+    
+   
+    /* Base Styles */
+    .container {
+        max-width: 1600px;
+        margin: 0 auto;
+        position: relative;
+        padding: 40px 20px;
+    }
+    
+    .header {
+        text-align: center;
+        margin-bottom: 50px;
+        color: white;
+    }
+    
+    .header h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 12px;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .header p {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        font-weight: 300;
+    }
+    
+    /* Professional Grid Layout for Large Screens */
+    .main-grid {
+        display: grid;
+        gap: 30px;
+        grid-template-columns: 1fr;
+    }
+    
+    /* Large Screen Professional Layout */
+    @media (min-width: 1024px) {
+        .container {
+            padding: 60px 40px;
+        }
+        
+        .main-grid {
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 40px;
+            grid-template-areas: 
+                "main-features rapid-recall"
+                "secondary-features ai-analytics";
+            align-items: start; /* This prevents equal height stretching */
+        }
+        
+        .main-features-card {
+            grid-area: main-features;
+        }
+        
+        .rapid-recall-card {
+            grid-area: rapid-recall;
+        }
+        
+        .secondary-features-card {
+            grid-area: secondary-features;
+        }
+        
+        .ai-analytics-card {
+            grid-area: ai-analytics;
+        }
+    }
+    
+    /* Extra Large Screen Layout */
+    @media (min-width: 1400px) {
+        .main-grid {
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-areas: 
+                "main-features rapid-recall ai-analytics"
+                "secondary-features secondary-features secondary-features";
+            align-items: start; /* This prevents equal height stretching */
+        }
+    }
+    
+    /* Feature Card Styles */
+    .feature-card {
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        border-radius: 24px;
+        padding: 32px;
+        border: 1px solid #e5e5e5;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+        overflow: hidden;
+        height: fit-content; /* This ensures cards only take the height they need */
+    }
+    
+    
+    
+    
+    
+    /* Section Titles */
+    .section-title {
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 24px;
+        color: #1e293b;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding-bottom: 16px;
+        border-bottom: 2px solid #f1f5f9;
+    }
+    
+    .section-title i:not(.fa-redo) {
+        color: #667eea;
+        font-size: 1.4rem;
+        background: linear-gradient(75deg, #1E40AF, #B91C1C);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    /* Main Features Grid */
+    .main-features {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    @media (min-width: 1024px) {
+        .main-features {
+            grid-template-columns: repeat(4, 2fr);
+            gap: 24px;
+        }
+    }
+    
+    @media (min-width: 1400px) {
+        .main-features {
+            grid-template-columns: repeat(4, 2fr);
+            gap: 20px;
+        }
+    }
+    
+    .main-btn {
+        background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+        color: #334155;
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        padding: 32px 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        min-height: 140px;
+        box-shadow: 
+            0 4px 6px -1px rgba(0, 0, 0, 0.05),
+            0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+    }
+    
+    .main-btn:hover {
+        background: linear-gradient(135deg, #f1f5f9 0%, #f8fafc 100%);
+        border-color: #cbd5e1;
+        transform: translateY(-2px);
+        box-shadow: 
+            0 10px 15px -3px rgba(0, 0, 0, 0.08),
+            0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+    
+    .main-btn:active {
+        transform: translateY(-1px);
+        box-shadow: 
+            0 4px 6px -1px rgba(0, 0, 0, 0.05),
+            0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+    
+    .main-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        z-index: 0;
+    }
+    
+    .main-btn:hover::before {
+        opacity: 0.1;
+    }
+    
+    .main-btn i, .main-btn span {
+        position: relative;
+        z-index: 1;
+    }
+    
+    .main-btn i {
+        font-size: 2rem;
+        transition: all 0.3s ease;
+        padding: 16px;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    
+    .main-btn:hover i {
+        color: #2563eb;
+        transform: scale(1.05);
+    }
+    
+    .main-btn:nth-child(1) i {
+        background: linear-gradient(135deg, #fef3c7, #fde68a);
+        color: #d97706;
+    }
+    
+    .main-btn:nth-child(2) i {
+        background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+        color: #2563eb;
+    }
+    
+    .main-btn:nth-child(3) i {
+        background: linear-gradient(135deg, #f3e8ff, #e9d5ff);
+        color: #7c3aed;
+    }
+    
+    .main-btn:nth-child(4) i {
+        background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+        color: #059669;
+    }
+    
+    .main-btn span {
+        font-weight: 600;
+        font-size: 1rem;
+        letter-spacing: -0.025em;
+        color: #374151;
+    }
+    
+    /* Rapid Recall Styles */
+    .rapid-recall {
+        background: linear-gradient(135deg, #f8fafc, #ffffff);
+        border-radius: 20px;
+        padding: 28px;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        border: 1px solid #e2e8f0;
+        height: fit-content; /* This ensures it only takes needed height */
+    }
+    
+    .recall-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .recall-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #1e293b;
+    }
+    
+    .reload-btn {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        cursor: pointer;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+    }
+    
+    .reload-btn:hover {
+        transform: rotate(180deg) scale(1.1);
+        box-shadow: 0 12px 28px rgba(102, 126, 234, 0.4);
+        background: linear-gradient(135deg, #764ba2, #667eea);
+    }
+    
+    .question-text {
+        font-size: 1.1rem;
+        margin-bottom: 24px;
+        line-height: 1.7;
+        color: #2d3748;
+        font-weight: 500;
+    }
+    
+    .options {
+        display: grid;
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+    
+    .option {
+        background: #f8fafc;
+        border: 2px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 20px;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        font-weight: 500;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .option::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: transparent;
+        transition: background 0.3s ease;
+    }
+    
+    .option:hover {
+        border-color: #667eea;
+        background: #f1f5f9;
+        transform: translateX(8px);
+    }
+    
+    .option:hover::before {
+        background: #667eea;
+    }
+    
+    .option.selected {
+        border-color: #667eea;
+        background: #eef2ff;
+    }
+    
+    .option.correct {
+        border-color: #10b981;
+        background: #ecfdf5;
+    }
+    
+    .option.correct::before {
+        background: #10b981;
+    }
+    
+    .option.incorrect {
+        border-color: #ef4444;
+        background: #fef2f2;
+    }
+    
+    .option.incorrect::before {
+        background: #ef4444;
+    }
+    
+    .result {
+        background: linear-gradient(135deg, #f8fafc, #ffffff);
+        border-radius: 16px;
+        padding: 24px;
+        margin-top: 20px;
+        display: none;
+        font-weight: 500;
+        line-height: 1.6;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    
+    .result.show {
+        display: block;
+        animation: slideIn 0.4s ease-out;
+    }
+    
+    .result.correct {
+        background: linear-gradient(135deg, #ecfdf5, #f0fdf4);
+        border-left: 5px solid #10b981;
+        color: #065f46;
+    }
+    
+    .result.incorrect {
+        background: linear-gradient(135deg, #fef2f2, #fef7f7);
+        border-left: 5px solid #ef4444;
+        color: #991b1b;
+    }
+    .result.correct strong::before {
+        content: '\f00c'; /* Font Awesome check icon */
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        margin-right: 0.3em;
+        color: #4CAF50;
+    }
+    
+    .result.incorrect strong::before {
+        content: '\f00d'; /* Font Awesome times icon */
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        margin-right: 0.3em;
+        color: #f44336;
+    }
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    /* Secondary Features */
+    .secondary-features {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    @media (max-width: 1023px) {
+        .secondary-features {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+    }
+    
+    .secondary-btn {
+        background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+        color: #334155;
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        padding: 32px 24px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        font-weight: 600;
+        box-shadow: 
+            0 4px 6px -1px rgba(0, 0, 0, 0.05),
+            0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        min-height: 140px;
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+    }
+    
+    .secondary-btn:hover {
+        background: linear-gradient(135deg, #f1f5f9 0%, #f8fafc 100%);
+        border-color: #cbd5e1;
+        transform: translateY(-2px);
+        box-shadow: 
+            0 10px 15px -3px rgba(0, 0, 0, 0.08),
+            0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+    
+    .secondary-btn:active {
+        transform: translateY(-1px);
+        box-shadow: 
+            0 4px 6px -1px rgba(0, 0, 0, 0.05),
+            0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+    
+    
+    
+    
+    
+    .secondary-btn i {
+        font-size: 2rem;
+        transition: all 0.3s ease;
+        padding: 16px;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    
+    .secondary-btn:hover i {
+        color: #047857;
+        transform: scale(1.05);
+    }
+    
+    .secondary-btn:nth-child(1) i {
+        background: linear-gradient(135deg, #fecaca, #fca5a5);
+        color: #dc2626;
+    }
+    
+    .secondary-btn:nth-child(2) i {
+        background: linear-gradient(135deg, #fed7d7, #f9a8a8);
+        color: #e53e3e;
+    }
+    
+    .secondary-btn span {
+        font-size: 1rem;
+        color: #374151;
+    }
+    
+    /* AI Analytics Features */
+    .ai-features {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .ai-btn {
+        background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+        color: #334155;
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        padding: 32px 24px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        font-weight: 600;
+        box-shadow: 
+            0 4px 6px -1px rgba(0, 0, 0, 0.05),
+            0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        min-height: 120px;
+        position: relative;
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+    }
+    
+    .ai-btn:hover {
+        background: linear-gradient(135deg, #f1f5f9 0%, #f8fafc 100%);
+        border-color: #cbd5e1;
+        transform: translateY(-2px);
+        box-shadow: 
+            0 10px 15px -3px rgba(0, 0, 0, 0.08),
+            0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+    
+    .ai-btn:active {
+        transform: translateY(-1px);
+        box-shadow: 
+            0 4px 6px -1px rgba(0, 0, 0, 0.05),
+            0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+    
+    
+    
+    .ai-btn i, .ai-btn span {
+        position: relative;
+        z-index: 1;
+    }
+    
+    .ai-btn i {
+        font-size: 2rem;
+        transition: all 0.3s ease;
+        padding: 16px;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #fee2e2, #fecaca);
+        color: #dc2626;
+    }
+    
+    .ai-btn span {
+        font-size: 1rem;
+        color: #374151;
+    }
+    
+    .ai-btn:hover i {
+        color: #b91c1c;
+        transform: scale(1.05);
+    }
+    
+    
+    
+    /* Bottom Menu Styles */
+    .menu-toggle {
+        position: fixed;
+        bottom: 32px;
+        right: 32px;
+        background: rgba(0, 0, 0, 0.9);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        z-index: 1000;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
+    }
+    
+    .menu-toggle:hover {
+        background: rgba(0, 0, 0, 1);
+        transform: scale(1.1);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+    }
+    
+    .bottom-menu {
+        position: fixed;
+        bottom: 105px;
+        right: 32px;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        padding: 24px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        transform: translateY(20px);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 999;
+        min-width: 260px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    .bottom-menu.show {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .menu-item {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 16px;
+        border-radius: 16px;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #1e293b;
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+        border: 1px solid #f1f5f9;
+    }
+    
+    .menu-item:hover {
+        background: linear-gradient(135deg, #f1f5f9 0%, #f8fafc 100%);
+        transform: translateX(4px);
+        border-color: #e2e8f0;
+    }
+    
+    .menu-item i {
+        font-size: 1.25rem;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        padding: 8px;
+    }
+    .menu-item:nth-child(1) i {
+        background: linear-gradient(135deg, #fef3c7, #fde68a);
+        color: #d97706;
+    }
+    
+    .menu-item:nth-child(2) i {
+        background: linear-gradient(135deg, #fecaca, #fca5a5);
+        color: #dc2626;
+    }
+    
+    .menu-item:nth-child(3) i {
+        background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+        color: #2563eb;
+    }
+    
+    .menu-item:nth-child(4) i {
+        background: linear-gradient(135deg, #e5e7eb, #d1d5db);
+        color: #6b7280;
+    }
+    
+    .menu-item:nth-child(5) i {
+        background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+        color: #059669;
+    }
+    .tertiary-features {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .tertiary-btn {
+        background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+        color: #334155;
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        padding: 28px 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        font-weight: 600;
+        box-shadow: 
+            0 4px 6px -1px rgba(0, 0, 0, 0.05),
+            0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        min-height: 120px;
+        position: relative;
+        overflow: hidden;
+        text-decoration: none;
+        backdrop-filter: blur(10px);
+    }
+    
+    .tertiary-btn:hover {
+        background: linear-gradient(135deg, #f1f5f9 0%, #f8fafc 100%);
+        border-color: #cbd5e1;
+        transform: translateY(-2px);
+        box-shadow: 
+            0 10px 15px -3px rgba(0, 0, 0, 0.08),
+            0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+    
+    .tertiary-btn:active {
+        transform: translateY(-1px);
+        box-shadow: 
+            0 4px 6px -1px rgba(0, 0, 0, 0.05),
+            0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+    
+    .tertiary-btn i {
+        font-size: 1.75rem;
+        transition: all 0.3s ease;
+        padding: 12px;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .tertiary-btn:hover i {
+        color: #6d28d9;
+        transform: scale(1.05);
+    }
+    
+    .tertiary-btn:nth-child(1) i {
+        background: linear-gradient(135deg, #fef3c7, #fde68a);
+        color: #d97706;
+    }
+    
+    .tertiary-btn:nth-child(2) i {
+        background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+        color: #2563eb;
+    }
+    
+    .tertiary-btn:nth-child(3) i {
+        background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+        color: #059669;
+    }
+    
+    .tertiary-btn:nth-child(4) i {
+        background: linear-gradient(135deg, #fef3c7, #fed7aa);
+        color: #ea580c;
+    }
+    
+    .tertiary-btn span {
+        font-size: 0.95rem;
+        color: #374151;
+        line-height: 1.3;
+    }
+    
+    
+    /* Mobile Optimizations */
+    @media (max-width: 1023px) {
+        .container {
+            padding: 20px 16px;
+        }
+        .tertiary-features {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+        .main-grid {
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+        
+        .feature-card {
+            padding: 24px;
+            min-height: auto;
+        }
+        
+        .main-features {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        
+        .main-btn {
+            padding: 24px 16px;
+            min-height: 120px;
+        }
+        
+        .secondary-features {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        
+        .secondary-btn {
+            padding: 24px 16px;
+            min-height: 120px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+        }
+    }
+    
+    @media (max-width: 767px) {
+        .container {
+            padding: 16px 12px;
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+        }
+        
+        .feature-card {
+            padding: 16px 11px;
+        }
+        
+        .main-btn, .secondary-btn {
+            padding: 20px 14px;
+            min-height: 100px;
+        }
+        
+        .main-btn i, .secondary-btn i {
+            font-size: 1.6rem;
+        }
+        
+        .main-btn span, .secondary-btn span {
+            font-size: 0.9rem;
+        }
+    }
+    
+    /* Loading Animation */
+    .loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+        color: #6b7280;
+    }
+    
+    .spinner {
+        animation: spin 1s linear infinite;
+        margin-right: 12px;
+    }
+    
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    @media (min-width: 1400px) {
+        .tertiary-features {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+    }
+</style>
+<style>
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 55px;
+        width: 280px;
+        height: calc(100vh - 55px);
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(20px);
+        border-right: 1px solid rgba(0, 0, 0, 0.1);
+        padding: 24px 0;
+        z-index: 1000;
+        display: none;
+        overflow-y: auto;
+    }
+    
+    .sidebar-header {
+        padding: 0 24px 24px 24px;
+        border-bottom: 1px solid #f1f5f9;
+        margin-bottom: 24px;
+    }
+    
+    .sidebar-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1e293b;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    
+    .sidebar-title i {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .sidebar-menu {
+        padding: 0 12px;
+    }
+    
+    .sidebar-item {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 16px 20px;
+        border-radius: 16px;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #1e293b;
+        position: relative;
+        overflow: hidden;
+        background: transparent;
+        border: none;
+        text-decoration: none;
+    }
+    
+    .sidebar-item:hover {
+        background: linear-gradient(135deg, #f1f5f9 0%, #f8fafc 100%);
+        transform: translateX(8px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    
+    .sidebar-item::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 4px;
+        background: transparent;
+        transition: background 0.3s ease;
+    }
+    
+    .sidebar-item:hover::before {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+    }
+    
+    .sidebar-item i {
+        font-size: 1.25rem;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        padding: 8px;
+        transition: transform 0.3s ease;
+    }
+    
+    .sidebar-item:hover i {
+        transform: scale(1.1);
+    }
+    
+    .sidebar-item:nth-child(1) i {
+        background: linear-gradient(135deg, #fef3c7, #fde68a);
+        color: #d97706;
+    }
+    
+    .sidebar-item:nth-child(2) i {
+        background: linear-gradient(135deg, #fecaca, #fca5a5);
+        color: #dc2626;
+    }
+    
+    .sidebar-item:nth-child(3) i {
+        background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+        color: #2563eb;
+    }
+    
+    .sidebar-item:nth-child(4) i {
+        background: linear-gradient(135deg, #e5e7eb, #d1d5db);
+        color: #6b7280;
+    }
+    
+    .sidebar-item:nth-child(5) i {
+        background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+        color: #059669;
+    }
+    
+    .sidebar-item span {
+        font-size: 1rem;
+        font-weight: 500;
+    }
+    @media (min-width: 1024px) {
+        .sidebar {
+            display: block;
+        }
+        
+        .main-content {
+            margin-left: 280px;
+        }
+        
+        .menu-toggle {
+            display: none;
+        }
+        
+        .bottom-menu {
+            display: none;
+        }
+        
+        .container {
+            max-width: calc(1600px - 280px);
+            padding: 25px 40px;
+        }
+    }
+    @media (max-width: 1023px) {
+        .sidebar {
+            display: none;
+        }
+        
+        .main-content {
+            margin-left: 0;
+        }
+        
+        .menu-toggle {
+            display: block;
+        }
+    }
+    
+    /* Sidebar scrollbar styling */
+    .sidebar::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .sidebar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    
+    .sidebar::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 3px;
+    }
+    
+    .sidebar::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.2);
+    }    
+    .menu-item:nth-child(4) i,
+    .sidebar-item:nth-child(4) i {
+        background: linear-gradient(135deg, #ddd6fe, #c4b5fd);
+        color: #7c3aed;
+    }
+    
+    .menu-item:nth-child(5) i,
+    .sidebar-item:nth-child(5) i {
+        background: linear-gradient(135deg, #fef3c7, #fde68a);
+        color: #f59e0b;
+    }
+    
+    /* Update existing icons to maintain proper order */
+    .menu-item:nth-child(6) i,
+    .sidebar-item:nth-child(6) i {
+        background: linear-gradient(135deg, #e5e7eb, #d1d5db);
+        color: #6b7280;
+    }
+    
+    .menu-item:nth-child(7) i,
+    .sidebar-item:nth-child(7) i {
+        background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+        color: #059669;
+    }
+</style>
+<style>
+    .banner {
+        position: relative;
+        width: 100%;
+        min-height: 80px;
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%);
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 2rem;
+        margin-bottom: 10px;
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .banner::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+            radial-gradient(circle at 20% 30%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+            radial-gradient(circle at 80% 70%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+    }
+
+    .content-section {
+        position: relative;
+        z-index: 2;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        flex: 1;
+    }
+
+    .text-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        flex: 1;
+    }
+
+    .coming-soon-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(251, 191, 36, 0.2);
+        border: 1px solid rgba(251, 191, 36, 0.3);
+        color: #fbbf24;
+        padding: 0.2rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        width: fit-content;
+    }
+
+    .title {
+        font-size: 1.8rem;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        margin: 0;
+        color: white;
+        line-height: 1.2;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+    }
+
+    .mobile-platforms {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.2rem;
+        color: #60a5fa;
+    }
+
+    .description {
+        font-size: 0.85rem;
+        color: #cbd5e1;
+        font-weight: 400;
+        margin: 0;
+        line-height: 1.4;
+        max-width: 600px;
+    }
+
+    .highlight-text {
+        color: #10b981;
+        font-weight: 600;
+    }
+
+    .cta-buttons {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        flex-shrink: 0;
+    }
+
+    .cta-button {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+        border: none;
+        padding: 0.7rem 1.5rem;
+        border-radius: 25px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        white-space: nowrap;
+        text-decoration: none;
+        min-width: 140px;
+        justify-content: center;
+    }
+
+    .cta-button:hover {
+        background: linear-gradient(135deg, #059669, #047857);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+    }
+
+    .telegram-button {
+        background: linear-gradient(135deg, #0088cc, #006ba6);
+        box-shadow: 0 4px 15px rgba(0, 136, 204, 0.3);
+    }
+
+    .telegram-button:hover {
+        background: linear-gradient(135deg, #006ba6, #005580);
+        box-shadow: 0 6px 20px rgba(0, 136, 204, 0.4);
+    }
+
+    .doctor-section {
+        position: relative;
+        z-index: 2;
+        flex-shrink: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100px;
+    }
+
+    .doctor-illustration {
+        width: 80px;
+        height: 80px;
+        background-image: url('/media/photos/home/doc.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+        .banner {
+            padding: 0.75rem 1.5rem;
+            min-height: 80px;
+        }
+
+        .title {
+            font-size: 1.5rem;
+        }
+
+        .description {
+            font-size: 0.75rem;
+        }
+
+        .cta-button {
+            padding: 0.6rem 1.2rem;
+            font-size: 0.75rem;
+            min-width: 120px;
+        }
+
+        .doctor-illustration {
+            width: 70px;
+            height: 70px;
+        }
+
+        .doctor-section {
+            width: 85px;
+        }
+    }
+
+    /* MOBILE: Hide doctor and expand text content */
+    @media (max-width: 768px) {
+        .banner {
+            padding: 0.6rem 1rem;
+            min-height: 85px;
+        }
+
+        .doctor-section {
+            display: none;
+        }
+
+        .content-section {
+            justify-content: space-between;
+            width: 100%;
+            gap: 1rem;
+        }
+
+        .text-content {
+            flex: 1;
+            max-width: none;
+        }
+
+        .title {
+            font-size: 1.3rem;
+        }
+
+        .mobile-platforms {
+            font-size: 1rem;
+        }
+
+        .description {
+            font-size: 0.7rem;
+            max-width: 100%;
+        }
+
+        .cta-button {
+            padding: 0.5rem 1rem;
+            font-size: 0.7rem;
+            min-width: 110px;
+        }
+
+        .cta-buttons {
+            gap: 0.4rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .banner {
+            padding: 0.5rem 0.75rem;
+            min-height: 90px;
+        }
+
+        .content-section {
+            gap: 0.75rem;
+        }
+
+        .title {
+            font-size: 1.1rem;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.3rem;
+        }
+
+        .mobile-platforms {
+            font-size: 0.9rem;
+        }
+
+        .coming-soon-badge {
+            font-size: 0.65rem;
+            padding: 0.15rem 0.6rem;
+        }
+
+        .description {
+            font-size: 0.65rem;
+        }
+
+        .cta-button {
+            padding: 0.45rem 0.8rem;
+            font-size: 0.65rem;
+            min-width: 100px;
+        }
+
+        .cta-buttons {
+            gap: 0.35rem;
+        }
+    }
+</style>
+
+<style>
+   
+
+    .test-card {
+        background: #bfdbfe;
+        padding: 24px;
+        width: 100%;
+        min-height: 180px;
+        display: flex;
+        align-items: stretch;
+        gap: 24px;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 1px solid #e5e5e5;
+        margin-bottom: 10px;
+        border-radius: 24px;
+        
+    }
+
+    /* Fixed Loading State */
+    .loading-state {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: #bfdbfe;
+        border-radius: 24px;
+        z-index: 15;
+    }
+
+    .loading-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        text-align: center;
+    }
+
+    .loading-spinner {
+        width: 50px;
+        height: 50px;
+        border: 4px solid #e5e5e5;
+        border-top: 4px solid #667eea;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+        color: #4A5568;
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+    .loading-subtext {
+        color: #718096;
+        font-size: 0.875rem;
+        opacity: 0.8;
+    }
+
+    /* Fixed No Test State */
+    .no-test-state {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: #718096;
+        padding: 40px 20px;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: #bfdbfe;
+        border-radius: 24px;
+        z-index: 10;
+    }
+
+    .no-test-icon {
+        font-size: 3rem;
+        margin-bottom: 16px;
+        opacity: 0.6;
+    }
+
+    .no-test-title {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: #4A5568;
+        margin-bottom: 8px;
+    }
+
+    .no-test-message {
+        font-size: 0.875rem;
+        color: #718096;
+        line-height: 1.5;
+    }
+
+    /* Fixed Card Header */
+    .card-header {
+        position: absolute;
+        top: -8px;
+        width:100%;
+        
+       color: #2D3748;
+        font-weight: 700;
+        font-size: 0.75rem;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        opacity: 0.8;
+        z-index: 5;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        padding-bottom: 4px;
+
+    }
+
+    /* Fixed Illustration Container */
+    .illustration-container {
+        flex-shrink: 0;
+        width: 100px;
+        height: 100px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        backdrop-filter: blur(10px);
+       
+        margin-top: 20px;
+        align-self: flex-start;
+    }
+
+    .doctor-illustration1 {
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
+        filter: brightness(1.1);
+    }
+
+    /* Fixed Content Section */
+    .content-section1 {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-width: 0;
+        padding-top: 20px;
+        gap: 12px;
+    }
+
+    .test-title {
+        color: #2D3748;
+        font-size: 1.4rem;
+        font-weight: 700;
+        line-height: 1.3;
+        letter-spacing: -0.025em;
+        margin-bottom: 4px;
+    }
+
+    .test-details {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
+
+    .detail-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: #4A5568;
+        font-size: 0.875rem;
+        font-weight: 500;
+        padding: 6px 12px;
+        background: rgba(255, 255, 255, 0.4);
+        border-radius: 10px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        white-space: nowrap;
+    }
+
+    /* Fixed Validity Section */
+    .validity-section {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: center;
+        gap: 12px;
+        flex-shrink: 0;
+        padding-top: 20px;
+        min-width: 140px;
+    }
+
+    .validity-badge {
+        background: linear-gradient(135deg, #fed7d7 0%, #fbb6ce 100%);
+        color: #C53030;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        border: 1px solid rgba(197, 48, 48, 0.2);
+        box-shadow: 0 2px 8px rgba(197, 48, 48, 0.1);
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    .start-button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 24px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        min-width: 120px;
+        text-align: center;
+    }
+
+    .start-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    .start-button:active {
+        transform: translateY(0);
+    }
+
+    /* Fixed Test Content - Initially visible with proper z-index */
+    .test-content {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        align-items: stretch;
+        gap: 24px;
+        opacity: 1;
+        z-index: 1;
+        position: relative;
+    }
+
+    /* Mobile Responsive Fixes */
+    @media (max-width: 768px) {
+        .test-card {
+            min-height: 110px;
+            padding: 16px;
+            gap: 16px;
+            border-radius: 16px;
+        }
+
+        .card-header {
+            margin-top:5px;
+            font-size: 0.7rem;
+        }
+
+        .illustration-container {
+            width: 60px;
+            height: 60px;
+            margin-top: 24px;
+            border-radius: 12px;
+        }
+
+        .doctor-illustration1 {
+            width: 100px;
+            height: 100px;
+        }
+
+        .content-section1 {
+            
+            gap: 8px;
+        }
+
+        .test-title {
+            font-size: 1.1rem;
+            line-height: 1.2;
+        }
+
+        .test-details {
+            gap: 8px;
+        }
+
+        .detail-item {
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .validity-section {
+            padding-top: 24px;
+            gap: 8px;
+            min-width: 100px;
+            
+        }
+
+        .validity-badge {
+            padding: 6px 12px;
+            font-size: 0.7rem;
+        }
+
+        .start-button {
+            padding: 10px 16px;
+            font-size: 0.8rem;
+            min-width: 100px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .test-card {
+            min-height: 110px;
+            padding: 12px;
+            gap: 12px;
+            
+            
+        }
+
+        .card-header {
+            position: absolute;
+            margin-bottom: 8px;
+           
+        }
+
+        .test-content {
+            
+            gap: 12px;
+        }
+
+        .illustration-container {
+            align-self: center;
+            margin-top: 0;
+            width: 50px;
+            height: 50px;
+            order: -1;
+            display:none;
+        }
+
+        .doctor-illustration1 {
+            width: 30px;
+            height: 30px;
+            display:none;
+        }
+
+        .content-section1 {
+            
+            
+            gap: 6px;
+        }
+
+        .test-title {
+            font-size: 1rem;
+        }
+
+        .test-details {
+            
+            gap: 6px;
+        }
+
+        .detail-item {
+            font-size: 0.7rem;
+            padding: 3px 6px;
+        }
+
+        
+
+        .validity-badge {
+            font-size: 0.65rem;
+            padding: 4px 8px;
+        }
+
+        .start-button {
+            padding: 8px 12px;
+            font-size: 0.75rem;
+            min-width: 80px;
+        }
+    }
+
+    /* Animation fixes */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .test-content.show {
+        animation: fadeInUp 0.6s ease-out;
+    }
+
+    /* Loading state mobile fixes */
+    @media (max-width: 768px) {
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border-width: 3px;
+        }
+
+        .loading-text {
+            font-size: 0.9rem;
+        }
+
+        .loading-subtext {
+            font-size: 0.8rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .loading-spinner {
+            width: 35px;
+            height: 35px;
+            border-width: 2px;
+        }
+
+        .loading-text {
+            font-size: 0.85rem;
+        }
+
+        .loading-subtext {
+            font-size: 0.75rem;
+        }
+
+        .no-test-icon {
+            font-size: 2rem;
+        }
+
+        .no-test-title {
+            font-size: 1rem;
+        }
+
+        .no-test-message {
+            font-size: 0.8rem;
+        }
+    }
+    .loading-text1::before {
+        content: '\f110'; /* Font Awesome spinner */
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        font-size: 0.8rem;
+        margin-right: 8px;
+        animation: spin 1s linear infinite;
+        display: inline-block;
+    }
+</style>
+<style>
+    /* Compact Practice Modal */
+.compact-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    padding: 20px;
+}
+
+.compact-modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.compact-modal {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 24px;
+    max-width: 320px;
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    transform: scale(0.95) translateY(10px);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+}
+
+.compact-modal-overlay.show .compact-modal {
+    transform: scale(1) translateY(0);
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(107, 114, 128, 0.1);
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
+    transition: all 0.2s ease;
+    font-size: 0.8rem;
+}
+
+.modal-close:hover {
+    background: rgba(107, 114, 128, 0.2);
+    color: #6b7280;
+}
+
+.compact-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.compact-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.compact-subtitle {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 400;
+}
+
+.practice-options-compact {
+    display: grid;
+    gap: 12px;
+}
+
+.practice-option-compact {
+    background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+    border: 1.5px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    text-align: left;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.practice-option-compact::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(168, 85, 247, 0.08));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.practice-option-compact:hover {
+    border-color: #6366f1;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+.practice-option-compact:hover::before {
+    opacity: 1;
+}
+
+.option-header-compact {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 6px;
+    position: relative;
+    z-index: 1;
+}
+
+.option-icon-compact {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.practice-option-compact:nth-child(1) .option-icon-compact {
+    background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+    color: #2563eb;
+}
+
+.practice-option-compact:nth-child(2) .option-icon-compact {
+    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+    color: #059669;
+}
+
+.practice-option-compact:hover .option-icon-compact {
+    transform: scale(1.05);
+}
+
+.option-title-compact {
+    font-size: 1rem;
+    font-weight: 650;
+    color: #1e293b;
+    margin: 0;
+}
+
+.option-description-compact {
+    font-size: 0.8rem;
+    color: #64748b;
+    line-height: 1.4;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+@media (max-width: 640px) {
+    .compact-modal {
+        padding: 20px;
+        margin: 16px;
+        max-width: 280px;
+    }
+
+    .compact-title {
+        font-size: 1.125rem;
+    }
+
+    .practice-option-compact {
+        padding: 14px;
+    }
+
+    .option-icon-compact {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+
+    .option-title-compact {
+        font-size: 0.95rem;
+    }
+
+    .option-description-compact {
+        font-size: 0.75rem;
+    }
+}
+/* ========================================
+   THIN APP DOWNLOAD BANNER - PROFESSIONAL
+   ======================================== */
+   /* ========================================
+   THIN APP DOWNLOAD BANNER - PROFESSIONAL
+   ======================================== */
+
+.app-banner-thin {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+  animation: slideDown 0.5s ease-out;
+}
+
+.app-banner-thin:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.banner-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  gap: 24px;
+}
+
+/* Left Section */
+.banner-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  min-width: 0;
+}
+
+.app-icon-small {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.app-icon-small i {
+  font-size: 1.5rem;
+  color: #ffffff;
+}
+
+.banner-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.banner-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
+}
+
+.new-badge {
+  background: #10b981;
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.new-badge.soon {
+  background: #f59e0b;
+}
+
+.banner-title h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+  line-height: 1.4;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+.banner-subtitle {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin: 0;
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.banner-subtitle i {
+  font-size: 0.85rem;
+}
+
+/* Right Section */
+.banner-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+/* Download Button */
+.download-btn-thin {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.25);
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.download-btn-thin::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: left 0.5s ease;
+}
+
+.download-btn-thin:hover::before {
+  left: 100%;
+}
+
+.download-btn-thin:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+}
+
+.download-btn-thin:active {
+  transform: translateY(0);
+}
+
+.download-btn-thin i {
+  font-size: 1rem;
+}
+
+.btn-text {
+  font-weight: 600;
+}
+
+.btn-size {
+  font-size: 0.7rem;
+  opacity: 0.9;
+  margin-left: 4px;
+  padding-left: 8px;
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Social Buttons */
+.social-btn-thin {
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  border: 1.5px solid;
+  white-space: nowrap;
+}
+
+.social-btn-thin.whatsapp {
+  background: #ffffff;
+  color: #25d366;
+  border-color: #25d366;
+}
+
+.social-btn-thin.whatsapp:hover {
+  background: #25d366;
+  color: #ffffff !important; /* Force white text on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(37, 211, 102, 0.3);
+}
+
+.social-btn-thin.telegram {
+  background: #ffffff;
+  color: #0088cc;
+  border-color: #0088cc;
+}
+
+.social-btn-thin.telegram:hover {
+  background: #0088cc;
+  color: #ffffff !important; /* Force white text on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 136, 204, 0.3);
+}
+
+.social-btn-thin i {
+  font-size: 1rem;
+}
+
+/* Ensure text color is visible in all states */
+.social-btn-thin span {
+  color: inherit;
+}
+
+/* Animation */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+/* Tablet (768px - 1023px) */
+@media (max-width: 1023px) {
+  .banner-container {
+    padding: 14px 20px;
+    gap: 20px;
+  }
+  
+  .banner-title h3 {
+    font-size: 0.95rem;
+  }
+  
+  .banner-subtitle {
+    font-size: 0.75rem;
+  }
+  
+  .download-btn-thin {
+    padding: 9px 16px;
+    font-size: 0.8rem;
+  }
+  
+  .social-btn-thin {
+    padding: 9px 14px;
+    font-size: 0.75rem;
+  }
+  
+  .btn-size {
+    display: none;
+  }
+}
+
+/* Mobile Landscape (641px - 767px) */
+@media (max-width: 767px) {
+  .banner-container {
+    padding: 12px 16px;
+    gap: 16px;
+  }
+  
+  .app-icon-small {
+    width: 42px;
+    height: 42px;
+  }
+  
+  .app-icon-small i {
+    font-size: 1.3rem;
+  }
+  
+  .banner-title h3 {
+    font-size: 0.9rem;
+  }
+  
+  .banner-subtitle {
+    font-size: 0.7rem;
+    gap: 6px;
+  }
+  
+  .download-btn-thin {
+    padding: 8px 14px;
+    font-size: 0.75rem;
+    gap: 5px;
+  }
+  
+  .download-btn-thin i {
+    font-size: 0.9rem;
+  }
+  
+  .social-btn-thin {
+    padding: 8px 12px;
+    font-size: 0.7rem;
+  }
+  
+  .social-btn-thin i {
+    font-size: 0.9rem;
+  }
+}
+
+/* Mobile Portrait (481px - 640px) */
+@media (max-width: 640px) {
+  .banner-container {
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  
+  .banner-left {
+    flex: 1 1 100%;
+    gap: 12px;
+  }
+  
+  .banner-right {
+    flex: 1 1 100%;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+  
+  .download-btn-thin {
+    flex: 1 1 100%; /* Full width on mobile */
+    justify-content: center;
+  }
+  
+  .social-btn-thin {
+    flex: 1;
+    justify-content: center;
+  }
+  
+  /* Keep text visible on mobile */
+  .btn-text {
+    display: inline;
+    font-size: 0.75rem;
+  }
+  
+  /* Ensure social button text is visible */
+  .social-btn-thin span {
+    display: inline;
+    color: inherit !important;
+  }
+  
+  /* Fix text color on mobile */
+  .social-btn-thin.whatsapp {
+    color: #25d366 !important;
+  }
+  
+  .social-btn-thin.telegram {
+    color: #0088cc !important;
+  }
+  
+  .social-btn-thin.whatsapp:active {
+    background: #25d366;
+    color: #ffffff !important;
+  }
+  
+  .social-btn-thin.telegram:active {
+    background: #0088cc;
+    color: #ffffff !important;
+  }
+}
+
+/* Small Mobile (max 480px) */
+@media (max-width: 480px) {
+  .banner-container {
+    padding: 12px;
+    gap: 12px;
+  }
+  
+  .app-icon-small {
+    width: 38px;
+    height: 38px;
+  }
+  
+  .app-icon-small i {
+    font-size: 1.2rem;
+  }
+  
+  .new-badge {
+    font-size: 0.6rem;
+    padding: 2px 6px;
+  }
+  
+  .banner-title h3 {
+    font-size: 0.85rem;
+    line-height: 1.3;
+  }
+  
+  .banner-subtitle {
+    font-size: 0.65rem;
+    gap: 4px;
+  }
+  
+  .download-btn-thin {
+    padding: 9px 12px;
+    font-size: 0.75rem;
+    border-radius: 8px;
+    gap: 6px;
+  }
+  
+  .download-btn-thin i {
+    font-size: 0.95rem;
+  }
+  
+  .btn-text {
+    font-size: 0.75rem;
+  }
+  
+  .social-btn-thin {
+    padding: 9px 10px;
+    font-size: 0.7rem;
+    border-radius: 8px;
+    gap: 6px;
+  }
+  
+  .social-btn-thin i {
+    font-size: 0.95rem;
+  }
+  
+  .social-btn-thin span {
+    font-size: 0.7rem;
+  }
+}
+
+/* Extra Small Mobile (max 360px) */
+@media (max-width: 360px) {
+  .banner-container {
+    padding: 10px;
+    gap: 10px;
+  }
+  
+  .banner-left {
+    gap: 10px;
+  }
+  
+  .banner-title {
+    gap: 6px;
+  }
+  
+  .banner-title h3 {
+    font-size: 0.8rem;
+  }
+  
+  .banner-subtitle {
+    font-size: 0.6rem;
+  }
+  
+  .banner-right {
+    gap: 6px;
+  }
+  
+  .download-btn-thin {
+    padding: 8px 10px;
+    font-size: 0.7rem;
+  }
+  
+  .download-btn-thin i {
+    font-size: 0.9rem;
+  }
+  
+  .btn-text {
+    font-size: 0.7rem;
+  }
+  
+  .social-btn-thin {
+    padding: 8px 8px;
+    font-size: 0.65rem;
+  }
+  
+  .social-btn-thin span {
+    display: none; /* Hide text, show icon only */
+  }
+  
+  .social-btn-thin i {
+    font-size: 1.1rem;
+  }
+}
+
+/* Large Screens (1440px+) */
+@media (min-width: 1440px) {
+  .banner-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 18px 32px;
+  }
+  
+  .app-icon-small {
+    width: 52px;
+    height: 52px;
+  }
+  
+  .app-icon-small i {
+    font-size: 1.6rem;
+  }
+  
+  .banner-title h3 {
+    font-size: 1.1rem;
+  }
+  
+  .banner-subtitle {
+    font-size: 0.85rem;
+  }
+  
+  .download-btn-thin {
+    padding: 11px 20px;
+    font-size: 0.9rem;
+  }
+  
+  .social-btn-thin {
+    padding: 11px 18px;
+    font-size: 0.85rem;
+  }
+}
+
+
+</style>
+<div class="main-content">
+
+    <div class="container">
+        <!-- Mobile App Download Section -->
+<!-- Mobile App Download Banner - Thin & Professional -->
+{% if android_version and android_version.show_download_banner %}
+<div class="app-banner-thin">
+  <div class="banner-container">
+    <!-- Left Section: App Icon & Info -->
+    <div class="banner-left">
+      <div class="app-icon-small">
+        <i class="fab fa-android"></i>
+      </div>
+      <div class="banner-info">
+        <div class="banner-title">
+          <span class="new-badge">NEW</span>
+          <h3>{{ android_version.banner_text|default:"MCQwave Mobile App Available" }}</h3>
+        </div>
+        <p class="banner-subtitle">
+          Version {{ android_version.current_version }} • 
+          20,000+ Curated MCQs And PYQs • 3,000+ Flashcards 
+        </p>
+      </div>
+    </div>
+    
+    <!-- Right Section: Download Button + Social Buttons -->
+    <div class="banner-right">
+      <button class="download-btn-thin" 
+              type="button"
+              data-url="{{ android_version.get_download_link }}"
+              onclick="downloadMobileApp(this)">
+        <i class="fas fa-download nfas"></i>
+        <span class="btn-text">Download APK</span>
+      </button>
+      
+      <a href="javascript:void(0)" class="social-btn-thin whatsapp" onclick="joinWhatsApp()">
+        <i class="fab fa-whatsapp"></i>
+        <span>WhatsApp</span>
+      </a>
+      
+      <a href="javascript:void(0)" class="social-btn-thin telegram" onclick="joinTelegram()">
+        <i class="fab fa-telegram-plane"></i>
+        <span>Telegram</span>
+      </a>
+    </div>
+  </div>
+</div>
+{% else %}
+<!-- Fallback if no app version -->
+<div class="app-banner-thin coming-soon-banner">
+  <div class="banner-container">
+    <div class="banner-left">
+      <div class="app-icon-small">
+        <i class="fas fa-mobile-alt"></i>
+      </div>
+      <div class="banner-info">
+        <div class="banner-title">
+          <span class="new-badge soon">SOON</span>
+          <h3>Mobile Apps Launching Soon</h3>
+        </div>
+        <p class="banner-subtitle">
+          <i class="fab fa-android"></i> Android • 
+          <i class="fab fa-apple"></i> iOS • 
+          35,000+ MCQs • 3,000+ Flashcards
+        </p>
+      </div>
+    </div>
+    
+    <div class="banner-right">
+      <a href="javascript:void(0)" class="social-btn-thin whatsapp" onclick="joinWhatsApp()">
+        <i class="fab fa-whatsapp"></i>
+        <span>WhatsApp</span>
+      </a>
+      
+      <a href="javascript:void(0)" class="social-btn-thin telegram" onclick="joinTelegram()">
+        <i class="fab fa-telegram-plane"></i>
+        <span>Telegram</span>
+      </a>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+
+        
+        
+        <div class="test-card" id="testCard">
+            <!-- Loading State -->
+            <div class="loading-state" id="loadingState">
+                <div class="loading-lines"></div>
+                <div class="loading-content">
+                    <div class="loading-spinner"></div>
+                    <div class="loading-text">Loading Mock Test</div>
+                    <div class="loading-subtext">Fetching latest test data...</div>
+                </div>
+            </div>
+    
+            <!-- No Test Available State -->
+            <div class="no-test-state" id="noTestState" style="display: none;">
+                <div class="no-test-icon">📚</div>
+                <div class="no-test-title">No Active Mock Test</div>
+                <div class="no-test-message">
+                    There are currently no live mock tests available.<br>
+                    Please check back later or contact support.
+                </div>
+            </div>
+    
+            <!-- Test Content (Initially Hidden) -->
+            <div class="test-content" id="testContent">
+                <div class="card-header" id="cardHeader">
+                    Today's Mock Test
+                </div>
+                
+                <div class="illustration-container">
+                    <img src="/media/photos/home/mocktest.png"
+                         alt="Medical Professional"
+                         class="doctor-illustration1"
+                         onerror="this.style.display='none'; this.parentNode.innerHTML='<div style=\'color:#667eea;font-size:2rem;\'>🩺</div>';">
+                </div>
+                
+                <div class="content-section1">
+                    <h2 class="test-title" id="testTitle">Loading...</h2>
+                    <div class="test-details" id="testDetails">
+                        <div class="detail-item">
+                            <span id="totalMcqs">-- MCQs</span>
+                        </div>
+                        <div class="detail-item">
+                            <span id="timeLimit">-- Minutes</span>
+                        </div>
+                        <div class="detail-item">
+                            <span id="testType">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="validity-section">
+                    <div class="validity-badge" id="validityBadge">Loading...</div>
+                    <button class="start-button" id="startButton" onclick="handleTestAction()">
+                        Loading...
+                    </button>
+                </div>
+            </div>
+        </div>
+    
+        <div class="main-grid">
+            <!-- Priority 1: Main Features -->
+            <div class="feature-card priority-1">
+                <div class="section-title">
+                    <i class="fas fa-star nfas"></i>
+                    Main Features
+                </div>
+                <div class="main-features">
+                    <button class="main-btn demo-btn" onclick="showCompactModal()">
+                        <i class="fas fa-question-circle nfas"></i>
+                        <span>Practice MCQs</span>
+                    </button>
+                    <button class="main-btn">
+                        <i class="fas fa-clipboard-check nfas"></i>
+                        <span>Mock Test</span>
+                    </button>
+                    <button class="main-btn">
+                        <i class="fas fa-bookmark nfas"></i>
+                        <span>Bookmarks</span>
+                    </button>
+                    <button class="main-btn">
+                        <i class="fas fa-book-open nfas"></i>
+                        <span>Study Material</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Priority 2: AI Analytics & Hive -->
+            <div class="feature-card">
+                <div class="section-title">
+                    <i class="fas fa-brain nfas"></i>
+                    AI Analytics & Hive
+                </div>
+                <div class="secondary-features">
+                    <button class="secondary-btn">
+                        <i class="fas fa-chart-line nfas"></i>
+                        <span>AI Analytics</span>
+                    </button>
+                    <button class="secondary-btn">
+                        <i class="fas fa-share-alt nfas"></i>
+                        <span>Sharing Hive</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Priority 3: Rapid Recall -->
+            <div class="feature-card">
+                <div class="section-title">
+                    <i class="fas fa-bolt nfas"></i>
+                    Rapid Recall
+                    <button class="reload-btn" onclick="loadNewQuestion()">
+                        <i class="fas fa-redo nfas"></i>
+                    </button>
+                </div>
+                <div class="rapid-recall">
+                    <div class="recall-header">
+                        
+                        
+                    </div>
+                    
+                        <div id="question-container">
+                            <div class="question-text" id="question-text">
+                                Loading question...
+                            </div>
+                            <div class="options" id="options">
+                                <div class="loading">
+                                    <i class="fas fa-spinner spinner"></i>
+                                    Loading options...
+                                </div>
+                            </div>
+                            <div class="result" id="result"></div>
+                        </div>
+                </div>
+            </div>
+
+            <!-- Priority 4: Review & Continue -->
+            <div class="feature-card">
+                <div class="section-title">
+                    <i class="fas fa-history nfas"></i>
+                    Review & Continue
+                </div>
+                <div class="tertiary-features">
+                    <button class="tertiary-btn">
+                        <i class="fas fa-redo nfas"></i>
+                        <span>Review Mock</span>
+                    </button>
+                    <button class="tertiary-btn">
+                        <i class="fas fa-eye nfas"></i>
+                        <span>Review Practice</span>
+                    </button>
+                    <button class="tertiary-btn">
+                        <i class="fas fa-play nfas"></i>
+                        <span>Continue Session</span>
+                    </button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Menu Toggle -->
+    <button class="menu-toggle" onclick="toggleMenu()">
+        <i class="fas fa-ellipsis-h nfas"></i>
+    </button>
+
+    <!-- Bottom Menu -->
+    <div class="bottom-menu" id="bottomMenu">
+        <div class="menu-item">
+            <i class="fas fa-calendar-alt nfas"></i>
+            <span>Upcoming Mock Tests</span>
+        </div>
+        <div class="menu-item">
+            <i class="fas fa-comments nfas"></i>
+            <span>Discussion Forums</span>
+        </div>
+        <div class="menu-item">
+            <i class="fas fa-crown nfas"></i>
+            <span>Subscription Status</span>
+        </div>
+        <div class="menu-item">
+            <i class="fas fa-gift nfas"></i>
+            <span>Offers</span>
+        </div>
+        <div class="menu-item">
+            <i class="fas fa-bell nfas"></i>
+            <span>Notifications</span>
+        </div>
+        
+        <div class="menu-item">
+            <i class="fas fa-question-circle nfas"></i>
+            <span>FAQs</span>
+        </div>
+    </div>
+</div>
+<div class="sidebar">
+    
+    <div class="sidebar-menu">
+        <div class="sidebar-item" onclick="window.location.href='mcq/comingsoon/'">
+            <i class="fas fa-calendar-alt nfas"></i>
+            <span>Upcoming Mock Tests</span>
+        </div>
+        <div class="sidebar-item" onclick="window.location.href='mcq/comingsoon/'">
+            <i class="fas fa-comments nfas"></i>
+            <span>Discussion Forums</span>
+        </div>
+        <div class="sidebar-item" onclick="window.location.href='mcq/comingsoon/'">
+            <i class="fas fa-crown nfas"></i>
+            <span>Subscription Status</span>
+        </div>
+        <div class="sidebar-item" onclick="window.location.href='mcq/comingsoon/'">
+            <i class="fas fa-gift nfas"></i>
+            <span>Offers</span>
+        </div>
+        <div class="sidebar-item" onclick="window.location.href='mcq/comingsoon/'">
+            <i class="fas fa-bell nfas"></i>
+            <span>Notifications</span>
+        </div>
+       
+        <div class="sidebar-item" onclick="window.location.href='mcq/faqs/'">
+            <i class="fas fa-question-circle nfas"></i>
+            <span>FAQs</span>
+        </div>
+    </div>
+</div>
+<!-- Compact Practice Modal -->
+<div id="compactModal" class="compact-modal-overlay">
+    <div class="compact-modal">
+        <button class="modal-close" onclick="hideCompactModal()">
+            <i class="fas fa-times nfas"></i>
+        </button>
+        
+        <div class="compact-header">
+            <h3 class="compact-title">Practice MCQs</h3>
+            <p class="compact-subtitle">Choose your practice method</p>
+        </div>
+        
+        <div class="practice-options-compact">
+            <div class="practice-option-compact" onclick="selectCompactPractice('curated')">
+                <div class="option-header-compact">
+                    <div class="option-icon-compact">
+                        <i class="fas fa-star nfas"></i>
+                    </div>
+                    <h4 class="option-title-compact">Curated Practice</h4>
+                </div>
+                <p class="option-description-compact">High-yield questions for daily revision</p>
+            </div>
+            
+            <div class="practice-option-compact" onclick="selectCompactPractice('pyq')">
+                <div class="option-header-compact">
+                    <div class="option-icon-compact">
+                        <i class="fas fa-history nfas"></i>
+                    </div>
+                    <h4 class="option-title-compact">Practice PYQs</h4>
+                </div>
+                <p class="option-description-compact">Actual past exam questions</p>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    // CSRF Token function
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    
+    // Global variables for question functionality
+    let currentQuestion = null;
+    let answered = false;
+    
+    // Function to fetch and load new question via AJAX
+    function loadNewQuestion() {
+        // Show loading state
+        document.getElementById('question-text').textContent = 'Loading new question...';
+        document.getElementById('options').innerHTML = '<div style="text-align: center; padding: 20px; color: #6b7280;"><i class="fas fa-spinner fa-spin"></i> Loading options...</div>';
+        document.getElementById('result').classList.remove('show', 'correct', 'incorrect');
+        answered = false;
+        
+        // Add rotation animation to reload button
+        const reloadBtn = document.querySelector('.reload-btn');
+        if (reloadBtn) {
+            reloadBtn.style.transform = 'rotate(180deg)';
+            setTimeout(() => {
+                reloadBtn.style.transform = 'rotate(0deg)';
+            }, 600);
+        }
+        
+        // Fetch new question via AJAX
+        fetch('/mcqs/qod/', {
+            method: 'GET',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Add small delay for smooth transition
+            setTimeout(() => displayQuestion(data), 500);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('question-text').textContent = 'Failed to load question. Please try again later.';
+            document.getElementById('options').innerHTML = '<div style="text-align: center; padding: 20px; color: #ef4444;"><i class="fas fa-exclamation-circle"></i> Error loading options</div>';
+        });
+    }
+    
+    // Function to display the fetched question
+    function displayQuestion(question) {
+        currentQuestion = question;
+        answered = false;
+        
+        // Set question text
+        document.getElementById('question-text').textContent = question.text;
+        
+        // Create options container
+        const optionsContainer = document.getElementById('options');
+        optionsContainer.innerHTML = '';
+        
+        // Handle image if present
+        if (question.has_image && question.image_url) {
+            const imageDiv = document.createElement('div');
+            imageDiv.style.textAlign = 'center';
+            imageDiv.style.marginBottom = '15px';
+            imageDiv.innerHTML = `<img src="${question.image_url}" style="max-width: 100%; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">`;
+            optionsContainer.appendChild(imageDiv);
+        }
+        
+        // Create options with proper data attributes
+        question.options.forEach((option, index) => {
+            if (option) {  // Only create option if it's not null
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                optionDiv.innerHTML = `<span>${String.fromCharCode(65 + index)}.</span> ${option}`;
+                // Store the original option text as data attribute for comparison
+                optionDiv.setAttribute('data-option-text', option.trim());
+                optionDiv.onclick = () => selectOption(optionDiv, option === question.correct_answer);
+                optionsContainer.appendChild(optionDiv);
+            }
+        });
+        
+        // Reset result display
+        document.getElementById('result').classList.remove('show', 'correct', 'incorrect');
+    }
+    
+    // Function to handle option selection
+    function selectOption(element, isCorrect) {
+        if (answered || !currentQuestion) return;
+        
+        answered = true;
+        const options = document.querySelectorAll('.option');
+        
+        // Remove any previous selections
+        options.forEach(opt => opt.classList.remove('selected', 'correct', 'incorrect'));
+        
+        // Mark selected option
+        element.classList.add('selected');
+        
+        // Normalize text for comparison (remove extra spaces, special characters issues)
+        function normalizeText(text) {
+            return text.replace(/\s+/g, ' ').trim();
+        }
+        
+        const normalizedCorrectAnswer = normalizeText(currentQuestion.correct_answer);
+        
+        // Show correct/incorrect styling
+        options.forEach((opt) => {
+            const optionText = opt.getAttribute('data-option-text');
+            const normalizedOptionText = normalizeText(optionText);
+            
+            if (normalizedOptionText === normalizedCorrectAnswer) {
+                opt.classList.add('correct');
+            } else if (opt === element && !isCorrect) {
+                opt.classList.add('incorrect');
+            }
+        });
+        
+        // Show result
+        const result = document.getElementById('result');
+        const formattedExplanation = currentQuestion.explanation ? currentQuestion.explanation.replace(/\n/g, '<br>') : '';
+        
+        result.innerHTML = isCorrect 
+            ? `<strong>Correct!</strong> ${formattedExplanation}`
+            : `<strong>Incorrect!</strong> ${formattedExplanation}`;
+        result.classList.add('show', isCorrect ? 'correct' : 'incorrect');
+    }
+    
+    // Bottom menu toggle functionality
+    function toggleMenu() {
+        const menu = document.getElementById('bottomMenu');
+        menu.classList.toggle('show');
+    }
+    
+    // Top Performers functionality
+    function fetchTopPerformers() {
+        // Check if we have a top performers container
+        const performersContainer = document.getElementById('top-performers-list');
+        if (!performersContainer) return;
+        
+        fetch('/mocktest/api/top_performers/', {
+            method: 'GET',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            renderTopPerformers(data);
+        })
+        .catch(error => {
+            console.error('Error loading top performers:', error);
+            if (performersContainer) {
+                performersContainer.innerHTML = `
+                    <div style="text-align: center; padding: 20px; color: #ef4444;">
+                        <i class="fas fa-exclamation-circle"></i>
+                        Failed to load top performers. Please try again later.
+                    </div>
+                `;
+            }
+        });
+    }
+    
+    // Function to render top performers
+    function renderTopPerformers(performers) {
+        const performersContainer = document.getElementById('top-performers-list');
+        if (!performersContainer) return;
+        
+        if (!performers || performers.length === 0) {
+            performersContainer.innerHTML = `
+                <div style="text-align: center; padding: 30px; color: #6b7280;">
+                    <i class="fas fa-users" style="font-size: 2rem; margin-bottom: 10px; opacity: 0.5;"></i>
+                    <p>No performance data available yet. Take a mock test to be featured here!</p>
+                </div>
+            `;
+            return;
+        }
+        
+        performersContainer.innerHTML = '';
+        
+        performers.forEach((performer, index) => {
+            const rank = index + 1;
+            const accuracy = performer.accuracy || 0;
+            
+            const performerCard = document.createElement('div');
+            performerCard.className = 'performer-card';
+            performerCard.innerHTML = `
+                <div class="rank-badge rank-${rank}">#${rank}</div>
+                <div class="performer-info">
+                    <h4>${performer.full_name} ${rank === 1 ? '👑' : ''}</h4>
+                    <div class="stats">
+                        <span>Score: ${performer.total_score}/${performer.actual_max_score}</span>
+                        <span>Accuracy: ${accuracy}%</span>
+                    </div>
+                </div>
+            `;
+            performersContainer.appendChild(performerCard);
+        });
+    }
+    
+    // Button click handlers
+    function setupButtonHandlers() {
+        // Main feature buttons
+        const mainButtons = document.querySelectorAll('.main-btn');
+        if (mainButtons.length >= 4) {
+            
+            mainButtons[1].onclick = () => window.location.href = 'mocktest/';
+            mainButtons[2].onclick = () => window.location.href = 'mcq/bookmarks/';
+            mainButtons[3].onclick = () => window.location.href = 'mcq/comingsoon/';
+        }
+        
+        // Secondary feature buttons
+        const secondaryButtons = document.querySelectorAll('.secondary-btn');
+        if (secondaryButtons.length >= 2) {
+            secondaryButtons[0].onclick = () => window.location.href = 'pomegranate/';
+            secondaryButtons[1].onclick = () => window.location.href = 'hive/';
+        }
+        
+        // Tertiary feature buttons
+        const tertiaryButtons = document.querySelectorAll('.tertiary-btn');
+        if (tertiaryButtons.length >= 3) {
+            tertiaryButtons[0].onclick = () => window.location.href = 'mocktest/review_mock_sessions_home/';
+            tertiaryButtons[1].onclick = () => window.location.href = 'mcq/rev_test_home/';
+            tertiaryButtons[2].onclick = () => window.location.href = 'mcq/cont_last_sess/';
+        }
+        
+        // Bottom menu items (for mobile)
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach((item, index) => {
+            item.onclick = () => {
+                switch(index) {
+                    case 0: window.location.href = 'mcq/comingsoon/'; break;
+                    case 1: window.location.href = 'mcq/comingsoon/'; break;
+                    case 2: window.location.href = 'mcq/comingsoon/'; break;
+                    case 3: window.location.href = 'mcq/comingsoon/'; break;
+                    case 4: window.location.href = 'mcq/comingsoon/'; break;
+                    case 5: window.location.href = 'mcq/faqs/'; break;
+                }
+            };
+        });
+        
+        // Sidebar items (for desktop) - these are already handled by onclick in HTML
+        // but you can add additional functionality here if needed
+    }
+    
+    // Initialize everything when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        // Load initial question for Rapid Recall
+        loadNewQuestion();
+        
+        // Setup button click handlers
+        setupButtonHandlers();
+        
+        // Load top performers if container exists
+        fetchTopPerformers();
+        
+        // Close menu when clicking outside (mobile only)
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('bottomMenu');
+            const toggle = document.querySelector('.menu-toggle');
+            
+            if (menu && toggle && !menu.contains(event.target) && !toggle.contains(event.target)) {
+                menu.classList.remove('show');
+            }
+        });
+        window.addEventListener('resize', function() {
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+            
+            if (window.innerWidth >= 1024) {
+                // Desktop view - show sidebar
+                if (sidebar) sidebar.style.display = 'block';
+                if (mainContent) mainContent.style.marginLeft = '280px';
+            } else {
+                // Mobile view - hide sidebar
+                if (sidebar) sidebar.style.display = 'none';
+                if (mainContent) mainContent.style.marginLeft = '0';
+            }
+        });
+    });
+    
+    // Reload button functionality with animation
+    document.addEventListener('DOMContentLoaded', function() {
+        const reloadBtn = document.querySelector('.reload-btn');
+        if (reloadBtn) {
+            reloadBtn.addEventListener('click', function() {
+                this.style.transform = 'rotate(180deg)';
+                setTimeout(() => {
+                    this.style.transform = 'rotate(0deg)';
+                }, 600);
+            });
+        }
+    });
+</script>
+<script>
+    function joinWhatsApp() {
+        // Replace with your actual WhatsApp community link
+        const whatsappLink = "https://chat.whatsapp.com/FYoIekoiTsD1aFIsOpUpm8";
+        window.open(whatsappLink, '_blank');
+    }
+    function joinTelegram() {
+        // Replace with your actual Telegram link
+        window.open('https://t.me/mcqwave', '_blank');
+    }
+    // Enhanced interactive effects
+    document.addEventListener('DOMContentLoaded', function() {
+        const shapes = document.querySelectorAll('.shape');
+        
+        shapes.forEach(shape => {
+            shape.addEventListener('mouseenter', function() {
+                this.style.transform += ' scale(1.3)';
+                this.style.transition = 'transform 0.3s ease';
+                this.style.opacity = '0.8';
+            });
+            
+            shape.addEventListener('mouseleave', function() {
+                this.style.transform = this.style.transform.replace(' scale(1.3)', '');
+                this.style.opacity = '0.4';
+            });
+        });
+
+        // Add a subtle parallax effect to the doctor
+        // Replace the problematic code with this:
+        document.addEventListener('mousemove', (e) => {
+            const doctor = document.querySelector('.doctor-illustration');
+            
+            // Add null check
+            if (doctor) {
+            const mouseX = (e.clientX - window.innerWidth / 2) * 0.01;
+            const mouseY = (e.clientY - window.innerHeight / 2) * 0.01;
+            doctor.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+            }
+        });
+  
+    });
+</script>
+<script>
+class MockTestManager {
+    constructor() {
+        this.testData = null;
+        this.countdownInterval = null;
+        this.originalButtonState = null;
+        this.isLoading = false;
+        
+        console.log('MockTestManager initializing...');
+        this.setupPageVisibilityHandlers();
+        this.setupSimpleNavigationFix();
+    
+        this.init();
+    }
+
+    init() {
+        // First try to get data from window, then fetch from server
+        this.testData = window.mockTestData || null;
+        
+        if (this.testData) {
+            console.log('Test data loaded from window:', this.testData);
+            this.renderTestCard();
+        } else {
+            console.log('No window data, fetching from server...');
+            this.fetchMockTestData();
+        }
+    }
+    setupSimpleNavigationFix() {
+        // Handle back/forward navigation
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                // Page came from cache (back/forward button)
+                console.log('Page loaded from cache - refreshing data');
+                this.fetchMockTestData();
+            }
+        });
+        
+        // Backup: Also refresh on window focus
+        let wasHidden = false;
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                wasHidden = true;
+            } else if (wasHidden) {
+                // Page became visible after being hidden
+                console.log('Page visible after being hidden - refreshing data');
+                this.fetchMockTestData();
+                wasHidden = false;
+            }
+        });
+    }
+    // Fetch mock test data from server
+    async fetchMockTestData() {
+        try {
+            this.showLoadingState();
+            
+            // Get UUID from various sources
+            const uuid = this.getUserUuid();
+            if (!uuid) {
+                throw new Error('User UUID not found');
+            }
+
+            const response = await fetch(`/home/mocktestdata/?uuid=${uuid}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRFToken': this.getCsrfToken()
+                },
+                credentials: 'same-origin'
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            
+            if (data.success && data.mock_test_data) {
+                this.testData = data.mock_test_data;
+                this.renderTestCard();
+                this.showTestContent();
+            } else {
+                this.showNoTestState();
+            }
+
+        } catch (error) {
+            console.error('Error fetching mock test data:', error);
+            this.showErrorState(error.message);
+        }
+    }
+
+    // Get user UUID from various sources
+    getUserUuid() {
+        // Try multiple sources for UUID
+        return window.userUuid || 
+               window.user_uuid || 
+               document.querySelector('[data-user-uuid]')?.dataset.userUuid ||
+               new URLSearchParams(window.location.search).get('uuid') ||
+               this.extractUuidFromPath();
+    }
+
+    // Extract UUID from URL path
+    extractUuidFromPath() {
+        const pathParts = window.location.pathname.split('/');
+        const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+        return pathParts.find(part => uuidPattern.test(part));
+    }
+
+    // Get CSRF token
+    getCsrfToken() {
+        const tokenElement = document.querySelector('[name=csrfmiddlewaretoken]');
+        if (tokenElement) return tokenElement.value;
+        
+        // Try cookie method
+        const cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+            const [name, value] = cookie.trim().split('=');
+            if (name === 'csrftoken') {
+                return decodeURIComponent(value);
+            }
+        }
+        return '';
+    }
+
+    // Render test card with data
+    renderTestCard() {
+        if (!this.testData) return;
+
+        this.updateCardHeader();
+        this.updateTestDetails();
+        this.updateValidityBadge();
+        this.updateStartButton();
+        this.storeOriginalButtonState();
+        this.setupCountdown();
+        this.bindEvents();
+    }
+
+    updateCardHeader() {
+        const header = document.getElementById('cardHeader') || document.querySelector('.card-header');
+        if (!header) return;
+
+        const headerText = {
+            'in_progress': 'Ongoing Mock Test',
+            'completed': 'Completed Mock Test',
+            'available': "Today's Mock Test"
+        };
+        
+        header.textContent = headerText[this.testData.status] || "Today's Mock Test";
+    }
+
+    updateTestDetails() {
+        const elements = {
+            testTitle: this.testData.test.title,
+            totalMcqs: `${this.testData.test.total_mcqs} MCQs`,
+            timeLimit: `${this.testData.test.duration} Minutes`,
+            testType: this.testData.test.test_type || 'Mock Test'
+        };
+
+        Object.entries(elements).forEach(([id, value]) => {
+            const element = document.getElementById(id) || document.querySelector(`.${id.replace(/([A-Z])/g, '-$1').toLowerCase()}`);
+            if (element) element.textContent = value;
+        });
+    }
+
+    updateValidityBadge() {
+        const badge = document.getElementById('validityBadge') || document.querySelector('.validity-badge');
+        if (!badge) return;
+
+        const badgeConfig = {
+            'available': {
+                text: `Expires in ${this.formatTimeRemaining(this.testData.time_remaining)}`,
+                background: 'linear-gradient(135deg, #fed7d7 0%, #fbb6ce 100%)',
+                color: '#C53030'
+            },
+            'in_progress': {
+                text: `Time Left: ${this.formatTimeRemaining(this.testData.time_remaining)}`,
+                background: '#FED7D7',
+                color: '#C53030'
+            },
+            'completed': {
+                text: 'Completed',
+                background: '#C6F6D5',
+                color: '#2F855A'
+            }
+        };
+
+        const config = badgeConfig[this.testData.status];
+        if (config) {
+            badge.textContent = config.text;
+            badge.style.background = config.background;
+            badge.style.color = config.color;
+        }
+    }
+
+    updateStartButton() {
+        const button = document.getElementById('startButton') || document.querySelector('.start-button');
+        if (!button) return;
+
+        const buttonConfig = {
+            'available': {
+                text: 'Start',
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+            },
+            'in_progress': {
+                text: 'Continue',
+                background: 'linear-gradient(135deg, #ED8936 0%, #DD6B20 100%)'
+            },
+            'completed': {
+                text: 'View Results',
+                background: 'linear-gradient(135deg, #48BB78 0%, #38A169 100%)'
+            }
+        };
+
+        const config = buttonConfig[this.testData.status];
+        if (config) {
+            button.textContent = config.text;
+            button.style.background = config.background;
+            button.setAttribute('data-action', this.testData.button_action);
+            
+            // Remove any onclick handlers that might reference undefined functions
+            button.removeAttribute('onclick');
+        }
+    }
+
+    // Store original button state for reset
+    storeOriginalButtonState() {
+        const button = document.querySelector('.start-button') || document.getElementById('startButton');
+        if (button) {
+            this.originalButtonState = {
+                innerHTML: button.innerHTML,
+                textContent: button.textContent,
+                style: {
+                    background: button.style.background || '',
+                    transform: button.style.transform || '',
+                    boxShadow: button.style.boxShadow || ''
+                },
+                disabled: button.disabled
+            };
+        }
+    }
+
+    // Setup event handlers for page visibility and navigation
+    setupPageVisibilityHandlers() {
+        // Handle page visibility change
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                this.resetPageState();
+            }
+        });
+
+        // Handle pageshow event (back/forward navigation)
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                this.resetPageState();
+            }
+        });
+
+        // Handle focus event
+        window.addEventListener('focus', () => {
+            this.resetPageState();
+        });
+
+        // Handle popstate (back/forward navigation)
+        window.addEventListener('popstate', () => {
+            setTimeout(() => {
+                this.resetPageState();
+            }, 100);
+        });
+    }
+
+    // Reset page to initial state
+    resetPageState() {
+        console.log('Resetting page state...');
+        
+        this.removeAllDialogs();
+        this.resetButtonState();
+        this.isLoading = false; // Reset loading flag
+        
+        if (this.countdownInterval) {
+            clearInterval(this.countdownInterval);
+            this.countdownInterval = null;
+        }
+        
+        if (this.testData) {
+            this.setupCountdown();
+        }
+    }
+
+    // Remove all confirmation dialogs
+    removeAllDialogs() {
+        const overlays = document.querySelectorAll('.confirmation-overlay');
+        overlays.forEach(overlay => overlay.remove());
+        
+        const dynamicStyles = document.querySelectorAll('style[data-dynamic]');
+        dynamicStyles.forEach(style => style.remove());
+    }
+
+    // Reset button to original state
+    resetButtonState() {
+        const button = document.querySelector('.start-button') || document.getElementById('startButton');
+        if (button && this.originalButtonState) {
+            button.innerHTML = this.originalButtonState.innerHTML;
+            button.disabled = this.originalButtonState.disabled;
+            
+            Object.keys(this.originalButtonState.style).forEach(property => {
+                button.style[property] = this.originalButtonState.style[property];
+            });
+        }
+    }
+
+    // Bind button click events
+    bindEvents() {
+        const button = document.querySelector('.start-button') || document.getElementById('startButton');
+        
+        if (button) {
+            // Remove existing listeners and onclick attribute
+            const newButton = button.cloneNode(true);
+            button.parentNode.replaceChild(newButton, button);
+            
+            // Remove any onclick attribute that might reference undefined functions
+            newButton.removeAttribute('onclick');
+            
+            // Add new listener
+            newButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.handleButtonClick();
+            });
+        }
+    }
+
+    // Handle button click based on test status
+    handleButtonClick() {
+        if (this.isLoading || !this.testData) {
+            console.log('Button click ignored - loading or no test data');
+            return;
+        }
+
+        console.log('Button clicked, action:', this.testData.button_action);
+
+        switch (this.testData.button_action) {
+            case 'startTest':
+                this.showStartConfirmation();
+                break;
+            case 'continueTest':
+                this.showContinueConfirmation();
+                break;
+            case 'viewScore':
+                this.redirectToResults();
+                break;
+            default:
+                console.error('Unknown button action:', this.testData.button_action);
+        }
+    }
+
+    // Setup countdown timer
+    setupCountdown() {
+        if (this.testData.status === 'in_progress' && this.testData.time_remaining > 0) {
+            this.startTestCountdown(this.testData.time_remaining);
+        } else if (this.testData.status === 'available' && this.testData.time_remaining > 0) {
+            this.startExpiryCountdown(this.testData.time_remaining);
+        }
+    }
+
+    // Start test countdown (for in-progress tests)
+    startTestCountdown(timeInSeconds) {
+        let remainingTime = Math.floor(timeInSeconds);
+        
+        const updateCountdown = () => {
+            if (remainingTime <= 0) {
+                clearInterval(this.countdownInterval);
+                this.handleTestExpiry();
+                return;
+            }
+
+            const timeElement = document.querySelector('.time-remaining') || 
+                              document.querySelector('.validity-badge');
+            
+            if (timeElement) {
+                timeElement.textContent = `Time Left: ${this.formatTimeRemaining(remainingTime)}`;
+            }
+            
+            remainingTime--;
+        };
+
+        updateCountdown();
+        this.countdownInterval = setInterval(updateCountdown, 1000);
+    }
+
+    // Start expiry countdown (for available tests)
+    startExpiryCountdown(timeInSeconds) {
+        let remainingTime = Math.floor(timeInSeconds);
+        
+        const updateExpiry = () => {
+            if (remainingTime <= 0) {
+                clearInterval(this.countdownInterval);
+                this.fetchMockTestData(); // Refresh data
+                return;
+            }
+
+            const expiryElement = document.querySelector('.validity-badge');
+            if (expiryElement && this.testData.status === 'available') {
+                expiryElement.textContent = `Expires in ${this.formatTimeRemaining(remainingTime)}`;
+            }
+            
+            remainingTime -= 60; // Decrease by 1 minute
+        };
+
+        updateExpiry();
+        this.countdownInterval = setInterval(updateExpiry, 60000); // Update every minute
+    }
+
+    // Format time remaining
+    formatTimeRemaining(seconds) {
+        if (!seconds || seconds <= 0) return '0m';
+        
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        
+        if (hours > 0) {
+            return `${hours}h ${minutes}m`;
+        } else {
+            return `${minutes}m`;
+        }
+    }
+
+    // Handle test expiry
+    handleTestExpiry() {
+        alert('Test time has expired! The page will refresh.');
+        this.fetchMockTestData(); // Refresh to get updated status
+    }
+
+    // Show start confirmation dialog
+    // Show start confirmation dialog
+    showStartConfirmation() {
+        this.showButtonLoadingState();
+        
+        setTimeout(() => {
+            this.createConfirmationDialog({
+                title: this.testData.test.title,
+                testInfo: {
+                    totalQuestions: this.testData.test.total_mcqs,
+                    duration: this.testData.test.duration
+                },
+                instructions: [
+                    'The exam will automatically end when the time limit is reached.',
+                    'You can continue the mock test at any time within the exam duration after you start.',
+                    'Use the "Next" button to move to the next question.',
+                    'Use the "Previous" button to go back to previous questions.',
+                    'Click on "Q" in the corner to access the question palette for quick navigation.',
+                    'Ensure you have a stable internet connection throughout the test.'
+                ],
+                confirmText: 'Start Test',
+                cancelText: 'Cancel',
+                confirmAction: () => this.startTest(),
+                onCancel: () => this.hideButtonLoadingState()
+            });
+        }, 1000);
+    }
+    
+    // Show continue confirmation dialog
+    showContinueConfirmation() {
+        this.showButtonLoadingState();
+        
+        setTimeout(() => {
+            const currentQ = this.testData.current_question || 1;
+            const totalQ = this.testData.total_questions || this.testData.test.total_mcqs;
+            
+            this.createConfirmationDialog({
+                title: this.testData.test.title,
+                testInfo: {
+                    totalQuestions: totalQ,
+                    duration: this.formatTimeRemaining(this.testData.time_remaining),
+                    currentProgress: `Question ${currentQ} of ${totalQ}`
+                },
+                instructions: [
+                    'Continue from where you left off.',
+                    'The exam will automatically end when the remaining time expires.',
+                    'Use the "Next" button to move to the next question.',
+                    'Use the "Previous" button to go back to previous questions.',
+                    'Click on "Q" in the corner to access the question palette for quick navigation.',
+                    'Ensure you have a stable internet connection throughout the test.'
+                ],
+                confirmText: 'Continue Test',
+                cancelText: 'Cancel',
+                confirmAction: () => this.continueTest(),
+                onCancel: () => this.hideButtonLoadingState()
+            });
+        }, 1000);
+    }
+    
+    // Create professional confirmation dialog
+    createConfirmationDialog(config) {
+        // Remove any existing modal
+        const existingModal = document.querySelector('.confirmation-modal');
+        if (existingModal) {
+            existingModal.remove();
+        }
+    
+        // Create modal HTML
+        const modal = document.createElement('div');
+        modal.className = 'confirmation-modal';
+        
+        const testInfoHTML = config.testInfo.currentProgress 
+            ? `<div class="test-info">
+                 <p><strong>Progress:</strong> ${config.testInfo.currentProgress}</p>
+                 <p><strong>Total Questions:</strong> ${config.testInfo.totalQuestions}</p>
+                 <p><strong>Time Remaining:</strong> ${config.testInfo.duration}</p>
+               </div>`
+            : `<div class="test-info">
+                 <p><strong>Total Questions:</strong> ${config.testInfo.totalQuestions}</p>
+                 <p><strong>Duration:</strong> ${config.testInfo.duration} minutes</p>
+               </div>`;
+    
+        const instructionsHTML = config.instructions.map((instruction, index) => 
+            `<li>${instruction}</li>`
+        ).join('');
+    
+        modal.innerHTML = `
+            <div class="modal-overlay">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">${config.title}</h2>
+                    </div>
+                    
+                    <div class="modal-body">
+                        ${testInfoHTML}
+                        
+                        <div class="instructions-section">
+                            <h3>Instructions:</h3>
+                            <ol class="instructions-list">
+                                ${instructionsHTML}
+                            </ol>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-cancel" onclick="this.cancelAction()">
+                            ${config.cancelText}
+                        </button>
+                        <button type="button" class="btn btn-confirm" onclick="this.confirmAction()">
+                            <span class="btn-text">${config.confirmText}</span>
+                            <div class="btn-loading" style="display: none;">
+                                <div class="loading-dots">
+                                    <div class="dot"></div>
+                                    <div class="dot"></div>
+                                    <div class="dot"></div>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    
+        // Add cancel action to button
+        const cancelBtn = modal.querySelector('.btn-cancel');
+        cancelBtn.cancelAction = () => {
+            modal.remove();
+            if (config.onCancel) {
+                config.onCancel();
+            }
+        };
+    
+        // Add confirm action to button
+        const confirmBtn = modal.querySelector('.btn-confirm');
+        confirmBtn.confirmAction = () => {
+            // Show loading state
+            const btnText = confirmBtn.querySelector('.btn-text');
+            const btnLoading = confirmBtn.querySelector('.btn-loading');
+            
+            btnText.style.display = 'none';
+            btnLoading.style.display = 'flex';
+            confirmBtn.disabled = true;
+            confirmBtn.style.opacity = '0.8';
+            
+            // Execute action after showing loading
+            setTimeout(() => {
+                modal.remove();
+                config.confirmAction();
+            }, 500);
+        };
+    
+        // Handle modal close
+        const closeModal = () => {
+            modal.remove();
+            if (config.onCancel) {
+                config.onCancel();
+            }
+        };
+    
+        // Add modal to page
+        this.addModalStyles();
+        document.body.appendChild(modal);
+    
+        // Close on overlay click
+        modal.querySelector('.modal-overlay').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeModal();
+            }
+        });
+    
+        // Close on escape key
+        const escapeHandler = (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+                document.removeEventListener('keydown', escapeHandler);
+            }
+        };
+        document.addEventListener('keydown', escapeHandler);
+    }
+    
+    // Add modal styles (separated for better organization)
+    addModalStyles() {
+        // Check if styles already exist
+        if (document.querySelector('#modal-styles')) return;
+        
+        const styles = document.createElement('style');
+    styles.id = 'modal-styles';
+    styles.textContent = `
+        .confirmation-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1000;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 100%;
+            max-height: calc(100vh - 20px);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .modal-header {
+            padding: 20px 20px 12px;
+            border-bottom: 1px solid #e5e7eb;
+            flex-shrink: 0;
+        }
+        
+        .modal-title {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+            color: #1f2937;
+            line-height: 1.3;
+        }
+        
+        .modal-body {
+            padding: 16px 20px;
+            overflow-y: auto;
+            flex: 1;
+            min-height: 0;
+        }
+        
+        .test-info {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .test-info p {
+            margin: 0 0 6px 0;
+            font-size: 13px;
+            color: #374151;
+        }
+        
+        .test-info p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .test-info strong {
+            color: #1f2937;
+            font-weight: 600;
+        }
+        
+        .instructions-section h3 {
+            margin: 0 0 10px 0;
+            font-size: 15px;
+            font-weight: 600;
+            color: #1f2937;
+        }
+        
+        .instructions-list {
+            margin: 0;
+            padding-left: 24px;
+            color: #374151;
+        }
+        
+        .instructions-list li {
+            margin-bottom: 6px;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        
+        .instructions-list li:last-child {
+            margin-bottom: 0;
+        }
+        
+        .modal-footer {
+            padding: 12px 20px 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            border-top: 1px solid #e5e7eb;
+            flex-shrink: 0;
+        }
+        
+        .btn {
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border: 1px solid;
+            transition: all 0.2s ease;
+            min-width: 90px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn:disabled {
+            cursor: not-allowed;
+        }
+        
+        .btn-cancel {
+            background: white;
+            color: #6b7280;
+            border-color: #d1d5db;
+        }
+        
+        .btn-cancel:hover:not(:disabled) {
+            background: #f9fafb;
+            border-color: #9ca3af;
+        }
+        
+        .btn-confirm {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        .btn-confirm:hover:not(:disabled) {
+            background: #2563eb;
+            border-color: #2563eb;
+        }
+        
+        .btn-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .loading-dots {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .loading-dots .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: dotPulse 1.4s ease-in-out infinite both;
+        }
+        
+        .loading-dots .dot:nth-child(1) { animation-delay: -0.32s; }
+        .loading-dots .dot:nth-child(2) { animation-delay: -0.16s; }
+        .loading-dots .dot:nth-child(3) { animation-delay: 0s; }
+        
+        @keyframes dotPulse {
+            0%, 80%, 100% {
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .modal-overlay {
+                padding: 5px;
+            }
+            
+            .modal-content {
+                max-height: calc(100vh - 10px);
+            }
+            
+            .modal-header {
+                padding: 16px 16px 10px;
+            }
+            
+            .modal-title {
+                font-size: 16px;
+            }
+            
+            .modal-body {
+                padding: 12px 16px;
+            }
+            
+            .test-info {
+                padding: 10px;
+                margin-bottom: 12px;
+            }
+            
+            .instructions-section h3 {
+                font-size: 14px;
+                margin-bottom: 8px;
+            }
+            
+            .instructions-list {
+                padding-left: 24px;
+            }
+            
+            .instructions-list li {
+                font-size: 12px;
+                margin-bottom: 5px;
+            }
+            
+            .modal-footer {
+                padding: 10px 16px 16px;
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .btn {
+                width: 100%;
+                padding: 12px 18px;
+                min-width: unset;
+            }
+        }
+        
+        @media (max-height: 600px) {
+            .modal-overlay {
+                padding: 5px;
+            }
+            
+            .modal-content {
+                max-height: calc(100vh - 10px);
+            }
+            
+            .modal-header {
+                padding: 12px 20px 8px;
+            }
+            
+            .modal-body {
+                padding: 10px 20px;
+            }
+            
+            .test-info {
+                padding: 10px;
+                margin-bottom: 10px;
+            }
+            
+            .instructions-list li {
+                margin-bottom: 4px;
+            }
+            
+            .modal-footer {
+                padding: 8px 20px 12px;
+            }
+        }
+    `;
+        
+        document.head.appendChild(styles);
+    }
+
+        // Add CSS animations
+        
+    // Show loading state on button only (not entire card)
+    showButtonLoadingState() {
+        const button = document.querySelector('.start-button') || document.getElementById('startButton');
+        if (!button) return;
+        
+        this.isLoading = true;
+        
+        button.style.transform = 'scale(0.98)';
+        button.disabled = true;
+        
+        const originalText = button.textContent;
+        button.innerHTML = `
+            <span style="display: inline-flex; align-items: center; gap: 8px;">
+                <span class="loading-text1">Loading...</span>
+                
+            </span>
+        `;
+        
+        setTimeout(() => {
+            button.style.transform = '';
+        }, 150);
+    }
+    hideButtonLoadingState() {
+        const button = document.querySelector('.start-button') || document.getElementById('startButton');
+        if (!button) return;
+        
+        this.isLoading = false;
+        
+        // Reset button state
+        button.disabled = false;
+        button.style.transform = '';
+        button.style.opacity = '';
+        
+        // Restore original text
+        const originalText = button.dataset.originalText || 'Start';
+        button.textContent = originalText;
+        
+        // Clean up stored data
+        delete button.dataset.originalText;
+    }
+    
+    // Close dialog with animation and reset button state
+   
+
+    // Start test
+    startTest() {
+        this.showRedirectLoading('Initializing Test Environment...');
+        setTimeout(() => {
+            const url = `/mocktest/${this.testData.test.uid}/start/`;
+            window.location.href = url;
+        }, 2000);
+    }
+
+    // Continue test
+    continueTest() {
+        this.showRedirectLoading('Resuming Your Test...');
+        setTimeout(() => {
+            const url = `/mocktest/${this.testData.test.uid}/start/`;
+            window.location.href = url;
+        }, 2000);
+    }
+
+    // Redirect to results
+    redirectToResults() {
+        this.isLoading = true;
+        const url = `/mocktest/result/${this.testData.session.uid}/`;
+        window.location.href = url;
+    }
+
+    // Show redirect loading message
+    showRedirectLoading(message) {
+        const overlay = document.querySelector('.confirmation-overlay');
+        if (!overlay) return;
+        
+        const dialog = overlay.querySelector('.confirmation-dialog');
+        
+        dialog.innerHTML = `
+            <div style="padding: 2rem; text-align: center;">
+                <div style="font-size: 2rem; margin-bottom: 1rem; animation: spin 1s linear infinite;">⏳</div>
+                <h3 style="color: #2D3748; margin-bottom: 0.5rem;">${message}</h3>
+                <p style="color: #4A5568; font-size: 0.9rem;">Please wait while we prepare your test environment.</p>
+            </div>
+        `;
+    }
+
+    // Show different states for entire card loading
+    showLoadingState() {
+        const loadingEl = document.getElementById('loadingState');
+        const testContentEl = document.getElementById('testContent');
+        const noTestEl = document.getElementById('noTestState');
+        
+        if (loadingEl) loadingEl.style.display = 'flex';
+        if (testContentEl) testContentEl.style.display = 'none';
+        if (noTestEl) noTestEl.style.display = 'none';
+    }
+
+    showTestContent() {
+        const loadingEl = document.getElementById('loadingState');
+        const testContentEl = document.getElementById('testContent');
+        const noTestEl = document.getElementById('noTestState');
+        
+        if (loadingEl) loadingEl.style.display = 'none';
+        if (testContentEl) {
+            testContentEl.style.display = 'flex';
+            testContentEl.classList.add('show');
+        }
+        if (noTestEl) noTestEl.style.display = 'none';
+        
+        this.isLoading = false; // Reset loading flag when content is shown
+    }
+
+    showNoTestState() {
+        const loadingEl = document.getElementById('loadingState');
+        const testContentEl = document.getElementById('testContent');
+        const noTestEl = document.getElementById('noTestState');
+        const testcard = document.getElementById('testCard');
+        if (loadingEl) loadingEl.style.display = 'none';
+        if (testContentEl) testContentEl.style.display = 'none';
+        testcard.style.display = 'none';
+        
+        
+        this.isLoading = false; // Reset loading flag
+    }
+
+    showErrorState(errorMessage) {
+        this.showNoTestState();
+        
+        const noTestIcon = document.querySelector('.no-test-icon');
+        const noTestTitle = document.querySelector('.no-test-title');
+        const noTestMessage = document.querySelector('.no-test-message');
+        
+        if (noTestIcon) noTestIcon.textContent = '⚠️';
+        if (noTestTitle) noTestTitle.textContent = 'Error Loading Test';
+        if (noTestMessage) {
+            noTestMessage.innerHTML = `Unable to load mock test data.<br>Error: ${errorMessage}<br>Please refresh the page or try again later.`;
+        }
+    }
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded, initializing MockTestManager');
+    window.mockTestManager = new MockTestManager();
+});
+
+// Cleanup on page unload
+window.addEventListener('beforeunload', () => {
+    if (window.mockTestManager?.countdownInterval) {
+        clearInterval(window.mockTestManager.countdownInterval);
+    }
+});
+// Download Mobile App Function
+function downloadMobileApp(button) {
+    const downloadUrl = button.getAttribute('data-url');
+    
+    if (!downloadUrl || downloadUrl === '#') {
+      alert('Download link not available. Please contact support.');
+      return;
+    }
+    
+    // Visual feedback
+    const originalContent = button.innerHTML;
+    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Downloading...</span>';
+    button.disabled = true;
+    
+    // Track download (optional - for analytics)
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'download', {
+        'event_category': 'Mobile App',
+        'event_label': 'Android APK Download'
+      });
+    }
+    
+    // Create download link
+    const link = document.createElement('a');
+    link.href = downloadUrl;
+    link.download = 'MCQwave.apk';
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    
+    // Clean up and restore button
+    setTimeout(() => {
+      document.body.removeChild(link);
+      button.innerHTML = originalContent;
+      button.disabled = false;
+    }, 2000);
+  }
+  
+</script>
+<script>
+
+        // Show Compact Modal
+        function showCompactModal() {
+            const modal = document.getElementById('compactModal');
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Hide Compact Modal
+        function hideCompactModal() {
+            const modal = document.getElementById('compactModal');
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Select Practice Type
+        function selectCompactPractice(type) {
+            if (type === 'curated') {
+                window.location.href = 'mcq/';
+            } else if (type === 'pyq') {
+                window.location.href = 'pyqs/';
+            }
+        }
+        
+        // Close modal when clicking overlay
+        document.getElementById('compactModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideCompactModal();
+            }
+        });
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                hideCompactModal();
+            }
+        });
+        </script>
+        <script>
+            // Auto-hide compact modal on page load/navigation
+            function resetCompactModalState() {
+                const compactModal = document.getElementById('compactModal');
+                if (compactModal && compactModal.classList.contains('show')) {
+                    compactModal.classList.remove('show');
+                    document.body.style.overflow = 'auto';
+                }
+            }
+            
+            // Handle various navigation scenarios
+            document.addEventListener('DOMContentLoaded', resetCompactModalState);
+            window.addEventListener('pageshow', resetCompactModalState);
+            window.addEventListener('focus', resetCompactModalState);
+            
+            // Handle visibility change (when user switches tabs and comes back)
+            document.addEventListener('visibilitychange', function() {
+                if (!document.hidden) {
+                    resetCompactModalState();
+                }
+            });
+            
+            // Handle popstate (back/forward navigation)
+            window.addEventListener('popstate', resetCompactModalState);
+            </script>
+            
+{% endblock %}
+
+{%block pp%}
+
+<li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">
+      
+        <i class="fas fa-user-circle profile-icon"></i>
+      
+      {{ user.user.username }}
+      
+    </a>
+    <div class="dropdown-content">
+        <a href="#">Settings</a>
+      <a href={% url 'logout' %}>Logout</a>
+    </div>
+  </li>
+
+
+{%endblock%} 

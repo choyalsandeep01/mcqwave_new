@@ -1,0 +1,2701 @@
+UID: cae3a0c9-b6c6-4b1d-ad22-c67c6c5c4adc
+Question: Which of the following is NOT a part of the normal mechanisms of labor?
+1. Engagement
+2. Flexion
+3. Extension
+4. Rupture of membranes
+Correct Option: Rupture of membranes
+Explanation: The mechanisms of labor include engagement, descent, flexion, internal rotation, extension, restitution, and expulsion. Rupture of membranes is a labor event but not one of the cardinal mechanisms.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 948c3d3d-7798-4518-81ae-f533b8a61419
+Question: Which stage of labor begins with the full dilation of the cervix and ends with the delivery of the baby?
+1. First stage
+2. Second stage
+3. Third stage
+4. Fourth stage
+Correct Option: Second stage
+Explanation: The second stage of labor starts with full cervical dilation and ends with the delivery of the fetus.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 76695f7d-1e66-4d60-9f78-5ef8341f5361
+Question: Which of the following is the correct definition of engagement in labor?
+1. The descent of the presenting part
+2. The widest diameter of the fetal head enters the pelvic inlet
+3. The rotation of the fetal head
+4. The delivery of the placenta
+Correct Option: The widest diameter of the fetal head enters the pelvic inlet
+Explanation: Engagement occurs when the largest transverse diameter of the fetal head enters the pelvic inlet.[Backmann Nad Lings Obstetrics And Gynecology]
+python bakmann.py "Gynecology"
+--------------------------------------------------
+UID: 2f9289a3-c2fd-4162-b23a-8f2b6f96afc6
+Question: What is the normal duration of the second stage of labor in a primigravida?
+1. 1-2 hours
+2. 2-3 hours
+3. 4-5 hours
+4. More than 5 hours
+Correct Option: 1-2 hours
+Explanation: In primigravida women, the second stage usually lasts 1 to 2 hours, though this can vary depending on many factors.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 4caab493-3d1e-4aed-a072-3615eaef7eb7
+Question: Which hormone plays the most significant role in the initiation of labor?
+1. Estrogen
+2. Progesterone
+3. Oxytocin
+4. Prolactin
+Correct Option: Oxytocin
+Explanation: Oxytocin stimulates uterine contractions and plays a key role in the initiation and progression of labor.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 5aeba907-a22f-4ee9-9c19-5c328e030453
+Question: The third stage of labor is managed actively by all except:
+1. Administration of uterotonic drugs
+2. Controlled cord traction
+3. Uterine massage
+4. Manual removal of placenta
+Correct Option: Manual removal of placenta
+Explanation: Active management includes administration of uterotonics, controlled cord traction, and uterine massage. Manual removal is indicated only in cases of retained placenta.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: e5cc78b6-98f3-4429-9478-801e14f8a168
+Question: What is the normal duration of the third stage of labor?
+1. 5-10 minutes
+2. 10-20 minutes
+3. 20-30 minutes
+4. More than 30 minutes
+Correct Option: 10-20 minutes
+Explanation: The third stage normally lasts about 10-20 minutes, during which the placenta is delivered.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: e74e1af5-652e-4f4c-8c54-1f930a13beeb
+Question: Which fetal presentation is associated with the longest labor?
+1. Cephalic
+2. Breech
+3. Transverse
+4. Occiput posterior
+Correct Option: Occiput posterior
+Explanation: The occiput posterior position can lead to longer and more painful labor due to difficulties in rotating the fetal head.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 3227bb78-865a-45b0-a2a3-a3d2a884b5da
+Question: Which of the following interventions is recommended in a woman experiencing uterine atony during the third stage of labor?
+1. Delayed cord clamping
+2. IV administration of oxytocin
+3. Amniotomy
+4. Use of forceps
+Correct Option: IV administration of oxytocin
+Explanation: Uterine atony is the most common cause of postpartum hemorrhage. IV oxytocin is given to stimulate uterine contractions.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 5661f7e1-edb0-447f-8bef-410535b10b58
+Question: What is the most common cause of prolonged second stage of labor?
+1. Fetal distress
+2. Cephalopelvic disproportion
+3. Breech presentation
+4. Premature rupture of membranes
+Correct Option: Cephalopelvic disproportion
+Explanation: Cephalopelvic disproportion is the most common cause of prolonged second stage as it prevents the fetal head from descending effectively.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: b6461517-b7cd-414c-b985-729af00c4a48
+Question: Which maneuver is most appropriate to manage shoulder dystocia in the second stage of labor?
+1. McRoberts maneuver
+2. Rubin's maneuver
+3. Symphysiotomy
+4. Zavanelli maneuver
+Correct Option: McRoberts maneuver
+Explanation: McRoberts maneuver involves hyperflexion of the mother's legs to her abdomen, which helps to increase the size of the pelvis and relieve shoulder dystocia.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 21293314-7bb9-4eb7-93fc-9833079cec9d
+Question: Which of the following conditions is NOT a contraindication to vaginal delivery?
+1. Complete placenta previa
+2. Transverse lie
+3. Prolapsed umbilical cord
+4. Occiput anterior presentation
+Correct Option: Occiput anterior presentation
+Explanation: Occiput anterior is the optimal fetal position for vaginal delivery, whereas the other conditions usually require a cesarean section.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: a6b94a50-2dbc-4ddd-97ea-6c880930a462
+Question: What is the most important step in preventing postpartum hemorrhage during the third stage of labor?
+1. Administration of uterotonic drugs
+2. Delayed cord clamping
+3. Uterine massage
+4. Delivery of the placenta by traction
+Correct Option: Administration of uterotonic drugs
+Explanation: Administering uterotonic drugs such as oxytocin immediately after delivery of the baby reduces the risk of postpartum hemorrhage.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 79ee529d-c6ab-4f7e-84b2-cdb42e32236d
+Question: Which is the most common cause of non-reassuring fetal heart rate during the first stage of labor?
+1. Uteroplacental insufficiency
+2. Cord prolapse
+3. Fetal arrhythmia
+4. Amniotic fluid embolism
+Correct Option: Uteroplacental insufficiency
+Explanation: Uteroplacental insufficiency is the most common cause of non-reassuring fetal heart rate patterns, which can lead to fetal hypoxia.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 51cc65ef-0f09-4908-a650-40a0c4ac1840
+Question: Which is the most effective treatment for uterine inversion during the third stage of labor?
+1. Uterine massage
+2. Immediate manual repositioning
+3. IV oxytocin
+4. Cesarean section
+Correct Option: Immediate manual repositioning
+Explanation: Immediate manual repositioning is the most effective treatment to restore the uterus to its normal position and control hemorrhage.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 81593a06-31d1-4253-849c-5a43fa45072a
+Question: A 25-year-old primigravida at 40 weeks of gestation is in labor for the past 8 hours. On examination, the cervix is fully dilated, but the baby’s head is at station +1, in the occiput posterior position. What is the most appropriate next step in managing this labor?
+1. Immediate cesarean section
+2. Vacuum-assisted vaginal delivery
+3. Watchful waiting and allow labor to progress naturally, unless there are signs of maternal or fetal distress
+4. Episiotomy and forceps delivery
+Correct Option: Watchful waiting and allow labor to progress naturally, unless there are signs of maternal or fetal distress.
+Explanation: In the absence of maternal or fetal distress, expectant management is preferred. Occiput posterior position can prolong labor, but many cases resolve spontaneously. Interventions such as forceps or vacuum-assisted delivery are only indicated if there is evidence of prolonged second stage or fetal distress.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 9d78e7ef-b2f9-4092-9726-0c1312cf8800
+Question: A 30-year-old woman, G2P1, in labor for 6 hours, has uterine contractions every 2 minutes, but no cervical dilation in the past 3 hours. On examination, the fetal head is not engaged. What is the most likely diagnosis?
+1. Uterine atony
+2. Cephalopelvic disproportion
+3. Prolonged latent phase of labor
+4. Preterm labor
+Correct Option: Cephalopelvic disproportion
+Explanation: Cephalopelvic disproportion (CPD)occurs when the fetal head is too large to pass through the maternal pelvis. The lack of engagement despite strong contractions suggests CPD. Management involves considering cesarean delivery if labor does not progress.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: dbc22719-ae94-452b-a70d-8fc269de4d6f
+Question: A 28-year-old woman in labor is experiencing severe bleeding after the delivery of the placenta. The uterus is soft and boggy on palpation. What is the most likely cause and initial management?
+1. Uterine atony; administer IV oxytocin and perform uterine massage
+2. Retained placental fragments; perform manual extraction
+3. Uterine rupture; perform immediate laparotomy
+4. Cervical tear; perform immediate suturing
+Correct Option: Uterine atony; administer IV oxytocin and perform uterine massage.
+Explanation: Uterine atony is the most common cause of postpartum hemorrhage (PPH). Management includes uterine massage and administration of uterotonics such as oxytocin. If bleeding persists, additional interventions like methylergonovine or carboprost may be required.
+--------------------------------------------------
+UID: bcba0269-aab6-443e-8122-f8e63b53a5a0
+Question: A 35-year-old woman at term presents with rupture of membranes but no contractions for the past 24 hours. Fetal heart rate is normal. What is the appropriate management?
+1. Expectant management for spontaneous labor onset
+2. Immediate cesarean section
+3. Induction of labor with oxytocin to reduce the risk of infection
+4. Administer antibiotics and delay labor induction for 48 hours
+Correct Option: Induction of labor with oxytocin to reduce the risk of infection.
+Explanation: Prolonged rupture of membranes (>24 hours) increases the risk of intra-amniotic infection (chorioamnionitis). If labor has not started spontaneously, induction with oxytocin is recommended to reduce the risk of infection while monitoring maternal and fetal well-being.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: b15c6a94-5b02-49ce-9578-25255b4fa3fd
+Question: A 32-year-old G3P2 woman in the second stage of labor shows signs of shoulder dystocia. The fetal head has delivered, but the shoulders are stuck. What maneuver should be performed first?
+1. Zavanelli maneuver
+2. McRoberts maneuver
+3. Fundal pressure
+4. Episiotomy
+Correct Option: McRoberts maneuver
+Explanation: The McRoberts maneuver, which involves flexing the mother’s thighs toward her abdomen, helps widen the pelvis and facilitate shoulder delivery. It is the first-line intervention for shoulder dystocia. Fundal pressure is contraindicated as it may worsen the impaction.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 1fc775f6-223a-418d-be72-1dc4757fcd15
+Question: What is the most common cause of prolonged labor in the first stage?
+1. Cephalopelvic disproportion
+2. Premature rupture of membranes
+3. Fetal distress
+4. Uterine atony
+Correct Option: Cephalopelvic disproportion
+Explanation: Cephalopelvic disproportion, where the baby's head is too large to pass through the mother’s pelvis, is a common cause of prolonged labor.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 10dfad16-ce69-4fec-ad5e-c9fbda668bf3
+Question: What is the most common sign that the first stage of labor has begun?
+1. Regular uterine contractions
+2. Rupture of membranes
+3. Full cervical dilation
+4. Expulsion of mucus plug
+Correct Option: Regular uterine contractions
+Explanation: The onset of labor is marked by regular uterine contractions that cause cervical dilation and effacement.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 12e4c30a-7da4-46c9-8d54-027c9dffa664
+Question: The latent phase of the first stage of labor typically ends when the cervix is dilated to:
+1. 3 cm
+2. 4 cm
+3. 6 cm
+4. 10 cm
+Correct Option: 4 cm
+Explanation: The latent phase of labor ends when the cervix is dilated to 4 cm, after which the active phase begins.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 9a8c82b9-a3db-403b-ace7-783e51091e2a
+Question: Which of the following describes the primary role of uterine contractions during the first stage of labor?
+1. Descent of the fetus
+2. Dilation and effacement of the cervix
+3. Expulsion of the placenta
+4. Rupture of membranes
+Correct Option: Dilation and effacement of the cervix
+Explanation: In the first stage of labor, contractions primarily work to thin and open the cervix for delivery.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 92d25f6a-c5af-4aff-a132-3b9a1ee6eb60
+Question: How is the first stage of labor divided?
+1. Active and latent phases
+2. Early and late phases
+3. First and second phases
+4. Prolonged and short phases
+Correct Option: Active and latent phases
+Explanation: The first stage of labor is divided into the latent phase (slow cervical dilation up to 4 cm) and the active phase (rapid dilation from 4 cm onward).[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: bd96f7e3-2346-46de-aa0d-ccc1295bef44
+Question: What is the primary purpose of the partograph used in the first stage of labor?
+1. Monitor fetal well-being
+2. Chart maternal vital signs
+3. Track the progress of labor
+4. Record medication administration
+Correct Option: Track the progress of labor
+Explanation: The partograph is used to monitor labor progress, particularly cervical dilation and descent of the fetal head.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 5549c5a0-3087-436f-ad19-ae02d4cd8f14
+Question: Which of the following findings is typical during the active phase of the first stage of labor?
+1. Cervical dilation of 1-2 cm per hour
+2. Cervical effacement of 25%
+3. Station -1
+4. Rupture of membranes
+Correct Option: Cervical dilation of 1-2 cm per hour
+Explanation: In the active phase of the first stage of labor, cervical dilation progresses more rapidly, often 1-2 cm per hour.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 46d1004c-c524-42af-a145-3646415da6f2
+Question: Which hormone plays a central role in coordinating uterine contractions during labor?
+1. Estrogen
+2. Progesterone
+3. Oxytocin
+4. Prolactin
+Correct Option: Oxytocin
+Explanation: Oxytocin stimulates uterine contractions and is crucial for the progress of labor.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 4079f2dd-f4a5-48b8-9361-db236ab6ad76
+Question: The active phase of the first stage of labor typically begins at a cervical dilation of:
+1. 2 cm
+2. 4 cm
+3. 6 cm
+4. 8 cm
+Correct Option: 4 cm
+Explanation: The active phase starts when cervical dilation reaches 4 cm, with contractions becoming more intense and frequent.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: f4670596-d175-42c4-b2db-0ab867d0d9e2
+Question: What is the usual frequency of contractions during the active phase of labor?
+1. Every 10-15 minutes
+2. Every 8-10 minutes
+3. Every 3-5 minutes
+4. Every 1-2 minutes
+Correct Option: Every 3-5 minutes
+Explanation: During the active phase of labor, contractions occur every 3-5 minutes and last for 45-60 seconds.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: c761c1d4-4c9d-4cdf-82f0-7c5bb8d1433c
+Question: The cervical dilation expected during the first stage of labor in a multiparous woman compared to a nulliparous woman is:
+1. Slower in multiparous
+2. Faster in multiparous
+3. Same in both
+4. Cannot be predicted
+Correct Option: Faster in multiparous
+Explanation: Cervical dilation tends to progress faster in multiparous women due to previous labor experience.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: c45a8d2d-bcd1-4863-876c-b1cc885c344f
+Question: What is the duration of the latent phase in the first stage of labor typically considered abnormal?
+1. More than 6 hours
+2. More than 8 hours
+3. More than 12 hours
+4. More than 20 hours
+Correct Option: More than 20 hours
+Explanation: A latent phase lasting more than 20 hours in nulliparous women and more than 14 hours in multiparous women is considered prolonged.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: b24df703-5340-412e-b5dd-039ca0ce5482
+Question: What is the most important intervention for a woman in the first stage of labor who is experiencing fetal heart rate decelerations?
+1. Increase IV fluids
+2. Administer oxytocin
+3. Reposition the mother
+4. Immediate cesarean section
+Correct Option: Reposition the mother
+Explanation: Repositioning the mother to relieve cord compression or improve placental perfusion is often the first step in managing fetal heart rate decelerations.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: b8f02536-63b3-49d7-915b-d7f0f05e03fc
+Question: During the first stage of labor, which of the following findings on a vaginal exam indicates impending transition to the second stage?
+1. Cervical dilation of 8 cm
+2. Complete cervical effacement
+3. Presenting part at +1 station
+4. Cervical dilation of 10 cm
+Correct Option: Cervical dilation of 10 cm
+Explanation: Full cervical dilation (10 cm) signals the end of the first stage and transition to the second stage.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 2e021e14-44ff-473e-9b73-d06d4c49c146
+Question: What is the expected rate of cervical dilation during the active phase of labor in nulliparous women?
+1. 0.5 cm per hour
+2. 1 cm per hour
+3. 5 cm per hour
+4. 2 cm per hour
+Correct Option: 1 cm per hour
+Explanation: In nulliparous women, the expected rate of cervical dilation during the active phase is about 1 cm per hour.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: c1e6082a-8375-4381-8e76-e470a9e0c6c8
+Question: Which of the following is a primary cause of obstructed labor?
+1. Cephalopelvic disproportion
+2. Premature rupture of membranes
+3. Hypertonic uterine contractions
+4. Maternal hypertension
+Correct Option: Cephalopelvic disproportion
+Explanation: Cephalopelvic disproportion (CPD), where the fetal head is too large to pass through the maternal pelvis, is the most common cause of obstructed labor.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: a5a8aabc-2326-4321-ad39-866de3f2f021
+Question: Which of the following is a clinical feature of obstructed labor?
+1. Rapid labor progress
+2. Bandl’s ring
+3. Soft and relaxed uterus
+4. Normal fetal heart rate
+Correct Option: Bandl’s ring
+Explanation: Bandl’s ring is a pathological retraction ring that forms during prolonged or obstructed labor, indicating severe uterine strain.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: e43c0876-7b06-4020-9bd9-57b1c17a882d
+Question: In obstructed labor, what is the most common complication for the fetus?
+1. Shoulder dystocia
+2. Cord prolapse
+3. Fetal hypoxia
+4. Uterine inversion
+Correct Option: Fetal hypoxia
+Explanation: Prolonged labor can reduce placental perfusion, leading to fetal hypoxia.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 98f4a70b-fb66-4135-83fa-b597176ae23b
+Question: Which of the following signs would suggest uterine rupture in obstructed labor?
+1. Abdominal pain relieved by analgesics
+2. Disappearance of contractions
+3. Fetal bradycardia
+4. Soft, non-tender abdomen
+Correct Option: Fetal bradycardia
+Explanation: Fetal bradycardia is a critical sign of uterine rupture, especially in obstructed labor. The sudden cessation of contractions and abdominal tenderness are also suggestive of rupture.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: d39565cf-4d94-4fcf-8a85-f9fd71847bd9
+Question: What is the best immediate management for confirmed obstructed labor?
+1. Administer oxytocin
+2. Forceps delivery
+3. Cesarean section
+4. Episiotomy
+Correct Option: Cesarean section
+Explanation: In obstructed labor, the primary intervention is cesarean section to prevent maternal and fetal complications.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 0370f004-76ab-4430-aa06-5b79225bb84c
+Question: Which maternal complication is least likely to occur due to obstructed labor?
+1. Vesicovaginal fistula
+2. Postpartum hemorrhage
+3. Uterine rupture
+4. Preterm labor
+Correct Option: Preterm labor
+Explanation: Preterm labor is not directly linked to obstructed labor, which typically happens at term when there is a mismatch between fetal size and pelvic capacity.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 4093261a-f682-472f-8278-ceb60610403c
+Question: Which diagnostic feature is commonly observed on ultrasound in obstructed labor?
+1. Head engaged in the pelvis
+2. Non-engaged head with excessive caput
+3. Posterior placenta previa
+4. Oligohydramnios
+Correct Option: Non-engaged head with excessive caput
+Explanation: A non-engaged head with excessive caput and molding indicates prolonged labor and obstruction.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: c53da3ac-eb6d-473f-b2ed-b9cd69b87fd8
+Question: What type of pelvis is most likely associated with cephalopelvic disproportion causing obstructed labor?
+1. Gynecoid
+2. Anthropoid
+3. Platypelloid
+4. Android
+Correct Option: Android
+Explanation: The android pelvis has a narrow pelvic inlet, often leading to cephalopelvic disproportion and obstructed labor.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 9c3269ca-8de8-4d34-b103-20446b3b1402
+Question: Obstructed labor in a multigravida with a previously normal delivery suggests:
+1. Cephalopelvic disproportion
+2. Fetal malpresentation
+3. Maternal fatigue
+4. Uterine atony
+Correct Option: Fetal malpresentation
+Explanation: A sudden occurrence of obstructed labor in a multigravida likely points to abnormal fetal presentation or position, such as occiput posterior or brow presentation.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: f5ffa37b-fc6e-4264-bdcb-14cf295db1ef
+Question: What is the typical pattern of uterine contractions in obstructed labor?
+1. Normal frequency and duration
+2. Hypotonic contractions
+3. Hypertonic contractions
+4. Absent contractions
+Correct Option: Hypertonic contractions
+Explanation: In obstructed labor, uterine contractions often become hypertonic, with strong but ineffective efforts to expel the fetus.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 145fc388-d3ec-4bbd-8b10-fcee5cb8a3ac
+Question: Which of the following is least likely to occur due to prolonged obstructed labor?
+1. Rectovaginal fistula
+2. Urinary incontinence
+3. Deep transverse arrest
+4. Abdominal compartment syndrome
+Correct Option: Abdominal compartment syndrome
+Explanation: While fistulas and urinary issues are common complications, abdominal compartment syndrome is not directly associated with obstructed labor.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: adb5a2be-34c2-450d-b860-bcb75575940f
+Question: What is the most appropriate management of Bandl’s ring in obstructed labor?
+1. Oxytocin infusion
+2. Manual rotation of the fetus
+3. Immediate cesarean section
+4. Operative vaginal delivery
+Correct Option: Immediate cesarean section
+Explanation: Bandl’s ring indicates impending uterine rupture, and immediate cesarean section is required.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: bf4b2fb3-0e2b-4fc6-bfa3-c9bcefcf102b
+Question: Which fetal malposition is most frequently associated with obstructed labor?
+1. Breech presentation
+2. Occiput posterior
+3. Occiput anterior
+4. Transverse lie
+Correct Option: Occiput posterior
+Explanation: Occiput posterior position often leads to prolonged and difficult labor, contributing to obstruction.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: d18ef99d-3c04-412a-a012-d3f5229be66d
+Question: Which of the following describes the pathophysiology of uterine rupture in obstructed labor?
+1. Fetal head descent
+2. Excessive pressure on the lower uterine segment
+3. Uterine relaxation due to hypoxia
+4. Cervical laceration
+Correct Option: Excessive pressure on the lower uterine segment
+Explanation: Prolonged obstructed labor places undue pressure on the lower uterine segment, eventually leading to rupture.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 2f2784b3-130e-47e5-94ad-f983fc65a561
+Question: What is the gold standard for diagnosing cephalopelvic disproportion in obstructed labor?
+1. MRI pelvis
+2. X-ray pelvimetry
+3. Clinical pelvimetry
+4. Ultrasound biometry
+Correct Option: X-ray pelvimetry
+Explanation: X-ray pelvimetry is the gold standard for diagnosing cephalopelvic disproportion, though clinical evaluation is often sufficient.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 48de5541-9c95-494d-80fe-84f3373b4f53
+Question: A 28-year-old primigravida is admitted in active labor. On the partograph, cervical dilation is plotted at 6 cm, with descent of the fetal head well above the ischial spines. The contractions are weak and irregular, occurring every 7–8 minutes. The patient reports increasing discomfort. What is the next best step in managing this labor?
+1. Augment labor with oxytocin
+2. Wait and watch
+3. Perform an immediate cesarean section
+4. Administer tocolytics to halt labor
+Correct Option: Augment labor with oxytocin
+Explanation: The partogram shows the patient in the active phase of labor with cervical dilation at 6 cm. However, weak and irregular contractions suggest inefficient labor. Augmenting labor with oxytocin can strengthen contractions and help progress labor. Immediate cesarean is not indicated unless there are signs of fetal distress or failure to progress after augmentation.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 33be0c0a-0ef3-4a01-a050-2ebf9dfe5fd9
+Question: A 30-year-old G2P1 woman has been in labor for 12 hours. Her partogram shows that she remains at 3 cm dilation, with contractions every 5 minutes. There are no signs of maternal or fetal distress. What does this scenario represent, and what is the appropriate management?
+1. Normal labor; continue monitoring
+2. Prolonged latent phase; administer oxytocin
+3. Prolonged active phase; proceed with cesarean section
+4. Cephalopelvic disproportion; perform cesarean section
+Correct Option: Prolonged latent phase; administer oxytocin
+Explanation: The latent phase of labor is expected to last up to 8 hours for primigravidas. In this case, the latent phase is prolonged (over 12 hours), and oxytocin should be administered to help progress labor. A cesarean is not necessary at this stage without further indications of cephalopelvic disproportion or failure to progress after oxytocin[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 4f1560d2-ec06-4998-bdfc-bd2507eb31a2
+Question: A partograph for a 32-year-old G3P2 woman shows that the fetal heart rate (FHR) has dropped to 90 bpm, with decelerations lasting more than 60 seconds. Cervical dilation is 8 cm, and the labor has progressed slowly. What is the next best step in managing this labor?
+1. Continue monitoring; FHR may recover
+2. Administer IV fluids and oxygen
+3. Perform an emergency cesarean section
+4. Perform instrumental delivery
+Correct Option: Perform an emergency cesarean section
+Explanation: Fetal bradycardia (FHR < 110 bpm) with prolonged decelerations is a sign of fetal distress. In the context of slow labor progress and fetal distress, an emergency cesarean section is indicated to prevent further fetal compromise. Administering fluids and oxygen may be considered as initial steps but will not resolve fetal distress in the long term.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 88c04eb4-17a0-4c77-8e7f-c119e9d44306
+Question: A 29-year-old G2P1 presents in active labor. Her partogram shows a slow rate of cervical dilation, remaining at 5 cm for the past four hours. Contractions are regular, occurring every 3 minutes. What should be the next step in the management of this patient?
+1. Continue to monitor the progress
+2. Augment labor with oxytocin
+3. Prepare for cesarean section
+4. Perform amniotomy
+Correct Option: Augment labor with oxytocin
+Explanation: In the active phase of labor, the expected rate of cervical dilation is at least 1 cm per hour. Since the patient has not progressed beyond 5 cm in four hours, labor is considered to be slow. Augmentation with oxytocin is the appropriate step to stimulate stronger contractions and promote progress.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: edc0688b-459c-403d-b4e5-b7ad7c655c83
+Question: A 25-year-old primigravida at 40 weeks of gestation is admitted to the labor ward with the onset of regular uterine contractions occurring every 5 minutes, each lasting about 30 seconds. On initial examination: Cervical dilation: 3 cm Cervical effacement: 50% Station: -2 Membranes: Intact Fetal heart rate: 140 beats per minute (normal) A partograph is initiated to monitor her labor progress. [Partograph description]: The partograph shows cervical dilation plotted at 3 cm. Over the next 4 hours, the cervical dilation progresses to 4 cm. The labor curve is approaching the alert line but has not crossed it. Uterine contractions remain regular but have not increased in frequency or intensity. Based on the partograph findings, what is the most appropriate next step in the management of this patient?
+1. Continue monitoring labor without intervention.
+2. Start oxytocin infusion to augment labor.
+3. Perform artificial rupture of membranes (amniotomy).
+4. Prepare for cesarean section due to prolonged labor.
+Correct Option: Continue monitoring labor without intervention.
+Explanation: In this case, the labor is in the latent phase. The cervix has dilated from 3 cm to 4 cm over 4 hours, which is acceptable progress in the latent phase for a primigravida. The partograph shows that the labor curve is approaching the alert line but has not crossed it, indicating that intervention is not yet necessary. Uterine contractions are regular, and both maternal and fetal conditions are stable..[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 0b597330-be22-40c2-8ccd-d071e69e10d5
+Question: A 28-year-old multiparous woman at 39 weeks gestation is admitted in active labor. Her initial examination reveals: Cervical dilation: 6 cm Cervical effacement: 100% Station: 0 Membranes: Ruptured with clear amniotic fluid Uterine contractions: Every 3 minutes, lasting 45 seconds Fetal heart rate: 145 beats per minute (normal) A partograph is commenced. [Partograph description]: The cervical dilation progresses from 6 cm to 8 cm over the next 2 hours. The labor curve is on the alert line. Suddenly, after 2 more hours, the cervical dilation remains at 8 cm. The labor curve has crossed the alert line towards the action line. Uterine contractions have become weaker and less frequent. What is the most appropriate management at this point?
+1. Administer intravenous fluids and observe.
+2. Augment labor with oxytocin infusion.
+3. Perform cesarean section for failure to progress.
+4. Allow more time for labor to progress naturally.
+Correct Option: Augment labor with oxytocin infusion.
+Explanation: The patient is experiencing a delay in the active phase of labor. The cervix has stalled at 8 cm for 2 hours, and the partograph shows the labor curve has crossed the alert line, indicating slow progress. Uterine contractions have become weaker, suggesting hypotonic uterine dysfunction..[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: b07a50b1-2325-4fd6-b536-820855368a3f
+Question: A 22-year-old primigravida at 41 weeks gestation is admitted with spontaneous onset of labor. On admission: Cervical dilation: 4 cm Effacement: 80% Station: -1 Membranes: Intact Uterine contractions: Every 4 minutes, lasting 40 seconds Fetal heart rate: 135 beats per minute (normal) A partograph is started. [Partograph description]: Over the next 6 hours, cervical dilation has progressed to only 5 cm. The labor curve has crossed the action line. Uterine contractions are strong and occurring every 3 minutes. Vaginal examination reveals molding and caput formation. No signs of cephalopelvic disproportion on pelvic assessment. What should be the next step in the management of this patient?
+1. Continue to monitor labor progress closely.
+2. Perform artificial rupture of membranes.
+3. Proceed to cesarean section due to labor dystocia.
+4. Increase oxytocin infusion rate.
+Correct Option: Proceed to cesarean section due to labor dystocia.
+Explanation: The patient is experiencing arrest of dilation in the active phase despite adequate uterine contractions. The partograph shows the labor curve has crossed the action line, indicating that labor is not progressing satisfactorily. Molding and caput formation suggest obstruction..[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: d754a365-d51b-4083-83bc-6b29b1d0c3b8
+Question: A 30-year-old woman, G2P1, at 40 weeks gestation, presents in active labor. Her previous delivery was a normal vaginal birth. On admission: Cervical dilation: 5 cm Effacement: 90% Station: 0 Membranes: Intact Uterine contractions: Every 2-3 minutes, lasting 50 seconds Fetal heart rate: 140 beats per minute (normal) A partograph is initiated. [Partograph description]: Over 3 hours, cervical dilation progresses to 7 cm. The labor curve remains to the left of the alert line. Suddenly, the patient reports severe abdominal pain between contractions. Uterine contractions become hypertonic and uncoordinated. Fetal heart rate drops to 90 beats per minute. The partograph shows no further cervical dilation. What is the most likely diagnosis, and what should be the immediate management?
+1. Uterine hyperstimulation; administer tocolytics.
+2. Placental abruption; perform emergency cesarean section.
+3. Uterine rupture; perform immediate laparotomy.
+4. Cord prolapse; perform vaginal examination to reposition the cord.
+Correct Option: Uterine rupture; perform immediate laparotomy.
+Explanation: The sudden severe abdominal pain, cessation of labor progress, hypertonic uterine contractions, and fetal bradycardia are classic signs of uterine rupture. Although she has no previous cesarean scar, rupture can occur in a multiparous uterus.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 152c213c-9c08-418f-ab7b-26ffb8df6cca
+Question: A 35-year-old primigravida at 42 weeks gestation presents with decreased fetal movements. She is admitted for induction of labor due to post-term pregnancy. On examination: Cervical dilation: 2 cm Bishop score: 6 Amniotic fluid index (AFI): 4 cm (oligohydramnios) Fetal heart rate: 130 beats per minute Labor is induced using prostaglandin E2 A partograph is started once labor begins. [Partograph description]: After 6 hours, cervical dilation is 4 cm. The labor curve is on the alert line. Uterine contractions are every 5 minutes, lasting 40 seconds. Fetal heart rate begins to show late decelerations. Meconium-stained amniotic fluid is observed. Considering the partograph findings and fetal status, what is the most appropriate management?
+1. Continue labor with close fetal monitoring.
+2. Perform amnioinfusion to dilute meconium.
+3. Augment labor with oxytocin.
+4. Proceed to emergency cesarean section.
+Correct Option: Proceed to emergency cesarean section.
+Explanation: The fetus is showing signs of distress (late decelerations and meconium-stained fluid), and the labor is slow (labor curve on the alert line). In a post-term pregnancy with oligohydramnios, the risk of fetal compromise is high.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: faac8c43-c1f1-4dcb-8d29-133e25ba4835
+Question: What is the typical ultrasound finding in twin reversed arterial perfusion (TRAP) sequence?
+1. Two viable fetuses
+2. One normal fetus and one acardiac twin
+3. Identical fetal growth
+4. Excessive amniotic fluid in both sacs
+Correct Option: One normal fetus and one acardiac twin
+Explanation: TRAP sequence involves a normal fetus and an acardiac twin that receives reversed blood flow through abnormal vascular connections.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 63c0737e-0036-45b2-bc41-6b9a23fd1580
+Question: Which of the following is a key indicator for determining fetal zygosity in twin pregnancies?
+1. Chorionicity
+2. Amnionicity
+3. Nuchal translucency
+4. Genetic testing
+Correct Option: Genetic testing
+Explanation: Zygosity in twins can only be definitively determined through genetic testing, as chorionicity and amnionicity may not always correlate with zygosity.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 3963e9a6-9ae0-41ee-99b6-09056f920ff2
+Question: What is the first-line investigation for confirming twin pregnancies?
+1. Serum beta-hCG
+2. MRI
+3. Ultrasound
+4. Doppler study
+Correct Option: Ultrasound
+Explanation: Ultrasound is the first-line investigation for confirming twin pregnancies, as it provides direct visualization of the fetuses and placentas.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 3c55a12f-c362-4979-b17e-6d5aa023f144
+Question: At what gestational age is the best time to determine chorionicity in twin pregnancies using ultrasound?
+1. 6-9 weeks
+2. 10-14 weeks
+3. 20-22 weeks
+4. 24-28 weeks
+Correct Option: 10-14 weeks
+Explanation: Chorionicity and amnionicity are best determined during the first trimester, especially between 10-14 weeks, when the dividing membranes are more visible.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 7f9363cf-197d-4690-8bc9-f7bd7dd2ced2
+Question: Which sign on ultrasound suggests a dichorionic twin pregnancy?
+1. Thin dividing membrane
+2. Single placenta
+3. Lambda sign
+4. No dividing membrane
+Correct Option: Lambda sign
+Explanation: The lambda or twin peak sign on ultrasound is indicative of a dichorionic twin pregnancy, where the placenta is split by a thick membrane.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: c1ff49f4-36b8-481f-9440-19c4ea7fddd1
+Question: Which investigation is most commonly used to assess for Twin-Twin Transfusion Syndrome (TTTS)?
+1. MRI
+2. Doppler ultrasound
+3. Non-stress test (NST)
+4. Amniocentesis
+Correct Option: Doppler ultrasound
+Explanation: Doppler ultrasound is the primary tool used to assess for Twin-Twin Transfusion Syndrome (TTTS), as it evaluates blood flow differences between the twins.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 1754899c-073d-4365-8002-29fef894995e
+Question: Which prenatal screening test is commonly recommended in twin pregnancies for chromosomal abnormalities?
+1. Amniocentesis
+2. Chorionic villus sampling
+3. Non-invasive prenatal testing (NIPT)
+4. Serum AFP
+Correct Option: Non-invasive prenatal testing (NIPT)
+Explanation: NIPT is often used for chromosomal screening in twin pregnancies, though its sensitivity is slightly lower compared to singleton pregnancies.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: ae30b0b2-72d3-40eb-81bb-308936880116
+Question: Which investigation is commonly used to monitor fetal growth discordance in twin pregnancies?
+1. MRI
+2. Ultrasound with Doppler studies
+3. Amniocentesis
+4. Serum hCG
+Correct Option: Ultrasound with Doppler studies
+Explanation: Ultrasound with Doppler studies is used to monitor fetal growth discordance in twin pregnancies and assess for conditions like selective intrauterine growth restriction (sIUGR).[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 15008b0f-b234-492e-8396-b16d27a454cb
+Question: In cases of twin-twin transfusion syndrome (TTTS), what findings would you expect on Doppler ultrasound?
+1. Increased blood flow in both twins
+2. Absent or reversed end-diastolic flow in the donor twin
+3. Reduced amniotic fluid in both sacs
+4. Polyhydramnios in the donor twin
+Correct Option: Absent or reversed end-diastolic flow in the donor twin
+Explanation: In TTTS, Doppler ultrasound may show absent or reversed end-diastolic flow in the donor twin, which indicates compromised blood flow.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 157a484c-3197-4cda-95f8-05e93e8e9faf
+Question: Which investigation is recommended for detecting fetal anomalies in the second trimester in twin pregnancies?
+1. Biophysical profile (BPP)
+2. Ultrasound anomaly scan
+3. Doppler ultrasound
+4. Amniocentesis
+Correct Option: Ultrasound anomaly scan
+Explanation: A detailed ultrasound anomaly scan in the second trimester is used to detect structural anomalies in both fetuses.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 13359bba-8042-4cdd-937d-4acfe63a2bb7
+Question: In monochorionic, diamniotic twin pregnancies, what is the role of serial ultrasounds?
+1. Monitor for twin-twin transfusion syndrome (TTTS)
+2. Assess fetal growth discordance
+3. Evaluate for selective intrauterine growth restriction (sIUGR)
+4. All of the above
+Correct Option: All of the above
+Explanation: Serial ultrasounds in monochorionic, diamniotic pregnancies are critical to monitor for TTTS, growth discordance, and sIUGR.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 0a669a6c-22b4-49db-8679-f9e1aeda0cf9
+Question: Which investigation is most useful for monitoring amniotic fluid levels in twin pregnancies?
+1. Doppler ultrasound
+2. Amniocentesis
+3. Biophysical profile (BPP)
+4. Nuchal translucency scan
+Correct Option: Biophysical profile (BPP)
+Explanation: BPP is a comprehensive assessment that includes measuring amniotic fluid levels, which is important in monitoring twin pregnancies.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 6f73dd68-89ad-49b7-9744-bf6d463196e5
+Question: What is the significance of discordant amniotic fluid levels in monochorionic twins?
+1. It indicates fetal well-being
+2. It is a normal finding
+3. It may suggest twin-twin transfusion syndrome (TTTS)
+4. It suggests polyhydramnios in both twins
+Correct Option: It may suggest twin-twin transfusion syndrome (TTTS)
+Explanation: Discordant amniotic fluid levels in monochorionic twins are a key indicator of TTTS, with one twin having oligohydramnios and the other polyhydramnios.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: eb97aa14-6fdb-4d8f-a61d-5afd55c1d41e
+Question: What is the recommended management for severe TTTS detected at 24 weeks gestation?
+1. Serial amnioreduction
+2. Immediate delivery
+3. Laser ablation of placental anastomoses
+4. Bed rest
+Correct Option: Laser ablation of placental anastomoses
+Explanation: Laser ablation of placental anastomoses is the treatment of choice for severe TTTS detected in the mid-trimester.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: b726caf9-403c-4add-906f-0a77212be080
+Question: Which of the following ultrasound features is suggestive of conjoined twins?
+1. Thick dividing membrane
+2. Single amniotic sac with one shared fetal structure
+3. Twin-peak sign
+4. Increased amniotic fluid in one sac
+Correct Option: Single amniotic sac with one shared fetal structure
+Explanation: Conjoined twins share certain fetal structures and are seen on ultrasound as having a single amniotic sac without a dividing membrane.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: cc102b06-f809-44f9-95c5-bc79a7b4b6f1
+Question: A 30-year-old woman with a monochorionic, diamniotic twin pregnancy at 24 weeks gestation is undergoing routine ultrasound. The Doppler study shows absent end-diastolic flow in the umbilical artery of one twin, and there is a significant discrepancy in the amniotic fluid volumes. What is the most likely diagnosis and appropriate next step in management?
+1. Twin-twin transfusion syndrome (TTTS); perform laser ablation
+2. Fetal growth restriction; increase surveillance
+3. Normal twin pregnancy; continue regular monitoring
+4. Twin reversed arterial perfusion sequence (TRAP); proceed to cesarean section
+Correct Option: Twin-twin transfusion syndrome (TTTS); perform laser ablation
+Explanation: The findings suggest severe TTTS, and laser ablation of placental anastomoses is the recommended treatment.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: da11fe53-ce80-4c3f-bd46-f5e90a40cf8a
+Question: A 28-year-old woman with a twin pregnancy presents at 32 weeks gestation with reduced fetal movements. Ultrasound reveals a growth discordance of 25% between the twins, with abnormal Doppler findings in the smaller twin. What is the most appropriate management?
+1. Immediate delivery
+2. Serial Doppler studies and close monitoring
+3. Amniocentesis for fetal lung maturity
+4. Bed rest and conservative management
+Correct Option: Serial Doppler studies and close monitoring
+Explanation: In cases of growth discordance, serial Doppler studies are essential to monitor for worsening fetal compromise, and close monitoring is indicated..[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 2e3838ff-0748-4d9f-8154-7261a8b9edb4
+Question: A 35-year-old woman with a dichorionic, diamniotic twin pregnancy at 20 weeks gestation undergoes a detailed anomaly scan. The scan reveals normal findings for both fetuses. What is the next step in the management of this pregnancy?
+1. Perform amniocentesis to confirm normalcy
+2. Continue routine antenatal care with serial ultrasounds
+3. Monitor with non-stress tests every week
+4. Consider fetal MRI to rule out hidden anomalies
+Correct Option: Continue routine antenatal care with serial ultrasounds
+Explanation: With a normal anomaly scan, routine antenatal care with serial ultrasounds for growth monitoring is recommended for twin pregnancies..[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 044cdc9b-2223-4f98-ad15-572d31c18810
+Question: A 26-year-old woman with a monochorionic, monoamniotic twin pregnancy at 28 weeks gestation is undergoing routine fetal surveillance. Doppler ultrasound shows normal flow patterns, and fetal growth is concordant. What is the next step in management?
+1. Continue expectant management with close monitoring
+2. Plan for immediate delivery
+3. Perform an amniocentesis to assess fetal lung maturity
+4. Administer corticosteroids and plan delivery at 32 weeks
+Correct Option: Continue expectant management with close monitoring
+Explanation: Monochorionic, monoamniotic pregnancies require close surveillance, but with normal growth and Doppler findings, expectant management is appropriate..[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 1bcef1cb-409c-4c0d-8bfd-60e01b8cf3e5
+Question: A 31-year-old woman with a twin pregnancy presents for her 34-week ultrasound. The scan shows that one twin has polyhydramnios, and the other twin has oligohydramnios. What is the most likely diagnosis, and what is the next step in management?
+1. Twin-twin transfusion syndrome (TTTS); perform amnioreduction
+2. Selective intrauterine growth restriction (sIUGR); administer corticosteroids
+3. Polyhydramnios in both twins; perform serial amnioreductions
+4. Normal finding in twin pregnancy; continue monitoring
+Correct Option: Twin-twin transfusion syndrome (TTTS); perform amnioreduction
+Explanation: The discrepancy in amniotic fluid volumes is indicative of TTTS, and therapeutic amnioreduction is a standard intervention in such cases..[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 9d7b5581-9d18-4a7b-ac10-a0f6264b56e2
+Question: Which is the most common type of twin pregnancy?
+1. Monochorionic monoamniotic twins
+2. Dichorionic diamniotic twins
+3. Monochorionic diamniotic twins
+4. Conjoined twins
+Correct Option: Dichorionic diamniotic twins
+Explanation: Dichorionic diamniotic twins are the most common type of twin pregnancy, especially in cases of dizygotic (fraternal) twins.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 8e240c6c-6bcc-4429-b227-04bdc84f5003
+Question: What type of twin pregnancy arises from a single fertilized egg that splits?
+1. Dizygotic twins
+2. Monochorionic monoamniotic twins
+3. Dichorionic diamniotic twins
+4. Monochorionic diamniotic twins
+Correct Option: Monochorionic diamniotic twins
+Explanation: Monozygotic twins arise from a single fertilized egg that splits. If the split occurs 4-8 days after fertilization, the twins share a placenta but have separate amniotic sacs, leading to a monochorionic diamniotic arrangement.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: aaefa7d0-edbf-4d61-b489-b5fbb9aada78
+Question: Which of the following is a characteristic of dichorionic twin pregnancies?
+1. Single placenta
+2. Two separate placentas
+3. Single amniotic sac
+4. Conjoined twins
+Correct Option: Two separate placentas
+Explanation: In dichorionic twin pregnancies, each twin has its own placenta, though the placentas may fuse, giving the appearance of one.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 8cbb8549-2447-4bf3-8cda-c401288c0b61
+Question: Which of the following twins share both the same placenta and amniotic sac?
+1. Monochorionic diamniotic twins
+2. Monochorionic monoamniotic twins
+3. Dichorionic monoamniotic twins
+4. Dizygotic twins
+Correct Option: Monochorionic monoamniotic twins
+Explanation: Monochorionic monoamniotic twins share both the placenta and the amniotic sac, a condition that carries a higher risk for complications like cord entanglement.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 8adeb4ae-eea4-45bf-b761-9b449bab13ff
+Question: Which type of twins is always dizygotic?
+1. Monochorionic diamniotic twins
+2. Dichorionic diamniotic twins
+3. Monochorionic monoamniotic twins
+4. Conjoined twins
+Correct Option: Dichorionic diamniotic twins
+Explanation: Dizygotic (fraternal) twins are always dichorionic diamniotic because they come from two separate eggs fertilized by two different sperm.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 4c33c923-3e0a-4187-b47a-dbe4c380e090
+Question: Which investigation is most useful in determining chorionicity in early pregnancy?
+1. Amniocentesis
+2. Ultrasound in the first trimester
+3. MRI
+4. Doppler study
+Correct Option: Ultrasound in the first trimester
+Explanation: Chorionicity is best determined in the first trimester through ultrasound, specifically by identifying the lambda sign for dichorionic twins or the T-sign for monochorionic twins.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 5c01b810-899e-47b1-944a-22411792bb4c
+Question: What is the key determinant of zygosity in twin pregnancies?
+1. Chorionicity
+2. Placental type
+3. Amniotic fluid volume
+4. Genetic testing
+Correct Option: Genetic testing
+Explanation: While chorionicity can give clues about zygosity, genetic testing is the definitive method for determining whether twins are monozygotic or dizygotic.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 6922d01b-f426-4315-bd76-67c5d75ad145
+Question: In a dichorionic twin pregnancy, the risk of twin-to-twin transfusion syndrome (TTTS) is:
+1. High
+2. Low
+3. Moderate
+4. Non-existent
+Correct Option: Low
+Explanation: TTTS occurs in monochorionic pregnancies because the twins share the same placenta, leading to unequal blood flow between the twins. This risk is low in dichorionic pregnancies as the twins have separate placentas.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 2f90d87c-db30-4cb9-9df8-db99701c248c
+Question: Which complication is most associated with monochorionic twin pregnancies?
+1. Twin-to-twin transfusion syndrome (TTTS)
+2. Gestational diabetes
+3. Intrauterine growth restriction
+4. Preeclampsia
+Correct Option: Twin-to-twin transfusion syndrome (TTTS)
+Explanation: TTTS is a serious complication seen in monochorionic twins due to shared blood vessels in the placenta, leading to unequal blood flow between the twins.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 73498cb4-367f-40a6-9cba-21fc23cdb68f
+Question: Monochorionic monoamniotic twin pregnancies are at high risk for all of the following except:
+1. Cord entanglement
+2. Preterm labor
+3. Twin-to-twin transfusion syndrome
+4. Fetal macrosomia
+Correct Option: Fetal macrosomia
+Explanation: Monochorionic monoamniotic twin pregnancies are at high risk for complications like cord entanglement, preterm labor, and TTTS, but fetal macrosomia is not a common complication in twin pregnancies.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: a171bc3b-51a0-49f5-a53b-9ae57e492ea4
+Question: Conjoined twins result from a failure of division of the embryonic disc after which time frame?
+1. 1-3 days
+2. 4-8 days
+3. 9-12 days
+4. 13-15 days
+Correct Option: 13-15 days
+Explanation: Conjoined twins occur when the division of the embryonic disc occurs after day 13, leading to incomplete separation.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: b51b6be0-2ef3-4080-9ccf-d796a8bde57b
+Question: In twin pregnancies, which condition is more likely in monochorionic diamniotic twins than in dichorionic diamniotic twins?
+1. Cord prolapse
+2. Placenta previa
+3. Twin-to-twin transfusion syndrome (TTTS)
+4. Fetal distress
+Correct Option: Twin-to-twin transfusion syndrome (TTTS)
+Explanation: TTTS is a complication of monochorionic twins, where they share the same placenta, leading to an imbalance in blood flow between the twins.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: e61c1bb6-e161-42c6-bf2d-f01fde4d96e0
+Question: Which marker is the most significant in differentiating monochorionic from dichorionic pregnancies?
+1. Amniotic fluid index
+2. Presence of the lambda sign on ultrasound
+3. Fetal weight discrepancy
+4. Umbilical artery Doppler
+Correct Option: Presence of the lambda sign on ultrasound
+Explanation: The lambda sign on ultrasound is a distinguishing feature for dichorionic twins, while its absence suggests monochorionic twins.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 1d03a9ed-67d0-4717-a216-21ac70a2e13a
+Question: In twin pregnancies, the risk of preeclampsia is:
+1. Lower than in singleton pregnancies
+2. Higher than in singleton pregnancies
+3. Similar to singleton pregnancies
+4. Negligible
+Correct Option: Higher than in singleton pregnancies
+Explanation: Twin pregnancies are associated with an increased risk of preeclampsia due to higher placental mass and hormone levels.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: d669d331-df8b-4976-ba48-602c3cd31caf
+Question: What is the likelihood of a woman having a second set of twins after already having one set of dizygotic twins?
+1. Same as the general population
+2. Slightly increased
+3. Significantly increased
+4. Zero
+Correct Option: Slightly increased
+Explanation: A woman who has had dizygotic twins is at a slightly higher risk of having another set of dizygotic twins due to genetic predisposition.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 90a9260f-36d1-41bf-ab02-b38b58ed891d
+Question: A 28-year-old primigravida at 18 weeks gestation is diagnosed with a twin pregnancy on routine ultrasound. The report reveals a single placenta and no visible separating membrane between the two fetuses. The fetuses have normal heart rates, but the mother is concerned about the risks associated with this type of twin pregnancy. What type of twin pregnancy is most likely based on the ultrasound findings, and what is the primary complication associated with it?
+1. Dichorionic diamniotic twins; risk of twin-to-twin transfusion syndrome (TTTS)
+2. Monochorionic diamniotic twins; risk of twin anemia-polycythemia sequence (TAPS)
+3. Monochorionic monoamniotic twins; risk of cord entanglement
+4. Conjoined twins; risk of structural malformations
+Correct Option: Monochorionic monoamniotic twins; risk of cord entanglement
+Explanation: The ultrasound findings of a single placenta and no separating membrane indicate a monochorionic monoamniotic (MCMA) twin pregnancy, where the twins share both the placenta and the amniotic sac. The primary complication in this type of pregnancy is cord entanglement due to the shared amniotic sac. This condition has a high risk of perinatal morbidity and mortality, and these pregnancies require close monitoring.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: a37167f3-4573-4344-917a-38720c1c5a36
+Question: A 26-year-old woman at 24 weeks gestation with monochorionic diamniotic twins presents for a routine ultrasound. The ultrasound shows a significant discrepancy in the amniotic fluid volumes between the two fetuses: one sac has polyhydramnios, while the other has oligohydramnios. There is also a noticeable size difference between the twins. What is the most likely diagnosis, and what is the appropriate management?
+1. Twin reversed arterial perfusion (TRAP) sequence; perform selective termination of the acardiac twin
+2. Twin-to-twin transfusion syndrome (TTTS); perform laser ablation of placental anastomoses
+3. Selective intrauterine growth restriction (sIUGR); continue expectant management with serial ultrasounds
+4. Discordant growth in dichorionic twins; plan early delivery
+Correct Option: Twin-to-twin transfusion syndrome (TTTS); perform laser ablation of placental anastomoses
+Explanation: The significant discrepancy in amniotic fluid volumes (polyhydramnios and oligohydramnios) and size difference in monochorionic diamniotic twins are classic features of TTTS. This condition occurs due to abnormal blood flow between the twins through placental anastomoses. The most effective treatment for severe TTTS is laser ablation of the abnormal blood vessels to stop the transfusion imbalance.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: ced9887d-bd4c-479b-af0a-be600dd2d917
+Question: A 32-year-old woman undergoes her first-trimester ultrasound at 12 weeks of gestation. The ultrasound report shows two fetuses with a thick dividing membrane and two separate placentas. Both fetuses are growing appropriately for gestational age, and the mother has no complaints. What is the most likely type of twin pregnancy, and what is the associated risk profile?
+1. Monochorionic diamniotic twins; high risk of twin-to-twin transfusion syndrome (TTTS)
+2. Dichorionic diamniotic twins; low risk of intertwin complications
+3. Monochorionic monoamniotic twins; high risk of cord entanglement
+4. Conjoined twins; high risk of structural abnormalities
+Correct Option: Dichorionic diamniotic twins; low risk of intertwin complications
+Explanation: The ultrasound findings of two separate placentas and a thick dividing membrane suggest a dichorionic diamniotic twin pregnancy. This is the most common type of twin pregnancy, especially in dizygotic twins, and is associated with a lower risk of complications compared to monochorionic twins, as each fetus has its own placenta and amniotic sac.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: e8bf2869-60bc-44f8-a7dc-fd06750bd3a4
+Question: A 29-year-old woman at 28 weeks gestation presents for routine ultrasound of her monochorionic diamniotic twin pregnancy. The ultrasound reveals a 30% growth discordance between the two fetuses, but both amniotic fluid volumes are normal. Doppler studies are within normal limits. What is the most appropriate next step in management?
+1. Immediate delivery due to fetal growth restriction
+2. Perform amnioreduction to balance fluid levels
+3. Continue with close monitoring and serial growth scans
+4. Perform laser ablation of placental anastomoses
+Correct Option: Continue with close monitoring and serial growth scans
+Explanation: In a monochorionic diamniotic twin pregnancy with growth discordance but normal amniotic fluid and Doppler findings, the best approach is close monitoring with serial growth ultrasounds. Immediate intervention is not warranted unless there are signs of worsening growth restriction or Doppler abnormalities.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 43e5d655-00a3-4352-8c6b-7cd5e777d477
+Question: A 24-year-old woman at 16 weeks gestation presents for her first ultrasound. The scan reveals two fetuses that appear to be physically attached at the thorax and share a single placenta. Both heartbeats are detectable, but there is no separating membrane between the fetuses. What is the most likely diagnosis, and what is the next step in management?
+1. Monochorionic monoamniotic twins; continue close fetal monitoring
+2. Conjoined twins; refer for specialized prenatal care and counseling
+3. Twin-to-twin transfusion syndrome; perform laser ablation of placental anastomoses
+4. Selective intrauterine growth restriction; perform serial growth ultrasounds
+Correct Option: Conjoined twins; refer for specialized prenatal care and counseling
+Explanation: The ultrasound findings of physically attached fetuses with a single placenta indicate conjoined twins. These twins result from incomplete separation of the embryo and require specialized care and counseling due to the complexity of management, which often involves surgical separation after birth.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 323184f2-b938-4ed8-bcf0-2f8365ec330a
+Question: Which pelvic shape is most commonly associated with the occipitoposterior position?
+1. Gynecoid
+2. Android
+3. Platypelloid
+4. Anthropoid
+Correct Option: Android
+Explanation: The android pelvis is associated with a higher likelihood of OP position due to its narrow anterior-posterior diameter.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 94eae64e-c3f9-4068-8267-81a0b91b2e64
+Question: What is the most common malposition in labor?
+1. Occipitoanterior
+2. Occipitoposterior
+3. Transverse lie
+4. Breech presentation
+Correct Option: Occipitoposterior
+Explanation: Occipitoposterior (OP) position is the most common malposition encountered during labor.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 7dad45ec-9610-4261-a034-5f8cc4854c2d
+Question: Which maternal factor increases the risk of persistent occipitoposterior position?
+1. Short maternal stature
+2. Diabetes
+3. Polyhydramnios
+4. Previous cesarean section
+Correct Option: Short maternal stature
+Explanation: Short maternal stature can be associated with an increased risk of persistent OP due to pelvic shape limitations.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: d90ed9a1-d1d5-43d0-890c-ccda2d4b355c
+Question: In which stage of labor does the occipitoposterior position commonly become problematic?
+1. First stage
+2. Second stage
+3. Third stage
+4. Latent stage
+Correct Option: Second stage
+Explanation: The occipitoposterior position is often associated with a prolonged second stage of labor due to difficulties in fetal rotation and descent.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 49e960a8-0f6e-4863-8f97-3cf55f1d6cd8
+Question: What is the incidence of occipitoposterior position at the onset of labor?
+1. 5%
+2. 10%
+3. 20%
+4. 30%
+Correct Option: 10%
+Explanation: OP position is seen in around 10% of labors at the onset, but many of these fetuses rotate to the occipitoanterior position during labor.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 17a572f1-56f4-4ae9-bec9-c2b781870c6d
+Question: Which maneuver is used to assist the rotation of the fetus from the occipitoposterior to the occipitoanterior position?
+1. Mauriceau-Smellie-Veit maneuver
+2. Lovset’s maneuver
+3. Digital rotation
+4. Woods corkscrew maneuver
+Correct Option: Digital rotation
+Explanation: Manual digital rotation is often used to rotate the fetus from OP to OA in order to facilitate delivery.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 7da7948c-ce56-4c64-ad1f-5458f013076d
+Question: What is a significant maternal complication associated with persistent occipitoposterior position?
+1. Uterine rupture
+2. Perineal tears
+3. Postpartum hemorrhage
+4. Deep transverse arrest
+Correct Option: Perineal tears
+Explanation: The persistent OP position increases the likelihood of maternal complications, such as higher-grade perineal tears, due to the extended duration of labor and fetal malposition.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 5e1b6245-e976-4b12-b5f9-5349308861ce
+Question: What is a typical fetal heart pattern associated with occipitoposterior position during labor
+1. Early decelerations
+2. Variable decelerations
+3. Late decelerations
+4. Sinusoidal pattern
+Correct Option: Variable decelerations
+Explanation: OP position can cause variable decelerations due to cord compression and difficulty with descent.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 86bac1c3-c618-4699-9b2f-fdb93c36802b
+Question: Which factor predicts the success of manual rotation from occipitoposterior to occipitoanterior?
+1. Fetal weight > 4 kg
+2. Engagement of the head
+3. Primigravida status
+4. Soft tissue dystocia
+Correct Option: Engagement of the head
+Explanation: When the fetal head is engaged and the cervix is fully dilated, manual rotation can be more successful.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 581b3093-de4c-46a4-8add-c741f7cc59f4
+Question: What is the role of forceps delivery in persistent occipitoposterior position?
+1. Correct fetal position
+2. Expedite delivery
+3. Alleviate fetal distress
+4. All of the above
+Correct Option: All of the above
+Explanation: Forceps delivery can be used to correct the fetal position, expedite delivery, and alleviate fetal distress in cases of persistent OP.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 5b33f1c6-9a1a-4f57-a922-520bd22be30d
+Question: What is the risk of performing cesarean section in cases of deep transverse arrest in occipitoposterior position?
+1. Uterine rupture
+2. Fetal acidosis
+3. Uterine atony
+4. All of the above
+Correct Option: All of the above
+Explanation: Deep transverse arrest in OP position increases the risk of cesarean complications, such as uterine rupture, fetal acidosis, and uterine atony.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: c4bb1cfa-2862-4c43-923b-1cd8d02fdee9
+Question: Which maternal factor significantly reduces the success rate of vaginal delivery in persistent occipitoposterior position?
+1. Advanced maternal age
+2. High maternal BMI
+3. Nulliparity
+4. Polyhydramnios
+Correct Option: High maternal BMI
+Explanation: High maternal BMI is associated with a higher rate of failed vaginal delivery in persistent OP cases due to poor progress in labor.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 0f215ed6-ce7a-4d73-a941-2f02dff33d54
+Question: Which of the following is a contraindication for manual rotation in occipitoposterior position?
+1. Previous cesarean section
+2. Fetal heart decelerations
+3. Cervical dilation of 4 cm
+4. Oligohydramnios
+Correct Option: Fetal heart decelerations
+Explanation: Fetal heart decelerations during labor are a contraindication for manual rotation due to the increased risk of fetal compromise.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: abc5097b-b1e0-4b60-aea8-93b04c02dcc8
+Question: What is the incidence of persistent occipitoposterior position at the time of delivery?
+1. 5%
+2. 10%
+3. 20%
+4. 1%
+Correct Option: 5%
+Explanation: About 5% of babies remain in OP position until delivery, requiring additional interventions.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: a3373db0-dbc9-4694-bc38-c28db3fe3522
+Question: Which maneuver is performed during cesarean section to assist in delivering a fetus in persistent OP position?
+1. Mauriceau-Smellie-Veit maneuver
+2. Kielland’s forceps
+3. Dührssen incisions
+4. Reverse breech extraction
+Correct Option: Reverse breech extraction
+Explanation: Reverse breech extraction is sometimes used during cesarean section to deliver a fetus in OP position when conventional delivery techniques are difficult.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 6e51df0f-740a-4643-b354-6d03807fc861
+Question: A 30-year-old primigravida in active labor is noted to have a fetus in occipitoposterior position. The cervix is fully dilated, and the fetal heart rate is reassuring. However, after two hours of pushing, the fetal head remains high in the pelvis. What is the most likely diagnosis?
+1. Deep transverse arrest
+2. Cord prolapse
+3. Placental abruption
+4. Shoulder dystocia
+Correct Option: Deep transverse arrest
+Explanation: Failure of descent of the fetal head after full dilation is consistent with deep transverse arrest, a common complication of OP position.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 63219eda-e383-4f79-8e27-cc6ede36b844
+Question: A 30-year-old primigravida in active labor is noted to have a fetus in occipitoposterior position. The cervix is fully dilated, and the fetal heart rate is reassuring. However, after two hours of pushing, the fetal head remains high in the pelvis. What is the best management option?
+1. Cesarean section
+2. Continue pushing
+3. Manual rotation
+4. Forceps delivery
+Correct Option: Cesarean section
+Explanation: In cases of deep transverse arrest with no progress, cesarean section is indicated to safely deliver the fetus[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 4009a2bf-15f2-41e1-b1bb-c4c60894b2ad
+Question: Which of the following is a cause of puerperal sepsis?
+1. Prolonged labor
+2. Retained products of conception
+3. Endometritis
+4. All of the above
+Correct Option: All of the above
+Explanation: Puerperal sepsis can be caused by prolonged labor, retained products, and endometritis.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: bda6b5ff-ab30-4bd9-9496-cef2e913920f
+Question: Which hormone plays a significant role in lactation during the puerperium?
+1. Estrogen
+2. Progesterone
+3. Prolactin
+4. Cortisol
+Correct Option: Prolactin
+Explanation: Prolactin is crucial for milk production during the puerperium.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: db84ef9c-f1b5-4700-8e9e-4fb799ca2a11
+Question: What is the normal duration of lochia after delivery?
+1. 1 week
+2. 2 weeks
+3. 3 weeks
+4. 6 weeks
+Correct Option: 3 weeks
+Explanation: Lochia typically lasts for about 3 weeks postpartum[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 3cf7b2be-66f4-424f-a2c0-171e6b7878e3
+Question: What is the main component of lochia serosa?
+1. Blood
+2. Shreds of fetal membranes
+3. Leukocytes and wound exudate
+4. Mucus
+Correct Option: Leukocytes and wound exudate
+Explanation: Lochia serosa is characterized by reduced RBCs but more leukocytes and wound exudate[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: d4d85400-f30c-45cd-974c-0862026aa780
+Question: Which type of lochia occurs on days 1-4 post-delivery?
+1. Lochia alba
+2. Lochia rubra
+3. Lochia serosa
+4. Lochia nigra
+Correct Option: Lochia rubra
+Explanation: Lochia rubra is present for the first 1-4 days postpartum[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 2b46cd55-69a0-45a8-b6aa-be7d668ab4a9
+Question: Which of the following is an early postpartum complication?
+1. Uterine subinvolution
+2. Postpartum depression
+3. Uterine rupture
+4. Urinary retention
+Correct Option: Urinary retention
+Explanation: Urinary retention can occur due to bladder overdistension in the early postpartum period[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 28cee515-2990-48c0-96de-6e3f8d5b517c
+Question: Which of the following is a normal finding during the first 24 hours post-delivery?
+1. Temperature above 37.5°C
+2. Pulse rate of 90-100 bpm
+3. No urine output
+4. Persistent lochia serosa
+Correct Option: Pulse rate of 90-100 bpm
+Explanation: During the first 24 hours post-delivery, a pulse rate of 90-100 bpm can be considered a normal physiological response. This mild tachycardia occurs due to excitement, pain, fluid shifts, and uterine contractions (after-pains). However, if the pulse rate exceeds 100 bpm persistently, it may indicate infection (endometritis), hemorrhage, dehydration, or anemia, requiring further evaluation.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 7cddaa8b-4dd3-47ab-9627-12ad6b23656b
+Question: What is the average amount of lochial discharge in the first 5-6 days postpartum?
+1. 100 mL
+2. 250 mL
+3. 500 mL
+4. 1000 mL
+Correct Option: 250 mL
+Explanation: The average discharge during the first 5-6 days is approximately 250 mL[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: c1a2dd59-760f-4bb8-9d77-b86fd42977a8
+Question: Which organism is most commonly responsible for urinary tract infections during the puerperium?
+1. Streptococcus
+2. Staphylococcus
+3. Escherichia coli
+4. Klebsiella
+Correct Option: Escherichia coli
+Explanation: E. coli is the most common organism responsible for UTI during the puerperium[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 960b7de0-33cd-4d07-9b40-dc41cde3f3d3
+Question: Which of the following conditions can cause stress incontinence in the late puerperium?
+1. Overflow incontinence
+2. True incontinence
+3. Genitourinary fistula
+4. None of the above
+Correct Option: Overflow incontinence
+Explanation: Overflow incontinence is often excluded first in stress incontinence cases[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: ae82990b-942f-4745-bdf0-45f8284f4aa7
+Question: Which factor can suppress milk production during the puerperium?
+1. High levels of prolactin
+2. Use of ergot preparations
+3. Regular breastfeeding
+4. Lactation promoting medications
+Correct Option: Use of ergot preparations
+Explanation: Ergot preparations can inhibit prolactin and suppress milk production[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 310ef87b-b0ef-4ad6-81fb-80fa59aa57f2
+Question: When should contraception be recommended to a non-lactating mother after delivery?
+1. Immediately
+2. 3 weeks postpartum
+3. 6 weeks postpartum
+4. 3 months postpartum
+Correct Option: 3 weeks postpartum
+Explanation: Non-lactating mothers should begin contraception by the 3rd week postpartum[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: d4153e9b-9ba4-4448-b069-f16fe51f39c0
+Question: When is surgery on the puerperal vagina usually contraindicated?
+1. First 6 months postpartum
+2. During lactation
+3. First few weeks postpartum
+4. When lochia is still present
+Correct Option: First few weeks postpartum
+Explanation: The vagina remains delicate and submucous venous congestion persists, so surgery is withheld[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 354fc762-0f68-4c7c-905c-7b785e2f8850
+Question: What is the clinical significance of malodorous lochia during the puerperium?
+1. Normal postpartum change
+2. Indicates uterine subinvolution
+3. Suggests infection
+4. Retained bits of conception
+Correct Option: Suggests infection
+Explanation: Malodorous lochia is a sign of infection[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 91f0d054-a248-4a8a-ad8d-cdbac10aa400
+Question: What is the primary management for retention of urine in the puerperium?
+1. Antispasmodics
+2. Immediate surgical correction
+3. Indwelling catheter
+4. Oral diuretics
+Correct Option: Indwelling catheter
+Explanation: If simple measures fail, an indwelling catheter is placed for 48 hours[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 4befea47-8504-477e-b561-2dec2f79f2dd
+Question: In which condition might lochia persist beyond the normal period in the puerperium?
+1. Infection
+2. Twin delivery
+3. Subinvolution
+4. Uterine rupture
+Correct Option: Subinvolution
+Explanation: Prolonged lochia may indicate subinvolution[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 0c6fe682-b42c-4a1c-b4ea-a673853c5a0f
+Question: What is the correct management for stress incontinence appearing in the late puerperium?
+1. Immediate catheterization
+2. Pelvic floor exercises
+3. Surgical intervention
+4. Antibiotic therapy
+Correct Option: Pelvic floor exercises
+Explanation: Stress incontinence can be managed by pelvic floor exercises[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: d43133bf-34c6-4bb9-a7cf-193571d805c2
+Question: Which of the following can be a side effect of bromocriptine used for lactation suppression?
+1. Hypertension
+2. Rebound prolactin secretion
+3. Seizures
+4. All of the above
+Correct Option: All of the above
+Explanation: Bromocriptine may cause multiple side effects like rebound secretion, seizures, and hypotension[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: a2c57666-e6c7-44cc-b3cd-4d10ae851086
+Question: A 28-year-old woman, 3 days postpartum, presents with a fever of 38.5°C and reports lower abdominal pain and foul-smelling lochia. What is the most likely diagnosis?
+1. Normal postpartum changes
+2. Endometritis
+3. Urinary tract infection
+4. Subinvolution
+Correct Option: Endometritis
+Explanation: Fever and foul-smelling lochia indicate infection, most commonly endometritis[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: b9d6076a-5e71-429f-acf7-1f0e18794da8
+Question: Which of the following is a normal finding during the puerperium?
+1. Uterine subinvolution
+2. Uterine involution
+3. Persistent lochia rubra for 6 weeks
+4. Increase in size of the uterus
+Correct Option: Uterine involution
+Explanation: Involution is the process of the uterus returning to its pre-pregnant size, which is a normal finding during the puerperium.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: a71a8653-0533-4201-9456-dd408fe4e876
+Question: Which of the following is the predominant type of lochia in the first 4-5 days after delivery?
+1. Lochia serosa
+2. Lochia rubra
+3. Lochia alba
+4. Lochia purulenta
+Correct Option: Lochia rubra
+Explanation: Lochia rubra, which consists primarily of blood, is typically seen in the first 4-5 days postpartum.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 300d415c-a694-43a2-9558-820dc8a93803
+Question: What is the average duration of lochial discharge after delivery?
+1. 1 week
+2. 2 weeks
+3. 3 weeks
+4. 6 weeks
+Correct Option: 3 weeks
+Explanation: Lochia typically persists for about 3 weeks, transitioning from lochia rubra to lochia serosa and finally lochia alba[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 405f7fad-92b6-45ce-ad2b-a9a7f184dd32
+Question: Which of the following is a physiological change during the puerperium?
+1. Increase in cardiac output
+2. Decrease in breast milk production
+3. Shrinking of the uterus
+4. Retention of placental tissue
+Correct Option: Shrinking of the uterus
+Explanation: Uterine involution is the shrinking of the uterus, a key physiological change during the puerperium.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 5f6cd802-81bf-43c5-b0d8-cc912751e831
+Question: What is the primary treatment for puerperal mastitis?
+1. Oral antibiotics
+2. Breastfeeding cessation
+3. Breast massage
+4. Antifungal therapy
+Correct Option: Oral antibiotics
+Explanation: Puerperal mastitis is typically treated with oral antibiotics and continued breastfeeding.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 61d442cc-9833-4314-9c89-c7a484ab6a53
+Question: Which factor is associated with delayed uterine involution?
+1. Retained products of conception
+2. Postpartum hemorrhage
+3. Twin pregnancy
+4. All of the above
+Correct Option: All of the above
+Explanation: Delayed involution can occur due to retained products, postpartum hemorrhage, and twin pregnancy.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 018a561e-e9f6-4434-ae6f-b927d6ff855f
+Question: What is a common symptom of puerperal sepsis?
+1. Fever
+2. Decreased lochia
+3. Hypotension
+4. Vaginal dryness
+Correct Option: Fever
+Explanation: Fever is a common sign of puerperal sepsis.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 463e09bb-9106-4366-ab24-735ee7f5210b
+Question: Which condition is associated with increased risk of thromboembolism during the puerperium?
+1. Obesity
+2. Cesarean section
+3. Immobility
+4. All of the above
+Correct Option: All of the above
+Explanation: Obesity, cesarean section, and immobility all increase the risk of thromboembolism during the puerperium.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 455bc7b7-86f0-4e1d-a683-f475ec209e94
+Question: What is the most common cause of secondary postpartum hemorrhage?
+1. Uterine atony
+2. Retained placental tissue
+3. Coagulation disorders
+4. Uterine rupture
+Correct Option: Retained placental tissue
+Explanation: Retained placental tissue is the most common cause of secondary postpartum hemorrhage.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 111f6201-63e5-4d14-8233-2547d793172c
+Question: Which of the following is used in the management of postpartum hemorrhage?
+1. Oxytocin
+2. Ergometrine
+3. Misoprostol
+4. All of the above
+Correct Option: All of the above
+Explanation: Oxytocin, ergometrine, and misoprostol are uterotonic agents used to manage postpartum hemorrhage.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 5cbc2125-91a0-4565-a414-60d5c57089ce
+Question: What is the best initial management of suspected puerperal sepsis?
+1. Blood cultures and intravenous antibiotics
+2. Wait for fever to subside
+3. Surgical intervention
+4. Antipyretics
+Correct Option: Blood cultures and intravenous antibiotics
+Explanation: Blood cultures should be obtained, and broad-spectrum antibiotics started immediately in suspected puerperal sepsis.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: a38e7626-716f-4be2-9b11-fbbb03d177b2
+Question: Which type of lochia is typically seen 10 days after delivery?
+1. Lochia rubra
+2. Lochia serosa
+3. Lochia alba
+4. Lochia purulenta
+Correct Option: Lochia serosa
+Explanation: Lochia serosa is typically seen around 10 days postpartum as the lochial discharge transitions from bloody to serous.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 58ac14c3-b73c-4572-b6d6-58d40c4ca2e9
+Question: A 28-year-old woman, 3 days postpartum, presents with a high-grade fever and foul-smelling lochia. Her uterus is tender to palpation. What is the most likely diagnosis?
+1. Endometritis
+2. Mastitis
+3. Thromboembolism
+4. Subinvolution
+Correct Option: Endometritis
+Explanation: Fever, foul-smelling lochia, and uterine tenderness are suggestive of endometritis, a common puerperal infection.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: a19b88da-e187-497d-bbaf-eb08e65d9157
+Question: A 25-year-old lactating mother has completed 6 months postpartum. She has been exclusively breastfeeding and is currently amenorrheia. She is seeking advice regarding contraception. What would be your recommendation?
+1. Lactational Amenorrhea Method (LAM) is effective up to 6 months postpartum; now she should consider an alternative method.
+2. She should continue LAM until her periods return.
+3. Oral contraceptives are contraindicated in breastfeeding.
+4. An IUD would be an appropriate option at this stage.
+Correct Option: Lactational Amenorrhea Method (LAM) is effective up to 6 months postpartum; now she should consider an alternative method.
+Explanation: The Lactational Amenorrhea Method (LAM) is an effective form of contraception for the first six months postpartum, provided the mother is exclusively breastfeeding, remains amenorrheic, and feeds frequently (at least every 4 hours during the day and every 6 hours at night). However, since this woman is now beyond six months postpartum, LAM is no longer a reliable contraceptive method, and she should consider an alternative. Suitable options include progesterone-only pills (POPs), an intrauterine device (IUD), contraceptive implants, or barrier methods like condoms. Combined oral contraceptives (COCs) should be used with caution in breastfeeding mothers, as high doses of estrogen can reduce milk supply. An IUD (either copper or hormonal) would be a safe and effective long-term option at this stage. Thus, she should now transition to a more reliable method of contraception to prevent an unplanned pregnancy.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: ae7fa30c-b803-4987-a1ed-8ecdf0f6347b
+Question: A 22-year-old woman comes to your clinic for contraception counseling. She is sexually active, not married, and would like to delay pregnancy for at least 5 years. She does not smoke and has no significant medical history. What is the most suitable contraceptive option for her?
+1. Combined Oral Contraceptive Pill
+2. Intrauterine Device (Cu-T 380A)
+3. Progesterone-only Pill
+4. Barrier methods
+Correct Option: Combined Oral Contraceptive Pill.
+Explanation: For a young, sexually active woman with no medical contraindications, combined oral contraceptive pills are highly effective and offer additional non-contraceptive benefits like regulation of menstruation and reduction of dysmenorrhea. Cu-T 380A may not be suitable as she is nulliparous.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 3215b521-a64b-4f86-a21f-511727555a0a
+Question: A 35-year-old woman, gravida 4, para 3, is interested in long-term reversible contraception. She is breastfeeding and does not want to take daily pills. What would be the best contraceptive option?
+1. Combined Oral Contraceptives
+2. Progesterone-only Pill
+3. Levonorgestrel-releasing Intrauterine System (LNG-IUS)
+4. Female sterilization
+Correct Option: Levonorgestrel-releasing Intrauterine System (LNG-IUS).
+Explanation: LNG-IUS is a long-acting reversible contraceptive that is ideal for women who desire long-term protection without the daily requirement of pills. It is also safe during breastfeeding and provides a non-hormonal local effect[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 04846734-51d8-4786-b303-b748aca137c1
+Question: A 40-year-old woman, a smoker, comes to your clinic for contraception counseling. She has a history of hypertension and is seeking an effective method to prevent pregnancy. Which contraceptive method is contraindicated in her case?
+1. Combined Oral Contraceptive Pills
+2. Progesterone-only Pill
+3. Copper Intrauterine Device (Cu-T)
+4. Barrier methods
+Correct Option: Combined Oral Contraceptive Pills.
+Explanation: COCs are contraindicated in women over 35 years who smoke and have a history of hypertension due to the increased risk of cardiovascular complications[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: dba415a1-522f-4347-8a6d-73a14e4922af
+Question: A 30-year-old woman presents to your clinic after an unprotected sexual encounter 48 hours ago. She is not on regular contraception and seeks advice for emergency contraception. Q. Which method should be recommended?
+1. Levonorgestrel
+2. Copper Intrauterine Device (Cu-T)
+3. Combined Oral Contraceptive Pill
+4. Hormonal Implant
+Correct Option: Copper Intrauterine Device (Cu-T).
+Explanation: The Cu-T IUD can be used for emergency contraception if inserted within 5 days of unprotected intercourse, and it provides long-term contraception afterward[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: b729b659-e3d6-454b-94b2-cc91ac269b08
+Question: A 25-year-old woman has been using the progesterone-only pill for 3 months. She reports irregular bleeding and is frustrated with this side effect. She is otherwise healthy and would like to continue using a hormonal contraceptive method.What would be the next best step?
+1. Continue with the progesterone-only pill
+2. Switch to Combined Oral Contraceptive Pill
+3. Switch to an implant
+4. Stop hormonal contraception
+Correct Option: Switch to an implant.
+Explanation: Progesterone-only methods, including implants, are often associated with irregular bleeding, but the implant is more effective and offers long-term contraception. Changing to an implant may help alleviate some of her concerns while maintaining effective contraception.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 6be81673-2695-4a44-a964-d716c5545b0b
+Question: What is the recommended calorie intake for an overweight woman with gestational diabetes mellitus (GDM)?
+1. 2000–2500 Kcal/day
+2. 1200–1800 Kcal/day
+3. 1500–2000 Kcal/day
+4. 1000–1500 Kcal/day
+Correct Option: 1200–1800 Kcal/day
+Explanation: For overweight women with GDM, dietary restriction to 1200–1800 Kcal/day is recommended to control blood sugar levels.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 9b04d845-db99-402d-ab02-482e425ba421
+Question: At what plasma glucose level after a 2-hour 75 gm glucose challenge is GDM diagnosed according to DIPSI?
+1. ≥ 140 mg/dL
+2. ≥ 130 mg/dL
+3. ≥ 150 mg/dL
+4. ≥ 160 mg/dL
+Correct Option: ≥ 140 mg/dL
+Explanation: According to the Diabetes In Pregnancy Societies of India (DIPSI), a plasma glucose value of ≥ 140 mg/dL after a 2-hour 75 gm glucose challenge confirms the diagnosis of GDM.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 6fe8d7fb-6cfa-4281-8502-4fd8dbec6203
+Question: Which of the following is not a hazard associated with GDM?
+1. Macrosomia
+2. Polyhydramnios
+3. Fetal anomalies during organogenesis
+4. Birth trauma
+Correct Option: Fetal anomalies during organogenesis
+Explanation: Fetal anomalies are not increased in GDM because metabolic disturbances usually occur after organogenesis[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 159365db-3c6c-4511-83b1-f90cc22ef23e
+Question: What is the recurrence risk of GDM in subsequent pregnancies?
+1. 25%
+2. 50%
+3. 10%
+4. 75%
+Correct Option: 50%
+Explanation: The recurrence risk of GDM in subsequent pregnancies is about 50%.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 0ccaabcc-a9a0-484b-b6b1-0b7eb4748494
+Question: What is the ideal fasting plasma glucose level in well-controlled GDM?
+1. ≤ 100 mg/dL
+2. ≤ 90 mg/dL
+3. ≤ 80 mg/dL
+4. ≤ 110 mg/dL
+Correct Option: 50%
+Explanation: In well-controlled GDM, the ideal fasting plasma glucose level should be ≤ 90 mg/dL.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 21526292-8070-402a-acf8-13001379266e
+Question: When should insulin therapy be initiated in GDM?
+1. If fasting plasma glucose exceeds 100 mg/dL
+2. If fasting plasma glucose exceeds 90 mg/dL
+3. If 2-hour postprandial glucose exceeds 120 mg/dL
+4. Both B and C
+Correct Option: Both B and C
+Explanation: Insulin therapy is recommended if fasting plasma glucose exceeds 90 mg/dL or if the 2-hour postprandial glucose exceeds 120 mg/dL, even on dietary control.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 12542286-c23b-4512-9479-98b5553b53cc
+Question: Which of the following complications is reduced in well-controlled GDM?
+1. Macrosomia
+2. Shoulder dystocia
+3. IUFD
+4. All of the above
+Correct Option: All of the above
+Explanation: In well-controlled GDM, complications such as intrauterine fetal death (IUFD), macrosomia, and shoulder dystocia are significantly reduced.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: e8c50992-1e8f-4b16-bb60-9b983193bd58
+Question: Which of the following tests is recommended for screening average-risk women for GDM?
+1. 75 gm oral glucose tolerance test
+2. 50 gm oral glucose challenge test
+3. Fasting blood glucose
+4. HbA1C
+Correct Option: 50 gm oral glucose challenge test
+Explanation: The 50 gm oral glucose challenge test without regard to the time of the last meal is used for screening average-risk women between 24 and 28 weeks of gestation.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: bafe0932-b1e2-4620-8865-109ef08e0c5d
+Question: Which of the following fetal outcomes is not associated with GDM?
+1. Macrosomia
+2. Fetal growth restriction
+3. Polyhydramnios
+4. IUFD
+Correct Option: Fetal growth restriction
+Explanation: Fetal growth restriction is not typically associated with GDM. Instead, GDM is more often associated with macrosomia and polyhydramnios.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: ab72dea0-64ed-4b7f-b3b2-55220d6a8568
+Question: What is the risk of developing type 2 diabetes within 5–20 years after having GDM?
+1. 25%
+2. 50%
+3. 10%
+4. 75%
+Correct Option: 50%
+Explanation: About 50% of women with GDM develop overt diabetes within 5–20 years following the initial diagnosis.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: cc48adbb-7287-4e28-ac88-3f2d5f70c297
+Question: Which of the following is a major maternal complication associated with vasculopathy in diabetic pregnancies?
+1. Intrauterine growth restriction (IUGR)
+2. Ketoacidosis
+3. Preeclampsia
+4. All of the above
+Correct Option: All of the above
+Explanation: Poor glycemic control and vasculopathy in GDM can lead to complications like IUGR, ketoacidosis, and preeclampsia.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 22050adf-ad90-43e4-8823-7f7bb09ba38a
+Question: What is the recommended elective delivery timing for women with GDM requiring insulin therapy?
+1. At 37 weeks
+2. At 40 weeks
+3. Around 38 weeks
+4. After 39 weeks
+Correct Option: Around 38 weeks
+Explanation: In women with GDM requiring insulin therapy or those with complications like macrosomia, elective delivery around 38 weeks is considered appropriate.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 11b92455-9d3f-4b53-a288-958cef3de351
+Question: What is the most common birth trauma associated with GDM?
+1. Shoulder dystocia
+2. Clavicular fracture
+3. Brachial plexus injury
+4. All of the above
+Correct Option: All of the above
+Explanation: Macrosomia in GDM can lead to birth trauma, commonly including shoulder dystocia, clavicular fracture, and brachial plexus injury.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 58b24a34-0eb3-4c77-9766-459cc84cb54c
+Question: What is the calorie restriction recommended for a woman with GDM and obesity?
+1. 2000–2500 Kcal/day
+2. 1200–1800 Kcal/day
+3. 1800–2000 Kcal/day
+4. 1000–1200 Kcal/day
+Correct Option: 1200–1800 Kcal/day
+Explanation: Women with GDM and obesity are advised to restrict their calorie intake to 1200–1800 Kcal/day.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 5f6f4ecd-df39-4e96-8f56-b6ec86f6862e
+Question: What is the primary reason for elective cesarean section in GDM patients?
+1. Fetal macrosomia
+2. Maternal obesity
+3. Preeclampsia
+4. Polyhydramnios
+Correct Option: Fetal macrosomia
+Explanation: Elective cesarean section is often recommended in GDM patients to avoid complications related to fetal [Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: d9446960-68ce-4742-997a-74379126bead
+Question: A 34-year-old woman with gestational diabetes is in her 36th week of pregnancy. Her blood sugar levels are well-controlled with insulin therapy. She asks about the recommended delivery plan. What is the recommended course of action regarding delivery for this patient?
+1. Allow spontaneous labor at term
+2. Induce labor at 38 weeks
+3. Schedule a cesarean section at 37 weeks
+4. Induce labor after 40 weeks
+Correct Option: Induce labor at 38 weeks
+Explanation: For patients with gestational diabetes who require insulin or who have complications such as macrosomia, elective delivery (induction or cesarean section) is typically recommended around 38 weeks to prevent potential complications like fetal overgrowth[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: c6c8c8db-5efd-44db-895d-5ef0d6bae074
+Question: A 30-year-old woman with a history of gestational diabetes in a previous pregnancy presents at 12 weeks gestation for her first prenatal visit. She is concerned about the recurrence of gestational diabetes. What is the most appropriate next step in screening for gestational diabetes in this patient?
+1. Screen with a 50 gm glucose challenge test at 24–28 weeks
+2. Perform an early glucose challenge test at this visit
+3. Recommend a 100 gm oral glucose tolerance test now
+4. Delay screening until symptoms develop
+Correct Option: Perform an early glucose challenge test at this visit
+Explanation: Women with a history of gestational diabetes are at high risk for recurrence in future pregnancies. Early screening is recommended, ideally at the first prenatal visit, to manage blood glucose levels early in the pregnancy[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 2370506c-328d-4c2f-8989-5b67d9a2cb3c
+Question: A 35-year-old woman at 30 weeks of gestation with gestational diabetes is struggling to maintain her fasting blood sugar levels below 95 mg/dL despite dietary modifications. Her current fasting blood glucose level is 100 mg/dL, and her 2-hour postprandial glucose is 130 mg/dL. What is the most appropriate management for this patient?
+1. Continue with diet and exercise
+2. Start oral hypoglycemic agents
+3. Start insulin therapy
+4. Increase caloric intake
+Correct Option: Start insulin therapy
+Explanation: For women with gestational diabetes who cannot maintain fasting blood glucose levels below 95 mg/dL with dietary modifications, insulin therapy is indicated to maintain glycemic control and prevent complications[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: f054de53-c1a8-4d0a-b942-bdc252cba20a
+Question: A 32-year-old woman with gestational diabetes who has been on insulin therapy is now 38 weeks pregnant. She has a fetal ultrasound showing an estimated fetal weight of 4.2 kg. The patient inquires about her delivery options. Which of the following options would be the most appropriate for this patient?
+1. Induce labor immediately
+2. Wait for spontaneous labor at term
+3. Schedule a cesarean section
+4. Induce labor after 40 weeks
+Correct Option: Schedule a cesarean section
+Explanation: For women with gestational diabetes and suspected macrosomia (fetal weight >4 kg), a cesarean section is often recommended to avoid birth trauma, particularly shoulder dystocia, which can occur with large infants[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 02cfbc46-79a4-4ac0-b3b9-3110a4db5a8f
+Question: Which of the following medications is preferred in the management of hypertension in pregnancy?
+1. Labetalol
+2. Captopril
+3. Enalapril
+4. Losartan
+Correct Option: Labetalol
+Explanation: Labetalol is a commonly used antihypertensive agent in pregnancy. ACE inhibitors and ARBs are contraindicated[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: f3133db8-0d0f-4a33-96db-7f1805696a99
+Question: Which of the following is a key diagnostic criterion for preeclampsia?
+1. Blood pressure ≥140/90 mm Hg after 20 weeks gestation
+2. Blood pressure <140/90 mm Hg
+3. Proteinuria <0.3 g in 24 hours
+4. Persistent epigastric pain
+Correct Option: Blood pressure ≥140/90 mm Hg after 20 weeks gestation
+Explanation: A blood pressure ≥140/90 mm Hg is one of the defining features of preeclampsia, along with proteinuria and signs of end-organ dysfunction[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 61bb93be-8237-4b51-b614-f521c5dc7b1c
+Question: Which hypertensive disorder in pregnancy is diagnosed before 20 weeks of gestation?
+1. Gestational hypertension
+2. Chronic hypertension
+3. Preeclampsia
+4. Eclampsia
+Correct Option: Chronic hypertension
+Explanation: Chronic hypertension is defined as hypertension diagnosed before 20 weeks of gestation or persisting beyond 12 weeks postpartum[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: d3670501-526d-4d4b-ae3e-65bbf4f80515
+Question: What is the most important predictor of adverse fetal outcomes in preeclampsia?
+1. Systolic blood pressure
+2. Diastolic blood pressure
+3. Proteinuria levels
+4. Maternal age
+Correct Option: Proteinuria levels
+Explanation: Proteinuria is a significant predictor of adverse fetal outcomes, more so than blood pressure levels[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 0692dde1-5071-470e-861c-0572c688f2da
+Question: Which of the following is NOT a typical risk factor for preeclampsia?
+1. Nulliparity
+2. Multiple gestations
+3. Advanced maternal age
+4. Smoking
+Correct Option: Smoking
+Explanation: Smoking has been shown to reduce the risk of preeclampsia, contrary to other conditions like nulliparity, multiple gestations, and advanced maternal age[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 07ad24c8-38b7-4c06-b791-0c91890657e0
+Question: Which of the following is recommended in women at high risk of preeclampsia?
+1. High-dose aspirin
+2. Calcium supplementation
+3. Low-protein diet
+4. Magnesium sulfate prophylaxis
+Correct Option: Calcium supplementation
+Explanation: Calcium supplementation has been shown to reduce the risk of gestational hypertension and preeclampsia in high-risk women[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: d10bc08a-281d-4571-b6e1-0452c015834b
+Question: Which of the following is the most appropriate management for mild gestational hypertension at 37 weeks gestation?
+1. Immediate delivery
+2. Expectant management with close monitoring
+3. Magnesium sulfate administration
+4. Antenatal steroids
+Correct Option: Expectant management with close monitoring
+Explanation: Mild gestational hypertension near term (37 weeks) can be managed expectantly with close monitoring unless complications arise[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: c03c6b69-e83b-445a-af37-11fa7f2493d3
+Question: Which condition is commonly associated with HELLP syndrome?
+1. Chronic hypertension
+2. Gestational diabetes
+3. Severe preeclampsia
+4. Oligohydramnios
+Correct Option: Severe preeclampsia
+Explanation: HELLP syndrome is a serious complication associated with severe preeclampsia, characterized by hemolysis, elevated liver enzymes, and low platelet count.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 320deeec-996d-4592-9228-baa9545c2b6a
+Question: At what point in pregnancy is low-dose aspirin recommended to reduce the risk of preeclampsia?
+1. After 34 weeks
+2. Before 16 weeks
+3. After 28 weeks
+4. Before 12 weeks
+Correct Option: Before 16 weeks
+Explanation: Low-dose aspirin is recommended before 16 weeks to reduce the risk of preeclampsia in high-risk women[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 78fc1fbc-f5d2-4964-addc-c696c82dbeca
+Question: Which of the following is NOT a complication of severe preeclampsia?
+1. Pulmonary edema
+2. Acute kidney injury
+3. Retinal detachment
+4. Hyperthyroidism
+Correct Option: Hyperthyroidism
+Explanation: While severe preeclampsia can cause various systemic complications, hyperthyroidism is not directly related[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 7010d3f0-6f83-4277-94e6-a0d85d236ff2
+Question: Which of the following lab findings is most consistent with HELLP syndrome?
+1. Elevated white blood cell count
+2. Thrombocytopenia
+3. Hyperkalemia
+4. Hypocalcemia
+Correct Option: Thrombocytopenia
+Explanation: HELLP syndrome is characterized by hemolysis, elevated liver enzymes, and low platelet count (thrombocytopenia)[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: ec9be2d3-ff0c-4402-adac-c483b0f18847
+Question: What is the mechanism of action of magnesium sulfate in the management of eclampsia?
+1. Vasodilation
+2. Inhibition of calcium influx into neurons
+3. Decreased renin secretion
+4. Increased sodium excretion
+Correct Option: Inhibition of calcium influx into neurons
+Explanation: Magnesium sulfate works by blocking calcium influx into neurons, stabilizing cell membranes, and preventing convulsions in eclampsia[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: daa19b37-d578-49c6-9454-df1633b5e667
+Question: Which fetal complication is most commonly associated with preeclampsia?
+1. Macrosomia
+2. Intrauterine growth restriction (IUGR)
+3. Polyhydramnios
+4. Fetal macrosomia
+Correct Option: Intrauterine growth restriction (IUGR)
+Explanation: Preeclampsia commonly results in placental insufficiency, leading to intrauterine growth restriction (IUGR)[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: d216fe66-1edd-4c79-9599-c02511db7d07
+Question: Which of the following is a major risk factor for the development of chronic hypertension after pregnancy?
+1. Low BMI
+2. Preterm delivery
+3. Nulliparity
+4. History of preeclampsia
+Correct Option: History of preeclampsia
+Explanation: A history of preeclampsia significantly increases the risk of chronic hypertension later in life[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: d787e4cf-2b43-4e95-b6f9-76e50ef47476
+Question: What is the definitive treatment for eclampsia?
+1. Intravenous labetalol
+2. Magnesium sulfate
+3. Antihypertensive drugs
+4. Delivery of the fetus
+Correct Option: Delivery of the fetus
+Explanation: The only definitive cure for eclampsia is the delivery of the fetus and placenta[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 1f469a33-492f-4e47-b4f3-5fc733aada1c
+Question: A 28-year-old primigravida presents at 36 weeks of gestation with persistent headaches, visual disturbances, and BP of 170/110 mm Hg. Urine dipstick reveals 3+ proteinuria. Blood tests show elevated liver enzymes and thrombocytopenia. What is the most appropriate management?
+1. Immediate induction of labor
+2. Magnesium sulfate therapy and observation
+3. Start antihypertensives and plan for elective cesarean at term
+4. Administer corticosteroids and plan for delivery after 48 hours
+Correct Option: Immediate induction of labor.
+Explanation: This patient has features of severe preeclampsia (high BP, proteinuria, and end-organ dysfunction such as liver abnormalities). The definitive treatment is delivery. Magnesium sulfate is administered for seizure prophylaxis, and antihypertensives may be given, but prompt delivery is necessary.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: cca8611c-403e-4e6f-a85d-0b32fffb8657
+Question: A 35-year-old woman at 34 weeks of gestation presents with BP of 150/100 mm Hg, 2+ proteinuria, and normal platelet count and liver enzymes. Fetal monitoring is reassuring. She is diagnosed with mild preeclampsia. What is the next best step in management?
+1. Deliver immediately
+2. Administer corticosteroids and continue observation
+3. Start antihypertensive medication
+4. Immediate cesarean section
+Correct Option: . Administer corticosteroids and continue observation.
+Explanation: In cases of mild preeclampsia without severe features, the goal is to manage conservatively if the pregnancy is less than 37 weeks. Corticosteroids are given to promote fetal lung maturity, and close monitoring is continued.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 8ec407a1-dfc3-41d9-948d-065a1e1fd224
+Question: A 30-year-old woman at 35 weeks of gestation presents with new-onset hypertension (160/110 mm Hg) and severe epigastric pain. Lab results show elevated liver enzymes and low platelets. What is the most appropriate course of action?
+1. Monitor BP and platelets, plan delivery at 37 weeks
+2. Administer magnesium sulfate and deliver the baby immediately
+3. Start antihypertensives and observe for improvement
+4. Administer corticosteroids and delay delivery for 48 hours
+Correct Option: Administer magnesium sulfate and deliver the baby immediately.
+Explanation: This patient likely has HELLP syndrome (Hemolysis, Elevated Liver enzymes, Low Platelets), a severe form of preeclampsia. Immediate delivery is indicated, and magnesium sulfate is given to prevent seizures.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 7f8035e0-f312-4cdc-9f36-786abbc52d22
+Question: Which of the following is the definitive treatment for preeclampsia?
+1. Antihypertensive drugs
+2. Delivery
+3. Magnesium sulfate
+4. Low-dose aspirin
+Correct Option: Delivery
+Explanation: The only definitive treatment for preeclampsia is delivery of the fetus. Other measures, like antihypertensives and magnesium sulfate, manage the symptoms but do not cure the condition .[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 2c37f91c-4126-4f02-92b2-3caa8f3a9089
+Question: Which of the following is a first-line drug for controlling seizures in eclampsia?
+1. Phenytoin
+2. Magnesium sulfate
+3. Labetalol
+4. Nifedipine
+Correct Option: Magnesium sulfate
+Explanation: Magnesium sulfate is the drug of choice for controlling convulsions in eclampsia .[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: eeca2d45-5d0f-4879-bb77-03739c55adb6
+Question: Which of the following is an indicator of severe preeclampsia?
+1. Blood pressure >140/90 mmHg
+2. Proteinuria >300 mg in 24 hours
+3. Thrombocytopenia
+4. Mild headache
+Correct Option: Thrombocytopenia
+Explanation: Thrombocytopenia (low platelet count) is a hallmark of severe preeclampsia .[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 8aeb9f77-981c-4a97-8ff5-081a9aea1725
+Question: What is the target blood pressure when treating severe preeclampsia?
+1. 160-180 mmHg systolic
+2. 120-130 mmHg systolic
+3. 140-160 mmHg systolic
+4. 180-200 mmHg systolic
+Correct Option: 140-160 mmHg systolic
+Explanation: The goal is to maintain systolic BP between 140 and 160 mmHg to prevent complications .[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 636d0bdf-9863-4da7-a8d5-9e12571e9c56
+Question: Low-dose aspirin in preeclampsia is beneficial because it:
+1. Inhibits prostaglandin synthesis
+2. Prevents platelet aggregation
+3. Improves renal function
+4. Reduces liver enzymes
+Correct Option: Prevents platelet aggregation
+Explanation: Low-dose aspirin reduces thromboxane production and helps in reducing the risk of preeclampsia .[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 6723d246-6006-44ba-b88d-f9a7cf638771
+Question: Which of the following is NOT typically associated with preeclampsia?
+1. Hemolysis
+2. Elevated liver enzymes
+3. Low platelet count
+4. Hypercalcemia
+Correct Option: Hypercalcemia
+Explanation: Preeclampsia is associated with HELLP syndrome (Hemolysis, Elevated Liver enzymes, Low Platelet count), not hypercalcemia .[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 6420bd38-f372-4307-a8b3-ebb98d625e7b
+Question: Magnesium sulfate therapy for eclampsia is stopped when which of the following signs is observed?
+1. Blood pressure drops below 90/60 mmHg
+2. Patellar reflexes are absent
+3. Heart rate exceeds 100 bpm
+4. Urine output decreases
+Correct Option: Patellar reflexes are absent
+Explanation: Absence of deep tendon reflexes, such as patellar reflexes, is a sign of magnesium toxicity .[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: bc93f910-5102-455f-a8ae-ae21fd9d317c
+Question: Which of the following risk factors predisposes a woman to preeclampsia?
+1. Multiple gestations
+2. Low BMI
+3. Hyperthyroidism
+4. Previous cesarean delivery
+Correct Option: Multiple gestations
+Explanation: Multiple gestations increase the risk of preeclampsia due to increased placental mass .[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 9d54a50a-9d7a-4494-8d30-8d5e40d1574c
+Question: In preeclampsia, which organ system is most commonly affected?
+1. Cardiovascular
+2. Renal
+3. Pulmonary
+4. Gastrointestinal
+Correct Option: Renal
+Explanation: Preeclampsia is primarily associated with renal dysfunction leading to proteinuria and oliguria .[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: d5d5f3d9-11b9-40ef-9a8f-2d1e30b6b975
+Question: Which of the following is a common fetal complication in severe preeclampsia?
+1. Macrosomia
+2. Intrauterine growth restriction (IUGR)
+3. Polyhydramnios
+4. Neonatal jaundice
+Correct Option: Intrauterine growth restriction (IUGR)
+Explanation: Due to placental insufficiency, the fetus often suffers from growth restriction .[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: c7dc7d12-d590-488c-a9e3-1d97b05a7886
+Question: Which biochemical marker has been studied as a potential predictor of preeclampsia?
+1. Fetal DNA in maternal serum
+2. HCG levels
+3. Serum creatinine
+4. Beta-hydroxybutyrate
+Correct Option: Fetal DNA in maternal serum
+Explanation: Detection of free fetal DNA in maternal serum is being studied as a potential early predictor of preeclampsia [Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 083e7117-ac52-44e2-941e-848d35d0790d
+Question: HELLP syndrome is a severe complication of preeclampsia. Which component is NOT part of HELLP syndrome?
+1. Hemolysis
+2. Elevated liver enzymes
+3. Low platelet count
+4. Hyperglycemia
+Correct Option: Hyperglycemia
+Explanation: HELLP syndrome consists of hemolysis, elevated liver enzymes, and low platelet count .[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: c3f2b0a0-277d-464d-ba9e-00d0a573e457
+Question: A 35-year-old woman presents at 30 weeks of gestation with BP of 170/110 mmHg, proteinuria, and severe headache. Which is the best course of action?
+1. Expectant management
+2. Immediate delivery
+3. Start magnesium sulfate and corticosteroids
+4. Administer antihypertensives only
+Correct Option: Start magnesium sulfate and corticosteroids
+Explanation: In cases of severe preeclampsia before 34 weeks, stabilization and administration of corticosteroids to enhance fetal lung maturity is advised .[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 073865e9-a42f-4b51-96b3-673950dbfc07
+Question: Which of the following clinical findings indicates the need for immediate delivery in preeclampsia?
+1. BP 150/100 mmHg
+2. Mild proteinuria
+3. Oliguria <500 mL/24 hours
+4. Absence of fetal movements for 1 hour
+Correct Option: Oliguria <500 mL/24 hours
+Explanation: Oliguria is a severe feature that indicates the progression of preeclampsia .[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: e81f21ad-2f50-41b6-81ea-a7913d937f4e
+Question: What is the role of corticosteroids in the management of preeclampsia?
+1. To lower blood pressure
+2. To prevent seizures
+3. To improve fetal lung maturity
+4. To reduce proteinuria
+Correct Option: To improve fetal lung maturity
+Explanation: Corticosteroids are given to preterm women to enhance fetal lung development .[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 8301785f-a914-4f99-a821-5b7b90e81388
+Question: A 28-year-old primigravida at 34 weeks gestation presents to the emergency room with severe headache, visual disturbances, and elevated blood pressure of 160/110 mm Hg. Urinalysis reveals proteinuria of +3. The patient denies any pre-existing medical conditions. What is the next best step in management?
+1. Observation and close monitoring
+2. Immediate delivery
+3. Magnesium sulfate administration
+4. Labetalol for BP control
+Correct Option: Magnesium sulfate administration
+Explanation: The patient has severe preeclampsia characterized by high blood pressure and significant proteinuria, along with symptoms like headache and visual disturbances. The immediate goal is seizure prevention, for which magnesium sulfate is the treatment of choice. Blood pressure control with Labetalol may also be required, but magnesium sulfate is crucial to prevent eclampsia.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 47656d84-1905-42f8-8773-1947a6e10628
+Question: A 32-year-old woman at 37 weeks gestation is diagnosed with preeclampsia with severe features, including blood pressure of 170/100 mm Hg and proteinuria of 4+. She has been admitted for management. Despite receiving antihypertensive medications, her condition does not improve. What is the definitive treatment for her condition?
+1. Inducing labor
+2. Administering corticosteroids
+3. Continuing antihypertensive therapy
+4. Delivery of the fetus
+Correct Option: Delivery of the fetus
+Explanation: The definitive treatment for preeclampsia, particularly with severe features, is delivery of the fetus. Antihypertensive therapy and magnesium sulfate are temporary measures to stabilize the mother, but delivery is necessary to prevent further complications.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 02c8af4f-dc7b-4f8b-8f53-c53165f6519e
+Question: A 30-year-old multigravida at 36 weeks gestation presents with upper right quadrant pain, nausea, and vomiting. Her blood pressure is 160/110 mm Hg, and lab results show elevated liver enzymes and thrombocytopenia. What is the likely diagnosis?
+1. HELLP syndrome
+2. Acute fatty liver of pregnancy
+3. Severe preeclampsia
+4. Gestational hypertension
+Correct Option: HELLP syndrome
+Explanation: The patient’s symptoms of upper quadrant pain, nausea, elevated blood pressure, and laboratory findings suggest HELLP syndrome (Hemolysis, Elevated Liver enzymes, and Low Platelets), a serious complication of preeclampsia that requires immediate management, often involving delivery.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 8f25f6fb-8550-457d-bbfa-85e2916a409b
+Question: A 26-year-old primigravida at 38 weeks gestation with preeclampsia is receiving magnesium sulfate. She suddenly becomes drowsy, her respiratory rate decreases to 8 breaths per minute, and patellar reflexes are absent. What is the most appropriate next step?
+1. Increase the magnesium sulfate infusion
+2. Discontinue magnesium sulfate and administer calcium gluconate
+3. Administer additional antihypertensives
+4. Immediate delivery by cesarean section
+Correct Option: Discontinue magnesium sulfate and administer calcium gluconate
+Explanation: The patient is experiencing magnesium sulfate toxicity, indicated by respiratory depression and loss of reflexes. The immediate treatment is to stop the magnesium sulfate infusion and administer calcium gluconate as the antidote.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 96f84962-a099-4deb-b099-6f510fbf71ef
+Question: A 35-year-old woman presents at 30 weeks of gestation with mild preeclampsia. Her blood pressure is 150/95 mm Hg, and urine protein is 1+. Fetal monitoring is normal. What is the recommended management at this stage?
+1. Immediate delivery
+2. Close monitoring and expectant management
+3. Administer magnesium sulfate
+4. Administer corticosteroids for fetal lung maturation
+Correct Option: Close monitoring and expectant management
+Explanation: For mild preeclampsia at 30 weeks with stable maternal and fetal conditions, expectant management with close monitoring is recommended to prolong the pregnancy and improve fetal outcomes.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 585b6dbc-6520-4754-9e50-3bbc60006566
+Question: A 32-year-old woman at 36 weeks of gestation presents to the emergency department with severe headaches, epigastric pain, and visual disturbances. Her blood pressure is 180/110 mmHg, and urine dipstick shows 4+ proteinuria. Laboratory findings reveal hemolysis, elevated liver enzymes, and a platelet count of 70,000/mm³, consistent with HELLP syndrome. What is the next best step in management?
+1. Immediate induction of labor
+2. Expectant management with antihypertensive therapy
+3. Administration of corticosteroids and delivery
+4. Magnesium sulfate for seizure prophylaxis
+Correct Option: Magnesium sulfate for seizure prophylaxis
+Explanation: This patient has severe preeclampsia complicated by HELLP syndrome (Hemolysis, Elevated Liver enzymes, Low Platelets). The definitive treatment is immediate delivery, regardless of gestational age, to prevent maternal and fetal complications. Since she is at 36 weeks gestation, the fetus is considered near-term, making immediate delivery the best option. Corticosteroids may be given to improve maternal and fetal outcomes. Magnesium sulfate should also be administered for seizure prophylaxis, but delivery remains the primary intervention.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: ab0bafda-2ce1-443e-b920-b8b607c06d6e
+Question: A 28-year-old woman delivered a healthy baby via cesarean section 24 hours ago. She now complains of severe right upper quadrant pain, nausea, and vomiting. Her laboratory tests show hemolysis, elevated liver enzymes, and a platelet count of 50,000/mm³. What is the most likely diagnosis?
+1. Postpartum eclampsia
+2. Acute fatty liver of pregnancy
+3. Postpartum HELLP syndrome
+4. Preeclampsia with severe features
+Correct Option: Postpartum HELLP syndrome
+Explanation: HELLP syndrome can manifest postpartum, particularly within 48 hours after delivery. The patient’s symptoms and laboratory findings of hemolysis, elevated liver enzymes, and low platelets point to this diagnosis. Prompt management includes magnesium sulfate, blood pressure control, and possibly transfusions or intensive care monitoring.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 411e6a0e-3b58-45a9-9f64-8226c6fb88e2
+Question: A 35-year-old pregnant woman at 30 weeks of gestation presents with generalized tonic-clonic seizures. Her blood pressure is 160/100 mmHg, and she has 3+ proteinuria. Laboratory tests show hemolysis, elevated liver enzymes, and low platelets. What is the best initial treatment for this patient?
+1. Diazepam for seizure control
+2. Magnesium sulfate
+3. Antihypertensive therapy
+4. Immediate cesarean section
+Correct Option: Magnesium sulfate
+Explanation: This patient has eclampsia, a complication of preeclampsia.Magnesium sulfate is the first-line treatment for seizure control in eclampsia. After stabilizing the patient, delivery is indicated, but the priority is seizure control and maternal stabilization.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: e4bc0558-7f7e-471b-92dc-1f58c042be32
+Question: A 29-year-old woman with a history of HELLP syndrome during her first pregnancy is now pregnant again. She is concerned about the recurrence of HELLP syndrome. What is her risk of developing HELLP syndrome again?
+1. 1–5%
+2. 5–10%
+3. 10–20%
+4. 20–30%
+Correct Option: 10–20%
+Explanation: The recurrence risk of HELLP syndrome in future pregnancies ranges between 10% and 20%. Close monitoring is required in subsequent pregnancies to detect early signs of preeclampsia or HELLP syndrome.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 10135903-8a47-4872-9882-efeac90c6a5b
+Question: A 34-year-old woman with preeclampsia is admitted at 34 weeks of gestation with a blood pressure of 170/100 mmHg. Her platelet count is 90,000/mm³, and liver enzymes are elevated. What is the safest method of anesthesia for cesarean delivery?
+1. General anesthesia
+2. Epidural anesthesia
+3. Spinal anesthesia
+4. Local anesthesia
+Correct Option: General anesthesia
+Explanation: In the setting of thrombocytopenia (<100,000/mm³), regional anesthesia such as epidural or spinal may increase the risk of epidural hematoma.Therefore, general anesthesia is preferred for cesarean delivery in these patients.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 2eaf96af-1412-4c46-ba61-3e12c25c8f6c
+Question: A 30-year-old pregnant woman at 20 weeks gestation is diagnosed with pulmonary hypertension. She complains of exertional dyspnea and occasional chest pain. Her oxygen saturation is 92%. What is the most appropriate management?
+1. Termination of pregnancy
+2. Close monitoring and continuation of pregnancy
+3. Anticoagulation with low-molecular-weight heparin (LMWH)
+4. Pulmonary vasodilator therapy
+Correct Option: Termination of pregnancy
+Explanation: Pulmonary hypertension in pregnancy carries a high maternal mortality risk. Termination of pregnancy is often recommended due to the increased cardiovascular strain during pregnancy, which can worsen the condition.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 1cca728c-ed7f-4363-b21e-13675993a51c
+Question: A 24-year-old woman with Marfan syndrome presents at 28 weeks of gestation with sudden onset chest pain and shortness of breath. A chest X-ray reveals an enlarged aortic root. Echocardiography confirms an aortic dissection. What is the immediate management?
+1. Elective cesarean section
+2. Beta-blockers to control blood pressure
+3. Aortic root surgery
+4. Antihypertensive medications
+Correct Option: Aortic root surgery
+Explanation: Marfan syndrome predisposes to aortic dissection, which is life-threatening. Surgical repair of the aortic root is necessary in cases of dissection, even during pregnancy.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: bf79c3c1-34a7-48b4-b095-1716ff7b83de
+Question: A 32-year-old woman presents at 36 weeks of gestation with dyspnea, fatigue, and swelling of the lower extremities. Echocardiography shows an ejection fraction of 30%, suggesting peripartum cardiomyopathy. What is the best course of action?
+1. Immediate delivery by cesarean section
+2. Management with diuretics and beta-blockers
+3. Anticoagulation therapy
+4. Expectant management until term
+Correct Option: Management with diuretics and beta-blockers
+Explanation: Peripartum cardiomyopathy is managed with medications such as diuretics, beta-blockers, and sometimes anticoagulation. Immediate delivery is not always necessary unless there is fetal or maternal distress.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: a31ea08f-bd75-442a-b423-3126d4cbc244
+Question: A 26-year-old woman with a known atrial septal defect (ASD) is 32 weeks pregnant. She reports palpitations and mild dyspnea but is otherwise well. Her oxygen saturation is 98%. What is the recommended management?
+1. Elective closure of ASD during pregnancy
+2. Management with beta-blockers
+3. No specific treatment, continue monitoring
+4. Immediate delivery
+Correct Option: No specific treatment, continue monitoring
+Explanation: An atrial septal defect typically does not cause significant problems during pregnancy, and most cases are managed with regular monitoring. Surgery is generally postponed until after delivery unless complications arise.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: f4b6d589-e43a-4b53-b2ff-6efffcdc3a97
+Question: Which of the following is a characteristic symptom of Acute Fatty Liver of Pregnancy?
+1. Jaundice
+2. Hypertension
+3. Edema
+4. Proteinuria
+Correct Option: Jaundice
+Explanation: Acute fatty liver of pregnancy presents commonly with jaundice, along with other hepatic dysfunction symptoms.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 898b15ca-f8b9-470d-bbf5-b2e13ca6ffce
+Question: The management of acute fatty liver of pregnancy primarily involves:
+1. Emergency Cesarean Section
+2. Dietary changes
+3. Antiviral drugs
+4. Conservative management
+Correct Option: Emergency Cesarean Section
+Explanation: Immediate delivery is usually the definitive treatment for acute fatty liver of pregnancy, especially after 34 weeks of gestation.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 742e5dfd-a192-4eea-a9c6-a0f34cb289a2
+Question: Which of the following is a major complication of untreated acute fatty liver of pregnancy?
+1. Hypoglycemia
+2. Pulmonary edema
+3. Hepatic encephalopathy
+4. All of the above
+Correct Option: All of the above
+Explanation: If left untreated, acute fatty liver can lead to hypoglycemia, encephalopathy, and even multi-organ failure.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: b7a83413-83e3-434a-9fd3-df4d034cd9f3
+Question: What laboratory finding is typical in acute fatty liver of pregnancy?
+1. Hypoglycemia
+2. Hyperglycemia
+3. Low AST levels
+4. High albumin levels
+Correct Option: Hypoglycemia
+Explanation: Hypoglycemia is common in acute fatty liver of pregnancy due to impaired liver function.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: f6c9c5ea-862a-422d-95fd-10d5bf79677c
+Question: The earliest sign of acute fatty liver in pregnancy is usually:
+1. Jaundice
+2. Nausea and vomiting
+3. Pruritus
+4. Hypertension
+Correct Option: Nausea and vomiting
+Explanation: Early nonspecific symptoms such as nausea and vomiting often precede the more severe manifestations of the disease.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 0c11ca16-490b-4073-8aad-74eec3cf8aa4
+Question: Which test is most useful in differentiating acute fatty liver of pregnancy from HELLP syndrome?
+1. Liver biopsy
+2. Serum bile acids
+3. Prothrombin time
+4. Platelet count
+Correct Option: Liver biopsy
+Explanation: Liver biopsy may help in difficult cases, showing microvesicular steatosis in acute fatty liver compared to HELLP.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 56a5bd8b-c7a7-4693-a8c3-5883c4b3091c
+Question: Acute fatty liver of pregnancy typically presents in which trimester?
+1. First
+2. Second
+3. Third
+4. Postpartum period
+Correct Option: Third
+Explanation: The disease usually presents in the third trimester, typically around 34 weeks of gestation.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 6a98fee8-939c-4ef1-8384-f83fd7895ac4
+Question: The hallmark histological feature of acute fatty liver of pregnancy is:
+1. Large-droplet steatosis
+2. Microvesicular steatosis
+3. Hepatic fibrosis
+4. Hepatic cirrhosis
+Correct Option: Microvesicular steatosis
+Explanation: Microvesicular fatty infiltration of hepatocytes is the classic histological finding in acute fatty liver.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 8a726b89-2abe-4285-aaba-ba328c505f22
+Question: Which condition is often associated with acute fatty liver of pregnancy?
+1. Preeclampsia
+2. Diabetes mellitus
+3. Hyperthyroidism
+4. Urinary tract infection
+Correct Option: Preeclampsia
+Explanation: Acute fatty liver of pregnancy has a strong association with preeclampsia.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 163e2eaa-1573-4237-b372-e800ed2e634a
+Question: Which of the following should be avoided in the management of acute fatty liver of pregnancy?
+1. Immediate delivery
+2. Conservative waiting until labor
+3. Intensive care monitoring
+4. Blood product transfusion
+Correct Option: Conservative waiting until labor
+Explanation: Conservative waiting can worsen maternal and fetal outcomes; immediate delivery is preferred[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 595a5fde-3026-469a-9f51-c26cc42fecbe
+Question: Which of the following lab results is most commonly seen in acute fatty liver of pregnancy?
+1. Hypoalbuminemia
+2. Hypernatremia
+3. Elevated bilirubin
+4. Thrombocytopenia
+Correct Option: Elevated bilirubin
+Explanation: Elevated bilirubin is a common feature as liver function is impaired in acute fatty liver of pregnancy.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: ba87020e-4ca3-4c0b-aaf1-1ca2d72da7ba
+Question: In acute fatty liver of pregnancy, the initial management includes all of the following EXCEPT:
+1. Aggressive rehydration
+2. Close monitoring of liver enzymes
+3. Beta-blockers for hypertension
+4. Immediate delivery of the fetus
+Correct Option: Beta-blockers for hypertension
+Explanation: Beta-blockers are not typically used in the management of acute fatty liver; the mainstay of treatment is delivery.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 1a97c0da-e685-47ed-8f13-0e662a1f3fe0
+Question: Which of the following complications can occur in the infant of a mother with acute fatty liver of pregnancy?
+1. Neonatal hypoglycemia
+2. Neonatal jaundice
+3. Respiratory distress syndrome
+4. All of the above
+Correct Option: All of the above
+Explanation: Neonatal complications include hypoglycemia, jaundice, and respiratory distress due to the maternal illness.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: f421f942-e414-4789-9acf-81613988294e
+Question: Acute fatty liver of pregnancy is distinguished from intrahepatic cholestasis of pregnancy by:
+1. Timing of onset
+2. Presence of pruritus
+3. Degree of liver enzyme elevation
+4. Presence of hepatic failure
+Correct Option: Presence of hepatic failure
+Explanation: Acute fatty liver often progresses to liver failure, which is not seen in intrahepatic cholestasis.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: c483b3b1-55e8-47c3-8283-e805c80ee83a
+Question: A severe consequence of untreated acute fatty liver in pregnancy is:
+1. Maternal death
+2. Fetal macrosomia
+3. Polyhydramnios
+4. Gestational diabetes
+Correct Option: Maternal death
+Explanation: Untreated cases can lead to multi-organ failure and maternal death.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: ee755767-c38b-49ae-baec-2d5661aa2d4d
+Question: What is the most common type of molar pregnancy?
+1. Partial mole
+2. Complete mole
+3. Invasive mole
+4. Choriocarcinoma
+Correct Option: Complete mole
+Explanation: A complete mole is the most common type of molar pregnancy, where there is an abnormal fertilization of an egg without a nucleus.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 18a40d69-4a97-441e-a7aa-3d215167d445
+Question: Which of the following is a classic ultrasound finding in a molar pregnancy?
+1. Snowstorm appearance
+2. Double decidual sac sign
+3. Gestational sac with fetal pole
+4. Fluid-filled sacs
+Correct Option: Snowstorm appearance
+Explanation: The classic snowstorm appearance on ultrasound is due to the presence of multiple cystic areas, characteristic of a complete mole.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: d938a56b-961e-41ee-9b87-4706e7ec6c36
+Question: Which hormone is typically elevated in molar pregnancies?
+1. Estrogen
+2. Progesterone
+3. Human chorionic gonadotropin (hCG)
+4. Luteinizing hormone (LH)
+Correct Option: Human chorionic gonadotropin (hCG)
+Explanation: hCG levels are abnormally elevated in molar pregnancies.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 37012027-be43-49b8-8f75-33a23e8f6e37
+Question: What is the standard initial management for a complete molar pregnancy?
+1. Chemotherapy
+2. Surgical evacuation
+3. Observation
+4. Radiation therapy
+Correct Option: Surgical evacuation
+Explanation: Suction curettage is the standard treatment for a molar pregnancy.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: b18b5d12-6586-48e1-82bb-fe4b47973980
+Question: Which of the following is a risk factor for molar pregnancy?
+1. Advanced maternal age
+2. Multiparity
+3. Pre-existing hypertension
+4. Prior uterine surgery
+Correct Option: Advanced maternal age
+Explanation: Women over the age of 35 are at an increased risk of molar pregnancies.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: c60bf7f1-83c6-4a78-94cb-983bdc420790
+Question: Which of the following is true regarding the recurrence risk of molar pregnancy?
+1. Recurrence is rare
+2. Risk increases with each subsequent pregnancy
+3. Prior history of molar pregnancy increases the risk
+4. There is no increased risk in future pregnancies
+Correct Option: Prior history of molar pregnancy increases the risk
+Explanation: Women who have had a molar pregnancy have an increased risk of recurrence in subsequent pregnancies.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: cf0afad9-ae40-4853-97e3-9a60ee7fa552
+Question: Which of the following is a potential complication of untreated molar pregnancy?
+1. Preeclampsia before 20 weeks gestation
+2. Preterm labor
+3. Intrauterine growth restriction (IUGR)
+4. Complete resolution without treatment
+Correct Option: Preeclampsia before 20 weeks gestation
+Explanation: Preeclampsia occurring before 20 weeks is associated with molar pregnancies.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 697ec56d-e7bf-4d16-8650-2c437a7423aa
+Question: What is the follow-up protocol after treatment of a molar pregnancy?
+1. Weekly hCG monitoring until normal for 3 weeks
+2. Monthly hCG monitoring for 6 months
+3. Annual pelvic ultrasounds
+4. No follow-up is required
+Correct Option: Monthly hCG monitoring for 6 months
+Explanation: After treatment, hCG levels are monitored regularly to ensure that the molar tissue has been completely evacuate[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: d8a0d22d-5f92-40bd-9b78-b992035d6a3f
+Question: Which chemotherapy agent is most commonly used for gestational trophoblastic neoplasia (GTN)?
+1. Methotrexate
+2. Cisplatin
+3. Vincristine
+4. Doxorubicin
+Correct Option: Methotrexate
+Explanation: Methotrexate is commonly used for the treatment of GTN, especially in low-risk cases.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 05014a8e-cb07-44ab-b54b-83db5fa3849f
+Question: Which of the following is a common site for metastasis in choriocarcinoma?
+1. Liver
+2. Brain
+3. Lungs
+4. Kidneys
+Correct Option: Lungs
+Explanation: The lungs are the most common site of metastasis in choriocarcinoma, a form of gestational trophoblastic neoplasia[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 313e552b-ab35-48c4-8bb5-f2f7fb34736b
+Question: What is the recommended duration of contraception following the treatment of a molar pregnancy?
+1. 6 months
+2. 12 months
+3. 18 months
+4. No contraception is required
+Correct Option: 12 months
+Explanation: Contraception is recommended for 12 months following treatment to ensure hCG levels return to normal and there is no recurrence.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: ce190b7d-f7bb-4ca4-bebb-d8e4c9f8f09c
+Question: Which of the following is considered a high-risk feature for developing gestational trophoblastic neoplasia (GTN) after a molar pregnancy?
+1. Age <20 years
+2. Elevated hCG >100,000 IU/L
+3. Multiple gestation
+4. Fetal tissue present
+Correct Option: Elevated hCG >100,000 IU/L
+Explanation: High hCG levels indicate a higher risk of progression to GTN.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: ca562fe3-3b33-409b-a707-d82a4eade032
+Question: What is the mechanism of action of methotrexate in the treatment of GTN?
+1. Inhibition of DNA synthesis
+2. Promotion of apoptosis
+3. Inhibition of protein synthesis
+4. Stimulation of immune response
+Correct Option: Inhibition of DNA synthesis
+Explanation: Methotrexate inhibits dihydrofolate reductase, disrupting DNA synthesis in rapidly dividing trophoblastic cells.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: df6933ed-33f7-4635-a879-b3c4c6e138be
+Question: Which of the following histological features is characteristic of a complete mole?
+1. Trophoblastic hyperplasia without villous edema
+2. Villous edema without trophoblastic proliferation
+3. Trophoblastic hyperplasia and villous edema
+4. Absence of trophoblastic tissue
+Correct Option: Trophoblastic hyperplasia and villous edema
+Explanation: Complete moles show trophoblastic proliferation with hydropic swelling of the villi.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 855ebfc6-6276-4be2-8384-7c4bee78fed1
+Question: Which genetic abnormality is associated with a complete molar pregnancy?
+1. Triploidy
+2. Tetraploidy
+3. Diploidy
+4. Monosomy
+Correct Option: Diploidy
+Explanation: Complete moles are typically diploid, usually 46XX, with all chromosomes of paternal origin.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 4d50cbec-74cf-4c3b-87ec-7ecab7df214c
+Question: A 35-year-old woman presents with severe nausea, vomiting, and vaginal bleeding at 12 weeks of gestation. Ultrasound shows a “snowstorm” pattern, and serum hCG is >100,000 IU/L. What is the next step in management?
+1. Expectant management
+2. Suction curettage
+3. Chemotherapy
+4. Methotrexate administration
+Correct Option: Suction curettage
+Explanation: Suction curettage is the treatment of choice for a molar pregnancy.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 8cb5cec5-adf1-4c28-b4e9-ed6719340a97
+Question: A patient with a history of complete molar pregnancy presents for follow-up 3 months after evacuation. Her hCG levels are rising again. What is the most likely diagnosis?
+1. Preeclampsia
+2. Recurrence of molar pregnancy
+3. Gestational trophoblastic neoplasia
+4. Incomplete evacuation
+Correct Option: Gestational trophoblastic neoplasia
+Explanation: Rising hCG after molar evacuation suggests the development of GTN.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 26573233-ef5f-428c-938e-41e4f854d707
+Question: A 28-year-old woman with a partial molar pregnancy undergoes evacuation. Her follow-up hCG levels are undetectable at 3 months. What is the recommended duration of contraception?
+1. 3 months
+2. 6 months
+3. 12 months
+4. 18 months
+Correct Option: 12 months
+Explanation: Contraception is advised for 12 months to ensure no recurrence.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 5b19a881-8017-4f48-989b-2f7ae6e7f0fe
+Question: A 40-year-old woman presents with shortness of breath and hemoptysis. She has a history of a complete molar pregnancy. Chest X-ray shows multiple lung nodules. What is the most likely diagnosis?
+1. Pulmonary embolism
+2. Gestational trophoblastic neoplasia with lung metastasis
+3. Tuberculosis
+4. Sarcoidosis
+Correct Option: Gestational trophoblastic neoplasia with lung metastasis
+Explanation: Lung metastasis is common in GTN, particularly in cases of choriocarcinoma.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: dca4d32c-2648-41c9-b4b2-db388df20e8e
+Question: What is Rh Isoimmunization?
+1. Antibody production in response to an Rh antigen
+2. Antibody production in response to a foreign antigen
+3. Production of immune antibodies in response to foreign red cell antigens from another species
+4. Production of antibodies naturally
+Correct Option: Antibody production in response to an Rh antigen
+Explanation: Rh isoimmunization occurs when immune antibodies are produced in response to foreign red cell antigens from another individual of the same species, especially involving the Rh antigen.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 6318bab9-93ce-4ee8-a260-22581752754c
+Question: Which test is used to determine fetal genotype for Rh factors?
+1. Ultrasound
+2. Amniocentesis
+3. Noninvasive fetal genotype using maternal blood
+4. Doppler study
+Correct Option: Noninvasive fetal genotype using maternal blood
+Explanation: Noninvasive fetal genotype (ffDNA) using maternal blood for D, C, c, E, e, and K antigens is used when maternal red cell antibodies are present.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: c9448f47-0d3a-48e0-9138-5af5233dbc23
+Question: What is the most important factor in Rh Isoimmunization?
+1. Sensitization
+2. Antibody production
+3. Red cell incompatibility
+4. Genetic inheritance of Rh factors
+Correct Option: Sensitization
+Explanation: Rh isoimmunization begins with sensitization, where the mother’s immune system is exposed to the Rh antigen.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: a6865851-10ab-4944-a09f-c04ea3d95baa
+Question: Which Rh antigen is considered most immunogenic?
+1. RhD
+2. RhC
+3. RhE
+4. All of the above
+Correct Option: RhD
+Explanation: The RhD antigen is the most immunogenic, and its presence determines Rh-positive status.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 4410b3ca-78ab-4520-812b-3d1c9b1ac61a
+Question: What is the common treatment for a pregnant woman with Rh isoimmunization?
+1. Blood transfusion
+2. Immunoglobulin administration
+3. Steroid therapy
+4. Bed rest
+Correct Option: Immunoglobulin administration
+Explanation: Administration of anti-D immunoglobulin can prevent Rh isoimmunization in Rh-negative women.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 457fbdf2-ec5b-418b-9c36-c4ff0da68d7f
+Question: At what stage does Rh Isoimmunization occur?
+1. After the first pregnancy
+2. Only during blood transfusion
+3. In two stages: sensitization and immunization
+4. Immediately after delivery
+Correct Option: In two stages: sensitization and immunization
+Explanation: Rh isoimmunization occurs in two stages: first sensitization, followed by immunization.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: bcfede50-a3ba-48f1-a8d3-4671801bbd3b
+Question: What determines whether an Rh-negative mother is at risk for isoimmunization?
+1. Her blood type
+2. The Rh genotype of the father
+3. Presence of antibodies in maternal serum
+4. The age of the mother
+Correct Option: The Rh genotype of the father
+Explanation: The father’s Rh genotype determines the risk; if he is Rh-positive and homozygous, all offspring will be Rh-positive, potentially causing isoimmunization.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 468566f5-2e06-4ea0-bc86-b328cefa6fa0
+Question: Which antibody is responsible for Rh Isoimmunization?
+1. IgM
+2. IgG
+3. IgA
+4. IgE
+Correct Option: IgG
+Explanation: IgG antibodies are responsible for Rh isoimmunization as they can cross the placenta and affect the fetus.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 71a94733-bb26-4979-9ef5-e93549acdfcf
+Question: Which maternal blood test indicates Rh Isoimmunization?
+1. Indirect Coombs test
+2. Direct Coombs test
+3. ABO typing
+4. HLA typing
+Correct Option: Indirect Coombs test
+Explanation: The indirect Coombs test checks for the presence of maternal antibodies against Rh-positive red cells.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: c59526ea-0c33-433d-b94d-28e57e3407ad
+Question: Which genetic locus is responsible for RhD antigen?
+1. Chromosome 1
+2. Chromosome 6
+3. Chromosome 9
+4. Chromosome 22
+Correct Option: Chromosome 1
+Explanation: The genetic locus for the RhD antigen is located on the short arm of chromosome 1.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 890db751-d711-460e-9f32-92e2f4d05924
+Question: In a case of severe Rh isoimmunization, what fetal intervention is most often recommended
+1. Early delivery
+2. Intrauterine blood transfusion
+3. Exchange transfusion after birth
+4. Fetal monitoring only
+Correct Option: Intrauterine blood transfusion
+Explanation: In cases of severe isoimmunization, intrauterine transfusion is indicated to manage fetal anemia[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 2036fdff-0ad8-4f9e-838a-1e9d51b2bfd7
+Question: What is the genotype of an Rh-positive individual who is heterozygous for RhD?
+1. Dd
+2. DD
+3. dd
+4. None of the above
+Correct Option: Dd
+Explanation: Heterozygous Rh-positive individuals have the genotype Dd, where D is dominant.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: c84c2c0c-4288-4540-92b9-244bcbef4dc2
+Question: In a sensitized Rh-negative mother, what is the recommended frequency of antibody titers?
+1. Every 4 weeks
+2. Every 2 weeks
+3. Every 6 weeks
+4. Every 8 weeks
+Correct Option: Every 4 weeks
+Explanation: Antibody titers should be monitored every 4 weeks during pregnancy to detect rising levels indicating fetal risk.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 0d73d023-9dcd-4047-8157-660aacfc9d72
+Question: Which of the following increases the risk of Rh Isoimmunization?
+1. ABO incompatibility
+2. Maternal trauma during pregnancy
+3. Normal delivery
+4. Low maternal antibody levels
+Correct Option: Maternal trauma during pregnancy
+Explanation: Maternal trauma can lead to fetomaternal hemorrhage, increasing the risk of Rh isoimmunization.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 737414f5-f7cd-454c-b9f2-05dd7b7a55d8
+Question: At what antibody titer is Rh Isoimmunization considered severe enough to warrant intervention?
+1. 1:8
+2. 1:16
+3. 1:32
+4. 1:64
+Correct Option: 1:32
+Explanation: A titer of 1:32 or higher is considered severe and may require fetal monitoring and intervention.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 491c72b8-8cef-4b04-acbb-3fb24e6d5843
+Question: Which of the following is the most common cause of oligohydramnios?
+1. Diabetes mellitus
+2. Renal agenesis in fetus
+3. Twin-Twin transfusion syndrome
+4. Polycythemia
+Correct Option: Renal agenesis in fetus
+Explanation: Oligohydramnios is frequently caused by renal abnormalities, particularly renal agenesis, where the fetus produces less urine.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 70d3642d-5053-47dc-bc2d-b850fcbc2490
+Question: Polyhydramnios is most commonly associated with which fetal condition?
+1. Fetal growth restriction
+2. Renal agenesis
+3. Anencephaly
+4. Duodenal atresia
+Correct Option: Anencephaly
+Explanation: Polyhydramnios is often seen in anencephaly because of the absence of fetal swallowing reflex, leading to excess amniotic fluid.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: c6718057-ec0f-4c18-af25-71cbaae6c74d
+Question: Which clinical sign is most indicative of polyhydramnios during pregnancy?
+1. Increased fetal movements
+2. Reduced fetal heart rate
+3. Abdominal distention greater than gestational age
+4. Decreased uterine size
+Correct Option: Abdominal distention greater than gestational age
+Explanation: Polyhydramnios often results in a larger-than-expected uterine size for the gestational age due to excess amniotic fluid.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: bf899f47-da01-46ba-9c20-91b1b40904e4
+Question: Oligohydramnios is associated with all of the following EXCEPT:
+1. Prolonged labor
+2. Fetal deformities
+3. Cord compression
+4. Increased fetal movements
+Correct Option: Increased fetal movements
+Explanation: Oligohydramnios leads to decreased fetal movements due to limited space within the uterus.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: f41a5b51-8cd4-4332-84b3-930316b0c10d
+Question: Which of the following is a treatment for oligohydramnios during labor?
+1. Amnioinfusion
+2. Amnioreduction
+3. Oxytocin infusion
+4. Cesarean section
+Correct Option: Amnioinfusion
+Explanation: Amnioinfusion is often used to relieve cord compression in oligohydramnios cases during labor.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: c9692dea-cee3-4ce0-80fc-ca49490d7f51
+Question: A pregnant woman at 32 weeks presents with polyhydramnios. The next best step in management is:
+1. Wait for spontaneous labor
+2. Amnioreduction
+3. Administer corticosteroids
+4. Bed rest and hydration
+Correct Option: Amnioreduction
+Explanation: Amnioreduction is often used to relieve symptoms in polyhydramnios and prevent complications like preterm labor.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 80c4a4e9-21b3-4c8f-b4ca-3f7f4fdf0da6
+Question: The most likely outcome of untreated severe oligohydramnios in early pregnancy is:
+1. Fetal macrosomia
+2. Cord prolapse
+3. Pulmonary hypoplasia
+4. Shoulder dystocia
+Correct Option: Pulmonary hypoplasia
+Explanation: Severe oligohydramnios in early pregnancy can restrict lung development, leading to pulmonary hypoplasia.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 0d2c1ad8-9bc0-464d-98cb-d27750b22059
+Question: Which ultrasound finding is most indicative of polyhydramnios?
+1. Largest vertical pocket <2 cm
+2. Amniotic fluid index >24 cm
+3. Absent amniotic fluid
+4. Largest vertical pocket >8 cm
+Correct Option: Amniotic fluid index >24 cm
+Explanation: Polyhydramnios is diagnosed when the amniotic fluid index (AFI) exceeds 24 cm.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 963da413-4959-4506-aa16-9d017ca55cba
+Question: Which is NOT a complication of oligohydramnios?
+1. Preterm labor
+2. Amniotic band syndrome
+3. Prolonged labor
+4. Fetal renal malformations
+Correct Option: Preterm labor
+Explanation: Oligohydramnios is usually associated with prolonged labor rather than preterm labor.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: c16aa900-d09e-4aa3-9547-c8afe11497a8
+Question: Which fetal complication is commonly associated with oligohydramnios?
+1. Pulmonary hypoplasia
+2. Macrosomia
+3. Hydrops fetalis
+4. Cardiac anomalies
+Correct Option: Pulmonary hypoplasia
+Explanation: Oligohydramnios can lead to underdevelopment of the fetal lungs (pulmonary hypoplasia).[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: a3129a13-e219-4b13-a2cf-3927928c5eb9
+Question: Which is the most severe complication of untreated polyhydramnios?
+1. Fetal macrosomia
+2. Preterm labor
+3. Cord prolapse
+4. Maternal hemorrhage
+Correct Option: Maternal hemorrhage
+Explanation: Sudden rupture of membranes in polyhydramnios can lead to abrupt uterine decompression and maternal hemorrhage.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 9c81f685-f38f-4fd1-8f3f-0e03c17daf0d
+Question: Which of the following drugs is NOT typically used in the management of polyhydramnios?
+1. Indomethacin
+2. Sulindac
+3. Amnioinfusion
+4. Methotrexate
+Correct Option: Methotrexate
+Explanation: Methotrexate is not used in polyhydramnios; it is used for ectopic pregnancy.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 50056a02-a60f-453e-b101-6aa6d8b70556
+Question: Polyhydramnios is associated with which of the following genetic disorders?
+1. Down syndrome
+2. Turner's syndrome
+3. Edward’s syndrome
+4. Klinefelter’s syndrome
+Correct Option: Edward’s syndrome
+Explanation: Polyhydramnios is often associated with chromosomal anomalies such as Edward’s syndrome (Trisomy 18).[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 8f4cf254-ba5a-4f1c-89cd-b66bb210b798
+Question: What is the most common maternal condition leading to polyhydramnios?
+1. Chronic hypertension
+2. Diabetes mellitus
+3. Renal disease
+4. Autoimmune disorders
+Correct Option: Diabetes mellitus
+Explanation: Diabetes is a well-known cause of polyhydramnios due to fetal hyperglycemia and polyuria.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: ae6b1d0e-b438-4da7-bc20-d5572cb78016
+Question: The maximum vertical pocket measurement used to diagnose oligohydramnios is:
+1. <5 cm
+2. <2 cm
+3. <3 cm
+4. <4 cm
+Correct Option: <2 cm
+Explanation: Oligohydramnios is defined when the maximum vertical pocket is less than 2 cm.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: a1d59be0-2427-47d6-8633-7f7d5473ce5e
+Question: A 34-year-old woman at 28 weeks gestation presents with a uterine size larger than dates, and an ultrasound confirms polyhydramnios. She is diabetic, and fetal ultrasound shows no abnormalities. What is the next best step in managing her case?
+1. Immediate delivery
+2. Fetal echocardiogram
+3. Amnioreduction
+4. Tight glycemic control
+Correct Option: Tight glycemic control
+Explanation: In cases of polyhydramnios associated with diabetes, glycemic control is essential to manage the condition.
+--------------------------------------------------
+UID: 80429ef2-5737-4d01-8533-4974589ad58f
+Question: Which act governs Medical Termination of Pregnancy (MTP) in India?
+1. Indian Penal Code
+2. MTP Act 1971
+3. Prenatal Diagnostic Techniques Act
+4. Indian Reproductive Health Act
+Correct Option: MTP Act 1971
+Explanation: The MTP Act of 1971 legalized abortion in India under specific circumstances.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: e93e86c3-bfde-4b1f-ad61-40fdacc4df6f
+Question: Up to how many weeks can pregnancy be terminated under the MTP Act?
+1. 8 weeks
+2. 12 weeks
+3. 20 weeks
+4. 24 weeks
+Correct Option: 20 weeks
+Explanation: Termination is permitted up to 20 weeks under the act, and opinion of two doctors is required for termination beyond 12 weeks .[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: d527e248-fcc6-408c-bf88-e0f304bfbc9b
+Question: Which of the following is an indication for therapeutic termination under the MTP Act?
+1. Cardiac disease (Grade III and IV)
+2. Hyperemesis gravidarum
+3. Unplanned pregnancy
+4. Gestational diabetes
+Correct Option: Cardiac disease (Grade III and IV)
+Explanation: Cardiac disease (Grade III and IV) with a history of decompensation is one of the major therapeutic indications for MTP .[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: a7393b9d-e366-46e2-8a93-5f4a5278c849
+Question: Which is the most commonly used medical method for MTP in the first trimester?
+1. Mifepristone and misoprostol
+2. Methotrexate
+3. Carboprost
+4. Oxytocin
+Correct Option: Mifepristone and misoprostol
+Explanation: Mifepristone and misoprostol is the standard regimen for first trimester medical abortion .[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 7ab76eae-5f9b-4caf-bce9-9e4189309f59
+Question: Which of the following is NOT a recommended surgical method for first trimester MTP?
+1. Vacuum aspiration
+2. Suction evacuation
+3. Dilation and curettage
+4. Hysterotomy
+Correct Option: Hysterotomy
+Explanation: Hysterotomy is typically reserved for cases where other methods have failed or are contraindicated[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: cd9902c0-755d-4cc9-b4e9-b13195bc9656
+Question: Which complication is most likely to arise in midtrimester termination of pregnancy?
+1. Menstrual disturbances
+2. Uterine perforation
+3. Endometriosis
+4. Pulmonary embolism
+Correct Option: Uterine perforation
+Explanation: Uterine perforation is a known complication of second trimester procedures[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 531ce694-0f73-4d18-aae1-7e3c2fe5f119
+Question: What is the role of anti-D immunoglobulin in Rh-negative women undergoing MTP?
+1. Prevent infection
+2. Prevent Rh isoimmunization
+3. Aid in uterine contraction
+4. Prevent hemorrhage
+Correct Option: Prevent Rh isoimmunization
+Explanation: Anti-D immunoglobulin is administered within 72 hours post-abortion to prevent Rh isoimmunization[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 43170440-1341-46cb-8d8c-5b052081089c
+Question: Which of the following drugs is NOT used for medical termination of pregnancy?
+1. Mifepristone
+2. Methotrexate
+3. Dinoprostone
+4. Furosemide
+Correct Option: Furosemide
+Explanation: Furosemide is a diuretic and not used for MTP .[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: bd7ffaaf-50a1-4dee-82a7-7bfa9ce8fba3
+Question: What is the most common indication for MTP due to genetic concerns?
+1. Down syndrome
+2. Cardiac defects
+3. Neural tube defects
+4. Hemophilia
+Correct Option: Down syndrome
+Explanation: Termination is often considered in cases of chromosomal abnormalities such as Down syndrome .[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: b2d98a74-350f-46b4-bc2d-b0806e5645c0
+Question: Which of the following is a medical method of second trimester abortion?
+1. Suction evacuation
+2. Hysterotomy
+3. Prostaglandins and oxytocin
+4. Menstrual regulation
+Correct Option: Prostaglandins and oxytocin
+Explanation: Prostaglandins and oxytocin are used for second trimester abortion .[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 3d81aed0-1b36-428d-97bf-66b05abc9caa
+Question: Which of the following methods is considered safest for first trimester abortion?
+1. Mifepristone and misoprostol
+2. Suction curettage
+3. Vacuum aspiration
+4. Hysterotomy
+Correct Option: Vacuum aspiration
+Explanation: Manual vacuum aspiration is considered very safe for first trimester abortions .[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 6c8e7709-85bc-4923-9f80-37850acae356
+Question: In which case is a hysterotomy recommended during MTP?
+1. Failed medical abortion
+2. Placenta previa
+3. Rh isoimmunization
+4. Neural tube defects
+Correct Option: Failed medical abortion
+Explanation: Hysterotomy is reserved for cases where other methods fail, such as in failed MTP .[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 2b48ea50-443e-447d-acd7-c01ea6936794
+Question: Which method of MTP is associated with a higher risk of uterine perforation?
+1. Vacuum aspiration
+2. Suction curettage
+3. Hysterotomy
+4. Dilation and evacuation
+Correct Option: Dilation and evacuation
+Explanation: Dilation and evacuation carry a higher risk of uterine perforation in MTP.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 48759190-a39a-41e2-92b3-21cda5780b06
+Question: What is the most common complication of medical MTP?
+1. Hemorrhage
+2. Incomplete abortion
+3. Uterine infection
+4. Uterine rupture
+Correct Option: Incomplete abortion
+Explanation: Incomplete abortion is a common complication of medical MTP.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------
+UID: 111fef71-f58d-4ab8-be1e-a1b3d13d14c6
+Question: Which of the following agents can be used for cervical preparation in second trimester abortion?
+1. Oxytocin
+2. Misoprostol
+3. Methotrexate
+4. Mifepristone
+Correct Option: Misoprostol
+Explanation: Misoprostol is commonly used for cervical ripening and preparation in second trimester abortions.[Backmann Nad Lings Obstetrics And Gynecology]
+--------------------------------------------------

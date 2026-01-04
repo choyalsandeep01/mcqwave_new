@@ -1,0 +1,78 @@
+{% elif item.type == 'test_session' %}
+    <div class="message {% if item.data.shared_by == 'me' %}message-sent{% else %}message-received{% endif %}">
+        <div class="message-content test-container">
+            <strong>{{ item.data.shared_by }} shared a Test Session at {{ item.data.shared_at }}</strong>
+            <a href="{% url 'start_shared_test' test_id=item.data.test_id %}" class="start-test-link">Start this test</a>
+        </div>
+    </div>
+
+    .start-test-link {
+        display: inline-block;
+        padding: 8px 16px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        margin-top: 10px;
+    }
+    
+    .start-test-link:hover {
+        background-color: #0056b3;
+        text-decoration: none;
+        color: white;
+    }
+
+    path('start_shared_test/<str:test_id>/', views.start_shared_test, name='start_shared_test'),
+
+    @login_required(login_url='/')
+def start_shared_test(request, test_id):
+    # Check if user already has a current test
+    profile = request.user.profile
+    if profile.current_test:
+        return redirect('cont', test_id=profile.current_test)
+
+    # Get the original test session
+    original_test_session = get_object_or_404(TestSession, test_id=test_id)
+    
+    # Get all MCQs from the original test answers
+    original_answers = TestAnswer.objects.filter(test_session=original_test_session)
+    mcq_uids = [answer.mcq_uid for answer in original_answers]
+    mcqs = MCQ.objects.filter(uid__in=mcq_uids)
+    
+    if not mcqs:
+        messages.error(request, "No MCQs found for this test.")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+    
+    # Create new test session for current user
+    new_test_id = str(uuid.uuid4())
+    new_test_session = TestSession.objects.create(
+        user=request.user,
+        test_id=new_test_id,
+        total_questions=original_test_session.total_questions,
+        selections=original_test_session.selections,
+        totaltime=original_test_session.totaltime
+    )
+    
+    # Create test answers for all MCQs
+    for mcq_uid in mcq_uids:
+        TestAnswer.objects.create(
+            test_session=new_test_session,
+            mcq_uid=mcq_uid
+        )
+    
+    # Update user's current test
+    profile.current_test = new_test_id
+    profile.save()
+    
+    # Serialize MCQs for the template
+    serializer = MCQSerializer(mcqs, many=True)
+    total_time_minutes = original_test_session.totaltime / 60  # Convert seconds to minutes
+    
+    messages.success(request, "Starting shared test...")
+    
+    return render(request, 'mcq/mcq.html', {
+        'mcqs': json.dumps(serializer.data),
+        'count': len(mcqs),
+        'test_id': new_test_id,
+        'total_time': total_time_minutes
+    })

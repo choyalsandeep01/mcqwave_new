@@ -1,0 +1,121 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Refund Policy{% endblock title %}
+
+{% block content %}
+<style>
+    .main {
+        max-width: 1200px;
+        margin: 10px auto;
+        padding: 30px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+    }
+
+    h1, h2 {
+        color: #1E40AF;
+        
+        font-size:1.5rem;
+        margin-bottom:30px;
+    }
+
+    .section {
+        margin-bottom: 25px;
+        margin-top:10px;
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 5px;
+    }
+
+    .important {
+        background-color: #ffe4e1;
+        border-left: 4px solid #ff4500;
+        padding: 10px;
+    }
+
+    ul, ol {
+        padding-left: 30px;
+    }
+    .mainheading{
+        text-align: center;
+        color:#2c3e50;
+        font-size:2.5em;
+    }
+    .lastupdated{
+        text-align:center;
+        margin-top:30px;
+        color:#666;
+    }
+    @media (max-width: 768px) {
+        .mainheading{
+            margin-top: -25px;
+            font-size:2em;
+        }
+
+    }
+</style>
+
+<div class="main">
+    <h1 class="mainheading">Refund Policy</h1>
+
+    <div class="section">
+        <h2>1. Eligibility for Refund</h2>
+        <p>Refunds are considered under the following conditions:</p>
+        <ul>
+            <li>Technical issues preventing platform usage</li>
+            <li>Significant discrepancies in service promised vs. delivered</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>2. Refund Request Process</h2>
+        <p>To request a refund:</p>
+        <ol>
+            <li>Contact support via registered email</li>
+            <li>Provide detailed explanation of issue</li>
+            <li>Include account and transaction details</li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>3. Non-Refundable Scenarios</h2>
+        <p>Refunds will NOT be processed for:</p>
+        <ul>
+            <li>User dissatisfaction with test performance</li>
+            <li>Voluntary account cancellation</li>
+            <li>Misuse of platform features</li>
+        </ul>
+    </div>
+
+    <div class="important">
+        <h2>4. Refund Timeline</h2>
+        <p>Approved refunds will be processed within 7-10 business days.</p>
+    </div>
+
+    <div class="section">
+        <h2>5. Contact for Queries</h2>
+        <p>For refund-related questions, email: support@mcqwave.com</p>
+    </div>
+
+    <p class="text-center lastupdated"><em>Last Updated: February 2025</em></p>
+</div>
+{% endblock %}
+{%block pp%}
+    
+<li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">
+      
+        <i class="fas fa-user-circle profile-icon"></i>
+      
+      {{ user.username }}
+      
+    </a>
+    <div class="dropdown-content">
+      <a href="#">Settings</a>
+      <a href={% url 'logout' %}>Logout</a>
+    </div>
+  </li>
+
+
+{%endblock%} 

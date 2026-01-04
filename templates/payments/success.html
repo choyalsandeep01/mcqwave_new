@@ -1,0 +1,369 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Payment Successful{% endblock %}
+
+{% block content %}
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<style>
+   
+    
+    /* Payment Success Page Styles */
+    .container {
+      padding: 3rem 1rem;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    
+    .row {
+      width: 100%;
+    }
+    
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 24px;
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.1),
+        0 8px 16px rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      overflow: hidden;
+      position: relative;
+      transform: translateY(0);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: slideUp 0.8s ease-out;
+    }
+    
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #10b981, #059669, #047857);
+      animation: shimmer 2s infinite;
+    }
+    
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 
+        0 32px 64px rgba(0, 0, 0, 0.15),
+        0 16px 32px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
+    
+    .card-body {
+      padding: 4rem 3rem;
+      position: relative;
+    }
+    
+    .fas.fa-check-circle {
+      color: #10b981 !important;
+      font-size: 5rem !important;
+      margin-bottom: 2rem;
+      animation: checkPulse 2s infinite;
+      filter: drop-shadow(0 4px 12px rgba(16, 185, 129, 0.3));
+    }
+    
+    h2 {
+      color: #065f46;
+      font-weight: 700;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #065f46, #10b981);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: fadeInUp 0.8s ease-out 0.3s both;
+    }
+    
+    .lead {
+      color: #374151;
+      font-size: 1.25rem;
+      font-weight: 400;
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+      animation: fadeInUp 0.8s ease-out 0.5s both;
+    }
+    
+    .mt-4 {
+      margin-top: 2.5rem !important;
+      animation: fadeInUp 0.8s ease-out 0.7s both;
+    }
+    
+    .btn {
+      padding: 1rem 2rem;
+      font-weight: 600;
+      font-size: 1rem;
+      border-radius: 12px;
+      text-decoration: none;
+      display: inline-block;
+      margin: 0.5rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      min-width: 160px;
+      text-align: center;
+      border: 2px solid transparent;
+    }
+    
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.6s;
+    }
+    
+    .btn:hover::before {
+      left: 100%;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      color: white;
+      box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+    }
+    
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #2563eb, #1e40af);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+      color: white;
+    }
+    
+    .btn-outline-secondary {
+      background: transparent;
+      color: #6b7280;
+      border: 2px solid #d1d5db;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn-outline-secondary:hover {
+      background: #f9fafb;
+      color: #374151;
+      border-color: #9ca3af;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Animations */
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(60px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes checkPulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+    }
+    
+    @keyframes shimmer {
+      0% {
+        background-position: -200px 0;
+      }
+      100% {
+        background-position: 200px 0;
+      }
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 2rem 1rem;
+      }
+      
+      .card-body {
+        padding: 3rem 2rem;
+      }
+      
+      .fas.fa-check-circle {
+        font-size: 4rem !important;
+      }
+      
+      h2 {
+        font-size: 2rem;
+      }
+      
+      .lead {
+        font-size: 1.125rem;
+      }
+      
+      .btn {
+        padding: 0.875rem 1.5rem;
+        font-size: 0.9rem;
+        display: block;
+        width: 100%;
+        margin: 0.5rem 0;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .card-body {
+        padding: 2.5rem 1.5rem;
+      }
+      
+      .fas.fa-check-circle {
+        font-size: 3.5rem !important;
+      }
+      
+      h2 {
+        font-size: 1.75rem;
+      }
+      
+      .lead {
+        font-size: 1rem;
+      }
+    }
+    
+    /* Dark mode support */
+    @media (prefers-color-scheme: dark) {
+      .card {
+        background: rgba(17, 24, 39, 0.95);
+        border: 1px solid rgba(75, 85, 99, 0.3);
+      }
+      
+      h2 {
+        color: #10b981;
+        background: linear-gradient(135deg, #10b981, #34d399);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      
+      .lead {
+        color: #d1d5db;
+      }
+      
+      .btn-outline-secondary {
+        color: #9ca3af;
+        border-color: #4b5563;
+      }
+      
+      .btn-outline-secondary:hover {
+        background: rgba(75, 85, 99, 0.1);
+        color: #f3f4f6;
+        border-color: #6b7280;
+      }
+    }
+    
+    /* Accessibility improvements */
+    .btn:focus {
+      outline: 2px solid #3b82f6;
+      outline-offset: 2px;
+    }
+    
+    @media (prefers-reduced-motion: reduce) {
+      .card {
+        animation: none;
+      }
+      
+      .fas.fa-check-circle {
+        animation: none;
+      }
+      
+      h2, .lead, .mt-4 {
+        animation: none;
+      }
+      
+      .btn::before {
+        display: none;
+      }
+    }
+    
+    /* High contrast mode */
+    @media (prefers-contrast: high) {
+      .card {
+        border: 2px solid #000;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      }
+      
+      .btn-primary {
+        background: #0000ff;
+        border: 2px solid #000;
+      }
+      
+      .btn-outline-secondary {
+        border: 2px solid #000;
+        color: #000;
+      }
+    }
+</style>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-success">
+                <div class="card-body text-center">
+                    <div class="mb-4">
+                        <i class="fas fa-check-circle text-success nfas" style="font-size: 4rem;"></i>
+                    </div>
+                    <h2 class="text-success">Payment Successful!</h2>
+                    <p class="lead">Thank you for your payment. Your subscription is now active.</p>
+                    
+                    <div class="mt-4">
+                        <a href="{% url 'payments:payment_plans' %}" class="btn btn-primary">
+                            View Subscription
+                        </a>
+                        <a href="{% url 'payments:payment_history' %}" class="btn btn-outline-secondary">
+                            Payment History
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+  // Prevent back navigation to payment gateway
+  (function() {
+      // Clear the history stack
+      history.replaceState(null, null, window.location.href);
+      
+      // Prevent back navigation
+      window.addEventListener('popstate', function(event) {
+          // Redirect to plans page instead of going back
+          window.location.href = '{% url "payments:payment_plans" %}';
+      });
+      
+      // Additional security - push state to prevent back navigation
+      history.pushState(null, null, window.location.href);
+      
+      // Handle back button press
+      window.addEventListener('beforeunload', function() {
+          // This won't prevent navigation but helps with cleanup
+          history.replaceState(null, null, '{% url "payments:payment_plans" %}');
+      });
+  })();
+</script>
+{% endblock %}

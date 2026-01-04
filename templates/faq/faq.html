@@ -1,0 +1,229 @@
+{% extends 'base/base.html' %}
+
+{% block title %}MCQwave-FAQs{% endblock title %}
+
+{% block content %}
+<style>
+    :root {
+        --bg-gradient-start: #1E40AF;
+        --bg-gradient-end: #ff3366;
+        --text-primary: #333;
+        --text-secondary: #666;
+        --card-bg: #ffffff;
+        --card-shadow: rgba(0,0,0,0.1);
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* Ensure the page takes full height */
+    html, body {
+        height: 100%;
+    }
+
+    body {
+        background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+        color: var(--text-primary);
+        line-height: 1.6;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Main content wrapper to push footer down */
+    .page-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+        flex: 1;
+    }
+
+    .faq-header {
+        text-align: center;
+        color: white;
+        margin-bottom: 2rem;
+    }
+
+    .faq-container {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 10px 25px var(--card-shadow);
+        padding: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .faq-item {
+        margin-bottom: 1.5rem;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 1rem;
+    }
+
+    .faq-question {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        font-weight: 700;
+        color: var(--text-primary);
+    }
+
+    .faq-answer {
+        display: none;
+        margin-top: 1rem;
+        color: var(--text-secondary);
+    }
+
+    .toggle-btn {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--bg-gradient-start);
+    }
+
+    .faq-answer ul {
+        list-style-type: none;
+        padding-left: 20px;
+    }
+    
+    .faq-answer ul li {
+        margin-bottom: 10px;
+        position: relative;
+    }
+    
+    .faq-answer ul li::before {
+        content: '✅';
+        position: absolute;
+        left: -20px;
+    }
+
+    @media (max-width: 768px) {
+        .container {
+            width: 95%;
+            padding: 1rem 0.5rem;
+        }
+
+        .faq-container {
+            padding: 1rem;
+        }
+    }
+</style>
+
+<div class="page-wrapper">
+    <div class="container">
+        <div class="faq-header">
+            <h1>Frequently Asked Questions</h1>
+            <p>Everything you need to know about MCQwave</p>
+        </div>
+
+        <div class="faq-container" id="faq-list">
+            <!-- FAQ items will be dynamically added here -->
+        </div>
+    </div>
+</div>
+
+<script>
+    // FAQ Data Structure
+    const faqs = [
+        {
+            question: "1.What is MCQwave?",
+            answer: "MCQwave is an online platform designed for practicing high yield multiple-choice questions (MCQs) specifically for postgraduate medical entrance exams like NEET PG, INI-CET and FMGE. It provides subject-wise and topic-wise MCQs with explanations to enhance exam preparation."
+        },{
+            question: "2. How is MCQwave different from other MCQ platforms?",
+            answer: "MCQwave offers a structured approach to practicing MCQs by categorizing them according to exam-relevant topics. It provides high-quality, clinically-oriented questions with detailed explanations, and allows users to track their progress."
+        },
+        {
+            question: "3. What exams does MCQwave cover?",
+            answer: "Currently, MCQwave supports preparation for: NEET PG,INI-CET and FMGE "
+        },
+        {
+            question: "4. What features are available in the premium plan?",
+            answer:  `
+                <ul>
+                    <li>Unlimited MCQ access</li>
+                    <li>Topic-wise & subject-wise questions</li>
+                    <li>Detailed explanations for each answer</li>
+                    <li>Performance tracking & analytics</li>
+                    <li>Share MCQs and Test Sessions to your friends</li>
+                    <li>Timed mock tests</li>
+                    <li>Regularly updated question bank</li>
+
+                </ul>
+            `
+        },
+       
+        {
+            question: "5. Is there a refund policy for premium subscriptions?",
+            answer: "Our refund policy is available on the website. If you face any issues, you can contact our support team."
+        },
+        {
+            question: "6. How can I contact MCQwave support?",
+            answer: "For any queries, you can reach out to our support team via email or the contact form on our website."
+        },
+        
+        // More FAQs will be added here
+    ];
+
+    // Render FAQs
+    function renderFAQs() {
+        const faqList = document.getElementById('faq-list');
+        
+        faqs.forEach((faq, index) => {
+            const faqItem = document.createElement('div');
+            faqItem.classList.add('faq-item');
+            faqItem.innerHTML = `
+                <div class="faq-question">
+                    <h3>${faq.question}</h3>
+                    <button class="toggle-btn" aria-expanded="false">+</button>
+                </div>
+                <div class="faq-answer">${faq.answer}</div>
+            `;
+            faqList.appendChild(faqItem);
+        });
+
+        // Add event listeners
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const toggleBtn = question.querySelector('.toggle-btn');
+                
+                answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+                toggleBtn.textContent = answer.style.display === 'block' ? '-' : '+';
+                toggleBtn.setAttribute('aria-expanded', answer.style.display === 'block');
+            });
+        });
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', renderFAQs);
+</script>
+
+{% endblock %}
+
+{%block pp%}
+
+<li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">
+      
+        <i class="fas fa-user-circle profile-icon"></i>
+      
+      {{ user.username }}
+      
+    </a>
+    <div class="dropdown-content">
+      <a href="#">Settings</a>
+      <a href={% url 'logout' %}>Logout</a>
+    </div>
+  </li>
+
+
+{%endblock%}

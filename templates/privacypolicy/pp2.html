@@ -1,0 +1,116 @@
+{% extends 'base/base.html' %}
+{% block title %}Privacy Policy{% endblock title %}
+
+{% block content %}
+<style>
+    .navfeed{
+        display: none;
+    }
+
+</style>
+<style>
+    .main {
+        max-width: 1200px;
+        margin: 10px auto;
+        padding: 30px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+    }
+
+    h1, h2 {
+        color: #1E40AF;
+        
+        font-size:1.5rem;
+        margin-bottom:30px;
+    }
+    .section {
+        margin-bottom: 20px;
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 5px;
+    }
+    .contact {
+        background-color: #e7f3fe;
+        padding: 15px;
+        border-left: 4px solid #2196F3;
+    }
+    .mainheading{
+        text-align: center;
+        color:#2c3e50;
+        font-size:2.5em;
+    }
+    .lastupdated{
+        text-align:center;
+        margin-top:30px;
+        color:#666;
+    }
+    @media (max-width: 768px) {
+        .mainheading{
+            margin-top: -25px;
+            font-size:2em;
+        }
+
+    }
+</style>
+<div class="main">
+<h1 class="mainheading">Privacy Policy</h1>
+
+<div class="section">
+    <h2>1. Information We Collect</h2>
+    <p>MCQwave collects the following personal information during user registration:</p>
+    <ul>
+        <li>First Name</li>
+        <li>Last Name</li>
+        <li>Email Address</li>
+        <li>Password (securely hashed and protected)</li>
+        <li>Profile Picture (optional, to be implemented in future)</li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>2. How We Collect Information</h2>
+    <p>We collect information solely through user registration on the MCQwave platform. No additional tracking methods are used.</p>
+</div>
+
+<div class="section">
+    <h2>3. How We Use Your Information</h2>
+    <p>The collected information is used for:</p>
+    <ul>
+        <li>Personalizing user experience</li>
+        <li>Communication with users regarding webapp updates or support</li>
+        <li>Authentication and account management</li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>4. Data Sharing</h2>
+    <p>MCQwave does not share user data with any third-party services or organizations. Your information remains confidential and is used exclusively within our platform.</p>
+</div>
+
+<div class="section">
+    <h2>5. Data Retention and Deletion</h2>
+    <p>We maintain user data as a backup. However, if a user manually deletes their account, all associated data will be permanently removed from our systems.</p>
+</div>
+
+<div class="section">
+    <h2>6. User Rights</h2>
+    <p>MCQwave provides users with the following rights and features:</p>
+    <ul>
+        <li>Solve multiple-choice questions (MCQs)</li>
+        <li>View detailed performance analysis</li>
+        <li>Take mock tests</li>
+        <li>See overall ranking based on performance</li>
+    </ul>
+</div>
+
+<div class="contact">
+    <h2>7. Contact Information</h2>
+    <p>For any privacy-related queries, account issues, or support, please contact us via the email address provided during registration.</p>
+</div>
+
+<p class="lastupdated"><em>Last Updated: February 2025</em></p>
+</div>
+{% endblock %}
+
+   

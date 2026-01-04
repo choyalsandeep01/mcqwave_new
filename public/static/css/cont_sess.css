@@ -1,0 +1,132 @@
+/* General styles */
+h2 {
+    text-align: center;
+    color: #1E40AF;
+    font-size: 24px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.table-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f0f8ff;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Table styles */
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.styled-table th, .styled-table td {
+    padding: 15px;
+    text-align: left;
+    font-size: 16px;
+    color: #333;
+}
+
+.styled-table th {
+    background-color: #1E40AF;
+    color: #ffffff;
+    text-transform: uppercase;
+}
+
+.styled-table tr {
+    border-bottom: 1px solid #ddd;
+}
+
+.styled-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.styled-table tr:hover {
+    background-color: #eaf4ff;
+    cursor: pointer;
+}
+
+/* Selections menu */
+.selection-menu {
+    display: none;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.selection-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.selection-list li {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+.selection-list li:last-child {
+    border-bottom: none;
+}
+
+/* Buttons */
+.toggle-button, .continue-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.toggle-button {
+    background-color: #004aad;
+    color: white;
+}
+
+.toggle-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.continue-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.continue-button:hover {
+    background-color: #388E3C;
+    transform: translateY(-2px);
+}
+
+.no-tests {
+    text-align: center;
+    font-style: italic;
+    color: #666;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    .table-container {
+        padding: 10px;
+    }
+
+    .styled-table th, .styled-table td {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .toggle-button, .continue-button {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+}

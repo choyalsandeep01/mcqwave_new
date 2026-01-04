@@ -1,0 +1,157 @@
+@login_required(login_url='/')
+def test(request, email_token):
+    user = request.user
+    test_id = str(uuid.uuid4())
+
+    selections_json = request.GET.get('selections')
+    selections = json.loads(selections_json) if selections_json else []
+    question_type = request.GET.get('questionType').title()
+    difficulty_level = request.GET.get('difficultyLevel').title()
+    num_mcqs = int(request.GET.get('num_mcqs', 25))
+    selections_data = []
+
+    for selection in selections:
+        parts = selection.split('-')
+        subject_name = parts[0]
+        selection_parts_count = len(parts)
+
+        # Apply the filters directly in the query
+        query = Q(topic__chapter__unit__subject__name=subject_name)
+        if question_type != "mixed":
+            query &= Q(types__types=question_type)
+        if difficulty_level != "mixed":
+            query &= Q(difficulty__name=difficulty_level)
+
+        if selection_parts_count == 2:
+            unit_name = parts[1]
+            query &= Q(topic__chapter__unit__name=unit_name)
+        elif selection_parts_count == 3:
+            unit_name = parts[1]
+            chapter_name = parts[2]
+            query &= Q(topic__chapter__unit__name=unit_name, topic__chapter__name=chapter_name)
+        elif selection_parts_count == 4:
+            unit_name = parts[1]
+            chapter_name = parts[2]
+            topic_name = parts[3]
+            query &= Q(topic__chapter__unit__name=unit_name, topic__chapter__name=chapter_name, topic__name=topic_name)
+
+        selections_data.append({
+            'selection': selection,
+            'query': query,
+            'weight': 1 / selection_parts_count,
+            'parts_count': selection_parts_count
+        })
+    print(query)
+    # Combine selections of the same level if applicable
+    if len(selections_data) > 1:
+        if all(selection['parts_count'] == 1 for selection in selections_data):
+            subject_queries = Q()
+            for selection in selections:
+                subject_name = selection.split('-')[0]
+                subject_queries |= Q(topic__chapter__unit__subject__name=subject_name)
+                print(subject_queries)
+            selections_data = [{'selection': "All subjects", 'query': subject_queries, 'weight': 1, 'parts_count': 1}]
+        elif all(selection['parts_count'] == 2 for selection in selections_data):
+            unit_queries = Q()
+            for selection in selections:
+                subject_name = selection.split('-')[0]
+                unit_name = selection.split('-')[1]
+                unit_queries |= Q(topic__chapter__unit__subject__name=subject_name, topic__chapter__unit__name=unit_name)
+                print(unit_queries)
+            selections_data = [{'selection': "All units", 'query': unit_queries, 'weight': 1, 'parts_count': 2}]
+        elif all(selection['parts_count'] == 3 for selection in selections_data):
+            chapter_queries = Q()
+            for selection in selections:
+                subject_name = selection.split('-')[0]
+                unit_name = selection.split('-')[1]
+                chapter_name = selection.split('-')[2]
+                chapter_queries |= Q(topic__chapter__unit__subject__name=subject_name, topic__chapter__unit__name=unit_name, topic__chapter__name=chapter_name)
+                print(chapter_queries)
+            selections_data = [{'selection': "All chapters", 'query': chapter_queries, 'weight': 1, 'parts_count': 3}]
+        elif all(selection['parts_count'] == 4 for selection in selections_data):
+            topic_queries = Q()
+            for selection in selections:
+                subject_name = selection.split('-')[0]
+                unit_name = selection.split('-')[1]
+                chapter_name = selection.split('-')[2]
+                topic_name = selection.split('-')[3]
+                topic_queries |= Q(topic__chapter__unit__subject__name=subject_name, topic__chapter__unit__name=unit_name, topic__chapter__name=chapter_name, topic__name=topic_name)
+                print(topic_queries)
+            selections_data = [{'selection': "All topics", 'query': topic_queries, 'weight': 1, 'parts_count': 4}]
+
+    total_weight = sum(selection['weight'] for selection in selections_data)
+    mcqs_allocation = [
+        {'selection': selection['selection'], 'query': selection['query'], 'allocated_mcqs': round((selection['weight'] / total_weight) * num_mcqs)}
+        for selection in selections_data
+    ]
+    total_allocated_mcqs = sum(alloc['allocated_mcqs'] for alloc in mcqs_allocation)
+
+    while total_allocated_mcqs != num_mcqs:
+        diff = num_mcqs - total_allocated_mcqs
+        if diff > 0:
+            for alloc in mcqs_allocation:
+                if alloc['allocated_mcqs'] < len(MCQ.objects.filter(alloc['query'])):
+                    alloc['allocated_mcqs'] += 1
+                    total_allocated_mcqs += 1
+                    if total_allocated_mcqs == num_mcqs:
+                        break
+        else:
+            for alloc in mcqs_allocation:
+                if alloc['allocated_mcqs'] > 0:
+                    alloc['allocated_mcqs'] -= 1
+                    total_allocated_mcqs -= 1
+                    if total_allocated_mcqs == num_mcqs:
+                        break
+
+    mcqs = []
+    remaining_mcqs = []
+    all_selected_mcq_ids = set()
+    selection_counts = {alloc['selection']: 0 for alloc in mcqs_allocation}
+
+    for alloc in mcqs_allocation:
+        filtered_mcqs = list(MCQ.objects.filter(alloc['query']))
+        random.shuffle(filtered_mcqs)
+        if filtered_mcqs:
+            segment_size = len(filtered_mcqs) // 5 if len(filtered_mcqs) >= 5 else 1
+            segments = [filtered_mcqs[i:i + segment_size] for i in range(0, len(filtered_mcqs), segment_size)]
+            selected_mcqs = []
+            for segment in segments:
+                if segment:
+                    mid_index = len(segment) // 2
+                    selected_mcqs.append(segment[0])
+                    if len(segment) > 1:
+                        selected_mcqs.append(segment[-1])
+                    if len(segment) > 2:
+                        selected_mcqs.append(segment[mid_index])
+                    if len(segment) > 3:
+                        selected_mcqs.append(segment[mid_index // 2])
+                        selected_mcqs.append(segment[mid_index + (mid_index // 2)])
+            selected_mcqs = list(set(selected_mcqs))
+            for mcq in selected_mcqs:
+                if mcq.uid not in all_selected_mcq_ids and len(mcqs) < num_mcqs:
+                    mcqs.append(mcq)
+                    all_selected_mcq_ids.add(mcq.uid)
+                    selection_counts[alloc['selection']] += 1
+        remaining_mcqs.extend(filtered_mcqs)
+
+    random.shuffle(mcqs)
+
+    if len(mcqs) < num_mcqs:
+        additional_needed = num_mcqs - len(mcqs)
+        remaining_mcqs = [mcq for mcq in remaining_mcqs if mcq.uid not in all_selected_mcq_ids]
+        random.shuffle(remaining_mcqs)
+        mcqs.extend(remaining_mcqs[:additional_needed])
+
+    serializer = MCQSerializer(mcqs, many=True)
+    mcqs_data = serializer.data
+    mcqs_json = json.dumps(mcqs_data)
+
+    test_session = TestSession.objects.create(user=user, test_id=test_id)
+    test_session.total_questions = len(mcqs)
+    test_session.selections = selections
+    test_session.save()
+
+    for mcq in mcqs:
+        TestAnswer.objects.create(test_session=test_session, mcq_uid=mcq.uid)
+
+    return render(request, 'mcq/mcq.html', {'mcqs': mcqs_json, 'count': len(mcqs), 'test_id': test_id})

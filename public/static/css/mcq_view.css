@@ -1,0 +1,859 @@
+body {
+    font-family: "Roboto Condensed", sans-serif !important;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    overflow: hidden; /* Prevent body scroll */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+}
+header{
+    display: none !important;
+}
+#current-question{
+    font-size: 1.5rem;
+}
+#question-text {
+    font-family: "Roboto Condensed", sans-serif;
+    font-weight: bold;
+    word-wrap: break-word;  /* Allows long words to break and wrap */
+    overflow-wrap: break-word;  /* Modern alternative to word-wrap */
+    width: 100%;  /* Ensure full width */
+}
+ #results-section {
+    width: 90%; 
+    max-width: 1000px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    margin: auto;
+    padding: 20px;
+    flex: 1;
+    overflow: hidden;
+}
+
+.mcq-container {
+     /* Ensure it's not restricted by height */
+     background: white;
+     padding: 20px;
+     width: 90%; /* Full width of the body with padding */
+     max-width: 1000px; /* Max width to prevent it from getting too large */
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+     box-sizing: border-box;
+     display: flex;
+     flex-direction: column;
+     height: calc(100vh - 60px); /* Adjust height to leave space for footer */
+     max-height: calc(100vh - 60px);
+     overflow: hidden; /* Hide overflow */
+     margin-bottom: 80px; /* Leave space for sticky footer */
+     position: relative;
+     
+}
+#review-result-button {
+    background: linear-gradient(45deg, #6a11cb, #2575fc); /* Gradient background */
+    color: white; /* Text color */
+    border: none; /* Remove border */
+    border-radius: 25px; /* Rounded corners */
+    padding: 10px 20px; /* Padding for size */
+    font-size: 15px; /* Font size */
+    font-weight: bold; /* Bold text */
+    text-transform: uppercase; /* Uppercase text */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: all 0.3s ease; /* Smooth transition on hover */
+    outline: none; /* Remove outline on focus */
+    margin-top: 20px; /* Margin for spacing */
+}
+
+#review-result-button:hover {
+    background: linear-gradient(45deg, #2575fc, #6a11cb); /* Invert gradient on hover */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
+    transform: translateY(-2px); /* Slight lift on hover */
+}
+#confirmModal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
+}
+
+#modalContent {
+    background-color: white;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 300px; /* Could be more or less, depending on screen size */
+    text-align: center;
+}
+
+#modalButtons {
+    margin-top: 20px;
+}
+
+.btnnn {
+    margin: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+#results-section {
+    height: auto;
+    max-height: none; /* Ensure it's not restricted by height */
+}
+.mcq-container.review-mode .options li {
+    cursor: default;
+}
+
+.options li.correct-answer {
+    background-color: green !important;
+    color: white;
+}
+.options li.correct-answer::before {
+    color: white;
+    border-color: white;
+}
+.options li.user-correct::before {
+    color: white;
+    border-color: white;
+}
+.options li.user-correct {
+    background-color: green !important;
+    color: white !important;
+}
+
+.options li.user-incorrect {
+    background-color: red !important;
+    color: white !important;
+}
+.options li.user-incorrect::before {
+    color: white;
+    border-color: white;
+}
+nav {
+    position: relative;
+    z-index: 1000;
+    background: #004aad;
+}
+.mcq-content {
+    flex: 1;
+    overflow-y: auto; /* Allow scrolling if content overflows */
+}
+
+.mcq-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 10px 0;
+}
+.review-status {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: 2px solid #ccc;
+    margin-right: 10px;
+}
+.question-info {
+    display: flex;
+    align-items: center;
+    letter-spacing: 1.3px;
+    
+}
+.menu-icon {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+}
+
+.header-buttons button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #004aad; /* Blue color */
+    color: white;
+    cursor: pointer;
+    border-radius: 25px;
+}
+#submit-button{
+    transition: all 0.3s ease;
+}
+
+/* Blinking animation */
+@keyframes submitBlink {
+    0% {
+        background-color: #004aad;
+        transform: scale(1);
+        box-shadow: 0 0 0 rgba(0, 74, 173, 0);
+    }
+    50% {
+        background-color: #0062e3;
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(0, 74, 173, 0.5);
+    }
+    100% {
+        background-color: #004aad;
+        transform: scale(1);
+        box-shadow: 0 0 0 rgba(0, 74, 173, 0);
+    }
+}
+
+/* Class for the blinking animation */
+.submit-blink {
+    animation: submitBlink 2s infinite;
+}
+.header-buttons button:not(.save):not(.review):hover {
+    background-color: #004aad; /* Darker blue on hover */
+}
+
+.mcq-header .timer {
+    font-weight: bold;
+    margin-top: 0px;
+    padding: 8px 15px;
+    text-align: right;
+    display: inline-block; /* Width fits content */
+    background-color: #f5f5f5; /* Light gray background for a subtle look */
+    color: #333; /* Dark text for readability */
+    border: 1px solid #ddd; /* Light border for definition */
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for a professional touch */
+}
+
+
+.question-nav {
+    display: none; /* Hide initially */
+    flex-direction: column; /* Stack buttons vertically */
+    position: absolute;
+    top: 125px; /* Adjust based on header height */
+    right: 0;
+    background: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 100; /* Ensure it is above other content */
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.question-nav.show {
+    display: flex; /* Show when toggled */
+}
+
+.question-nav button {
+    padding: 25px 25px;
+    margin: 5px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    color:black
+}
+
+
+#toggle-draw-btn {
+    position: fixed;
+    bottom:71px;
+    left: 88%;
+    z-index: 2000;
+    pointer-events: auto;  /* Button should appear on top of canvas */
+}
+.question-nav button.active {
+    background-color: #004aad;
+    color: white;
+    border: 5px solid #004aad;
+}
+
+.question {
+    margin: 20px 0;
+}
+
+.question p {
+    margin: 20px 0;
+}
+
+.question img {
+    max-width: 100%;
+    max-height: 200px;
+    height: auto;
+    display: block;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    object-fit: contain;
+}
+
+.options {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between options */
+}
+
+.options li {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.95);
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    cursor: pointer;
+    box-sizing: border-box;
+    min-width: 120px;
+    padding: 15px 15px 15px 50px;  /* Increased left padding for the prefix */
+    margin: 8px 0;
+    overflow: visible;
+    word-wrap: break-word;
+    height: auto;
+    line-height: 1.5;
+    max-width: 100%;
+    position: relative;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+.options li::before {
+    content: attr(data-prefix);
+    position: absolute;
+    left: 15px;
+    padding-right: 5px;
+    border-right: solid black 0.1px;
+    font-weight: 600;
+    color: #000000;
+    font-size: 1.1em;
+}
+.options li .option-radio {
+    margin: 0;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+.options li:has(.option-radio:checked) {
+    background-color: #ebf8ff;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.2);
+}
+
+/* Disabled state */
+.options li:has(.option-radio:disabled) {
+    opacity: 0.7;
+    cursor: not-allowed;
+    background-color: #f7fafc;
+}
+.options li.selected {
+    background-color: #1f7de0; /* Change background color for selected option */
+    color: #000000; /* Change text color for selected option */
+}
+
+.options input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+/* .question, .options, .status-text {
+    -webkit-user-select: none;                                                              
+    -moz-user-select: none;                                                       
+    -ms-user-select: none;                                                     
+    user-select: none;                                                            
+     } */
+.options label {
+    display: block;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding-left: 40px; /* Space for custom indicator */
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.mcq-footer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background: white;
+    padding: 10px 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%; /* Full width of the body */
+    box-sizing: border-box;
+}
+
+.mcq-footer button {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    flex: 1; /* Flex items to share the space equally */
+    margin: 3px; /* Remove margin for uniform spacing */
+}
+#toggle-draw-btn {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White icon color */
+    border: none; /* Remove default border */
+    padding: 15px; /* Space around the icon */
+    border-radius: 50%; /* Make the button circular */
+    cursor: pointer; /* Change cursor on hover */
+    font-size: 12px; /* Increase icon size */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth hover transition */
+}
+
+#toggle-draw-btn:hover {
+    background-color: #45a049; /* Slightly darker green on hover */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3); /* Enhance shadow on hover */
+}
+
+#toggle-draw-btn i {
+    margin: 0; /* Ensure icon is centered */
+}
+
+.mcq-footer .bookmark,
+
+.mcq-footer .next,
+.mcq-footer .back {
+    background-color: #004aad;
+    color: white;
+    border-radius: 25px;
+}
+.header-buttons.review-mode .save,
+.header-buttons.review-mode .review {
+    display: none;
+}
+.header-buttons .save {
+    background-color: #4CAF50;
+    border-radius: 25px;
+}
+
+.header-buttons .review {
+    background-color: #FF9800;
+    border-radius: 25px;
+
+}
+
+.status-text {
+    margin-top: 10px;
+    color: #555;
+    font-style: italic;
+    text-align: center;
+}
+
+/* Fullscreen Image View */
+.image-viewer {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.image-viewer img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+}
+/* Modal styles */
+.confirmation-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+}
+
+/* Modal Content */
+.modal-content {
+    background: white;
+    padding: 2rem;
+    max-width: 550px;
+    width: 90%;
+    max-height: 85vh;
+    
+    position: relative;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+/* Close Button */
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    transition: color 0.2s;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+.modal-close:hover {
+    color: #333;
+    background: #f0f0f0;
+}
+.modal-content h2 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 0.75rem;
+}
+.modal-content p {
+    color: #666;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+.modal-summary {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    overflow-y: auto;
+    height: 65%;
+}
+.modal-summary h3 {
+    color: #2c3e50;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+#unanswered-list, #review-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+#unanswered-list li, #review-list li {
+    background: #fff;
+    border: 2px solid #e74c3c;
+    color: #e74c3c;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+#review-list li {
+    border-color: #f39c12;
+    color: #f39c12;
+}
+
+
+/* Buttons Container */
+.modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+.btn-confirm, .btn-cancel {
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+}
+.btn-confirm {
+    background: #2ecc71;
+    color: white;
+}
+
+.btn-confirm:hover {
+    background: #27ae60;
+}
+
+.btn-cancel {
+    background: #e74c3c;
+    color: white;
+}
+
+.btn-cancel:hover {
+    background: #c0392b;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+/* Button Styles */
+
+
+
+
+.result-container {
+    margin-top: 20px;
+}
+
+.result-item {
+    margin: 15px 0;
+}
+
+.result-item p {
+    margin: 0;
+    font-size: 18px;
+}
+
+.progress-bar {
+    width: 100%;
+    background-color: #f0f0f0;
+    border-radius: 25px;
+    overflow: hidden;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    transition: width 2s ease-in-out; /* Smooth animation for progress bars */
+}
+.bookmark-button {
+    padding: 15px 30px;
+    background-color: #ff6f61;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    transform: translateY(0);
+}
+
+.bookmark-button:hover {
+    background-color: #ff9a85;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Expanded menu (initially hidden) */
+.expanded-menu {
+    position: absolute;
+    bottom: 70px; 
+    left: 5%;
+    transform: translateX(-50%);
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.expanded-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Action buttons in the expanded menu */
+.action-btn1 {
+    padding: 12px 25px;
+    background-color: #f0f0f0;
+    color: #333;
+    border: none;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: left;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.action-btn1:hover {
+    background-color: #004aad;
+    color: white;
+    transform: scale(1.05);
+}
+.bookmark.bookmarked {
+    background-color: #ffcc00; /* Highlighted color */
+}
+
+.action-btn1.selected {
+    background-color: #ffcc00;
+}
+/* Button icon style */
+.action-btn1::before {
+    display: inline-block;
+    font-size: 18px;
+}
+.hidden {
+    display: none;
+}
+.loader {
+    border: 4px solid #f3f3f3; /* Light grey background */
+    border-top: 4px solid crimson; /* Crimson loader color */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    display: none; /* Hidden initially */
+    position: fixed; /* Centering the loader */
+    top: 50%;
+    left: 50%;
+    margin-left: -15px; /* Half of width */
+    margin-top: -15px; /* Half of height */
+    z-index: 1000; /* Above all elements */
+}
+
+/* Keyframes for spinning animation */
+@keyframes spin {
+    0% { 
+        transform: rotate(0deg);
+    }
+    100% { 
+        transform: rotate(360deg);
+    }
+}
+.progress-bar span {
+    display: block;
+    height: 100%;
+    line-height: 30px;
+    text-align: center;
+    white-space: nowrap;
+    color: #fff;
+    position: absolute;
+    left: 10px;
+    font-weight: bold;
+}
+
+.total {
+    background-color: #3498db;
+}
+
+.correct {
+    background-color: #2ecc71;
+}
+
+.wrong {
+    background-color: #e74c3c;
+}
+
+.not-attempted {
+    background-color: #f1c40f;
+}
+
+.time-taken-container {
+    margin-top: 30px;
+    font-size: 20px;
+    color: #333;
+}
+
+#explanation-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background-color: #f9f9f9;
+    
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+    margin: 0 auto;
+    width: 100%; /* Responsive width */
+    box-sizing: border-box;
+}
+
+/* Explanation Textarea */
+#explanation-container {
+    position: relative;
+}
+
+#explanation-container textarea {
+    width: 100%;
+    padding: 10px; /* Adjust as needed */
+    border-left: 4px solid #2196F3;
+
+    box-sizing: border-box;
+    background-color: #fff;
+    font-size: 16px;
+    line-height: 1.5;
+    resize: none; /* Disable resizing */
+    overflow: hidden; /* Prevent internal scrollbars */
+    color: #333;
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+    .mcq-footer {
+        flex-direction: row;
+    }
+    .mcq-footer button{
+        font-size: 10px;
+    }
+    .header-buttons{
+        font-size: 10px;
+    }
+    .mcq-header .timer{
+        font-size: 10px;
+    }
+    .mcq-container {
+        margin-bottom: 70px;
+        width: 99%;
+        padding-bottom: 70px;
+    }
+    .review-status {
+       
+        margin-right: 12px;
+    }
+    .bookmark-button{
+        font-size: 16px;
+        padding: 12px 20px;
+    }
+
+    .action-btn {
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+    .modal-content {
+        padding: 1.5rem;
+        width: 95%;
+        height: 70%;
+    }
+    
+    .modal-buttons {
+        flex-direction: row;
+    }
+    
+    .btn-confirm, .btn-cancel {
+        width: 100%;
+    }
+    
+    
+}

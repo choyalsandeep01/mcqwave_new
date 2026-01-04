@@ -1,0 +1,1535 @@
+{% extends 'base/base.html' %}
+
+{% block title %}MCQwave-PYQs{% endblock title %}
+
+
+
+{% block content %}
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #fafbfc;
+            min-height: 100vh;
+            color: #1a202c;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 8px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+            color: white;
+            margin-bottom: 8px;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.15);
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .header p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .exam-selector {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e5e7eb;
+        }
+
+        .exam-selector h3 {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+        }
+
+        .exam-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .exam-option {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 6px 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.75rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            user-select: none;
+            min-height: 28px;
+        }
+
+        .exam-option:hover {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+
+        .exam-option.selected {
+            background: #3b82f6;
+            color: white;
+            border-color: #1d4ed8;
+        }
+
+        .search-section {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e5e7eb;
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 8px 8px 8px 32px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            background: #f9fafb;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+            background: white;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            margin-top: 4px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .search-result-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #f3f4f6;
+            transition: background 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+        }
+
+        .search-result-item:hover {
+            background: #f3f4f6;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 8px;
+        }
+
+        .subjects-section {
+            background: white;
+            border-radius: 8px;
+            padding: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e5e7eb;
+        }
+
+        .subjects-section h2 {
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+        }
+
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 8px;
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .subjects-grid::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .subjects-grid::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 2px;
+        }
+
+        .subjects-grid::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 2px;
+        }
+
+        .subject-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 12px;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .subject-card:hover {
+            border-color: #3b82f6;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .subject-card.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .subject-card.disabled:hover {
+            transform: none;
+            border-color: #e2e8f0;
+        }
+
+        .subject-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .subject-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: white;
+            font-weight: 600;
+        }
+
+        .subject-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #374151;
+            flex: 1;
+        }
+
+        .subject-select-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .subject-select-btn:hover {
+            background: #2563eb;
+        }
+
+        .subject-select-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .units-container {
+            margin-top: 8px;
+        }
+
+        .units-toggle {
+            background: #f3f4f6;
+            border: none;
+            padding: 6px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem;
+            color: #374151;
+            transition: all 0.2s ease;
+            width: 100%;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-weight: 500;
+        }
+
+        .units-toggle:hover {
+            background: #e5e7eb;
+        }
+
+        .units-toggle i {
+            transition: transform 0.2s ease;
+            font-size: 10px;
+        }
+
+        .units-toggle.open i {
+            transform: rotate(180deg);
+        }
+
+        .units-list {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: #f9fafb;
+            border-radius: 4px;
+            margin-top: 4px;
+        }
+        
+        .units-list.show {
+            max-height: 400px; /* Increase this value to show more units */
+            overflow-y: auto;
+            border: 1px solid #e5e7eb;
+            scrollbar-width: thin;
+        }
+        
+        /* Custom scrollbar styling */
+        .units-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .units-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+        
+        .units-list::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 3px;
+        }
+        
+        .units-list::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+        
+
+        .unit-item {
+            padding: 4px 8px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin: 2px 0;
+            transition: all 0.2s ease;
+            background: #f9fafb;
+            border-left: 2px solid transparent;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .unit-item:hover {
+            background: #dbeafe;
+            border-left-color: #3b82f6;
+        }
+
+        .unit-item.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #f3f4f6;
+        }
+
+        .unit-item.disabled:hover {
+            background: #f3f4f6;
+            border-left-color: transparent;
+        }
+
+        .selections-section {
+            background: white;
+            border-radius: 8px;
+            padding: 12px;
+            height: fit-content;
+            position: sticky;
+            top: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e5e7eb;
+        }
+
+        .selections-section h2 {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+        }
+
+        .selections-container {
+            min-height: 60px;
+            margin-bottom: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .selections-container::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .selections-container::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 2px;
+        }
+
+        .selections-container::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 2px;
+        }
+
+        .selection-item {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            padding: 8px 10px;
+            border-radius: 6px;
+            margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideIn 0.2s ease;
+            box-shadow: 0 1px 3px rgba(59, 130, 246, 0.2);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .selection-text {
+            font-weight: 500;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .remove-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            font-size: 10px;
+        }
+
+        .remove-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #6b7280;
+            font-style: italic;
+            padding: 16px;
+            border: 1px dashed #d1d5db;
+            border-radius: 6px;
+            background: #f9fafb;
+            font-size: 0.8rem;
+        }
+
+        .start-practice-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .start-practice-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .start-practice-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            max-width: 400px;
+            width: 90%;
+            animation: slideUp 0.2s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -40%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        .modal h3 {
+            font-size: 1.2rem;
+            margin-bottom: 16px;
+            text-align: center;
+            color: #374151;
+            font-weight: 600;
+        }
+
+        .mode-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .mode-option {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .mode-option:hover {
+            border-color: #3b82f6;
+            background: #eff6ff;
+            transform: translateY(-1px);
+        }
+
+        .mode-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: white;
+        }
+
+        .test-mode { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        .instant-mode { background: linear-gradient(135deg, #f59e0b, #d97706); }
+
+        .mode-details h4 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+            color: #374151;
+            font-weight: 600;
+        }
+
+        .mode-details p {
+            color: #6b7280;
+            font-size: 0.8rem;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            color: #6b7280;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .close-modal:hover {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        /* Notification styles */
+        .notification {
+            position: fixed;
+            top: 12px;
+            right: 12px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: slideInRight 0.2s ease;
+            max-width: 300px;
+            font-size: 0.85rem;
+        }
+
+        .notification.error {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+        }
+
+        .notification.slide-out {
+            animation: slideOutRight 0.2s ease;
+        }
+
+        .notification-icon {
+            font-size: 1rem;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            font-size: 0.8rem;
+            margin-bottom: 2px;
+        }
+
+        .notification-message {
+            font-size: 0.7rem;
+            opacity: 0.9;
+        }
+
+        /* Responsive design */
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr 260px;
+            }
+            
+            .subjects-grid {
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .selections-section {
+                position: static;
+                order: -1;
+            }
+            
+            .subjects-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                max-height: 60vh;
+            }
+
+            .exam-options {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 4px;
+            }
+            
+            .header {
+                padding: 12px;
+            }
+            
+            .header h1 {
+                font-size: 1.3rem;
+            }
+            
+            .subjects-grid {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+            
+            .exam-options {
+                align-items: stretch;
+            }
+            
+            .exam-option {
+                justify-content: center;
+                padding: 8px 12px;
+            }
+            
+            .notification {
+                top: 8px;
+                right: 8px;
+                left: 8px;
+                max-width: none;
+            }
+        }
+        .notification.subscription-error {
+            background: linear-gradient(135deg, #dc2626, #b91c1c) !important;
+            border-left: 4px solid #fca5a5;
+            max-width: 420px !important;
+            min-height: auto;
+        }
+        
+        .notification.subscription-error .notification-message {
+            line-height: 1.4;
+            font-size: 0.8rem;
+        }
+        
+        .notification.subscription-error button {
+            transition: all 0.2s ease;
+        }
+        
+        .notification.subscription-error button:hover {
+            background: rgba(255,255,255,0.3) !important;
+            transform: translateY(-1px);
+        }
+        
+    </style>
+
+    <div class="container">
+        
+        {% csrf_token %}
+
+            
+            <div class="exam-selector">
+                <h3><i class="fas fa-clipboard-list nfas"></i> Select Exam Types</h3>
+                <div class="exam-options">
+                    {% for cat_code, cat_name in pyq_categories %}
+                    <div class="exam-option" data-exam="{{ cat_code|lower|slugify }}">
+                        <i class="fas fa-{% if 'NEET' in cat_code %}stethoscope{% elif 'INI' in cat_code %}user-md{% elif 'FMGE' in cat_code %}globe{% else %}clipboard-check{% endif %} nfas"></i>
+                        {{ cat_name }}
+                    </div>
+                    {% endfor %}
+                    {% if pyq_categories %}
+                    <div class="exam-option" data-exam="all">
+                        <i class="fas fa-check-double nfas"></i>
+                        ALL
+                    </div>
+                    {% endif %}
+                </div>
+        </div>
+
+        <div class="search-section">
+            <div class="search-container">
+                <i class="fas fa-search search-icon nfas"></i>
+                <input type="text" class="search-input" placeholder="Search subjects or units (e.g., CNS, Cardiology...)">
+                <div class="search-results" id="searchResults"></div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="subjects-section">
+                <h2><i class="fas fa-book-medical nfas"></i> Select Subjects & Units</h2>
+                <div class="subjects-grid" id="subjectsGrid">
+                    <!-- Subject cards will be generated here -->
+                </div>
+            </div>
+
+            <div class="selections-section">
+                <h2><i class="fas fa-check-circle nfas"></i> Your Selections</h2>
+                <div class="selections-container" id="selectionsContainer">
+                    <div class="empty-state">
+                        <i class="fas fa-hand-point-left nfas" style="font-size: 2rem; color: #cbd5e1; margin-bottom: 0.5rem;"></i>
+                        <br>Select subjects or units to add them here
+                    </div>
+                </div>
+                <button class="start-practice-btn" id="startPracticeBtn" disabled>
+                    <i class="fas fa-play nfas"></i> Start Practice
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for practice modes -->
+    <div class="modal" id="practiceModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closePracticeModal()">
+                <i class="fas fa-times nfas"></i>
+            </button>
+            <h3><i class="fas fa-cogs nfas"></i> Choose Practice Mode</h3>
+            <div class="mode-options">
+                <div class="mode-option" onclick="startMode('test')">
+                    <div class="mode-icon test-mode">
+                        <i class="fas fa-clock nfas"></i>
+                    </div>
+                    <div class="mode-details">
+                        <h4>Test Mode</h4>
+                        <p>Timed practice with detailed analysis and scoring</p>
+                    </div>
+                </div>
+                <div class="mode-option" onclick="startMode('instant')">
+                    <div class="mode-icon instant-mode">
+                        <i class="fas fa-bolt nfas"></i>
+                    </div>
+                    <div class="mode-details">
+                        <h4>Instant Mode</h4>
+                        <p>Quick practice with immediate feedback and explanations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Replace the hardcoded subjects array with data from Django
+        const subjects = [
+            {% for subject in subjects %}
+            {
+                uid: "{{ subject.uid }}",
+                name: "{{ subject.name|escapejs }}",
+                icon: "{{ subject.icon|default:'fas fa-stethoscope nfas' }}",
+                color: "{{ subject.icon_color|default:'#1e3c72' }}",
+                units: [
+                    {% for unit in subject.units.all %}
+                    {
+                        uid: "{{ unit.uid }}",
+                        name: "{{ unit.name|escapejs }}"
+                    }{% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                ]
+            }{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        ];
+    
+        // Update exam categories
+        // Update exam categories with Django data
+        const examCategories = [
+        {% for cat_code, cat_name in pyq_categories %}
+        {
+            code: "{{ cat_code|lower|slugify }}",
+            name: "{{ cat_name }}"
+        }{% if not forloop.last %},{% endif %}
+        {% endfor %}
+        ];
+    
+        let selections = [];
+        let selectedExams = [];
+        let selectedSubjects = [];
+    
+        function initializeApp() {
+            renderSubjects();
+            setupEventListeners();
+        }
+    
+        function showNotification(title, message, type = 'success') {
+            // Remove existing notification if any
+            const existingNotification = document.querySelector('.notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+    
+            const notification = document.createElement('div');
+            notification.className = `notification ${type === 'error' ? 'error' : ''}`;
+            
+            const icon = type === 'success' ? 'fas fa-check-circle nfas' : 'fas fa-exclamation-circle nfas';
+            
+            notification.innerHTML = `
+                <div class="notification-icon">
+                    <i class="${icon}"></i>
+                </div>
+                <div class="notification-content">
+                    <div class="notification-title">${title}</div>
+                    <div class="notification-message">${message}</div>
+                </div>
+            `;
+    
+            document.body.appendChild(notification);
+    
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                notification.classList.add('slide-out');
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, 300);
+            }, 3000);
+        }
+    
+        function renderSubjects() {
+            const grid = document.getElementById('subjectsGrid');
+            grid.innerHTML = '';
+    
+            subjects.forEach((subject, index) => {
+                const isSubjectSelected = selectedSubjects.includes(subject.name);
+                const cardClass = isSubjectSelected ? 'subject-card disabled' : 'subject-card';
+                
+                const card = document.createElement('div');
+                card.className = cardClass;
+                card.innerHTML = `
+                    <div class="subject-header">
+                        <div class="subject-icon" style="background: ${subject.color}">
+                            <i class="${subject.icon} nfas"></i>
+                        </div>
+                        <div class="subject-name">${subject.name}</div>
+                    </div>
+                    <button class="subject-select-btn" onclick="addSelection('${subject.name}')" ${isSubjectSelected ? 'disabled' : ''}>
+                        <i class="fas fa-plus nfas"></i> Select Complete Subject
+                    </button>
+                    <div class="units-container">
+                        <button class="units-toggle" onclick="toggleUnits(${index})">
+                            <span><i class="fas fa-list nfas"></i> View Units (${subject.units.length})</span>
+                            <i class="fas fa-chevron-down nfas"></i>
+                        </button>
+                        <div class="units-list" id="units-${index}">
+                            ${subject.units.map(unit => {
+                                    const isUnitDisabled = isSubjectSelected || selections.some(s => s.subject === subject.name && s.unit === unit.name);
+                                    const unitClass = isUnitDisabled ? 'unit-item disabled' : 'unit-item';
+                                    return `
+                                        <div class="${unitClass}" onclick="${isUnitDisabled ? '' : `addSelection('${subject.name}', '${unit.name}')`}">
+                                            <i class="fas fa-bookmark nfas"></i>
+                                            ${unit.name}
+                                        </div>
+                                    `;
+                                }).join('')}
+
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+    
+        function toggleUnits(index) {
+            const unitsList = document.getElementById(`units-${index}`);
+            const toggle = unitsList.previousElementSibling;
+            
+            if (unitsList.classList.contains('show')) {
+                unitsList.classList.remove('show');
+                toggle.querySelector('span').innerHTML = `<i class="fas fa-list nfas"></i> View Units (${subjects[index].units.length})`;
+                toggle.classList.remove('open');
+            } else {
+                unitsList.classList.add('show');
+                toggle.querySelector('span').innerHTML = `<i class="fas fa-list nfas"></i> Hide Units (${subjects[index].units.length})`;
+                toggle.classList.add('open');
+            }
+        }
+        
+    
+        function addSelection(subjectName, unitName = null) {
+            const subject = subjects.find(s => s.name === subjectName);
+            if (!subject) return;
+    
+            let selectionData = {
+                text: unitName ? `${subjectName} → ${unitName}` : subjectName,
+                subject: subjectName,
+                subjectUid: subject.uid,
+                unit: unitName,
+                unitUid: null
+            };
+    
+            if (unitName) {
+                const unit = subject.units.find(u => u.name === unitName);
+                if (unit) {
+                    selectionData.unitUid = unit.uid;
+                }
+            }
+    
+            // Check if selecting full subject when units already selected
+            if (!unitName && selections.some(s => s.subject === subjectName && s.unit)) {
+                showNotification('Selection Conflict', `You have already selected individual units from ${subjectName}. Remove them first to select the complete subject.`, 'error');
+                return;
+            }
+    
+            // Check if selecting unit when full subject already selected
+            if (unitName && selectedSubjects.includes(subjectName)) {
+                showNotification('Subject Already Selected', `Complete ${subjectName} is already selected. Individual units cannot be added.`, 'error');
+                return;
+            }
+    
+            // Check if selection already exists
+            if (selections.find(s => s.text === selectionData.text)) {
+                showNotification('Already Added', `${selectionData.text} is already in your selections.`, 'error');
+                return;
+            }
+    
+            // If selecting full subject, remove any existing units from that subject
+            if (!unitName) {
+                selections = selections.filter(s => s.subject !== subjectName);
+                selectedSubjects.push(subjectName);
+            }
+    
+            selections.push(selectionData);
+    
+            renderSelections();
+            renderSubjects(); // Re-render to update disabled states
+            updatePyqCount(); // Update PYQ count
+            
+            const message = unitName ? `Unit "${unitName}" added from ${subjectName}` : `Complete ${subjectName} subject added`;
+            showNotification('Selection Added', message);
+        }
+    
+        function removeSelection(index) {
+            const removedSelection = selections[index];
+            
+            // If removing a full subject, remove it from selectedSubjects
+            if (!removedSelection.unit) {
+                selectedSubjects = selectedSubjects.filter(s => s !== removedSelection.subject);
+            }
+            
+            selections.splice(index, 1);
+            renderSelections();
+            renderSubjects(); // Re-render to update disabled states
+            updatePyqCount(); // Update PYQ count
+            
+            showNotification('Selection Removed', `${removedSelection.text} has been removed from your selections.`);
+        }
+    
+        function renderSelections() {
+            const container = document.getElementById('selectionsContainer');
+            const startBtn = document.getElementById('startPracticeBtn');
+    
+            if (selections.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-hand-point-left nfas" style="font-size: 2rem; color: #cbd5e1; margin-bottom: 0.5rem;"></i>
+                        <br>Select subjects or units to add them here
+                    </div>
+                `;
+                startBtn.innerHTML = '<i class="fas fa-play nfas"></i> Start Practice';
+                startBtn.disabled = true;
+            } else {
+                container.innerHTML = selections.map((selection, index) => {
+                    const icon = selection.unit ? 'fas fa-bookmark nfas' : 'fas fa-book nfas';
+                    return `
+                        <div class="selection-item">
+                            <span class="selection-text">
+                                <i class="${icon}"></i>
+                                ${selection.text}
+                            </span>
+                            <button class="remove-btn" onclick="removeSelection(${index})">
+                                <i class="fas fa-times nfas"></i>
+                            </button>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+    
+        // Add function to update PYQ count
+        function updatePyqCount() {
+            if (selections.length === 0) {
+                const startBtn = document.getElementById('startPracticeBtn');
+                startBtn.innerHTML = '<i class="fas fa-play nfas"></i> Start Practice';
+                startBtn.disabled = true;
+                return;
+            }
+    
+            const subjectUids = selections.filter(s => !s.unit).map(s => s.subjectUid);
+            const unitUids = selections.filter(s => s.unit).map(s => s.unitUid);
+            const examTypes = selectedExams.length > 0 ? selectedExams : [];
+    
+            const params = new URLSearchParams();
+            subjectUids.forEach(uid => params.append('subject_uids', uid));
+            unitUids.forEach(uid => params.append('unit_uids', uid));
+            examTypes.forEach(type => params.append('exam_types', type));
+    
+            fetch(`/pyqs/pyq-count/?${params.toString()}`)
+            .then(response => response.json())
+            .then(data => {
+                updateStartButton(data.count);
+            })
+            .catch(error => {
+                console.error('Error fetching PYQ count:', error);
+                updateStartButton(0);
+            });
+        }
+    
+        // Update the start button with PYQ count
+        function updateStartButton(count) {
+            const startBtn = document.getElementById('startPracticeBtn');
+            if (count > 0) {
+                startBtn.innerHTML = `<i class="fas fa-play nfas"></i> Start Practice (${count} Questions)`;
+                startBtn.disabled = false;
+            } else {
+                startBtn.innerHTML = `<i class="fas fa-play nfas"></i> No Questions Available`;
+                startBtn.disabled = true;
+            }
+        }
+    
+        function setupEventListeners() {
+            // Exam selector
+            document.querySelectorAll('.exam-option').forEach(option => {
+                option.addEventListener('click', () => {
+                    const exam = option.dataset.exam;
+                    
+                    if (exam === 'all') {
+                        // Toggle all exams
+                        if (selectedExams.length === examCategories.length) {
+                            selectedExams = [];
+                            document.querySelectorAll('.exam-option').forEach(opt => {
+                                opt.classList.remove('selected');
+                            });
+                        } else {
+                            selectedExams = examCategories.map(cat => cat.code);
+                            document.querySelectorAll('.exam-option').forEach(opt => {
+                                opt.classList.add('selected');
+                            });
+                        }
+                    } else {
+                        // Toggle individual exam
+                        if (selectedExams.includes(exam)) {
+                            selectedExams = selectedExams.filter(e => e !== exam);
+                            option.classList.remove('selected');
+                            document.querySelector('[data-exam="all"]').classList.remove('selected');
+                        } else {
+                            selectedExams.push(exam);
+                            option.classList.add('selected');
+                            
+                            // Check if all individual exams are selected
+                            if (selectedExams.length === examCategories.length) {
+                                document.querySelector('[data-exam="all"]').classList.add('selected');
+                            }
+                        }
+                    }
+                    
+                    updateExamSelection();
+                });
+            });
+    
+            // Search functionality
+            const searchInput = document.querySelector('.search-input');
+            const searchResults = document.getElementById('searchResults');
+            
+            searchInput.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase().trim();
+                
+                if (query === '') {
+                    searchResults.style.display = 'none';
+                    return;
+                }
+    
+                const results = [];
+                subjects.forEach(subject => {
+                    if (subject.name.toLowerCase().includes(query)) {
+                        results.push({
+                            text: subject.name,
+                            subject: subject.name,
+                            unit: null,
+                            icon: subject.icon
+                        });
+                    }
+                    
+                    subject.units.forEach(unit => {
+                        if (unit.name.toLowerCase().includes(query) || subject.name.toLowerCase().includes(query)) {
+                            results.push({
+                                text: `${subject.name} → ${unit.name}`,
+                                subject: subject.name,
+                                unit: unit.name,
+                                icon: 'fas fa-bookmark nfas'
+                            });
+                        }
+                    });
+                });
+    
+                if (results.length > 0) {
+                    searchResults.innerHTML = results.slice(0, 8).map(result => `
+                        <div class="search-result-item" onclick="addSelection('${result.subject}', ${result.unit ? `'${result.unit}'` : 'null'})">
+                            <i class="${result.icon}"></i>
+                            ${result.text}
+                        </div>
+                    `).join('');
+                    searchResults.style.display = 'block';
+                } else {
+                    searchResults.innerHTML = `
+                        <div class="search-result-item">
+                            <i class="fas fa-search nfas"></i>
+                            No results found
+                        </div>
+                    `;
+                    searchResults.style.display = 'block';
+                }
+            });
+    
+            // Close search results when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.search-container')) {
+                    searchResults.style.display = 'none';
+                }
+            });
+    
+            // Start practice button
+            document.getElementById('startPracticeBtn').addEventListener('click', () => {
+                if (selections.length > 0) {
+                    if (selectedExams.length === 0) {
+                        showNotification('Select Exam Type', 'Please select at least one exam type before starting practice.', 'error');
+                        return;
+                    }
+                    document.getElementById('practiceModal').style.display = 'block';
+                }
+            });
+        }
+    
+        function updateExamSelection() {
+            updatePyqCount(); // Update count when exam selection changes
+            
+            const examText = selectedExams.length === 0 ? 'No exam selected' : 
+                           selectedExams.length === examCategories.length ? 'All exams selected' : 
+                           `${selectedExams.length} exam${selectedExams.length > 1 ? 's' : ''} selected`;
+            
+            console.log(`Exam selection updated: ${examText}`);
+        }
+    
+        function closePracticeModal() {
+            document.getElementById('practiceModal').style.display = 'none';
+        }
+    
+        async function startMode(mode) {
+            closePracticeModal();
+            
+            if (selections.length === 0) {
+                showNotification('No Selections', 'Please select subjects or units first.', 'error');
+                return;
+            }
+            
+            if (selectedExams.length === 0) {
+                showNotification('No Exam Type', 'Please select at least one exam type.', 'error');
+                return;
+            }
+            
+            // Show loading state
+            showNotification('Starting Practice', 'Creating your practice session...', 'success');
+            
+            // Prepare data for the practice session
+            const practiceData = {
+                mode: mode,
+                subjectUids: selections.filter(s => !s.unit).map(s => s.subjectUid),
+                unitUids: selections.filter(s => s.unit).map(s => s.unitUid),
+                examTypes: selectedExams,
+                selections: selections
+            };
+            
+            try {
+                const csrfToken = getCookie('csrftoken');
+                
+                if (!csrfToken) {
+                    showNotification('Security Error', 'CSRF token not found. Please refresh the page and try again.', 'error');
+                    return;
+                }
+        
+                const response = await fetch('/pyqs/get-filtered-mcqs/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken,
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                    credentials: 'same-origin',
+                    body: JSON.stringify(practiceData)
+                });
+        
+                // Handle different response types
+                if (!response.ok) {
+                    const contentType = response.headers.get('content-type');
+                    let errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+                    
+                    try {
+                        if (contentType && contentType.includes('application/json')) {
+                            const errorData = await response.json();
+                            errorMessage = errorData.error || errorMessage;
+                        }
+                    } catch (parseError) {
+                        console.log('Could not parse error response as JSON');
+                    }
+                    
+                    // Handle specific error cases with user-friendly messages
+                    if (response.status === 403) {
+                        if (errorMessage.toLowerCase().includes('subscription')) {
+                            showSubscriptionError(errorMessage, selectedExams);
+                        } else {
+                            showNotification('Access Denied', 'You do not have permission to access this feature. Please check your subscription and try again.', 'error');
+                        }
+                    } else if (response.status === 401) {
+                        showNotification('Authentication Required', 'Please log in again to continue.', 'error');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+                    } else {
+                        showNotification('Error', errorMessage, 'error');
+                    }
+                    return;
+                }
+        
+                // Handle successful response
+                const contentType = response.headers.get('content-type');
+                
+                if (contentType && contentType.includes('application/json')) {
+                    const data = await response.json();
+                    if (!data.success) {
+                        showNotification('Error', data.error || 'Unknown error occurred', 'error');
+                        return;
+                    }
+                    // Handle JSON response if needed
+                } else {
+                    // It's HTML - the practice page
+                    const html = await response.text();
+                    document.open();
+                    document.write(html);
+                    document.close();
+                }
+                
+            } catch (error) {
+                console.error('Network error:', error);
+                showNotification('Connection Error', 'Failed to connect to server. Please check your internet connection and try again.', 'error');
+            }
+        }
+        
+        // Add this function after your existing functions
+function showSubscriptionError(errorMessage, selectedExams) {
+    // Remove existing notification if any
+    const existingNotification = document.querySelector('.notification');
+    if (existingNotification) {
+        existingNotification.remove();
+    }
+
+    // Map exam codes to display names
+    const examNames = {
+        'neet-pg': 'NEET-PG',
+        'inicet': 'INI-CET', 
+        'ini-cet': 'INI-CET',
+        'fmge': 'FMGE',
+        'upsc-cms': 'UPSC-CMS',
+        'upsc': 'UPSC-CMS',
+        'all': 'All Exams'
+    };
+    
+    const selectedExamNames = selectedExams.map(exam => examNames[exam] || exam).join(', ');
+    
+    const notification = document.createElement('div');
+    notification.className = 'notification error subscription-error';
+    notification.style.maxWidth = '400px';
+    notification.style.fontSize = '0.9rem';
+    
+    notification.innerHTML = `
+        <div class="notification-icon">
+            <i class="fas fa-lock nfas"></i>
+        </div>
+        <div class="notification-content">
+            <div class="notification-title">Subscription Required</div>
+            <div class="notification-message">
+                You need an active subscription for: <strong>${selectedExamNames}</strong>
+                <br><br>
+                <small style="opacity: 0.8">${errorMessage}</small>
+            </div>
+            <div style="margin-top: 10px;">
+                <button onclick="redirectToSubscription()" style="background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">
+                    Upgrade Now
+                </button>
+                <button onclick="closeSubscriptionError()" style="background: transparent; color: rgba(255,255,255,0.7); border: none; padding: 6px 8px; cursor: pointer; font-size: 0.8rem; margin-left: 8px;">
+                    Close
+                </button>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(notification);
+    
+    // Auto remove after 10 seconds (longer for subscription errors)
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.classList.add('slide-out');
+            setTimeout(() => notification.remove(), 300);
+        }
+    }, 10000);
+}
+
+function closeSubscriptionError() {
+    const notification = document.querySelector('.subscription-error');
+    if (notification) {
+        notification.classList.add('slide-out');
+        setTimeout(() => notification.remove(), 300);
+    }
+}
+
+function redirectToSubscription() {
+    // Update this URL to your actual subscription/pricing page
+    window.location.href = '/payment/plans/'; // or wherever your subscription page is
+}
+
+        
+        // Helper function to get CSRF token
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        
+        function showQuestionDistribution(mcqs, distribution) {
+            console.log('=== QUESTION DISTRIBUTION SUMMARY ===');
+            console.log(`Total Questions: ${mcqs.length}`);
+            
+            console.log('\nSubject Distribution:');
+            Object.entries(distribution.subjects).forEach(([subject, count]) => {
+                console.log(`  ${subject}: ${count} questions (${(count/mcqs.length*100).toFixed(1)}%)`);
+            });
+            
+            console.log('\nExam Distribution:');
+            Object.entries(distribution.exams).forEach(([exam, count]) => {
+                console.log(`  ${exam}: ${count} questions (${(count/mcqs.length*100).toFixed(1)}%)`);
+            });
+            
+            console.log('\nDifficulty Distribution:');
+            Object.entries(distribution.difficulty).forEach(([difficulty, count]) => {
+                console.log(`  ${difficulty}: ${count} questions (${(count/mcqs.length*100).toFixed(1)}%)`);
+            });
+            
+            console.log('=====================================');
+        }
+        // Close modal when clicking outside
+        document.getElementById('practiceModal').addEventListener('click', (e) => {
+            if (e.target.id === 'practiceModal') {
+                closePracticeModal();
+            }
+        });
+    
+        // Initialize the app
+        initializeApp();
+    </script>
+    {% endblock %}
+
+    {%block pp%}
+    
+    <li class="dropdown">
+        <a href="javascript:void(0)" class="dropbtn">
+          
+            <i class="fas fa-user-circle profile-icon"></i>
+          
+          {{ user.username }}
+          
+        </a>
+        <div class="dropdown-content">
+          <a href="#">Settings</a>
+          <a href={% url 'logout' %}>Logout</a>
+        </div>
+      </li>
+    
+    
+    {%endblock%} 

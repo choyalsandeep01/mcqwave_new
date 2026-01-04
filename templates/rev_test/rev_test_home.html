@@ -1,0 +1,763 @@
+{% extends 'base/base.html' %}
+{% block title %}Practice Sessions{% endblock title %}
+
+{% block content %}
+<!-- Keep all the CSS styles exactly the same as before -->
+<style>
+/* All the previous CSS styles remain exactly the same */
+/* Modern CSS Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    color: #2d3748;
+}
+
+/* Main Container */
+.sessions-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    min-height: 100vh;
+}
+
+/* Header Section */
+.sessions-header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sessions-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.sessions-subtitle {
+    text-align: center;
+    color: #64748b;
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+/* Stats Section */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem;
+    border-radius: 16px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #667eea;
+    display: block;
+}
+
+.stat-label {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+/* Sessions Content */
+.sessions-content {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Filter Section */
+.filter-section {
+    padding: 1.5rem 2rem;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.filter-tabs {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.filter-tab {
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    border: none;
+    background: rgba(255, 255, 255, 0.7);
+    color: #64748b;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.filter-tab:hover {
+    background: rgba(102, 126, 234, 0.1);
+    color: #667eea;
+}
+
+.filter-tab.active {
+    background: #1E40AF;
+    color: white;
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+/* Desktop Table View */
+.desktop-view {
+    display: block;
+}
+
+.sessions-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.sessions-table th {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    padding: 1.25rem 1.5rem;
+    text-align: left;
+    font-weight: 600;
+    color: #374151;
+    border-bottom: 2px solid #e2e8f0;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.sessions-table tbody tr {
+    border-bottom: 1px solid #f1f5f9;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.sessions-table tbody tr:hover {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+    transform: scale(1.01);
+}
+
+.sessions-table td {
+    padding: 1.25rem 1.5rem;
+    vertical-align: middle;
+}
+
+/* Session Type Badge */
+.session-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.session-badge.pyq {
+    background: #B91C1C;
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.session-badge.curated {
+    background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(30, 58, 138, 0.3);
+}
+
+.session-badge i {
+    font-size: 0.875rem;
+}
+
+/* Date Styling */
+.session-date {
+    font-weight: 500;
+    color: #374151;
+}
+
+.session-time {
+    font-size: 0.8rem;
+    color: #64748b;
+    display: block;
+    margin-top: 0.25rem;
+}
+
+/* Selections Styling */
+.session-selections {
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #4b5563;
+    position: relative;
+}
+
+.session-selections:hover::after {
+    content: attr(title);
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #1f2937;
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Score Styling */
+.session-score {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #374151; /* Neutral color since it's just a count */
+}
+
+
+.score-high { color: #059669; }
+.score-medium { color: #d97706; }
+.score-low { color: #dc2626; }
+
+/* Questions Count */
+.questions-count {
+    background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+    padding: 0.5rem 0.75rem;
+    border-radius: 12px;
+    font-weight: 600;
+    color: #3730a3;
+    display: inline-block;
+}
+
+/* Mobile Card View */
+.mobile-view {
+    display: none;
+    padding: 1rem;
+}
+
+.session-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.session-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.card-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.meta-item {
+    text-align: center;
+}
+
+.meta-label {
+    font-size: 0.75rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+}
+
+.meta-value {
+    font-weight: 600;
+    color: #374151;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #64748b;
+}
+
+.empty-icon {
+    font-size: 4rem;
+    color: #cbd5e1;
+    margin-bottom: 1rem;
+}
+
+.empty-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.empty-message {
+    font-size: 1rem;
+    color: #64748b;
+}
+
+/* Loading State */
+.loading-skeleton {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .sessions-container {
+        padding: 1.5rem 1rem;
+    }
+    
+    .sessions-title {
+        font-size: 2rem;
+    }
+    
+    .sessions-table th,
+    .sessions-table td {
+        padding: 1rem;
+    }
+    
+    
+}
+
+@media (max-width: 768px) {
+    .desktop-view {
+        display: none;
+    }
+    
+    .mobile-view {
+        display: block;
+    }
+    
+    .sessions-header {
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .sessions-title {
+        font-size: 1.75rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+        margin: 1.5rem 0;
+    }
+    
+    .stat-card {
+        padding: 1rem;
+    }
+    
+    .stat-number {
+        font-size: 1.5rem;
+    }
+    
+    .filter-section {
+        padding: 1rem;
+    }
+    
+    .filter-tab {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .sessions-container {
+        padding: 1rem 0.5rem;
+    }
+    
+    .sessions-header {
+        padding: 1rem;
+    }
+    
+    .sessions-title {
+        font-size: 1.5rem;
+    }
+    
+    .sessions-subtitle {
+        font-size: 1rem;
+    }
+    
+    
+    .session-card {
+        padding: 1rem;
+    }
+    
+    .card-meta {
+        gap: 0.75rem;
+    }
+    
+    .session-badge {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.7rem;
+    }
+}
+
+/* Smooth transitions */
+* {
+    transition: all 0.2s ease;
+}
+
+/* Focus styles for accessibility */
+.sessions-table tbody tr:focus,
+.session-card:focus,
+.filter-tab:focus {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+    .filter-section {
+        display: none;
+    }
+    
+    .sessions-container {
+        background: none;
+    }
+    
+    .sessions-content,
+    .sessions-header {
+        box-shadow: none;
+        background: white;
+    }
+}
+</style>
+
+<div class="sessions-container">
+    <!-- Header Section -->
+    <div class="sessions-header">
+        <h1 class="sessions-title">Practice Sessions</h1>
+        
+<!-- FIXED Stats Grid - Now shows correct weekly data -->
+<div class="stats-grid">
+    <div class="stat-card">
+        <span class="stat-number">{{ total_sessions }}</span>
+        <div class="stat-label">Total Sessions</div>
+    </div>
+    <div class="stat-card">
+        <!-- FIXED: Now shows sessions from last 7 days only -->
+        <span class="stat-number">{{ weekly_sessions_count }}</span>
+        <div class="stat-label">This Week</div>
+    </div>
+    <div class="stat-card">
+        <span class="stat-number" id="latest-score">
+            {% if latest_correct and latest_total %}
+                {{ latest_correct|floatformat:0 }}/{{ latest_total|floatformat:0 }}
+            {% else %}
+                0/0
+            {% endif %}
+        </span>
+        <div class="stat-label">Latest Score</div>
+    </div>
+    <div class="stat-card">
+        <span class="stat-number" id="total-questions">{{ total_questions_sum }}</span>
+        <div class="stat-label">Questions Solved</div>
+    </div>
+</div>
+
+    </div>
+
+    <!-- Main Content -->
+    <div class="sessions-content">
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <div class="filter-tabs">
+                <button class="filter-tab active" data-filter="all">
+                    <i class="fas fa-list nfas"></i> All Sessions
+                </button>
+                <button class="filter-tab" data-filter="pyq">
+                    <i class="fas fa-history nfas"></i> PYQ Only
+                </button>
+                <button class="filter-tab" data-filter="curated">
+                    <i class="fas fa-graduation-cap nfas"></i> Curated Only
+                </button>
+            </div>
+        </div>
+
+        <!-- Desktop Table View -->
+        <!-- Desktop Table View -->
+<div class="desktop-view">
+    <table class="sessions-table">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Date & Time</th>
+                <th>Selections</th>
+                <th>Questions</th>
+                <th>Score</th> <!-- This shows correct answers, not percentage -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for session in test_sessions %}
+            <tr class="session-row" 
+                data-link="rev_test/?test_id={{ session.test_id }}"
+                data-type="{% if session.pyq %}pyq{% else %}curated{% endif %}"
+                tabindex="0">
+                <td>
+                    <span class="session-badge {% if session.pyq %}pyq{% else %}curated{% endif %}">
+                        {% if session.pyq %}
+                            <i class="fas fa-history nfas"></i>
+                            PYQ
+                        {% else %}
+                            <i class="fas fa-graduation-cap nfas"></i>
+                            Curated
+                        {% endif %}
+                    </span>
+                </td>
+                <td>
+                    <div class="session-date">
+                        <span class="local-time" data-utc-time="{{ session.created_at|date:'c' }}"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="session-selections" title="{{ session.selections|join:', ' }}">
+                        {{ session.selections|join:", " }}
+                    </div>
+                </td>
+                <td>
+                    <span class="questions-count">
+                        {{ session.total_questions|floatformat:0 }}
+                    </span>
+                </td>
+                <td>
+                    <!-- FIXED: Show just the number of correct answers, not percentage -->
+                    <span class="session-score">
+                        {{ session.score|floatformat:0 }}
+                    </span>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-clipboard-list nfas"></i>
+                        </div>
+                        <div class="empty-title">No Practice Sessions Yet</div>
+                        <div class="empty-message">Start your first practice session to see your progress here</div>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Mobile Card View -->
+<div class="mobile-view">
+    {% for session in test_sessions %}
+    <div class="session-card" 
+         data-link="rev_test/?test_id={{ session.test_id }}"
+         data-type="{% if session.pyq %}pyq{% else %}curated{% endif %}"
+         tabindex="0">
+        <div class="card-header">
+            <span class="session-badge {% if session.pyq %}pyq{% else %}curated{% endif %}">
+                {% if session.pyq %}
+                    <i class="fas fa-history nfas"></i>
+                    PYQ
+                {% else %}
+                    <i class="fas fa-graduation-cap nfas"></i>
+                    Curated
+                {% endif %}
+            </span>
+            <div class="session-date">
+                <span class="local-time" data-utc-time="{{ session.created_at|date:'c' }}"></span>
+            </div>
+        </div>
+        
+        <div class="session-selections" title="{{ session.selections|join:', ' }}">
+            {{ session.selections|join:", " }}
+        </div>
+        
+        <div class="card-meta">
+            <div class="meta-item">
+                <div class="meta-label">Questions</div>
+                <div class="meta-value">{{ session.total_questions|floatformat:0 }}</div>
+            </div>
+            <div class="meta-item">
+                <div class="meta-label">Score</div>
+                <!-- FIXED: Show just the number of correct answers -->
+                <div class="meta-value">
+                    {{ session.score|floatformat:0 }}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="empty-state">
+        <div class="empty-icon">
+            <i class="fas fa-clipboard-list nfas"></i>
+        </div>
+        <div class="empty-title">No Practice Sessions Yet</div>
+        <div class="empty-message">Start your first practice session to see your progress here</div>
+    </div>
+    {% endfor %}
+</div>
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Format local time
+        const timeElements = document.querySelectorAll('.local-time');
+        timeElements.forEach(element => {
+            const utcTime = element.getAttribute('data-utc-time');
+            const date = new Date(utcTime);
+            const formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear().toString().slice(-2)}`;
+            const formattedTime = date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+            
+            element.innerHTML = `
+                <div>${formattedDate}</div>
+                <div class="session-time">${formattedTime}</div>
+            `;
+        });
+    
+        // FIXED: Safely calculate total questions (check if element exists)
+        const totalQuestionsElement = document.getElementById('total-questions');
+        if (totalQuestionsElement) {
+            const sessionElements = document.querySelectorAll('[data-questions]');
+            let totalQuestions = 0;
+            sessionElements.forEach(element => {
+                const questions = parseInt(element.getAttribute('data-questions')) || 0;
+                totalQuestions += questions;
+            });
+            
+            // Only update if we have data from JavaScript calculation
+            if (sessionElements.length > 0) {
+                totalQuestionsElement.textContent = totalQuestions;
+            }
+        }
+    
+        // FIXED: Format latest score to remove decimals
+        const latestScoreElement = document.getElementById('latest-score');
+        if (latestScoreElement) {
+            const scoreText = latestScoreElement.textContent.trim();
+            const parts = scoreText.split('/');
+            if (parts.length === 2) {
+                const numerator = Math.floor(parseFloat(parts[0]));
+                const denominator = Math.floor(parseFloat(parts[1]));
+                latestScoreElement.textContent = `${numerator}/${denominator}`;
+            }
+        }
+    
+        // Handle row clicks
+        const clickableElements = document.querySelectorAll('.session-row, .session-card');
+        clickableElements.forEach(element => {
+            element.addEventListener('click', function() {
+                const link = this.getAttribute('data-link');
+                if (link) {
+                    window.location.href = link;
+                }
+            });
+    
+            // Handle keyboard navigation
+            element.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+        });
+    
+        // Filter functionality
+        const filterTabs = document.querySelectorAll('.filter-tab');
+        const sessionElements = document.querySelectorAll('[data-type]');
+    
+        filterTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                const filter = this.getAttribute('data-filter');
+                
+                // Update active tab
+                filterTabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Filter sessions
+                sessionElements.forEach(session => {
+                    const sessionType = session.getAttribute('data-type');
+                    if (filter === 'all' || filter === sessionType) {
+                        session.style.display = '';
+                        session.style.animation = 'fadeIn 0.3s ease';
+                    } else {
+                        session.style.display = 'none';
+                    }
+                });
+            });
+        });
+    
+        // Add fade in animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
+    });
+    </script>
+    
+{% endblock %}
+
+{% block pp %}
+<li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">
+        <i class="fas fa-user-circle profile-icon"></i>
+        {{ user.username }}
+    </a>
+    <div class="dropdown-content">
+        <a href="#">Settings</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+</li>
+{% endblock %}

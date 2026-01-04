@@ -1,0 +1,76 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const radarCtx = document.getElementById('radarChart').getContext('2d');
+    
+    const labelsElement = document.getElementById('chartLabels').textContent.trim();
+    const dataElement = document.getElementById('chartData').textContent.trim();
+    
+    const labels = labelsElement ? JSON.parse(labelsElement) : [];
+    const data = dataElement ? JSON.parse(dataElement) : [];
+    
+    // Intelligent label truncation
+    const truncatedLabels = labels.map(label => {
+        if (label.length <= 4) return label;
+        
+        if (label.includes(' ')) {
+            return label.split(' ')
+                .map(word => word[0])
+                .join('')
+                .substring(0, 4)
+                .toUpperCase();
+        }
+        
+        return label.substring(0, 4);
+    });
+    
+    // Dynamic color generation
+    const dynamicColors = truncatedLabels.map((_, index) => 
+        `hsl(${(index * 360) / truncatedLabels.length}, 70%, 50%)`
+    );
+    
+    // Chart configuration remains the same...
+    const radarChart = new Chart(radarCtx, {
+        // ... existing chart configuration ...
+    });
+
+    // Modified legend creation with better contrast
+    const legendContainer = document.createElement('div');
+    legendContainer.classList.add('radar-legend');
+    
+    labels.forEach((label, index) => {
+        const legendItem = document.createElement('span');
+        const color = dynamicColors[index];
+        
+        // Create a wrapper for the text to ensure proper contrast
+        const textWrapper = document.createElement('span');
+        textWrapper.textContent = `${label}: ${data[index]}%`;
+        textWrapper.style.color = '#333'; // Dark text color for better readability
+        textWrapper.style.backgroundColor = 'white'; // White background for text
+        textWrapper.style.padding = '2px 6px';
+        textWrapper.style.borderRadius = '3px';
+        textWrapper.style.display = 'inline-block';
+        
+        // Style the legend item
+        legendItem.style.backgroundColor = color + '15'; // Very light background
+        legendItem.style.border = `2px solid ${color}`; // Colored border
+        legendItem.style.display = 'inline-flex';
+        legendItem.style.alignItems = 'center';
+        legendItem.style.padding = '3px';
+        legendItem.style.borderRadius = '5px';
+        
+        // Add a color indicator
+        const colorIndicator = document.createElement('span');
+        colorIndicator.style.width = '12px';
+        colorIndicator.style.height = '12px';
+        colorIndicator.style.backgroundColor = color;
+        colorIndicator.style.borderRadius = '50%';
+        colorIndicator.style.marginRight = '6px';
+        colorIndicator.style.display = 'inline-block';
+        
+        legendItem.appendChild(colorIndicator);
+        legendItem.appendChild(textWrapper);
+        legendContainer.appendChild(legendItem);
+    });
+
+    // Append legend directly after the chart wrapper
+    document.querySelector('.chart-wrapper').after(legendContainer);
+});

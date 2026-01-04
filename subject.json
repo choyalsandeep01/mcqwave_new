@@ -1,0 +1,182 @@
+[
+{
+    "model": "mcqs.subject",
+    "pk": "0530081e-0ef4-48a1-9a64-1dcdcbcd91d8",
+    "fields": {
+        "created_at": "2024-08-16T14:27:53.186Z",
+        "updated_at": "2024-08-16T13:56:00.503Z",
+        "order": 10,
+        "name": "OPTHALMOLOGY"
+    }
+},
+{
+    "model": "mcqs.subject",
+    "pk": "06d3572a-95ec-4819-b33d-6ca010b25174",
+    "fields": {
+        "created_at": "2024-08-16T14:27:34.859Z",
+        "updated_at": "2024-08-16T13:55:46.623Z",
+        "order": 7,
+        "name": "FMT"
+    }
+},
+{
+    "model": "mcqs.subject",
+    "pk": "18c2091d-dceb-4791-b3a9-123668c200ea",
+    "fields": {
+        "created_at": "2024-08-16T14:39:45.698Z",
+        "updated_at": "2024-08-16T13:55:25.110Z",
+        "order": 3,
+        "name": "PHYSIOLOGY"
+    }
+},
+{
+    "model": "mcqs.subject",
+    "pk": "29f2597a-3b30-43fa-b7b9-283a44c8ad86",
+    "fields": {
+        "created_at": "2024-08-16T14:28:33.908Z",
+        "updated_at": "2024-08-16T13:56:24.719Z",
+        "order": 18,
+        "name": "RADIOLOGY"
+    }
+},
+{
+    "model": "mcqs.subject",
+    "pk": "2b7fbbaa-f734-4b6f-a5f4-6e9b12a27932",
+    "fields": {
+        "created_at": "2024-08-17T05:17:14.347Z",
+        "updated_at": "2024-08-16T13:55:37.946Z",
+        "order": 6,
+        "name": "MICROBIOLOGY"
+    }
+},
+{
+    "model": "mcqs.subject",
+    "pk": "2dd272c0-7513-4e5a-9a91-903c71250df8",
+    "fields": {
+        "created_at": "2024-08-16T14:28:16.319Z",
+        "updated_at": "2024-08-16T13:56:20.990Z",
+        "order": 14,
+        "name": "OBS AND GYNEC"
+    }
+},
+{
+    "model": "mcqs.subject",
+    "pk": "478b1fb2-b714-46c0-bd92-1f93e1735534",
+    "fields": {
+        "created_at": "2024-08-16T14:27:14.518Z",
+        "updated_at": "2024-08-16T13:55:33.057Z",
+        "order": 5,
+        "name": "PATHOLOGY"
+    }
+},
+{
+    "model": "mcqs.subject",
+    "pk": "60ca20ef-3c2b-4253-90e7-e5b93152d8ab",
+    "fields": {
+        "created_at": "2024-08-16T14:28:29.929Z",
+        "updated_at": "2024-08-16T13:57:42.833Z",
+        "order": 17,
+        "name": "PSYCHIATRY"
+    }
+},
+{
+    "model": "mcqs.subject",
+    "pk": "68a32022-aafe-4d5b-aa27-db3b3dfa564e",
+    "fields": {
+        "created_at": "2024-08-16T14:28:00.028Z",
+        "updated_at": "2024-08-16T13:56:09.142Z",
+        "order": 11,
+        "name": "MEDICINE"
+    }
+},
+{
+    "model": "mcqs.subject",
+    "pk": "8f103bdc-a139-4ba3-81d8-71cf9b88d779",
+    "fields": {
+        "created_at": "2024-08-16T14:27:40.876Z",
+        "updated_at": "2024-08-16T13:55:49.821Z",
+        "order": 8,
+        "name": "PSM"
+    }
+},
+{
+    "model": "mcqs.subject",
+    "pk": "930eac91-d471-492f-826c-fcf58ec8ea89",
+    "fields": {
+        "created_at": "2024-08-16T14:28:25.000Z",
+        "updated_at": "2024-08-16T13:57:34.362Z",
+        "order": 16,
+        "name": "ORTHOPEDICS"
+    }
+},
+{
+    "model": "mcqs.subject",
+    "pk": "9eb8b698-b7f7-44da-b536-fbe98d6d6893",
+    "fields": {
+        "created_at": "2024-08-16T14:27:45.854Z",
+        "updated_at": "2024-08-16T13:55:53.054Z",
+        "order": 9,
+        "name": "ENT"
+    }
+},
+{
+    "model": "mcqs.subject",
+    "pk": "aeefb22e-52d9-4d79-826c-3a0cc9d3a136",
+    "fields": {
+        "created_at": "2024-08-16T14:28:04.237Z",
+        "updated_at": "2024-08-16T13:56:05.758Z",
+        "order": 12,
+        "name": "SURGERY"
+    }
+},
+{
+    "model": "mcqs.subject",
+    "pk": "b78d2f2a-8af3-42b6-a90a-121c551a4184",
+    "fields": {
+        "created_at": "2024-08-16T14:26:57.956Z",
+        "updated_at": "2024-08-16T13:55:29.066Z",
+        "order": 4,
+        "name": "PHARMACOLOGY"
+    }
+},
+{
+    "model": "mcqs.subject",
+    "pk": "c4a2f64b-6ffb-4795-bc7b-d44048a2e38f",
+    "fields": {
+        "created_at": "2024-08-16T14:28:20.333Z",
+        "updated_at": "2024-08-16T13:56:41.648Z",
+        "order": 15,
+        "name": "DERMATOLOGY"
+    }
+},
+{
+    "model": "mcqs.subject",
+    "pk": "ca38a327-cb20-4e52-ba40-0e7e03a2ceea",
+    "fields": {
+        "created_at": "2024-08-17T04:17:46.450Z",
+        "updated_at": "2024-08-16T13:55:21.065Z",
+        "order": 2,
+        "name": "BIOCHEMISTRY"
+    }
+},
+{
+    "model": "mcqs.subject",
+    "pk": "e22baa34-e407-4b35-a37c-a725f9e78352",
+    "fields": {
+        "created_at": "2024-08-16T14:28:11.983Z",
+        "updated_at": "2024-08-16T13:56:17.495Z",
+        "order": 13,
+        "name": "PEDIATRICS"
+    }
+},
+{
+    "model": "mcqs.subject",
+    "pk": "f633da0c-96a5-4a1b-a9bb-7e95eb4e516b",
+    "fields": {
+        "created_at": "2024-08-16T14:26:13.480Z",
+        "updated_at": "2024-08-16T13:52:40.080Z",
+        "order": 1,
+        "name": "ANATOMY"
+    }
+}
+]

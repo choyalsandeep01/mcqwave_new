@@ -1,0 +1,1732 @@
+{% extends 'base/base.html' %}
+{% block title %}Practice MCQs{% endblock title %}
+
+{% block content %}
+<style>
+    .mini-stats-strip {
+        background: linear-gradient(90deg, #1e3c72, #dc143c);
+        padding: 0.5rem;
+        border-radius: 8px 8px 0 0;
+        margin: 10px 0 0 0;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .mini-stats-grid {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        gap: 1rem;
+        max-width: 100%;
+    }
+    
+    .mini-stat {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .mini-stat i {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.9rem;
+    }
+    
+    .mini-stat-number {
+        color: white;
+        font-weight: bold;
+        font-size: 0.9rem;
+        margin-right: 0.2rem;
+    }
+    
+    .mini-stat-label {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.8rem;
+    }
+    
+    .stats-note {
+        background: rgba(30, 60, 114, 0.05);
+        border: 1px solid rgba(30, 60, 114, 0.1);
+        border-top: none;
+        padding: 0.3rem 0.5rem;
+        font-size: 0.7rem;
+        color: #666;
+        text-align: center;
+        border-radius: 0 0 8px 8px;
+        margin-bottom: 10px;
+    }
+    
+    .stats-note i {
+        color: #1e3c72;
+        font-size: 0.7rem;
+        margin-right: 0.2rem;
+    }
+    
+    @media (max-width: 480px) {
+        .mini-stats-grid {
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+        }
+        
+        .mini-stat {
+            font-size: 0.8rem;
+        }
+    }
+    </style>
+    <style>
+        
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            border: 1px solid #e5e5e5;
+            
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: none;
+            background: transparent;
+            color: #6c757d;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .tab:hover:not(.active) {
+            background: #e9ecef;
+            color: #495057;
+        }
+
+        .content {
+            padding: 20px;
+            min-height: 400px;
+        }
+
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .breadcrumb {
+            background: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin-bottom: 0; /* Remove bottom margin */
+            font-size: 0.85rem;
+            color: #6c757d;
+            flex: 1; /* Take remaining space */
+            margin-left: 10px; /* Add some space from back button */
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                gap: 8px;
+            }
+        }
+
+        .card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 12px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            border-color: #667eea;
+        }
+
+        .card.selected {
+            background: #1e3c72;
+            color: white;
+            border-color: #1e3c72;
+        }
+
+        .card.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #f8f9fa;
+        }
+
+        .card-icon {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .card-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #764ba2;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .selected-items {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .selected-item {
+            background: white;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .selected-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .hierarchy-path {
+            font-size: 0.85rem;
+            color: #495057;
+            font-weight: 500;
+        }
+
+        .remove-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            background: #c82333;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6c757d;
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .badge {
+            background: #667eea;
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-left: 5px;
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.4rem;
+            }
+            
+            .tab {
+                padding: 12px 8px;
+                font-size: 0.8rem;
+            }
+            
+            .content {
+                padding: 15px;
+            }
+            
+            .card {
+                min-height: 70px;
+                padding: 8px 4px;
+            }
+            
+            .card-title {
+                font-size: 0.7rem;
+            }
+            
+            .card-icon {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    <style>
+        .navigation-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding: 0 5px;
+        }
+        
+        .back-btn {
+            background: #dc143c;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: slideIn 0.4s ease forwards;
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(255, 107, 107, 0.4);
+            background: linear-gradient(135deg, #ff5252, #e53e3e);
+        }
+        
+        .back-btn:active {
+            transform: translateY(0);
+        }
+        
+        .back-btn i {
+            font-size: 0.9rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .back-btn:hover i {
+            transform: translateX(-2px);
+        }
+        
+        .back-btn.hidden {
+            opacity: 0;
+            transform: translateX(-20px);
+            pointer-events: none;
+        }
+        
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .back-btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+            
+            .navigation-header {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+    <style>
+        .search-container {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .search-results {
+            position: absolute;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            display: none;
+            z-index: 1000;
+        }
+        
+        .search-result-item {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+        
+        .search-result-item:hover {
+            background-color: #f0f0f0;
+        }
+        </style>
+        <style>
+            .demo-container {
+                background: rgba(255, 255, 255, 0.95);
+                border-radius: 16px;
+                padding: 24px;
+                max-width: 480px;
+                width: 100%;
+                text-align: center;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            }
+            
+            .demo-title {
+                font-size: 1.4rem;
+                font-weight: 600;
+                color: #2c3e50;
+                margin-bottom: 20px;
+            }
+            
+            /* Settings Button */
+            .settings-btn {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                border: none;
+                border-radius: 12px;
+                padding: 12px 24px;
+                font-size: 0.95rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+            }
+            
+            .settings-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            }
+            
+            .settings-btn i {
+                font-size: 1rem;
+            }
+            
+            /* Modal Styles */
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1000;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(3px);
+            }
+            
+            .modal.show {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .modal-content {
+                background: white;
+                border-radius: 16px;
+                border: 1px solid #e5e5e5;
+                width: 90%;
+                max-width: 420px;
+                box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
+                overflow: hidden;
+            }
+            
+            .modal-header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 16px 20px;
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                position: relative;
+            }
+            
+            .close-btn {
+                background: rgba(255, 255, 255, 0.2);
+                border: none;
+                color: white;
+                font-size: 1.2rem;
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .close-btn:hover {
+                background: rgba(255, 255, 255, 0.3);
+                transform: rotate(90deg);
+            }
+            
+            .modal-body {
+                padding: 20px;
+            }
+            
+            .setting-group {
+                margin-bottom: 20px;
+            }
+            
+            .setting-label {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 0.9rem;
+                font-weight: 600;
+                color: #2c3e50;
+                margin-bottom: 10px;
+            }
+            
+            .setting-label i {
+                color: #667eea;
+                font-size: 1rem;
+            }
+            
+            /* Toggle Buttons */
+            .toggle-group {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 6px;
+            }
+            
+            .toggle-btn {
+                background: #f8f9fa;
+                border: 1px solid #e9ecef;
+                border-radius: 8px;
+                padding: 8px 4px;
+                font-size: 0.75rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                text-align: center;
+                color: #6c757d;
+            }
+            
+            .toggle-btn:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
+            
+            .toggle-btn.active {
+                background: #1e3c72;
+                color: white;
+                border-color: #667eea;
+                box-shadow: 0 3px 12px rgba(102, 126, 234, 0.3);
+            }
+            
+            /* Input Styles */
+            .input-group {
+                position: relative;
+            }
+            
+            .input-field {
+                width: 100%;
+                padding: 10px 14px;
+                border: 1px solid #e9ecef;
+                border-radius: 8px;
+                font-size: 0.9rem;
+                transition: all 0.3s ease;
+                background: #f8f9fa;
+            }
+            
+            .input-field:focus {
+                outline: none;
+                border-color: #667eea;
+                background: white;
+                box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+            }
+            
+            .input-hint {
+                font-size: 0.75rem;
+                color: #6c757d;
+                margin-top: 6px;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+            
+            .input-hint i {
+                color: #28a745;
+                font-size: 0.7rem;
+            }
+            
+            /* Range Slider */
+            .range-slider {
+                width: 100%;
+                height: 6px;
+                border-radius: 3px;
+                background: #e9ecef;
+                outline: none;
+                appearance: none;
+                cursor: pointer;
+            }
+            
+            .range-slider::-webkit-slider-thumb {
+                appearance: none;
+                width: 18px;
+                height: 18px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                cursor: pointer;
+                box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+                transition: all 0.3s ease;
+            }
+            
+            .range-slider::-webkit-slider-thumb:hover {
+                transform: scale(1.1);
+            }
+            
+            .range-slider::-moz-range-thumb {
+                width: 18px;
+                height: 18px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                cursor: pointer;
+                border: none;
+                box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+            }
+            
+            .range-values {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 6px;
+                font-size: 0.75rem;
+                color: #6c757d;
+            }
+            
+            .range-current {
+                text-align: center;
+                margin-top: 8px;
+                font-weight: 600;
+                color: #667eea;
+                font-size: 0.9rem;
+            }
+            
+            /* Action Buttons */
+            .modal-actions {
+                padding: 16px 20px;
+                border-top: 1px solid #e9ecef;
+                display: flex;
+                gap: 10px;
+            }
+            
+            .action-btn {
+                flex: 1;
+                padding: 12px;
+                border: none;
+                border-radius: 8px;
+                font-size: 0.9rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+            }
+            
+            .action-btn i {
+                font-size: 0.85rem;
+            }
+            
+            .btn-primary {
+                background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+                color: white;
+            }
+            
+            .btn-primary:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 4px 16px rgba(40, 167, 69, 0.3);
+            }
+            
+            .btn-secondary {
+                background: #6c757d;
+                color: white;
+            }
+            
+            .btn-secondary:hover {
+                background: #5a6268;
+                transform: translateY(-1px);
+                box-shadow: 0 4px 16px rgba(108, 117, 125, 0.3);
+            }
+            
+            /* Responsive Design */
+            @media (max-width: 768px) {
+                .modal-content {
+                    width: 95%;
+                    max-width: 380px;
+                }
+            
+                .modal-body {
+                    padding: 16px;
+                }
+            
+                .setting-group {
+                    margin-bottom: 16px;
+                }
+            
+                .toggle-group {
+                    grid-template-columns: repeat(4, 1fr);
+                    gap: 8px;
+                }
+            
+                .toggle-btn {
+                    font-size: 0.8rem;
+                    padding: 10px 6px;
+                }
+            
+                .setting-label {
+                    font-size: 0.85rem;
+                }
+            
+                .modal-actions {
+                    
+                    gap: 8px;
+                }
+            }
+            
+            @media (max-width: 480px) {
+                .demo-container {
+                    padding: 16px;
+                }
+            
+                .demo-title {
+                    font-size: 1.2rem;
+                }
+            
+                .settings-btn {
+                    padding: 10px 20px;
+                    font-size: 0.9rem;
+                }
+            
+                .modal-header {
+                    padding: 12px 16px;
+                }
+            
+                .modal-content {
+                    max-width: 340px;
+                }
+            
+                .modal-body {
+                    padding: 12px;
+                }
+            
+                .setting-group {
+                    margin-bottom: 12px;
+                }
+            
+                .setting-label {
+                    font-size: 0.8rem;
+                }
+            
+                .toggle-btn {
+                    font-size: 0.7rem;
+                    padding: 8px 4px;
+                }
+            
+                .input-field {
+                    padding: 8px 12px;
+                    font-size: 0.85rem;
+                }
+            
+                .input-hint {
+                    font-size: 0.7rem;
+                }
+            
+                .range-current {
+                    font-size: 0.85rem;
+                }
+            
+                .modal-actions {
+                    padding: 12px 16px;
+                }
+            
+                .action-btn {
+                    padding: 10px;
+                    font-size: 0.85rem;
+                }
+            }
+            
+            /* Remove custom scrollbar since we're making it compact */
+            .modal-content {
+                overflow: visible;
+            }
+            </style>
+    <div class="mini-stats-strip">
+        <div class="mini-stats-grid">
+            <div class="mini-stat">
+                <i class="fas fa-clipboard-list nfas"></i>
+                <span class="mini-stat-number" id="totalCounter">0</span>
+                <span class="mini-stat-label">Total</span>
+            </div>
+            
+            <div class="mini-stat">
+                <i class="fas fa-stethoscope nfas"></i>
+                <span class="mini-stat-number" id="clinicalCounter">0</span>
+                <span class="mini-stat-label">Clinical</span>
+            </div>
+            
+            <div class="mini-stat">
+                <i class="fas fa-image nfas"></i>
+                <span class="mini-stat-number" id="imageCounter">0</span>
+                <span class="mini-stat-label">Image</span>
+            </div>
+        </div>
+    </div>
+    <div class="stats-note">
+        <i class="fas fa-sync-alt fa-spin nfas"></i>Our team is continuously adding new high-yield MCQs to enhance your learning experience
+    </div>
+    <div class="container">
+        
+
+        <div class="content">
+            <div class="section">
+                
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search for topics..." class="search-box">
+                    <div id="searchResults" class="search-results"></div>
+                </div>
+                
+                <div class="navigation-header">
+                    <button class="back-btn hidden" id="back-btn">
+                        <i class="fas fa-arrow-left nfas"></i>
+                        
+                    </button>
+                    <div class="breadcrumb" id="breadcrumb">
+                        Subjects
+                    </div>
+                </div>
+                <div class="cards-grid" id="cards-container">
+                    <!-- Cards will be dynamically loaded here -->
+                </div>
+
+                <div class="action-buttons" id="action-buttons" style="display: none;">
+                    <button class="btn btn-primary" id="select-complete">
+                        Select Complete
+                    </button>
+                    <button class="btn btn-secondary" id="select-individual">
+                        Select Individual
+                    </button>
+                </div>
+            </div>
+
+            <div class="selected-items">
+                <div class="section-title">
+                    <span>✓</span>
+                    <span>Selected Items</span>
+                    <span class="badge" id="selected-count">0</span>
+                </div>
+                <div id="selected-container">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">—</div>
+                        <p>No items selected yet</p>
+                    </div>
+                </div>
+            </div>
+            <div class="demo-container">
+               
+                <button class="settings-btn" id="settingsBtn">
+                    <i class="fas fa-cogs nfas"></i>
+                    Advanced Settings
+                </button>
+            </div>
+        
+            <!-- Modal -->
+            <div class="modal" id="settingsModal">
+                <div class="modal-content">
+                    
+                    
+                    <div class="modal-body">
+                        <!-- Difficulty Setting -->
+                        <div class="setting-group">
+                            <div class="setting-label">
+                                <i class="fas fa-chart-line nfas"></i>
+                                Difficulty Level
+                            </div>
+                            <div class="toggle-group" id="difficultyGroup">
+                                <button class="toggle-btn" data-value="easy">Easy</button>
+                                <button class="toggle-btn" data-value="medium">Medium</button>
+                                <button class="toggle-btn" data-value="tough">Tough</button>
+                                <button class="toggle-btn active" data-value="mixed">Mixed</button>
+                            </div>
+                        </div>
+        
+                        <!-- Type Setting -->
+                        <div class="setting-group">
+                            <div class="setting-label">
+                                <i class="fas fa-layer-group nfas"></i>
+                                Question Type
+                            </div>
+                            <div class="toggle-group" id="typeGroup">
+                                <button class="toggle-btn" data-value="general">General</button>
+                                <button class="toggle-btn" data-value="image">Image</button>
+                                <button class="toggle-btn" data-value="clinical">Clinical</button>
+                                <button class="toggle-btn active" data-value="mixed">Mixed</button>
+                            </div>
+                        </div>
+        
+                        <!-- Number of Questions -->
+                        <div class="setting-group">
+                            <div class="setting-label">
+                                <i class="fas fa-list-ol nfas"></i>
+                                Number of Questions
+                            </div>
+                            <div class="input-group">
+                                <input type="number" class="input-field" id="numQuestions" min="1" max="40" placeholder="Enter number of questions">
+                                <div class="input-hint">
+                                    <i class="fas fa-info-circle nfas"></i>
+                                    Maximum 40 questions allowed
+                                </div>
+                            </div>
+                        </div>
+        
+                        <!-- Time per Question -->
+                        <div class="setting-group">
+                            <div class="setting-label">
+                                <i class="fas fa-stopwatch nfas"></i>
+                                Time per Question (minutes)
+                            </div>
+                            <div class="input-group">
+                                <input type="range" class="range-slider" id="timeRange" min="0.6" max="3" step="0.1" value="1.5">
+                                <div class="range-values">
+                                    <span>0.6 min</span>
+                                    <span>3.0 min</span>
+                                </div>
+                                <div class="range-current" id="timeValue">1.5 minutes</div>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="modal-actions">
+                        <button class="action-btn btn-primary" id="saveBtn">
+                            <i class="fas fa-save nfas"></i>
+                            Save Settings
+                        </button>
+                        <button class="action-btn btn-secondary" id="resetBtn">
+                            <i class="fas fa-undo nfas"></i>
+                            Reset to Default
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // DOM Elements
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsModal = document.getElementById('settingsModal');
+        const difficultyGroup = document.getElementById('difficultyGroup');
+        const typeGroup = document.getElementById('typeGroup');
+        const numQuestions = document.getElementById('numQuestions');
+        const timeRange = document.getElementById('timeRange');
+        const timeValue = document.getElementById('timeValue');
+        const saveBtn = document.getElementById('saveBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        // Settings object to store current values
+        let settings = {
+            difficulty: 'mixed',
+            type: 'mixed',
+            numQuestions: '',
+            timePerQuestion: 1.5
+        };
+
+        // Event Listeners
+        settingsBtn.addEventListener('click', openModal);
+        settingsModal.addEventListener('click', (e) => {
+            if (e.target === settingsModal) closeModal();
+        });
+
+        // Toggle button functionality
+        difficultyGroup.addEventListener('click', (e) => {
+            if (e.target.classList.contains('toggle-btn')) {
+                handleToggleClick(difficultyGroup, e.target);
+                settings.difficulty = e.target.dataset.value;
+            }
+        });
+
+        typeGroup.addEventListener('click', (e) => {
+            if (e.target.classList.contains('toggle-btn')) {
+                handleToggleClick(typeGroup, e.target);
+                settings.type = e.target.dataset.value;
+            }
+        });
+
+        // Number input validation
+        numQuestions.addEventListener('input', (e) => {
+            let value = parseInt(e.target.value);
+            if (value > 40) {
+                e.target.value = 40;
+                showNotification('Maximum 40 questions allowed', 'warning');
+            }
+            settings.numQuestions = e.target.value;
+        });
+
+        // Range slider functionality
+        timeRange.addEventListener('input', (e) => {
+            const value = parseFloat(e.target.value);
+            timeValue.textContent = `${value} minute${value !== 1 ? 's' : ''}`;
+            settings.timePerQuestion = value;
+        });
+
+        // Save and Reset buttons
+        saveBtn.addEventListener('click', saveSettings);
+        resetBtn.addEventListener('click', resetSettings);
+
+        // Functions
+        function openModal() {
+            settingsModal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            settingsModal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        function handleToggleClick(group, clickedBtn) {
+            // Remove active class from all buttons in the group
+            group.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            clickedBtn.classList.add('active');
+            
+            // Add ripple effect
+            addRippleEffect(clickedBtn);
+        }
+
+        function addRippleEffect(button) {
+            const ripple = document.createElement('span');
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = rect.width / 2 - size / 2;
+            const y = rect.height / 2 - size / 2;
+            
+            ripple.style.cssText = `
+                position: absolute;
+                width: ${size}px;
+                height: ${size}px;
+                left: ${x}px;
+                top: ${y}px;
+                background: rgba(255, 255, 255, 0.5);
+                border-radius: 50%;
+                transform: scale(0);
+                animation: ripple 0.6s ease;
+                pointer-events: none;
+            `;
+            
+            // Add ripple animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes ripple {
+                    to {
+                        transform: scale(2);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            button.style.position = 'relative';
+            button.style.overflow = 'hidden';
+            button.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        }
+
+        function saveSettings() {
+            // Validate settings
+            if (settings.numQuestions && (settings.numQuestions < 1 || settings.numQuestions > 40)) {
+                showNotification('Please enter a valid number of questions (1-40)', 'error');
+                return;
+            }
+
+            // Save to localStorage (you can modify this to send to server)
+            
+            
+            
+            
+            // Log settings for demo
+           
+            
+            closeModal();
+        }
+
+        function resetSettings() {
+            // Reset to default values
+            settings = {
+                difficulty: 'mixed',
+                type: 'mixed',
+                numQuestions: '',
+                timePerQuestion: 1.5
+            };
+            
+            // Update UI
+            updateUI();
+            
+            showNotification('Settings reset to default', 'info');
+        }
+
+        function updateUI() {
+            // Update difficulty buttons
+            difficultyGroup.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.value === settings.difficulty);
+            });
+            
+            // Update type buttons
+            typeGroup.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.value === settings.type);
+            });
+            
+            // Update number input
+            numQuestions.value = settings.numQuestions;
+            
+            // Update time range
+            timeRange.value = settings.timePerQuestion;
+            timeValue.textContent = `${settings.timePerQuestion} minute${settings.timePerQuestion !== 1 ? 's' : ''}`;
+        }
+
+        function showNotification(message, type = 'info') {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 16px 24px;
+                border-radius: 12px;
+                color: white;
+                font-weight: 600;
+                z-index: 2000;
+                animation: slideIn 0.3s ease;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            `;
+            
+            // Set background color based on type
+            const colors = {
+                success: '#28a745',
+                error: '#dc3545',
+                warning: '#ffc107',
+                info: '#17a2b8'
+            };
+            
+            notification.style.background = colors[type] || colors.info;
+            notification.textContent = message;
+            
+            // Add slide in animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            document.body.appendChild(notification);
+            
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        // Load settings from localStorage on page load
+        function loadSettings() {
+            const savedSettings = localStorage.getItem('mcqSettings');
+            if (savedSettings) {
+                settings = JSON.parse(savedSettings);
+                updateUI();
+            }
+        }
+
+        // Initialize
+        loadSettings();
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+            if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                if (settingsModal.classList.contains('show')) {
+                    saveSettings();
+                }
+            }
+        });
+    </script>
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+
+        // Get data from Django template
+        const data = {{ data|safe }};
+        
+        // State management
+        let currentLevel = 'subject';
+        let currentPath = [];
+        let selectedItems = [];
+        let selectedItem = null;
+
+        // DOM elements
+        const cardsContainer = document.getElementById('cards-container');
+        const actionButtons = document.getElementById('action-buttons');
+        const selectCompleteBtn = document.getElementById('select-complete');
+        const selectIndividualBtn = document.getElementById('select-individual');
+        const selectedContainer = document.getElementById('selected-container');
+        const selectedCount = document.getElementById('selected-count');
+        const breadcrumb = document.getElementById('breadcrumb');
+        const sectionTitle = document.getElementById('section-title');
+
+        // Initialize app
+        function init() {
+            bindEvents();
+            loadLevel('subject', Object.keys(data));
+            updateBreadcrumb();
+            updateSectionTitle();
+            updateBackButton();
+        }
+
+        // Bind event listeners
+        function bindEvents() {
+            selectCompleteBtn.addEventListener('click', selectComplete);
+            selectIndividualBtn.addEventListener('click', selectIndividual);
+        }
+
+        // Load level content
+        function loadLevel(level, items) {
+            currentLevel = level;
+            cardsContainer.innerHTML = '';
+
+            if (Array.isArray(items)) {
+                // For subjects (array of subject names)
+                items.forEach(item => {
+                    const card = createCard(item, level);
+                    cardsContainer.appendChild(card);
+                });
+            } else {
+                // For units, chapters, topics (object with keys)
+                Object.keys(items).forEach(key => {
+                    const card = createCard(key, level);
+                    cardsContainer.appendChild(card);
+                });
+            }
+        }
+
+        // Create card element
+        function createCard(name, level) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            
+            // Check if this item is already selected
+            const isDisabled = isItemSelected(name, level);
+            if (isDisabled) {
+                card.classList.add('disabled');
+            }
+
+            card.innerHTML = `
+                <div class="card-title">${name}</div>
+            `;
+
+            if (!isDisabled) {
+                card.addEventListener('click', () => {
+                    if (level === 'topic') {
+                        // Auto-select topic
+                        autoSelectTopic(name);
+                    } else {
+                        selectCard(card, name, level);
+                    }
+                });
+            }
+
+            return card;
+        }
+
+        // Select card
+        function selectCard(card, name, level) {
+            // Remove previous selection
+            document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+            
+            // Select current card
+            card.classList.add('selected');
+            selectedItem = name;
+
+            // Show action buttons for non-topic levels
+            if (level !== 'topic') {
+                showActionButtons();
+            }
+
+            updateSectionTitle();
+        }
+
+        // Auto-select topic
+        function autoSelectTopic(topicName) {
+            const hierarchy = [...currentPath, topicName];
+            addToSelected(hierarchy);
+            resetToSubjectLevel();
+        }
+
+        // Select complete item
+        function selectComplete() {
+            if (selectedItem) {
+                const hierarchy = [...currentPath, selectedItem];
+                addToSelected(hierarchy);
+                resetToSubjectLevel();
+            }
+        }
+
+        const backBtn = document.getElementById('back-btn');
+
+        // Add event listener for back button
+        backBtn.addEventListener('click', goBack);
+
+        // Function to go back to previous level
+        function goBack() {
+            if (currentPath.length > 0) {
+                // Remove last item from path
+                currentPath.pop();
+                
+                // Reset selected item
+                selectedItem = null;
+                
+                // Determine new level
+                const levels = ['subject', 'unit', 'chapter', 'topic'];
+                currentLevel = levels[currentPath.length] || 'subject';
+                
+                // Load the previous level
+                const currentData = getCurrentLevelData();
+                if (currentData) {
+                    loadLevel(currentLevel, currentData);
+                } else {
+                    loadLevel('subject', Object.keys(data));
+                }
+                
+                // Update UI
+                updateBreadcrumb();
+                updateSectionTitle();
+                updateBackButton();
+                hideActionButtons();
+                
+                // Add smooth transition effect
+                cardsContainer.style.opacity = '0';
+                setTimeout(() => {
+                    cardsContainer.style.opacity = '1';
+                }, 150);
+            }
+        }
+
+        // Function to update back button visibility
+        function updateBackButton() {
+            if (currentPath.length > 0) {
+                backBtn.classList.remove('hidden');
+            } else {
+                backBtn.classList.add('hidden');
+            }
+        }
+
+        // Select individual items
+        function selectIndividual() {
+            if (selectedItem) {
+                const newPath = [...currentPath, selectedItem];
+                currentPath = newPath;
+
+                const nextLevel = getNextLevel(currentLevel);
+                
+                if (nextLevel) {
+                    const currentData = getCurrentLevelData();
+                    if (currentData && (Array.isArray(currentData) ? currentData.length > 0 : Object.keys(currentData).length > 0)) {
+                        loadLevel(nextLevel, currentData);
+                        updateBreadcrumb();
+                        updateSectionTitle();
+                        updateBackButton();
+                        hideActionButtons();
+                        selectedItem = null;
+                    } else {
+                        console.error('No data found for next level');
+                        resetToSubjectLevel();
+                    }
+                }
+            }
+        }
+
+        // Get current level data
+        function getCurrentLevelData() {
+            let result = data;
+            
+            for (let i = 0; i < currentPath.length; i++) {
+                const item = currentPath[i];
+                if (!result[item]) {
+                    console.error('Item not found:', item, 'in', result);
+                    return null;
+                }
+                result = result[item];
+            }
+
+            return result;
+        }
+
+        // Get next level
+        function getNextLevel(currentLevel) {
+            const levels = ['subject', 'unit', 'chapter', 'topic'];
+            const currentIndex = levels.indexOf(currentLevel);
+            return currentIndex < levels.length - 1 ? levels[currentIndex + 1] : null;
+        }
+
+        // Add to selected items
+        function addToSelected(hierarchy) {
+            // Check if already exists
+            const hierarchyStr = hierarchy.join(' → ');
+            if (!selectedItems.some(item => item.hierarchy.join(' → ') === hierarchyStr)) {
+                selectedItems.push({
+                    hierarchy: hierarchy,
+                    id: Date.now()
+                });
+                updateSelectedDisplay();
+            }
+        }
+
+        // Check if item is selected
+        function isItemSelected(itemName, level) {
+            const currentHierarchy = [...currentPath, itemName];
+            return selectedItems.some(selected => {
+                const selectedPath = selected.hierarchy;
+                if (selectedPath.length !== currentHierarchy.length) return false;
+                
+                // Check if this exact path or a parent path is already selected
+                for (let i = 0; i < currentHierarchy.length; i++) {
+                    if (selectedPath[i] !== currentHierarchy[i]) return false;
+                }
+                return true;
+            });
+        }
+
+        // Update selected display
+        function updateSelectedDisplay() {
+            selectedCount.textContent = selectedItems.length;
+
+            if (selectedItems.length === 0) {
+                selectedContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">—</div>
+                        <p>No items selected yet</p>
+                    </div>
+                `;
+            } else {
+                selectedContainer.innerHTML = selectedItems.map(item => `
+                    <div class="selected-item">
+                        <div class="hierarchy-path">${item.hierarchy.join(' → ')}</div>
+                        <button class="remove-btn" onclick="removeSelected(${item.id})">×</button>
+                    </div>
+                `).join('');
+                showNotification('Your selection added!', 'success');
+            }
+        }
+
+        // Remove selected item
+        function removeSelected(id) {
+            selectedItems = selectedItems.filter(item => item.id !== id);
+            updateSelectedDisplay();
+            
+            // Refresh current level to re-enable cards
+            const currentData = getCurrentLevelData();
+            if (currentData) {
+                loadLevel(currentLevel, currentData);
+            } else {
+                loadLevel('subject', Object.keys(data));
+            }
+            updateBreadcrumb();
+            updateSectionTitle();
+            hideActionButtons();
+        }
+
+        // Reset to subject level
+        function resetToSubjectLevel() {
+            currentPath = [];
+            currentLevel = 'subject';
+            selectedItem = null;
+            loadLevel('subject', Object.keys(data));
+            updateBreadcrumb();
+            updateSectionTitle();
+            updateBackButton();
+            hideActionButtons();
+        }
+
+        // Update breadcrumb
+        function updateBreadcrumb() {
+            const pathStr = currentPath.length > 0 ? currentPath.join(' → ') : 'Subjects';
+            breadcrumb.textContent = pathStr;
+        }
+
+        // Update section title
+        function updateSectionTitle() {
+            const levels = {
+                'subject': 'Select Subject',
+                'unit': 'Select Unit',
+                'chapter': 'Select Chapter',
+                'topic': 'Select Topic'
+            };
+            
+            let title = levels[currentLevel] || 'Select';
+            if (selectedItem && currentLevel !== 'topic') {
+                title += ` (${selectedItem} selected)`;
+            }
+            
+        }
+
+        // Show action buttons
+        function showActionButtons() {
+            actionButtons.style.display = 'flex';
+        }
+
+        // Hide action buttons
+        function hideActionButtons() {
+            actionButtons.style.display = 'none';
+        }
+
+        // Make removeSelected globally accessible
+        window.removeSelected = removeSelected;
+        function searchTopics(term) {
+            const results = [];
+            const termLower = term.toLowerCase();
+            
+            Object.entries(data).forEach(([subject, units]) => {
+                Object.entries(units).forEach(([unit, chapters]) => {
+                    Object.entries(chapters).forEach(([chapter, topics]) => {
+                        topics.forEach(topic => {
+                            const path = [subject, unit, chapter, topic];
+                            const fullPath = path.join('->');
+                            
+                            let matchIndex = -1;
+                            path.forEach((item, index) => {
+                                if (item.toLowerCase().includes(termLower)) {
+                                    matchIndex = index;
+                                }
+                            });
+        
+                            if (matchIndex !== -1) {
+                                results.push(path.slice(0, matchIndex + 1).join('->'));
+                            }
+                        });
+                    });
+                });
+            });
+        
+            return [...new Set(results)];
+        }
+        function displayResults(results) {
+            searchResults.innerHTML = '';
+            
+            if (results.length > 0) {
+                results.forEach(result => {
+                    const div = document.createElement('div');
+                    div.className = 'search-result-item';
+                    div.textContent = result;
+                    div.onclick = () => handleResultClick(result);
+                    searchResults.appendChild(div);
+                });
+                searchResults.style.display = 'block';
+            } else {
+                searchResults.style.display = 'none';
+            }
+        }
+        function handleResultClick(result) {
+            // Check if maximum selections reached
+            if (selectedItems.length >= 5) {
+                alert("Maximum 5 selections are possible at a time.");
+                return;
+            }
+        
+            // Parse the result path
+            const hierarchy = result.split('->');
+            
+            // Check if this selection already exists
+            const hierarchyStr = hierarchy.join(' → ');
+            if (!selectedItems.some(item => item.hierarchy.join(' → ') === hierarchyStr)) {
+                // Add to selected items
+                selectedItems.push({
+                    hierarchy: hierarchy,
+                    id: Date.now()
+                });
+                updateSelectedDisplay();
+            }
+        
+            // Clear search
+            searchInput.value = '';
+            searchResults.style.display = 'none';
+        }
+        
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.trim();
+            if (term) {
+                const results = searchTopics(term);
+                displayResults(results);
+            } else {
+                searchResults.style.display = 'none';
+            }
+        });
+        
+        // Close search results when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.style.display = 'none';
+            }
+        });
+        // Initialize the app
+        init();
+    </script>
+    <script>
+        function animateNumber(element, target, duration = 1000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                start += increment;
+                element.textContent = Math.floor(start);
+                if (start >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                }
+            }, 16);
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const totalElement = document.getElementById('totalCounter');
+            const clinicalElement = document.getElementById('clinicalCounter');
+            const imageElement = document.getElementById('imageCounter');
+            
+            animateNumber(totalElement, {{ total_mcqs }});
+            animateNumber(clinicalElement, {{ clinical_mcqs }});
+            animateNumber(imageElement, {{ image_mcqs }});
+        });
+        </script>
+    {%endblock%}
+    {%block pp%}
+
+<li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">
+      
+        <i class="fas fa-user-circle profile-icon"></i>
+      
+      {{ user.username }}
+      
+    </a>
+    <div class="dropdown-content">
+      <a href="#">Settings</a>
+      <a href={% url 'logout' %}>Logout</a>
+    </div>
+  </li>
+
+
+{%endblock%} 
+{% block footer %}
+    <!-- Leaving this block empty to remove the footer -->
+{% endblock %}

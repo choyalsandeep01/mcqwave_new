@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: #007bff; color: white; padding: 20px; text-align: center; }
+        .content { padding: 20px; background: #f8f9fa; }
+        .footer { padding: 20px; text-align: center; font-size: 12px; color: #666; }
+        .success-icon { font-size: 48px; color: #28a745; }
+        .details { background: white; padding: 15px; border-radius: 5px; margin: 15px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>{{ site_name }}</h1>
+        </div>
+        
+        <div class="content">
+            <div style="text-align: center;">
+                <div class="success-icon">✓</div>
+                <h2>Payment Successful!</h2>
+            </div>
+            
+            <p>Dear {{ user.first_name|default:user.username }},</p>
+            
+            <p>Thank you for your payment! Your subscription has been activated successfully.</p>
+            
+            <div class="details">
+                <h3>Subscription Details:</h3>
+                <p><strong>Plan:</strong> {{ subscription.plan.name }}</p>
+                <p><strong>Amount Paid:</strong> ₹{{ transaction.amount }}</p>
+                <p><strong>Transaction ID:</strong> {{ transaction.transaction_id }}</p>
+                <p><strong>Valid From:</strong> {{ subscription.start_date|date:"F d, Y" }}</p>
+                <p><strong>Valid Until:</strong> {{ subscription.end_date|date:"F d, Y" }}</p>
+            </div>
+            
+            <p>You can now access all the features included in your plan.</p>
+            
+            <p>If you have any questions, please contact our support team.</p>
+            
+            <p>Best regards,<br>The {{ site_name }} Team</p>
+        </div>
+        
+        <div class="footer">
+            <p>This is an automated email. Please do not reply to this email.</p>
+        </div>
+    </div>
+</body>
+</html>

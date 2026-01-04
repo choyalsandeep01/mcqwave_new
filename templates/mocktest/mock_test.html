@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Mock Test</title>
+    <link rel="stylesheet" href="/media/css/mocktest/mock_test.css">
+</head>
+<style>
+    .question-image-container {
+      margin: 15px 0;
+      max-width: 100%;
+      text-align: center;
+    }
+    
+    .question-image {
+      max-width: 100%;
+      max-height: 300px;
+      border-radius: 4px;
+      cursor: zoom-in;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .image-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.85);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+    }
+    
+    .image-modal-content {
+      max-width: 90%;
+      max-height: 90%;
+      animation: fadeIn 0.3s;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .image-close {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      color: white;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+  <style>
+    /* Your existing styles... */
+    
+    /* Django Messages Styling */
+    .messages-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 10000;
+        max-width: 400px;
+        width: 100%;
+    }
+
+    .message-alert {
+        display: flex;
+        align-items: flex-start;
+        padding: 16px;
+        margin-bottom: 12px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        animation: slideInFromRight 0.4s ease-out;
+        position: relative;
+        word-wrap: break-word;
+        line-height: 1.4;
+    }
+
+    .message-success {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+        border-left: 4px solid #047857;
+    }
+
+    .message-error {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        color: white;
+        border-left: 4px solid #b91c1c;
+    }
+
+    .message-warning {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        color: white;
+        border-left: 4px solid #b45309;
+    }
+
+    .message-info {
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        color: white;
+        border-left: 4px solid #1d4ed8;
+    }
+
+    .message-icon {
+        font-size: 1.25rem;
+        margin-right: 12px;
+        margin-top: 2px;
+        flex-shrink: 0;
+    }
+
+    .message-content {
+        flex-grow: 1;
+        margin-right: 8px;
+    }
+
+    .message-text {
+        font-size: 0.9rem;
+        font-weight: 500;
+        margin: 0;
+    }
+
+    .message-close {
+        background: none;
+        border: none;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 1.1rem;
+        cursor: pointer;
+        padding: 4px;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        flex-shrink: 0;
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .message-close:hover {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+    }
+
+    /* Animation for message appearance */
+    @keyframes slideInFromRight {
+        from {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    /* Animation for message disappearance */
+    @keyframes slideOutToRight {
+        from {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        to {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+    }
+
+    .message-alert.slide-out {
+        animation: slideOutToRight 0.3s ease-in;
+    }
+
+    /* Responsive design for messages */
+    @media (max-width: 768px) {
+        .messages-container {
+            top: 10px;
+            right: 10px;
+            left: 10px;
+            max-width: none;
+        }
+        
+        .message-alert {
+            padding: 12px;
+            font-size: 0.85rem;
+        }
+        
+        .message-icon {
+            font-size: 1.1rem;
+            margin-right: 10px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .message-alert {
+            padding: 10px;
+        }
+        
+        .message-text {
+            font-size: 0.8rem;
+        }
+    }
+</style>
+
+<body>
+    <div class="test-container">
+        {% if messages %}
+    <div class="messages-container" id="messages-container">
+        {% for message in messages %}
+        <div class="message-alert message-{{ message.tags }}" data-message-level="{{ message.level }}">
+            <div class="message-icon">
+                {% if message.tags == 'success' %}
+                    <i class="fas fa-check-circle nfas"></i>
+                {% elif message.tags == 'error' %}
+                    <i class="fas fa-exclamation-circle nfas"></i>
+                {% elif message.tags == 'warning' %}
+                    <i class="fas fa-exclamation-triangle nfas"></i>
+                {% elif message.tags == 'info' %}
+                    <i class="fas fa-info-circle nfas"></i>
+                {% else %}
+                    <i class="fas fa-bell nfas"></i>
+                {% endif %}
+            </div>
+            <div class="message-content">
+                <div class="message-text">{{ message }}</div>
+            </div>
+            <button class="message-close" onclick="closeMessage(this)">
+                <i class="fas fa-times nfas"></i>
+            </button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+        <!-- Header Section -->
+        <header class="test-header">
+            <div class="test-info">
+                <h1 id="test-title">Mock Test</h1>
+                <p id="test-description"></p>
+            </div>
+            <div class="timer-container">
+                <div class="timer">
+                    <span id="hours">00</span>:<span id="minutes">00</span>:<span id="seconds">00</span>
+                </div>
+                <p>Time Remaining</p>
+            </div>
+        </header>
+
+        <!-- Navigation Controls -->
+        <div class="test-navigation">
+            <div class="progress-info">
+                <span id="current-question">1</span> of <span id="total-questions">0</span> Questions
+            </div>
+            
+        </div>
+
+        <!-- Question and Answer Content -->
+        <div class="test-content">
+            <div class="question-container">
+                <div id="question-content">
+                    <!-- Question text will be inserted here -->
+                </div>
+                <div id="options-container">
+                    <!-- Options will be inserted here -->
+                </div>
+                <div class="question-actions">
+                    <label class="mark-review">
+                        <input type="checkbox" id="mark-for-review"> Mark for review
+                    </label>
+                    <button id="skip-question" class="btn btn-secondary">Skip Question</button>
+                </div>
+            </div>
+
+            <div class="navigation-buttons">
+                <button id="prev-question" class="btn btn-secondary">Previous</button>
+                <button id="next-question" class="btn btn-primary">Next</button>
+                <button id="submit-test" class="btn btn-danger">Submit Test</button>
+            </div>
+        </div>
+
+        <!-- Question Navigation Panel -->
+        <div class="question-panel">
+            <div class="question-status">
+                <div class="status-indicator">
+                    <span class="indicator-dot answered"></span> Answered
+                </div>
+                <div class="status-indicator">
+                    <span class="indicator-dot unanswered"></span> Unanswered
+                </div>
+                <div class="status-indicator">
+                    <span class="indicator-dot marked"></span> Marked for Review
+                </div>
+                <div class="status-indicator">
+                    <span class="indicator-dot skipped"></span> Skipped
+                </div>
+            </div>
+            <h3>Question Navigator</h3>
+            <div id="question-buttons">
+                <!-- Question buttons will be generated here -->
+            </div>
+            <div class="panel-actions">
+                <button id="submit-test-panel" class="btn btn-danger">Submit Test</button>
+            </div>
+        </div>
+        <button class="navigator-menu-toggle" id="navigator-toggle">
+            <span>Q</span>
+        </button>
+        <div class="panel-overlay" id="panel-overlay"></div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmation-modal" class="modal">
+        <div class="modal-content">
+            <h3>Confirm Submission</h3>
+            <p>Are you sure you want to submit your test? Once submitted, you won't be able to change your answers.</p>
+            <div class="modal-actions">
+                <button id="cancel-submit" class="btn btn-secondary">Cancel</button>
+                <button id="confirm-submit" class="btn btn-danger">Submit Test</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Time's Up Modal -->
+    <div id="timeout-modal" class="modal">
+        <div class="modal-content">
+            <h3>Time's Up!</h3>
+            <p>Your test time has expired. Your answers have been automatically submitted.</p>
+            <div class="modal-actions">
+                <button id="view-results" class="btn btn-primary">View Results</button>
+            </div>
+        </div>
+    </div>
+    <div id="image-modal" class="image-modal">
+        <span class="image-close">&times;</span>
+        <img class="image-modal-content" id="modal-img">
+      </div>
+    <script>
+        // Add this to your existing script section inside the DOMContentLoaded event listener
+        
+        // Elements for question navigator menu
+        const navigatorToggle = document.getElementById('navigator-toggle');
+        const questionPanel = document.querySelector('.question-panel');
+        const panelOverlay = document.getElementById('panel-overlay');
+        
+        // Event listeners for question navigator menu
+        navigatorToggle.addEventListener('click', toggleQuestionNavigator);
+        panelOverlay.addEventListener('click', closeQuestionNavigator);
+        
+        // Functions for question navigator menu
+        function toggleQuestionNavigator() {
+            questionPanel.classList.toggle('open');
+            panelOverlay.classList.toggle('visible');
+        }
+        
+        function closeQuestionNavigator() {
+            questionPanel.classList.remove('open');
+            panelOverlay.classList.remove('visible');
+        }
+        
+        // Close navigator when a question button is clicked
+        document.querySelectorAll('.question-button').forEach(button => {
+            button.addEventListener('click', () => {
+                if (window.innerWidth <= 992) {
+                    closeQuestionNavigator();
+                }
+            });
+        });
+        
+        // Close navigator when window is resized to desktop
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 992) {
+                closeQuestionNavigator();
+            }
+        });
+        
+        // Add to your generateQuestionButtons function to ensure new buttons get the event listener
+        function generateQuestionButtons() {
+            // Your existing code here...
+            
+            // Add this at the end of the function
+            questions.forEach((_, index) => {
+                const button = questionButtons.children[index];
+                button.addEventListener('click', () => {
+                    if (window.innerWidth <= 992) {
+                        closeQuestionNavigator();
+                    }
+                });
+            });
+        }
+        </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // State variables
+            let currentQuestionIndex = 0;
+            let questions = [];
+            let sessionUid = '';
+            let testData = {};
+            let timerInterval;
+            let timeRemainingSeconds = 0;
+            let prevqueuid = '';
+            // Get session ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            sessionUid = urlParams.get('session') || '{{ session.uid }}';
+            
+            if (!sessionUid) {
+                console.error('No session ID provided');
+                return;
+            }
+            
+            // Initialize the test
+            
+            
+            // Elements
+            const questionContent = document.getElementById('question-content');
+            const optionsContainer = document.getElementById('options-container');
+            const currentQuestionSpan = document.getElementById('current-question');
+            const totalQuestionsSpan = document.getElementById('total-questions');
+            const prevButton = document.getElementById('prev-question');
+            const nextButton = document.getElementById('next-question');
+            const submitButton = document.getElementById('submit-test');
+            const submitPanelButton = document.getElementById('submit-test-panel');
+            const markForReviewCheckbox = document.getElementById('mark-for-review');
+            const skipQuestionButton = document.getElementById('skip-question');
+            const questionButtons = document.getElementById('question-buttons');
+            const confirmationModal = document.getElementById('confirmation-modal');
+            const timeoutModal = document.getElementById('timeout-modal');
+            const confirmSubmitButton = document.getElementById('confirm-submit');
+            const cancelSubmitButton = document.getElementById('cancel-submit');
+            const viewResultsButton = document.getElementById('view-results');
+            
+            initializeTest();
+
+            // Event listeners
+            prevButton.addEventListener('click', goToPrevQuestion);
+            nextButton.addEventListener('click', goToNextQuestion);
+            submitButton.addEventListener('click', showConfirmationModal);
+            submitPanelButton.addEventListener('click', showConfirmationModal);
+            confirmSubmitButton.addEventListener('click', submitTest);
+            cancelSubmitButton.addEventListener('click', hideConfirmationModal);
+            skipQuestionButton.addEventListener('click', skipQuestion);
+            viewResultsButton.addEventListener('click', viewResults);
+            // Functions
+            async function initializeTest() {
+                try {
+                    // Create a hidden input field in your template with the JSON data as value
+                    const questionsInput = document.createElement('input');
+                    questionsInput.type = 'hidden';
+                    questionsInput.id = 'questions-json-data';
+                    questionsInput.value = '{{ questions_json|escapejs }}';
+                    document.body.appendChild(questionsInput);
+                    
+                    // Get the questions data from the hidden input
+                    const questionsJsonString = document.getElementById('questions-json-data').value;
+                    questions = JSON.parse(questionsJsonString);
+                    console.log(questions);
+                    // Get time remaining and other data
+                    timeRemainingSeconds = parseInt('{{ time_remaining_seconds }}') || 3600; // Default 1 hour
+                    currentQuestionIndex = parseInt('{{ current_index }}') || 0;
+                    
+                    // Update UI
+                    document.getElementById('test-title').textContent = '{{ mock_test.title }}';
+                    document.getElementById('test-description').textContent = '{{ mock_test.description }}';
+                    totalQuestionsSpan.textContent = questions.length;
+                    
+                    // Generate question navigation buttons
+                    generateQuestionButtons();
+                    const question = questions[currentQuestionIndex];
+                    prevqueuid= question.answer_uid;
+                    // Display the first question
+                    displayQuestion(currentQuestionIndex);
+                    
+                    // Start the timer
+                    startTimer();
+                    
+                    // Set up periodic timer update with the server
+                    setInterval(updateTimerWithServer, 30000); // Update every 30 seconds
+                } catch (error) {
+                    console.error('Error initializing test:', error);
+                }
+            }
+            
+            function displayQuestion(index) {
+                if (index < 0 || index >= questions.length) {
+                    console.error('Invalid question index');
+                    return;
+                }
+                
+                const question = questions[index];
+                currentQuestionIndex = index;
+                
+                
+
+                // Update current question indicator
+                currentQuestionSpan.textContent = index + 1;
+                
+                // Display question text
+                questionContent.innerHTML = `<h2>Question ${index + 1}</h2><p>${question.text}</p>`;
+                
+                if (question.image && question.image !== '') {
+                    const imageContainer = document.createElement('div');
+                    imageContainer.className = 'question-image-container';
+                    
+                    const image = document.createElement('img');
+                    image.src = question.image;
+                    image.className = 'question-image';
+                    image.alt = `Image for question ${index + 1}`;
+                    image.onclick = function() { openImageModal(this.src); };
+                    
+                    imageContainer.appendChild(image);
+                    questionContent.appendChild(imageContainer);
+                  }
+                // Display options
+                optionsContainer.innerHTML = '';
+                const optionTextToIndex = {};
+                question.options.forEach((option, index) => {
+                    optionTextToIndex[option] = index + 1; // Index+1 to match your value system
+                });
+                question.options.forEach((option, optionIndex) => {
+                    const selectedIndex = optionTextToIndex[question.selected_option];
+                    const isSelected = optionIndex + 1 === selectedIndex;
+                    const optionDiv = document.createElement('div');
+                    optionDiv.className = 'option';
+                    if (isSelected) {
+                        optionDiv.classList.add('selected');
+                    }
+                    
+                    const optionLabel = document.createElement('label');
+                    
+                    const optionInput = document.createElement('input');
+                    optionInput.type = 'radio';
+                    optionInput.name = 'question-option';
+                    optionInput.value = optionIndex + 1;
+                    optionInput.checked = isSelected;
+                    optionInput.addEventListener('change', () => selectOption(optionIndex + 1));
+                    
+                    optionLabel.appendChild(optionInput);
+                    optionLabel.appendChild(document.createTextNode(` ${option}`));
+                    
+                    optionDiv.appendChild(optionLabel);
+                    optionsContainer.appendChild(optionDiv);
+                });
+                
+                // Update mark for review checkbox
+                markForReviewCheckbox.checked = question.is_marked_for_review;
+                markForReviewCheckbox.addEventListener('change', updateQuestionStatus);
+                
+                // Update skip button status
+                skipQuestionButton.textContent = question.is_skipped ? 'Unskip Question' : 'Skip Question';
+                
+                // Update navigation button states
+                prevButton.disabled = index === 0;
+                nextButton.disabled = index === questions.length - 1;
+                submitButton.style.display = index === questions.length - 1 ? 'block' : 'none';
+                
+                // Update question button status
+                updateQuestionButtonStatus(index);
+                
+                markQuestionVisible(question.answer_uid);
+                prevqueuid = question.answer_uid;
+            }
+            function openImageModal(imageSrc) {
+                const modal = document.getElementById('image-modal');
+                const modalImg = document.getElementById('modal-img');
+                modal.style.display = 'flex';
+                modalImg.src = imageSrc;
+                
+                // Prevent page scrolling when modal is open
+                document.body.style.overflow = 'hidden';
+              }
+              
+              // Set up the image modal close functionality
+              
+                const modal = document.getElementById('image-modal');
+                const closeBtn = document.querySelector('.image-close');
+                
+                // Close modal when clicking on X
+                closeBtn.onclick = closeImageModal;
+                
+                // Close modal when clicking anywhere on the modal background
+                modal.onclick = function(event) {
+                  if (event.target === modal) {
+                    closeImageModal();
+                  }
+                };
+                
+                // Close modal with Escape key
+                document.addEventListener('keydown', function(event) {
+                  if (event.key === 'Escape' && modal.style.display === 'flex') {
+                    closeImageModal();
+                  }
+                });
+              
+              
+              function closeImageModal() {
+                const modal = document.getElementById('image-modal');
+                modal.style.display = 'none';
+                
+                // Re-enable page scrolling
+                document.body.style.overflow = 'auto';
+              }
+            async function markQuestionVisible(answerUid) {
+                console.log(prevqueuid);
+                console.log(answerUid);
+                try {
+                    const formData = new FormData();
+                    formData.append('answer_uid', answerUid);
+                    formData.append('prev_que_uid', prevqueuid);
+                    
+                    const response = await fetch(`/mocktest/session/${sessionUid}/question/visible/`, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRFToken': getCsrfToken()
+                        }
+                    });
+                    
+                    if (!response.ok) {
+                        console.error('Failed to mark question as visible');
+                    }
+                } catch (error) {
+                    console.error('Error marking question as visible:', error);
+                }
+            }
+            function selectOption(optionNumber) {
+                const question = questions[currentQuestionIndex];
+                
+                question.is_skipped = false; // Automatically unskip when an option is selected
+                const selectedOptionText = question.options[optionNumber - 1];
+                question.selected_option = selectedOptionText;
+                // Update UI
+                updateQuestionButtonStatus(currentQuestionIndex);
+                skipQuestionButton.textContent = 'Skip Question';
+                
+                // Save answer to server
+                saveAnswer(selectedOptionText);
+            }
+            
+            function updateQuestionStatus() {
+                const question = questions[currentQuestionIndex];
+                question.is_marked_for_review = markForReviewCheckbox.checked;
+                
+                let selectedOptionText = '';
+                if (question.selected_option) {
+                    selectedOptionText = question.options[question.selected_option - 1];
+                }
+                // Update UI
+                updateQuestionButtonStatus(currentQuestionIndex);
+                
+                // Save answer to server
+                saveAnswer(selectedOptionText);
+            }
+            
+            function skipQuestion() {
+                const question = questions[currentQuestionIndex];
+                question.is_skipped = !question.is_skipped;
+                
+                let selectedOptionText = '';
+                if (question.selected_option) {
+                    selectedOptionText = question.options[question.selected_option - 1];
+                }
+                // Update UI
+                skipQuestionButton.textContent = question.is_skipped ? 'Unskip Question' : 'Skip Question';
+                updateQuestionButtonStatus(currentQuestionIndex);
+                
+                // Save answer to server
+                saveAnswer(selectedOptionText);
+                
+                // Go to next question if skipped
+                if (question.is_skipped && currentQuestionIndex < questions.length - 1) {
+                    goToNextQuestion();
+                }
+            }
+            
+            function goToPrevQuestion() {
+                if (currentQuestionIndex > 0) {
+                    displayQuestion(currentQuestionIndex - 1);
+                }
+            }
+            
+            function goToNextQuestion() {
+                if (currentQuestionIndex < questions.length - 1) {
+                    displayQuestion(currentQuestionIndex + 1);
+                }
+            }
+            
+            function generateQuestionButtons() {
+                questionButtons.innerHTML = '';
+                
+                questions.forEach((question, index) => {
+                    const button = document.createElement('button');
+                    button.className = 'question-button';
+                    button.textContent = index + 1;
+                    button.dataset.index = index;
+                    
+                    button.addEventListener('click', () => {
+                        displayQuestion(index);
+                    });
+                    
+                    questionButtons.appendChild(button);
+                });
+                
+                // Update all button statuses
+                questions.forEach((_, index) => {
+                    updateQuestionButtonStatus(index);
+                });
+            }
+            
+            function updateQuestionButtonStatus(index) {
+                const questionButtons = document.querySelectorAll('.question-button');
+                const question = questions[index];
+                const button = questionButtons[index];
+                
+                if (!button) return;
+                
+                // Remove all status classes
+                button.classList.remove('answered', 'unanswered', 'marked', 'skipped', 'current');
+                
+                // Add current class if this is the current question
+                if (index === currentQuestionIndex) {
+                    button.classList.add('current');
+                }
+                
+                // Add status class based on question state
+                if (question.is_skipped) {
+                    button.classList.add('skipped');
+                } else if (question.is_marked_for_review) {
+                    button.classList.add('marked');
+                } else if (question.selected_option) {
+                    button.classList.add('answered');
+                } else {
+                    button.classList.add('unanswered');
+                }
+            }
+            
+            async function saveAnswer(selectedOptionText) {
+                const question = questions[currentQuestionIndex];
+                
+                try {
+                    const formData = new FormData();
+                    formData.append('answer_uid', question.answer_uid);
+                    formData.append('option', selectedOptionText  || '');
+                    formData.append('is_marked', question.is_marked_for_review);
+                    formData.append('is_skipped', question.is_skipped);
+                    formData.append('current_index', currentQuestionIndex);
+                    
+                    const response = await fetch(`/mocktest/session/${sessionUid}/answer/`, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRFToken': getCsrfToken()
+                        }
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to save answer');
+                    }
+                } catch (error) {
+                    console.error('Error saving answer:', error);
+                }
+            }
+            
+            function startTimer() {
+                updateTimerDisplay();
+                
+                timerInterval = setInterval(() => {
+                    timeRemainingSeconds--;
+                    
+                    if (timeRemainingSeconds <= 0) {
+                        clearInterval(timerInterval);
+                        showTimeoutModal();
+                    }
+                    
+                    updateTimerDisplay();
+                }, 1000);
+            }
+            
+            function updateTimerDisplay() {
+                const hours = Math.floor(timeRemainingSeconds / 3600);
+                const minutes = Math.floor((timeRemainingSeconds % 3600) / 60);
+                const seconds = timeRemainingSeconds % 60;
+                
+                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+                
+                // Add warning class if less than 5 minutes remaining
+                const timerElement = document.querySelector('.timer');
+                if (timeRemainingSeconds < 300) {
+                    timerElement.classList.add('warning');
+                } else {
+                    timerElement.classList.remove('warning');
+                }
+            }
+            
+            async function updateTimerWithServer() {
+                try {
+                    // Fix the URL to match your actual Django URL pattern
+                    const response = await fetch(`/mocktest/session/${sessionUid}/timer/`, {
+                        method: 'GET',
+                        headers: {
+                            'X-CSRFToken': getCsrfToken()
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        
+                        // Handle different response structures from the server
+                        if (data.status === 'completed' || data.status === 'timeout') {
+                            clearInterval(timerInterval);
+                            if (data.redirect_url) {
+                                window.location.href = data.redirect_url;
+                            } else {
+                                showTimeoutModal();
+                            }
+                        } else if (data.status === 'active' && data.time_remaining !== undefined) {
+                            // Update the client-side timer with the server value
+                            timeRemainingSeconds = data.time_remaining;
+                            updateTimerDisplay();
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error updating timer with server:', error);
+                }
+            }
+            
+            function showConfirmationModal() {
+                confirmationModal.style.display = 'flex';
+            }
+            
+            function hideConfirmationModal() {
+                confirmationModal.style.display = 'none';
+            }
+            
+            function showTimeoutModal() {
+                timeoutModal.style.display = 'flex';
+                submitTestToServer(true);
+                // Basic page reload
+                
+
+            }
+            
+            async function submitTest() {
+                hideConfirmationModal();
+                await submitTestToServer(false);
+                
+                
+                // Redirect to results page
+                window.location.href = `/mocktest/session/${sessionUid}/submit/`;
+            }
+            
+            async function submitTestToServer(isTimeout) {
+                try {
+                    const question = questions[currentQuestionIndex];
+                    prevqueuid= question.answer_uid;
+                    const formData = new FormData();
+                    formData.append('is_timeout', isTimeout);
+                    formData.append('prev_que_uid', prevqueuid);
+                    const response = await fetch(`/mocktest/session/${sessionUid}/submit/`, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRFToken': getCsrfToken()
+                        }
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to submit test');
+                    }
+                    
+                    return await response.json();
+                } catch (error) {
+                    console.error('Error submitting test:', error);
+                }
+            }
+            
+            function viewResults() {
+                window.location.href = `/mocktest/result/${sessionUid}/`;
+            }
+            
+            function getCsrfToken() {
+                // Look for the CSRF token in cookies
+                const cookieValue = document.cookie
+                    .split('; ')
+                    .find(row => row.startsWith('csrftoken='))
+                    ?.split('=')[1];
+                
+                // If not found in cookies, try to find it in a meta tag
+                if (!cookieValue) {
+                    const metaTag = document.querySelector('meta[name="csrf-token"]');
+                    return metaTag ? metaTag.getAttribute('content') : '';
+                }
+                
+                return cookieValue;
+            }
+            
+            // Handle browser back/reload to prevent losing answers
+            window.addEventListener('beforeunload', function(e) {
+                // Only show warning if test is not completed
+                if (!testData.is_completed) {
+                    e.preventDefault();
+                    e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+                    return e.returnValue;
+                }
+            });
+            
+            // Add keyboard shortcuts for navigation
+            document.addEventListener('keydown', function(event) {
+                // Only enable shortcuts if no input is focused
+                if (document.activeElement.tagName !== 'INPUT' && 
+                    document.activeElement.tagName !== 'TEXTAREA' && 
+                    document.activeElement.tagName !== 'SELECT') {
+                    
+                    switch(event.key) {
+                        case 'ArrowLeft':
+                            goToPrevQuestion();
+                            break;
+                        case 'ArrowRight':
+                            goToNextQuestion();
+                            break;
+                        case '1': case '2': case '3': case '4':
+                            const optionNum = parseInt(event.key);
+                            const options = document.querySelectorAll('input[name="question-option"]');
+                            if (options.length >= optionNum) {
+                                options[optionNum - 1].checked = true;
+                                selectOption(optionNum);
+                            }
+                            break;
+                        case 'm':
+                            markForReviewCheckbox.checked = !markForReviewCheckbox.checked;
+                            updateQuestionStatus();
+                            break;
+                        case 's':
+                            skipQuestion();
+                            break;
+                    }
+                }
+            });
+            
+            // Add touch swipe support for mobile devices
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            document.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+            
+            document.addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+            
+            function handleSwipe() {
+                const swipeThreshold = 100;
+                if (touchEndX < touchStartX - swipeThreshold) {
+                    // Swipe left to next question
+                    goToNextQuestion();
+                }
+                
+                if (touchEndX > touchStartX + swipeThreshold) {
+                    // Swipe right to previous question
+                    goToPrevQuestion();
+                }
+            }
+            
+            // Function to check for unanswered questions
+            function getUnansweredQuestionsCount() {
+                return questions.filter(q => !q.selected_option && !q.is_skipped).length;
+            }
+            
+            // Add warning when submitting with unanswered questions
+            submitButton.addEventListener('click', function(e) {
+                const unansweredCount = getUnansweredQuestionsCount();
+                if (unansweredCount > 0) {
+                    const confirmationMessage = document.querySelector('#confirmation-modal p');
+                    confirmationMessage.textContent = `You have ${unansweredCount} unanswered question(s). Are you sure you want to submit your test? Once submitted, you won't be able to change your answers.`;
+                }
+            });
+            
+            // Update progress indicators
+            function updateProgressIndicators() {
+                const answeredCount = questions.filter(q => q.selected_option).length;
+                const markedCount = questions.filter(q => q.is_marked_for_review).length;
+                const skippedCount = questions.filter(q => q.is_skipped).length;
+                const unansweredCount = questions.length - answeredCount - skippedCount;
+                
+                // Update progress bar or any UI indicators here if needed
+                // This could be extended to show percentages or visual progress
+            }
+            
+            // Handle session timeout on server side (e.g., user logged out)
+            async function checkSessionValidity() {
+                try {
+                    const response = await fetch(`/mock-tests/session/${sessionUid}/check/`, {
+                        method: 'GET',
+                        headers: {
+                            'X-CSRFToken': getCsrfToken()
+                        }
+                    });
+                    
+                    if (!response.ok) {
+                        // Session invalid or user logged out
+                        window.location.href = '/login/?next=' + encodeURIComponent(window.location.pathname);
+                    }
+                } catch (error) {
+                    console.error('Error checking session validity:', error);
+                }
+            }
+            
+            // Check session validity periodically (every 5 minutes)
+            setInterval(checkSessionValidity, 300000);
+            
+            // Initialize progress indicators
+            updateProgressIndicators();
+        });
+    </script>
+    <script>
+        window.addEventListener("pageshow", function (event) {
+            if (event.persisted) {
+                window.location.reload();
+            }
+        });
+    </script>
+    <script>
+        // Django Messages Functions
+        function closeMessage(button) {
+            const messageElement = button.closest('.message-alert');
+            messageElement.classList.add('slide-out');
+            
+            setTimeout(() => {
+                messageElement.remove();
+                const container = document.getElementById('messages-container');
+                if (container && container.children.length === 0) {
+                    container.style.display = 'none';
+                }
+            }, 300);
+        }
+        
+        function autoHideMessages() {
+            const messages = document.querySelectorAll('.message-alert');
+            
+            messages.forEach((message, index) => {
+                const messageLevel = message.dataset.messageLevel;
+                let hideDelay = 5000;
+                
+                if (messageLevel === '40') { // ERROR
+                    hideDelay = 8000;
+                } else if (messageLevel === '30') { // WARNING
+                    hideDelay = 6000;
+                } else if (messageLevel === '25') { // SUCCESS
+                    hideDelay = 4000;
+                } else if (messageLevel === '20') { // INFO
+                    hideDelay = 5000;
+                }
+                
+                setTimeout(() => {
+                    if (message.parentNode) {
+                        message.classList.add('slide-out');
+                        setTimeout(() => {
+                            message.remove();
+                            const container = document.getElementById('messages-container');
+                            if (container && container.children.length === 0) {
+                                container.style.display = 'none';
+                            }
+                        }, 300);
+                    }
+                }, hideDelay + (index * 500));
+            });
+        }
+
+        // Function to add a new message dynamically
+        function addMessage(type, text) {
+            const container = document.getElementById('messages-container') || createMessageContainer();
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message-alert message-${type}`;
+            messageDiv.innerHTML = `
+                <div class="message-icon">
+                    <i class="fas ${getMessageIcon(type)} nfas"></i>
+                </div>
+                <div class="message-content">
+                    <div class="message-text">${text}</div>
+                </div>
+                <button class="message-close" onclick="closeMessage(this)">
+                    <i class="fas fa-times nfas"></i>
+                </button>
+            `;
+            
+            container.appendChild(messageDiv);
+            container.style.display = 'block';
+            
+            // Auto hide this message
+            setTimeout(() => {
+                if (messageDiv.parentNode) {
+                    messageDiv.classList.add('slide-out');
+                    setTimeout(() => messageDiv.remove(), 300);
+                }
+            }, type === 'error' ? 8000 : 5000);
+        }
+
+        function createMessageContainer() {
+            const container = document.createElement('div');
+            container.id = 'messages-container';
+            container.className = 'messages-container';
+            document.body.insertBefore(container, document.body.firstChild);
+            return container;
+        }
+
+        function getMessageIcon(type) {
+            const icons = {
+                'success': 'fa-check-circle',
+                'error': 'fa-exclamation-circle',
+                'warning': 'fa-exclamation-triangle',
+                'info': 'fa-info-circle'
+            };
+            return icons[type] || 'fa-bell';
+        }
+        
+        // Initialize messages on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-hide messages
+            autoHideMessages();
+            
+            // Add click-to-dismiss functionality for messages
+            document.querySelectorAll('.message-alert').forEach(message => {
+                message.addEventListener('click', function(e) {
+                    if (!e.target.closest('.message-close')) {
+                        closeMessage(this.querySelector('.message-close'));
+                    }
+                });
+            });
+        });
+
+        // Example of how to add messages from JavaScript
+        // addMessage('success', 'Test started successfully!');
+        // addMessage('error', 'Failed to save answer!');
+        // addMessage('warning', 'Time is running out!');
+        // addMessage('info', 'Question saved automatically!');
+    </script>
+</body>
+</html>

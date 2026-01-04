@@ -1,0 +1,659 @@
+{% extends 'base/base.html' %}
+
+{% block title %}MCQwave - My Mock Tests{% endblock title %}
+
+{% block content %}
+<div class="mock-sessions-container">
+    <div class="page-header">
+        <h1 class="page-title">My Mock Tests</h1>
+        <p class="page-subtitle">Review your performance and continue from where you left off</p>
+    </div>
+
+    <!-- Ongoing Sessions Section -->
+    <div class="sessions-section">
+        <div class="section-header">
+            <h2 class="section-title">Ongoing Tests</h2>
+            <span class="badge badge-primary">{{ ongoing_sessions|length }}</span>
+        </div>
+
+        {% if ongoing_sessions %}
+        <div class="sessions-grid">
+            {% for session in ongoing_sessions %}
+            <div class="session-card ongoing">
+                <div class="session-card-header">
+                    <span class="session-category">{{ session.mock_test.category }}</span>
+                    <span class="session-status">In Progress</span>
+                </div>
+                <div class="session-card-body">
+                    <h3 class="session-title">{{ session.mock_test.title }}</h3>
+                    <div class="session-details">
+                        <div class="detail-item">
+                            <i class="fas fa-clock nfas"></i>
+                            <span data-utc-time="{{ session.start_time|date:'c' }}">Started {{ session.start_time|date:"M d, Y" }} at {{ session.start_time|date:"h:i A" }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-question-circle nfas"></i>
+                            <span>{{ session.mock_test.total_mcqs }} Questions</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-hourglass-half nfas"></i>
+                            <span>{{ session.mock_test.time_limit_minutes }} Minutes</span>
+                        </div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-label">Progress</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: {{ session.total_attempted|add:session.total_skipped }}%"></div>
+                        </div>
+                        <div class="progress-text">{{ session.total_attempted|add:session.total_skipped }}% completed</div>
+                    </div>
+                </div>
+                <div class="session-card-footer">
+                    <a href="/mocktest/{{ session.mock_test.uid }}/start/">
+                        <i class="fas fa-play nfas"></i> Resume Test
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <i class="fas fa-clipboard-list nfas"></i>
+            </div>
+            <p class="empty-state-text">You don't have any ongoing tests</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Completed Sessions Section -->
+    <div class="sessions-section">
+        <div class="section-header">
+            <h2 class="section-title">Completed Tests</h2>
+            <span class="badge badge-success">{{ completed_sessions|length }}</span>
+        </div>
+
+        {% if completed_sessions %}
+        <div class="sessions-grid">
+            {% for session in completed_sessions %}
+            <div class="session-card completed"  data-session-uid="{{ session.uid }}">
+                <div class="session-card-header">
+                    <span class="session-category">{{ session.mock_test.category }}</span>
+                    <span class="session-status">Completed</span>
+                </div>
+                <div class="session-card-body">
+                    <h3 class="session-title">{{ session.mock_test.title }}</h3>
+                    <div class="session-details">
+                        <div class="detail-item">
+                            <i class="fas fa-calendar-check nfas"></i>
+                            <span data-utc-time="{{ session.end_time|date:'c' }}">Completed {{ session.end_time|date:"M d, Y" }} at {{ session.end_time|date:"h:i A" }}</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-stopwatch nfas"></i>
+                            <span>{{ session.time_spent_seconds|floatformat:"0" }} seconds</span>
+                        </div>
+                    </div>
+                    <div class="session-score">
+                        <div class="score-container">
+                            <div class="score-value">{{ session.score }}</div>
+                            <div class="score-label">Score</div>
+                        </div>
+                        <div class="score-details">
+                            <div class="score-detail correct">
+                                <span class="detail-value">{{ session.total_correct }}</span>
+                                <span class="detail-label">Correct</span>
+                            </div>
+                            <div class="score-detail incorrect">
+                                <span class="detail-value">{{ session.total_incorrect }}</span>
+                                <span class="detail-label">Incorrect</span>
+                            </div>
+                            <div class="score-detail skipped">
+                                <span class="detail-value">{{ session.total_skipped }}</span>
+                                <span class="detail-label">Skipped</span>
+                            </div>
+                        </div>
+                    </div>
+                    {% if session.rank %}
+                    <div class="rank-container">
+                        <div class="rank-badge">
+                            <i class="fas fa-trophy nfas"></i>
+                            <span>Rank #{{ session.rank }} updating..</span>
+                        </div>
+                        <div class="percentile-badge">
+                            <i class="fas fa-chart-line nfas"></i>
+                            <span>{{ session.percentile|floatformat:1 }} percentile</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="session-card-footer session-card-footerb">
+                    <a href="#">
+                        <i class="fas fa-chart-bar nfas"></i> Analyze
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <div class="empty-state-icon">
+                <i class="fas fa-tasks nfas"></i>
+            </div>
+            <p class="empty-state-text">You haven't completed any tests yet</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- CSS for the mock sessions page -->
+<style>
+    .mock-sessions-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+    }
+
+    .page-header {
+        margin-bottom: 2.5rem;
+        text-align: center;
+    }
+
+    .page-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 0.5rem;
+    }
+
+    .page-subtitle {
+        font-size: 1.1rem;
+        color: #666;
+        margin-bottom: 1rem;
+    }
+
+    .sessions-section {
+        margin-bottom: 3rem;
+    }
+
+    .section-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid #f0f0f0;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0;
+        color: #333;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 0.375rem;
+        margin-left: 0.75rem;
+    }
+
+    .badge-primary {
+        background-color: #4a6cf7;
+        color: white;
+    }
+
+    .badge-success {
+        background-color: #2ecc71;
+        color: white;
+    }
+
+    .sessions-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .session-card {
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .session-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .session-card-header {
+        padding: 1rem 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .session-category {
+        font-weight: 600;
+        color: #333;
+    }
+
+    .session-status {
+        font-size: 0.875rem;
+        font-weight: 600;
+        padding: 0.25rem 0.75rem;
+        border-radius: 12px;
+    }
+
+    .ongoing .session-status {
+        background-color: #e3effd;
+        color: #4a6cf7;
+    }
+
+    .completed .session-status {
+        background-color: #e7f9ed;
+        color: #2ecc71;
+    }
+
+    .session-card-body {
+        padding: 1.5rem;
+    }
+
+    .session-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: #111;
+    }
+
+    .session-details {
+        margin-bottom: 1.25rem;
+    }
+
+    .detail-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        color: #666;
+    }
+
+    .detail-item i {
+        width: 1.25rem;
+        margin-right: 0.75rem;
+        color: #4a6cf7;
+    }
+
+    .progress-container {
+        margin: 1.25rem 0;
+    }
+
+    .progress-label {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+        font-size: 0.875rem;
+        color: #666;
+    }
+
+    .progress-bar {
+        height: 0.5rem;
+        background-color: #f0f0f0;
+        border-radius: 0.25rem;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background-color: #4a6cf7;
+    }
+
+    .progress-text {
+        font-size: 0.875rem;
+        color: #666;
+        margin-top: 0.5rem;
+        text-align: right;
+    }
+
+    .session-score {
+        display: flex;
+        align-items: center;
+        margin: 1.25rem 0;
+    }
+
+    .score-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-right: 1.5rem;
+        padding-right: 1.5rem;
+        border-right: 1px solid #f0f0f0;
+    }
+
+    .score-value {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #4a6cf7;
+    }
+
+    .score-label {
+        font-size: 0.875rem;
+        color: #666;
+    }
+
+    .score-details {
+        display: flex;
+        flex-grow: 1;
+        justify-content: space-between;
+    }
+
+    .score-detail {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .detail-value {
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
+
+    .detail-label {
+        font-size: 0.75rem;
+        color: #666;
+    }
+
+    .correct .detail-value {
+        color: #2ecc71;
+    }
+
+    .incorrect .detail-value {
+        color: #e74c3c;
+    }
+
+    .skipped .detail-value {
+        color: #f39c12;
+    }
+
+    .rank-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1rem;
+    }
+
+    .rank-badge, .percentile-badge {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem 0.75rem;
+        background-color: #f9f9f9;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        font-weight: 600;
+    }
+
+    .rank-badge i, .percentile-badge i {
+        margin-right: 0.5rem;
+    }
+
+    .rank-badge {
+        color: #f39c12;
+    }
+
+    .percentile-badge {
+        color: #9b59b6;
+    }
+
+    .session-card-footer {
+        padding: 1rem 1.5rem;
+        border-top: 1px solid #f0f0f0;
+    }
+    .session-card-footer:hover{
+        background-color:#d6d6d6;
+    }
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: none;
+    }
+    
+    .btn i {
+        margin-right: 0.5rem;
+    }
+    
+    .btn-primary {
+        background-color: #4a6cf7;
+        color: white;
+    }
+    
+    .btn-primary:hover {
+        background-color: #3a5ce5;
+    }
+    
+    .btn-success {
+        background-color: #2ecc71;
+        color: white;
+    }
+    
+    .btn-success:hover {
+        background-color: #27ae60;
+    }
+    
+    .btn-block {
+        display: flex;
+        width: 100%;
+    }
+    
+    .empty-state {
+        text-align: center;
+        padding: 3rem;
+        background-color: #f9f9f9;
+        border-radius: 12px;
+        margin-bottom: 2rem;
+    }
+    
+    .empty-state-icon {
+        font-size: 3rem;
+        color: #ccc;
+        margin-bottom: 1rem;
+    }
+    
+    .empty-state-text {
+        font-size: 1.1rem;
+        color: #666;
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Responsive styles */
+    @media (max-width: 768px) {
+        .sessions-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .page-title {
+            font-size: 2rem;
+        }
+        
+        .session-score {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .score-container {
+            flex-direction: row;
+            margin-right: 0;
+            padding-right: 0;
+            border-right: none;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .score-value {
+            margin-right: 0.5rem;
+        }
+        
+        .score-details {
+            width: 100%;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .rank-container {
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .rank-badge, .percentile-badge {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const analyzeButtons = document.querySelectorAll('.session-card-footerb');
+            
+            analyzeButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    // Get the session UID from a data attribute
+                    const sessionCard = this.closest('.session-card');
+                    const sessionUid = sessionCard.getAttribute('data-session-uid');
+                    
+                    // Redirect to the result page with the session UID
+                    window.location.href = `/mocktest/result/${sessionUid}/`;
+                });
+            });
+        });
+    </script>
+    <script>
+        // Find spans with the data-utc-time attribute
+        document.querySelectorAll('span[data-utc-time]').forEach(span => {
+          // Get the ISO-formatted UTC time from the data attribute
+          const utcTimeString = span.getAttribute('data-utc-time');
+          
+          // Create a date object (browser automatically converts to local time)
+          const date = new Date(utcTimeString);
+          
+          // Format the date in the desired format
+          const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+          const month = months[date.getMonth()];
+          const day = date.getDate();
+          const year = date.getFullYear();
+          
+          let hours = date.getHours();
+          const ampm = hours >= 12 ? 'PM' : 'AM';
+          hours = hours % 12;
+          hours = hours ? hours : 12; // Convert 0 to 12
+          
+          const minutes = date.getMinutes().toString().padStart(2, '0');
+          
+          // Update the span content
+          span.textContent = `Completed ${month} ${day}, ${year} at ${hours}:${minutes} ${ampm}`;
+        });
+      </script>
+      
+    <!-- JavaScript for the mock sessions page -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Calculate actual progress percentages
+            const progressBars = document.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+                const width = bar.style.width;
+                if (width) {
+                    const percentage = parseFloat(width);
+                    bar.style.width = `${percentage}%`;
+                }
+            });
+            
+            // Add animation to session cards
+            const sessionCards = document.querySelectorAll('.session-card');
+            sessionCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+            
+            // Add tooltips to relevant elements
+            const tooltipElements = document.querySelectorAll('[data-tooltip]');
+            tooltipElements.forEach(element => {
+                const tooltip = element.getAttribute('data-tooltip');
+                element.setAttribute('title', tooltip);
+            });
+            
+            // Calculate time remaining for ongoing tests
+            const updateTimeRemaining = () => {
+                const ongoingTests = document.querySelectorAll('.ongoing');
+                ongoingTests.forEach(test => {
+                    const startTimeEl = test.querySelector('.start-time');
+                    const timeLimit = test.querySelector('.time-limit');
+                    
+                    if (startTimeEl && timeLimit) {
+                        const startTime = new Date(startTimeEl.dataset.timestamp);
+                        const timeLimitMinutes = parseInt(timeLimit.dataset.minutes);
+                        const endTime = new Date(startTime.getTime() + timeLimitMinutes * 60 * 1000);
+                        const now = new Date();
+                        
+                        const timeRemaining = endTime - now;
+                        if (timeRemaining > 0) {
+                            const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
+                            const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+                            const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+                            
+                            const timeRemainingEl = test.querySelector('.time-remaining');
+                            if (timeRemainingEl) {
+                                timeRemainingEl.textContent = `${hours}h ${minutes}m ${seconds}s remaining`;
+                            }
+                        }
+                    }
+                });
+            };
+            
+            // Update time remaining every second
+            setInterval(updateTimeRemaining, 1000);
+            
+            // Initialize time remaining
+            updateTimeRemaining();
+        });
+    </script>
+    {% endblock content %}
+
+    {%block pp%}
+
+<li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">
+      
+        <i class="fas fa-user-circle profile-icon"></i>
+      
+      {{ user.username }}
+      
+    </a>
+    <div class="dropdown-content">
+      <a href="#">Settings</a>
+      <a href={% url 'logout' %}>Logout</a>
+    </div>
+  </li>
+
+
+{%endblock%} 

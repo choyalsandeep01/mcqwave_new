@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCQwave Tea</title>
+  <link rel="stylesheet" href="/media/css/tea_home.css">
+</head>
+<body>
+  <div class="container">
+    <div class="text-section">
+      <h1 class="typewriter">MCQwave TEA</h1>
+      <p class="description">
+        Tactical Examination Assistant :- An advanced neural network AI that analyzes user approaches to solving MCQs, providing guidance on the most effective strategies to improve problem-solving skills.
+      </p>
+    </div>
+
+    <!-- Sci-Fi animated tea cup section -->
+    <div class="image-section">
+      <img src="/media/photos/ad.png" alt="Teacup and Plate" class="teacup-img">
+    
+      <!-- Chat section -->
+      <div class="chat-section">
+        <div class="chat-bubble ai">
+          <p>Analyzing your approach to the last question...</p>
+        </div>
+      </div>
+    
+      <!-- Sci-Fi Button for restarting chat -->
+      <div class="restart-chat hidden">
+        <button class="sci-fi-button">Lets have a cup of tea again...</button>
+      </div>
+    </div>
+    
+    
+    
+    
+    
+    <div class="model-section">
+      <canvas id="teaCup"></canvas>
+    </div>
+  </div>
+
+  <!-- Three.js library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script>
+  const chatSection = document.querySelector('.chat-section');
+const restartButton = document.querySelector('.restart-chat');
+const sciFiButton = document.querySelector('.sci-fi-button');
+
+const messages = [
+"Wait until the tea is taking a sip to recognize your approaches from last solved MCQs...",
+  "Great attempt, but remember to focus on the patient's symptoms.",
+  "Consider revisiting pharmacology for better insights on treatment choices.",
+  "Look into the latest studies on diagnostic techniques for differential diagnoses.",
+  "Pay attention to the order of clinical findings. It often leads to the correct diagnosis.",
+  "A neural network detected that you're consistently selecting distractor options. Focus on clinical clues."
+];
+
+let index = 0;
+let chatInterval; // Store the chat interval
+
+// Function to add a chat bubble
+function addChatBubble() {
+  if (index < messages.length) {
+    const newBubble = document.createElement('div');
+    newBubble.classList.add('chat-bubble', 'ai');
+    newBubble.innerHTML = `<p>${messages[index]}</p>`;
+    chatSection.appendChild(newBubble);
+
+    // Scroll to the latest message
+    chatSection.scrollTo({
+      top: chatSection.scrollHeight,
+      behavior: 'smooth'
+    });
+
+    // Keep message visible for 20 seconds before fading it out
+    setTimeout(() => {
+      newBubble.style.animation = 'finalDisappear 1.5s ease forwards';
+    }, 2000);
+
+    setTimeout(() => {
+      newBubble.remove();
+      if (index === messages.length - 1) {
+        // Show the restart button once the last message fades
+        setTimeout(() => {
+          restartButton.classList.remove('hidden');
+        }, 500); // This delay matches the finalDisappear animation
+      }
+    }, 21500); // Match the finalDisappear timing
+
+    index++; // Move to the next message
+  } else {
+    clearInterval(chatInterval); // Stop adding bubbles when all messages are shown
+  }
+}
+
+// Function to start or restart the chat
+function startChat() {
+  clearInterval(chatInterval); // Clear any existing interval
+  chatSection.innerHTML = ''; // Clear previous chat bubbles
+  index = 0; // Reset the index
+  restartButton.classList.add('hidden'); // Hide the restart button
+
+  // Show the first message immediately
+  addChatBubble();
+
+  // Start adding the rest of the messages at 8-second intervals
+  chatInterval = setInterval(addChatBubble, 8000);
+}
+
+// Start chat when the page loads
+startChat();
+
+// Restart chat when the button is clicked
+sciFiButton.addEventListener('click', () => {
+  startChat(); // Call the startChat function to restart the chat
+});
+</script>
+  
+  
+  
+  
+</body>
+</html>

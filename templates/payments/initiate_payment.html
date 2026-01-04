@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Initiate Payment - {{ plan.name }}</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <style>
+        .feature-item {
+            position: relative;
+            padding-left: 20px;
+        }
+        .feature-item::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0">Confirm Your Purchase</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="plan-details mb-4">
+                            <h5>{{ plan.name }}</h5>
+                                                         
+                            {% if plan.features %}
+                            <div class="features mb-3">
+                                <h6>Features:</h6>
+                                <ul class="list-unstyled">
+                                    {% for feature in plan.features %}
+                                    <li class="feature-item mb-1">{{ feature }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% endif %}
+                                                                     
+                            <!-- Plan Type -->
+                                                        
+                            <!-- Duration -->
+                            <div class="mb-2">
+                                <strong>Duration:</strong> {{ plan.duration_days }} days
+                            </div>
+                                                         
+                            <!-- Valid Till Information -->
+                            <div class="mb-3">
+                                <strong>Valid Till:</strong> {{ valid_till_date|date:"d M Y" }}
+                            </div>
+                                                                                                                          
+                            <div class="pricing mb-3">
+                                <h4 class="text-primary">₹{{ plan.price }}</h4>
+                                <small class="text-muted">for {{ plan.duration_days }} days ({{ plan.get_plan_type_display }})</small>
+                            </div>
+                        </div>
+                                                                          
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    Proceed to Payment
+                                </button>
+                                <a href="{% url 'payments:payment_plans' %}" class="btn btn-outline-secondary">
+                                    Back to Plans
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script>
+        (function() {
+            'use strict';
+            
+            // Block back navigation completely
+            history.pushState(null, null, window.location.href);
+            
+            window.onpopstate = function () {
+                // Always redirect to plans page on back navigation
+                window.location.replace('{% url "payments:payment_plans" %}');
+            };
+            
+            // Detect if page was accessed via browser navigation
+            if (window.performance && window.performance.navigation) {
+                var navigationType = window.performance.navigation.type;
+                
+                // If accessed via back button (type 2) or reload (type 1)
+                if (navigationType === 2 || navigationType === 1) {
+                    window.location.replace('{% url "payments:payment_plans" %}');
+                }
+            }
+            
+            // Prevent form resubmission on refresh
+            window.onbeforeunload = function() {
+                // Clear any form data
+                var forms = document.getElementsByTagName('form');
+                for (var i = 0; i < forms.length; i++) {
+                    forms[i].reset();
+                }
+            };
+            
+            // Additional protection against F5, Ctrl+R
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'F5' || (e.ctrlKey && e.key === 'r')) {
+                    e.preventDefault();
+                    window.location.replace('{% url "payments:payment_plans" %}');
+                }
+            });
+            
+        })();
+        </script>
+</body>
+</html>

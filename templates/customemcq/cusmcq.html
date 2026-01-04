@@ -1,0 +1,3053 @@
+{% extends 'base/base.html' %}
+{% block title %}Practice MCQs{% endblock title %}
+
+{% block content %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+    /* Original animations */
+    @keyframes slideIn {
+        0% { transform: translateY(-100%); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes fadeOut {
+        0% { opacity: 1; transform: translateY(0); }
+        100% { opacity: 0; transform: translateY(-100%); }
+    }
+    
+    .notification {
+        animation: slideIn 0.5s ease-out, fadeOut 0.5s ease-in forwards 5s;
+        z-index: 1000;
+    }
+    .notification-info {
+        background-color: rgba(59, 130, 246, 0.9);
+    }
+    .notification-success {
+        animation: slideIn 0.2s ease-out, fadeOut 0.2s ease-in forwards 2s;
+        background-color: rgba(16, 185, 129, 0.9);
+    }
+    .notification-error {
+        background-color: rgba(239, 68, 68, 0.9);
+    }
+    .notification-warning {
+        background-color: rgba(245, 158, 11, 0.9);
+    }
+    .score {
+        display: none;
+    }
+    
+    /* Tailwind CSS class replacements */
+    .fixed {
+        position: fixed;
+    }
+    .top-15 {
+        top: 50px;
+    }
+    .left-0 {
+        left: 0;
+    }
+    .w-full {
+        width: 100%;
+    }
+    .z-9999999 {
+        z-index: 9999999;
+    }
+    .text-white {
+        color: white;
+    }
+    .text-center {
+        text-align: center;
+    }
+    .p-4 {
+        padding: 16px;
+    }
+    .shadow-lg {
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+    .max-w-xl {
+        max-width: 576px;
+    }
+    .mx-auto {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .flex {
+        display: flex;
+    }
+    .items-center {
+        align-items: center;
+    }
+    .justify-center {
+        justify-content: center;
+    }
+    .space-x-4 > * + * {
+        margin-left: 16px;
+    }
+    .w-6 {
+        width: 24px;
+    }
+    .h-6 {
+        height: 24px;
+    }
+    .text-lg {
+        font-size: 18px;
+        line-height: 1.75;
+    }
+    .font-semibold {
+        font-weight: 600;
+    }
+</style>
+
+<style>
+    .mini-stats-strip {
+        background: linear-gradient(90deg, #1e3c72, #dc143c);
+        padding: 0.5rem;
+        border-radius: 8px 8px 0 0;
+        margin: 10px 0 0 0;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .mini-stats-grid {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        gap: 1rem;
+        max-width: 100%;
+    }
+    
+    .mini-stat {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .mini-stat i {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.9rem;
+    }
+    
+    .mini-stat-number {
+        color: white;
+        font-weight: bold;
+        font-size: 0.9rem;
+        margin-right: 0.2rem;
+    }
+    
+    .mini-stat-label {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.8rem;
+    }
+    
+    .stats-note {
+        background: rgba(30, 60, 114, 0.05);
+        border: 1px solid rgba(30, 60, 114, 0.1);
+        border-top: none;
+        padding: 0.3rem 0.5rem;
+        font-size: 0.7rem;
+        color: #666;
+        text-align: center;
+        border-radius: 0 0 8px 8px;
+        margin-bottom: 10px;
+    }
+    
+    .stats-note i {
+        color: #1e3c72;
+        font-size: 0.7rem;
+        margin-right: 0.2rem;
+    }
+    
+    @media (max-width: 480px) {
+        .mini-stats-grid {
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+        }
+        
+        .mini-stat {
+            font-size: 0.8rem;
+        }
+    }
+    </style>
+    <style>
+        
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            border: 1px solid #e5e5e5;
+            
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: none;
+            background: transparent;
+            color: #6c757d;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .tab:hover:not(.active) {
+            background: #e9ecef;
+            color: #495057;
+        }
+
+        .content {
+            padding: 20px;
+            min-height: 400px;
+        }
+
+        .section {
+            position: relative; /* Add this to the section */
+
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .breadcrumb {
+            background: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin-bottom: 0; /* Remove bottom margin */
+            font-size: 0.85rem;
+            color: #6c757d;
+            flex: 1; /* Take remaining space */
+            margin-left: 10px; /* Add some space from back button */
+        }
+
+        .cards-grid {
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                
+            }
+        }
+
+        
+        .card {
+            background: #ffffff;
+            border: 1px solid #e8ecf0;
+            border-radius: 8px;
+            padding: 0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-height: 72px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+            position: relative;
+            overflow: hidden;
+        }
+        
+            .card:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                border-color: #d1d9e0;
+            }
+
+            .card.selected {
+                background: #f8fafc;
+                border-color: #3b82f6;
+                box-shadow: 0 0 0 1px #3b82f6;
+            }
+            
+            .card.disabled {
+                opacity: 0.6;
+                cursor: not-allowed;
+                background: #f9fafb;
+                border-color: #e5e7eb;
+            }
+
+        .card-icon {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .card-title {
+            font-size: 11px;
+            font-weight: 500;
+            line-height: 1.2;
+            text-align: center;
+            color: #374151;
+            margin: 0;
+            word-break: break-word;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .card-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 6px;
+            min-height: 48px;
+            gap: 6px;
+        }
+        .card-initial-box {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+            flex-shrink: 0;
+        }
+        .card-actions {
+            display: none;
+            flex-direction: row;
+            gap: 1px;
+            width: 100%;
+            border-top: 1px solid #e5e7eb;
+            background: #f9fafb;
+        }
+        
+        
+        .card.selected .card-actions {
+            display: flex;
+        }
+        .card-btn {
+            flex: 1;
+            padding: 6px 4px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 10px;
+            font-weight: 500;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            color: #6b7280;
+            height: 24px;
+        }
+        .card-btn:first-child {
+            border-right: 1px solid #e5e7eb;
+        }
+        
+        .card-btn-complete {
+            color: #059669;
+        }
+        .card-btn-complete:hover {
+            background: #ecfdf5;
+            color: #047857;
+        }
+        .card-btn-individual {
+            color: #0ea5e9;
+        }
+        
+        .card-btn-individual:hover {
+            background: #f0f9ff;
+            color: #0284c7;
+        }
+        .card-btn:hover {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        
+        .card-btn-icon {
+            font-size: 9px;
+            font-weight: 600;
+        }
+        .card-btn:active {
+            background: #e5e7eb;
+            transform: scale(0.98);
+        }
+        
+        /* Subject Color Themes */
+        .card[data-subject="anesthesia"] .card-initial-box { background: #ef4444; }
+        .card[data-subject="anatomy"] .card-initial-box { background: #f97316; }
+        .card[data-subject="biochemistry"] .card-initial-box { background: #eab308; }
+        .card[data-subject="physiology"] .card-initial-box { background: #22c55e; }
+        .card[data-subject="pathology"] .card-initial-box { background: #06b6d4; }
+        .card[data-subject="pharmacology"] .card-initial-box { background: #3b82f6; }
+        .card[data-subject="microbiology"] .card-initial-box { background: #8b5cf6; }
+        .card[data-subject="forensic"] .card-initial-box { background: #ec4899; }
+        .card[data-subject="community"] .card-initial-box { background: #10b981; }
+        .card[data-subject="medicine"] .card-initial-box { background: #f59e0b; }
+        .card[data-subject="surgery"] .card-initial-box { background: #dc2626; }
+        .card[data-subject="pediatrics"] .card-initial-box { background: #fb7185; }
+        .card[data-subject="gynecology"] .card-initial-box { background: #f472b6; }
+        .card[data-subject="obstetrics"] .card-initial-box { background: #a855f7; }
+        .card[data-subject="orthopedic"] .card-initial-box { background: #0ea5e9; }
+        .card[data-subject="ophthalmology"] .card-initial-box { background: #06b6d4; }
+        .card[data-subject="ent"] .card-initial-box { background: #84cc16; }
+        .card[data-subject="dermatology"] .card-initial-box { background: #f97316; }
+        .card[data-subject="psychiatry"] .card-initial-box { background: #6366f1; }
+        .card[data-subject="radiology"] .card-initial-box { background: #64748b; }
+        .card[data-subject="skin"] .card-initial-box { background: #f59e0b; }
+
+        .card:not([data-subject]) .card-initial-box { display:none; }
+
+        .action-buttons {
+            position: absolute;
+            z-index: 1000;
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            min-width: 200px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #764ba2;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .selected-items {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .selected-item {
+            background: white;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .selected-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .hierarchy-path {
+            font-size: 0.85rem;
+            color: #495057;
+            font-weight: 500;
+        }
+
+        .remove-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            background: #c82333;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6c757d;
+        }
+
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .badge {
+            background: #667eea;
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-left: 5px;
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.4rem;
+            }
+            
+            .tab {
+                padding: 12px 8px;
+                font-size: 0.8rem;
+            }
+            
+            .content {
+                padding: 15px;
+            }
+            .cards-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+            
+            .card {
+                min-height: 68px;
+            }
+            
+            .card-content {
+                padding: 6px 4px;
+                min-height: 44px;
+            }
+            
+            .card-title {
+                font-size: 10px;
+            }
+            
+            .card-btn {
+                padding: 5px 3px;
+                font-size: 9px;
+                height: 22px;
+            }
+            
+            .card-btn-icon {
+                font-size: 8px;
+            }
+            
+        }
+    </style>
+    <style>
+        .navigation-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding: 0 5px;
+        }
+        
+        .back-btn {
+           
+            background: #dc143c;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: slideIn 0.4s ease forwards;
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(255, 107, 107, 0.4);
+            background: linear-gradient(135deg, #ff5252, #e53e3e);
+        }
+        
+        .back-btn:active {
+            transform: translateY(0);
+        }
+        
+        .back-btn i {
+            font-size: 0.9rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .back-btn:hover i {
+            transform: translateX(-2px);
+        }
+        
+        .back-btn.hidden {
+            display: none !important;
+        }
+        
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .back-btn {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+            
+            .navigation-header {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+    <style>
+        .search-container {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .search-results {
+            position: absolute;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            display: none;
+            z-index: 1000;
+        }
+        
+        .search-result-item {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+        
+        .search-result-item:hover {
+            background-color: #f0f0f0;
+        }
+        </style>
+        <style>
+            .demo-container {
+                background: rgba(255, 255, 255, 0.95);
+                border-radius: 16px;
+                padding: 24px;
+                max-width: 480px;
+                width: 100%;
+                text-align: center;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            }
+            
+            .demo-title {
+                font-size: 1.4rem;
+                font-weight: 600;
+                color: #2c3e50;
+                margin-bottom: 20px;
+            }
+            
+            /* Settings Button */
+            .settings-btn {
+                background: #1E40AF;
+                color: white;
+                border: none;
+                border-radius: 100px;
+                padding: 12px 24px;
+                font-size: 0.95rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                
+            }
+            
+            .settings-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            }
+            
+            .settings-btn i {
+                font-size: 1rem;
+            }
+            
+            /* Modal Styles */
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1000;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(3px);
+            }
+            
+            .modal.show {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .modal-content {
+                background: white;
+                border-radius: 16px;
+                border: 1px solid #e5e5e5;
+                width: 90%;
+                max-width: 420px;
+                box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
+                overflow: hidden;
+            }
+            
+            .modal-header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 16px 20px;
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                position: relative;
+            }
+            
+            .close-btn {
+                background: rgba(255, 255, 255, 0.2);
+                border: none;
+                color: white;
+                font-size: 1.2rem;
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .close-btn:hover {
+                background: rgba(255, 255, 255, 0.3);
+                transform: rotate(90deg);
+            }
+            
+            .modal-body {
+                padding: 20px;
+            }
+            
+            .setting-group {
+                margin-bottom: 20px;
+            }
+            
+            .setting-label {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-size: 0.9rem;
+                font-weight: 600;
+                color: #2c3e50;
+                margin-bottom: 10px;
+            }
+            
+            .setting-label i {
+                color: #667eea;
+                font-size: 1rem;
+            }
+            
+            /* Toggle Buttons */
+            .toggle-group {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 6px;
+            }
+            
+            .toggle-btn {
+                background: #f8f9fa;
+                border: 1px solid #e9ecef;
+                border-radius: 8px;
+                padding: 8px 4px;
+                font-size: 0.75rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                text-align: center;
+                color: #6c757d;
+            }
+            
+            .toggle-btn:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
+            
+            .toggle-btn.active {
+                background: #1e3c72;
+                color: white;
+                border-color: #667eea;
+                box-shadow: 0 3px 12px rgba(102, 126, 234, 0.3);
+            }
+            
+            /* Input Styles */
+            .input-group {
+                position: relative;
+            }
+            
+            .input-field {
+                width: 100%;
+                padding: 10px 14px;
+                border: 1px solid #e9ecef;
+                border-radius: 8px;
+                font-size: 0.9rem;
+                transition: all 0.3s ease;
+                background: #f8f9fa;
+            }
+            
+            .input-field:focus {
+                outline: none;
+                border-color: #667eea;
+                background: white;
+                box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+            }
+            
+            .input-hint {
+                font-size: 0.75rem;
+                color: #6c757d;
+                margin-top: 6px;
+                display: flex;
+                align-items: center;
+                gap: 4px;
+            }
+            
+            .input-hint i {
+                color: #28a745;
+                font-size: 0.7rem;
+            }
+            
+            /* Range Slider */
+            .range-slider {
+                width: 100%;
+                height: 6px;
+                border-radius: 3px;
+                background: #e9ecef;
+                outline: none;
+                appearance: none;
+                cursor: pointer;
+            }
+            
+            .range-slider::-webkit-slider-thumb {
+                appearance: none;
+                width: 18px;
+                height: 18px;
+                border-radius: 50%;
+                background: #1e3c72;
+                cursor: pointer;
+                box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+                transition: all 0.3s ease;
+            }
+            
+            .range-slider::-webkit-slider-thumb:hover {
+                transform: scale(1.1);
+            }
+            
+            .range-slider::-moz-range-thumb {
+                width: 18px;
+                height: 18px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                cursor: pointer;
+                border: none;
+                box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+            }
+            
+            .range-values {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 6px;
+                font-size: 0.75rem;
+                color: #6c757d;
+            }
+            
+            .range-current {
+                text-align: center;
+                margin-top: 8px;
+                font-weight: 600;
+                color: #667eea;
+                font-size: 0.9rem;
+            }
+            
+            /* Action Buttons */
+            .modal-actions {
+                padding: 16px 20px;
+                border-top: 1px solid #e9ecef;
+                display: flex;
+                gap: 10px;
+            }
+            
+            .action-btn {
+                flex: 1;
+                padding: 12px;
+                border: none;
+                border-radius: 8px;
+                font-size: 0.9rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+            }
+            
+            .action-btn i {
+                font-size: 0.85rem;
+            }
+            
+            .btn-primary {
+                background: #28a745;
+                color: white;
+            }
+            
+            .btn-primary:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 4px 16px rgba(40, 167, 69, 0.3);
+            }
+            
+            .btn-secondary {
+                background: #6c757d;
+                color: white;
+            }
+            
+            .btn-secondary:hover {
+                background: #5a6268;
+                transform: translateY(-1px);
+                box-shadow: 0 4px 16px rgba(108, 117, 125, 0.3);
+            }
+            
+            /* Responsive Design */
+            @media (max-width: 768px) {
+                .modal-content {
+                    width: 95%;
+                    max-width: 380px;
+                }
+            
+               
+            
+                .setting-group {
+                    margin-bottom: 16px;
+                }
+            
+                .toggle-group {
+                    grid-template-columns: repeat(4, 1fr);
+                    gap: 8px;
+                }
+            
+                .toggle-btn {
+                    font-size: 0.8rem;
+                    padding: 10px 6px;
+                }
+            
+                .setting-label {
+                    font-size: 0.85rem;
+                }
+            
+                .modal-actions {
+                    
+                    gap: 8px;
+                }
+            }
+            
+            @media (max-width: 480px) {
+                .demo-container {
+                    padding: 16px;
+                }
+            
+                .demo-title {
+                    font-size: 1.2rem;
+                }
+            
+                .settings-btn {
+                    padding: 10px 20px;
+                    font-size: 0.9rem;
+                }
+            
+                .modal-header {
+                    padding: 12px 16px;
+                }
+            
+                .modal-content {
+                    max-width: 340px;
+                }
+            
+                
+            
+                .setting-group {
+                    margin-bottom: 12px;
+                }
+            
+                .setting-label {
+                    font-size: 0.8rem;
+                }
+            
+                .toggle-btn {
+                    font-size: 0.7rem;
+                    padding: 8px 4px;
+                }
+            
+                .input-field {
+                    padding: 8px 12px;
+                    font-size: 0.85rem;
+                }
+            
+                .input-hint {
+                    font-size: 0.7rem;
+                }
+            
+                .range-current {
+                    font-size: 0.85rem;
+                }
+            
+                .modal-actions {
+                    padding: 12px 16px;
+                }
+            
+                .action-btn {
+                    padding: 10px;
+                    font-size: 0.85rem;
+                }
+            }
+            
+            /* Remove custom scrollbar since we're making it compact */
+            .modal-content {
+                overflow: visible;
+            }
+            </style>
+            <style>
+            .practice-container {
+                position: relative;
+                display: inline-block;
+            }
+    
+            .start-practice-btn {
+                background: #1E40AF;
+                color: white;
+                border: none;
+                border-radius: 100px;
+                padding: 12px 20px;
+                font-size: 15px;
+                font-weight: 600;
+                font-family: inherit;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                position: relative;
+                overflow: hidden;
+                min-width: 140px;
+                text-align: center;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                margin-bottom:10px;
+            }
+    
+            .start-practice-btn:hover {
+                transform: translateY(-1px);
+                box-shadow: 0 4px 16px rgba(0, 122, 255, 0.3);
+            }
+    
+            .start-practice-btn:active {
+                transform: translateY(0);
+                box-shadow: 0 1px 4px rgba(0, 122, 255, 0.2);
+            }
+    
+            .start-practice-btn:focus {
+                outline: none;
+                box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.3);
+            }
+    
+            .dropdown-arrow {
+                font-size: 12px;
+                transition: transform 0.2s ease;
+            }
+    
+            .start-practice-btn.active .dropdown-arrow {
+                transform: rotate(180deg);
+            }
+    
+            .dropdown-menu {
+                position: absolute;
+                width:320px;
+                bottom: 120%;
+                left: 0;
+                right: 0;
+                background: white;
+                border-radius: 16px;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+                margin-top: 8px;
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-10px);
+                transition: all 0.3s ease;
+                z-index: 1000;
+                overflow: hidden;
+            }
+    
+            .dropdown-menu.active {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+    
+            .dropdown-header {
+                padding: 16px 20px 12px;
+                border-bottom: 1px solid #f0f0f0;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+    
+            .dropdown-title {
+                font-size: 16px;
+                font-weight: 600;
+                color: #1d1d1f;
+            }
+    
+            .close-btn {
+                background: none;
+                border: none;
+                font-size: 18px;
+                color: #8e8e93;
+                cursor: pointer;
+                padding: 4px;
+                border-radius: 6px;
+                transition: all 0.2s ease;
+            }
+    
+            .close-btn:hover {
+                background: #f0f0f0;
+                color: #1d1d1f;
+            }
+    
+            .dropdown-option {
+                padding: 16px 20px;
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                cursor: pointer;
+                transition: background-color 0.2s ease;
+                border: none;
+                width: 100%;
+                background: none;
+                text-align: left;
+            }
+    
+            .dropdown-option:hover {
+                background: #f8f9fa;
+            }
+    
+            .dropdown-option:active {
+                background: #e9ecef;
+            }
+    
+            .dropdown-option:not(:last-child) {
+                border-bottom: 1px solid #f0f0f0;
+            }
+    
+            .option-icon {
+                width: 24px;
+                height: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 16px;
+                color: #007AFF;
+            }
+    
+            .option-content {
+                flex: 1;
+            }
+    
+            .option-title {
+                font-size: 16px;
+                font-weight: 600;
+                color: #1d1d1f;
+                margin-bottom: 2px;
+            }
+    
+            .option-caption {
+                font-size: 14px;
+                color: #8e8e93;
+                line-height: 1.3;
+            }
+    
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.1);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+                z-index: 999;
+            }
+    
+            .overlay.active {
+                opacity: 1;
+                visibility: visible;
+            }
+    
+           
+        </style>
+        
+    <div class="mini-stats-strip">
+        <div class="mini-stats-grid">
+            <div class="mini-stat">
+                <i class="fas fa-clipboard-list nfas"></i>
+                <span class="mini-stat-number" id="totalCounter">0</span>
+                <span class="mini-stat-label">Total</span>
+            </div>
+            
+            <div class="mini-stat">
+                <i class="fas fa-stethoscope nfas"></i>
+                <span class="mini-stat-number" id="clinicalCounter">0</span>
+                <span class="mini-stat-label">Clinical</span>
+            </div>
+            
+            <div class="mini-stat">
+                <i class="fas fa-image nfas"></i>
+                <span class="mini-stat-number" id="imageCounter">0</span>
+                <span class="mini-stat-label">Image</span>
+            </div>
+        </div>
+    </div>
+    <div class="stats-note">
+        <i class="fas fa-sync-alt fa-spin nfas"></i>Our team is continuously adding new high-yield MCQs to enhance your learning experience
+    </div>
+    <div class="container">
+        
+
+        <div class="content">
+            
+            
+            <div class="overlay" id="overlay"></div>
+        
+            <div class="section">
+                
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search for topics..." class="search-box">
+                    <div id="searchResults" class="search-results"></div>
+                </div>
+                
+                <div class="navigation-header">
+                    <button class="back-btn hidden" id="back-btn">
+                        <i class="fas fa-arrow-left nfas"></i>
+                        
+                    </button>
+                    <div class="breadcrumb" id="breadcrumb">
+                        Subjects
+                    </div>
+                </div>
+                <div class="cards-grid" id="cards-container">
+                    <!-- Cards will be dynamically loaded here -->
+                    
+                </div>
+              
+                
+            </div>
+            <div class="practice-container">
+                <button class="start-practice-btn" id="startPracticeBtn">
+                    Start Practice
+                    <span class="dropdown-arrow">▼</span>
+                </button>
+                
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <div class="dropdown-header">
+                        <span class="dropdown-title">Choose Practice Mode</span>
+                        <button class="close-btn" id="closeBtn">×</button>
+                    </div>
+                    
+                    <button class="dropdown-option" data-mode="test">
+                        <div class="option-icon">📝</div>
+                        <div class="option-content">
+                            <div class="option-title">Test Mode</div>
+                            <div class="option-caption">Complete all questions then see results with detailed explanations</div>
+                        </div>
+                    </button>
+                    
+                    <button class="dropdown-option" data-mode="instant">
+                        <div class="option-icon">⚡</div>
+                        <div class="option-content">
+                            <div class="option-title">Instant Check</div>
+                            <div class="option-caption">Get immediate feedback after each question with explanations</div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            <button class="settings-btn" id="settingsBtn">
+                <i class="fas fa-cogs nfas"></i>
+               
+            </button>
+            <div class="selected-items">
+                <div class="section-title">
+                    <span>✓</span>
+                    <span>Selected Items</span>
+                    <span class="badge" id="selected-count">0</span>
+                </div>
+                <div id="selected-container">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">—</div>
+                        <p>No items selected yet</p>
+                    </div>
+                </div>
+            </div>
+            
+               
+                
+           
+        
+            <!-- Modal -->
+            <div class="modal" id="settingsModal">
+                <div class="modal-content">
+                    
+                    
+                    <div class="modal-body">
+                        <!-- Difficulty Setting -->
+                        <div class="setting-group">
+                            <div class="setting-label">
+                                <i class="fas fa-chart-line nfas"></i>
+                                Difficulty Level
+                            </div>
+                            <div class="toggle-group" id="difficultyGroup">
+                                <button class="toggle-btn" data-value="easy">Easy</button>
+                                <button class="toggle-btn" data-value="medium">Medium</button>
+                                <button class="toggle-btn" data-value="tough">Tough</button>
+                                <button class="toggle-btn active" data-value="mixed">Mixed</button>
+                            </div>
+                        </div>
+        
+                        <!-- Type Setting -->
+                        <div class="setting-group">
+                            <div class="setting-label">
+                                <i class="fas fa-layer-group nfas"></i>
+                                Question Type
+                            </div>
+                            <div class="toggle-group" id="typeGroup">
+                                <button class="toggle-btn" data-value="general">General</button>
+                                <button class="toggle-btn" data-value="image">Image</button>
+                                <button class="toggle-btn" data-value="clinical">Clinical</button>
+                                <button class="toggle-btn active" data-value="mixed">Mixed</button>
+                            </div>
+                        </div>
+        
+                        <!-- Number of Questions -->
+                        <div class="setting-group">
+                            <div class="setting-label">
+                                <i class="fas fa-list-ol nfas"></i>
+                                Number of Questions
+                            </div>
+                            <div class="input-group">
+                                <input type="number" class="input-field" id="numQuestions" min="1" max="40" placeholder="Enter number of questions">
+                                <div class="input-hint">
+                                    <i class="fas fa-info-circle nfas"></i>
+                                    Maximum 40 questions allowed
+                                </div>
+                            </div>
+                        </div>
+        
+                        <!-- Time per Question -->
+                        <div class="setting-group">
+                            <div class="setting-label">
+                                <i class="fas fa-stopwatch nfas"></i>
+                                Time per Question (minutes)
+                            </div>
+                            <div class="input-group">
+                                <input type="range" class="range-slider" id="timeRange" min="0.6" max="3" step="0.1" value="1.0">
+                                <div class="range-values">
+                                    <span>0.6 min</span>
+                                    <span>3.0 min</span>
+                                </div>
+                                <div class="range-current" id="timeValue">1 minute</div>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="modal-actions">
+                        <button class="action-btn btn-primary" id="saveBtn">
+                            
+                            ✓ Done
+                        </button>
+                        <button class="action-btn btn-secondary" id="resetBtn">
+                            <i class="fas fa-undo nfas"></i>
+                            Reset to Default
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    
+    {% if messages %}
+    <div class="fixed top-15 left-0 w-full z-9999999">
+        {% for message in messages %}
+            <div class="notification notification-{{ message.tags }} text-white text-center p-4 shadow-lg">
+                <div class="max-w-xl mx-auto flex items-center justify-center space-x-4">
+                    {% if message.tags == 'info' %}
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    {% elif message.tags == 'success' %}
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    {% elif message.tags == 'warning' %}
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                        </svg>
+                    {% elif message.tags == 'error' %}
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    {% endif %}
+                    <span class="text-lg font-semibold">{{ message }}</span>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <script>
+        const startBtn = document.getElementById('startPracticeBtn');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        const closeBtn = document.getElementById('closeBtn');
+        const overlay = document.getElementById('overlay');
+        const dropdownOptions = document.querySelectorAll('.dropdown-option');
+
+        // Toggle dropdown
+        startBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleDropdown();
+        });
+
+        // Close dropdown
+        closeBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeDropdown();
+        });
+
+        // Close on overlay click
+        overlay.addEventListener('click', closeDropdown);
+
+        // Handle option selection
+        dropdownOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                const mode = this.dataset.mode;
+                console.log(`Selected mode: ${mode}`);
+                
+                // Add your logic here for different modes
+                if (mode === 'test') {
+                    handleTestMode();
+                } else if (mode === 'instant') {
+                    handleInstantMode();
+                }
+                
+                closeDropdown();
+            });
+        });
+
+        // Close on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeDropdown();
+            }
+        });
+
+        // Close on outside click
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.practice-container')) {
+                closeDropdown();
+            }
+        });
+
+        function toggleDropdown() {
+            const isActive = dropdownMenu.classList.contains('active');
+            if (isActive) {
+                closeDropdown();
+            } else {
+                openDropdown();
+            }
+        }
+
+        function openDropdown() {
+            startBtn.classList.add('active');
+            dropdownMenu.classList.add('active');
+            overlay.classList.add('active');
+        }
+
+        function closeDropdown() {
+            startBtn.classList.remove('active');
+            dropdownMenu.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        function handleTestMode() {
+            // Your test mode logic here
+            console.log('Starting Test Mode...');
+            // Example: redirect to test page or show test interface
+        }
+
+        function handleInstantMode() {
+            // Your instant check mode logic here
+            console.log('Starting Instant Check Mode...');
+            // Example: redirect to instant check page or show instant interface
+        }
+    </script>
+    <script>
+        // DOM Elements
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsModal = document.getElementById('settingsModal');
+        const difficultyGroup = document.getElementById('difficultyGroup');
+        const typeGroup = document.getElementById('typeGroup');
+        const numQuestions = document.getElementById('numQuestions');
+        const timeRange = document.getElementById('timeRange');
+        const timeValue = document.getElementById('timeValue');
+        const saveBtn = document.getElementById('saveBtn');
+        const resetBtn = document.getElementById('resetBtn');
+
+        // Settings object to store current values
+        let settings = {
+            difficulty: 'mixed',
+            type: 'mixed',
+            numQuestions: '',
+            timePerQuestion: 1.0
+        };
+
+        // Event Listeners
+        settingsBtn.addEventListener('click', openModal);
+        settingsModal.addEventListener('click', (e) => {
+            if (e.target === settingsModal) closeModal();
+        });
+
+        // Toggle button functionality
+        difficultyGroup.addEventListener('click', (e) => {
+            if (e.target.classList.contains('toggle-btn')) {
+                handleToggleClick(difficultyGroup, e.target);
+                settings.difficulty = e.target.dataset.value;
+            }
+        });
+
+        typeGroup.addEventListener('click', (e) => {
+            if (e.target.classList.contains('toggle-btn')) {
+                handleToggleClick(typeGroup, e.target);
+                settings.type = e.target.dataset.value;
+            }
+        });
+
+        // Number input validation
+        numQuestions.addEventListener('input', (e) => {
+            let value = parseInt(e.target.value);
+            if (value > 40) {
+                e.target.value = 40;
+                showNotification('Maximum 40 questions allowed', 'warning');
+            }
+            settings.numQuestions = e.target.value;
+        });
+
+        // Range slider functionality
+        timeRange.addEventListener('input', (e) => {
+            const value = parseFloat(e.target.value);
+            timeValue.textContent = `${value} minute${value !== 1 ? 's' : ''}`;
+            settings.timePerQuestion = value;
+        });
+
+        // Save and Reset buttons
+        saveBtn.addEventListener('click', saveSettings);
+        resetBtn.addEventListener('click', resetSettings);
+
+        // Functions
+        function openModal() {
+            settingsModal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            settingsModal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        function handleToggleClick(group, clickedBtn) {
+            // Remove active class from all buttons in the group
+            group.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            clickedBtn.classList.add('active');
+            
+            // Add ripple effect
+            addRippleEffect(clickedBtn);
+        }
+
+        function addRippleEffect(button) {
+            const ripple = document.createElement('span');
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = rect.width / 2 - size / 2;
+            const y = rect.height / 2 - size / 2;
+            
+            ripple.style.cssText = `
+                position: absolute;
+                width: ${size}px;
+                height: ${size}px;
+                left: ${x}px;
+                top: ${y}px;
+                background: rgba(255, 255, 255, 0.5);
+                border-radius: 50%;
+                transform: scale(0);
+                animation: ripple 0.6s ease;
+                pointer-events: none;
+            `;
+            
+            // Add ripple animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes ripple {
+                    to {
+                        transform: scale(2);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            button.style.position = 'relative';
+            button.style.overflow = 'hidden';
+            button.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        }
+
+        function saveSettings() {
+            // Validate settings
+            if (settings.numQuestions && (settings.numQuestions < 1 || settings.numQuestions > 40)) {
+                showNotification('Please enter a valid number of questions (1-40)', 'error');
+                return;
+            }
+
+            // Save to localStorage (you can modify this to send to server)
+            
+            
+            
+            
+            // Log settings for demo
+           
+            
+            closeModal();
+        }
+
+        function resetSettings() {
+            // Reset to default values
+            settings = {
+                difficulty: 'mixed',
+                type: 'mixed',
+                numQuestions: '',
+                timePerQuestion: 1.0
+            };
+            
+            // Update UI
+            updateUI();
+            
+            showNotification('Settings reset to default', 'info');
+        }
+
+        function updateUI() {
+            // Update difficulty buttons
+            difficultyGroup.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.value === settings.difficulty);
+            });
+            
+            // Update type buttons
+            typeGroup.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.value === settings.type);
+            });
+            
+            // Update number input
+            numQuestions.value = settings.numQuestions;
+            
+            // Update time range
+            timeRange.value = settings.timePerQuestion;
+            timeValue.textContent = `${settings.timePerQuestion} minute${settings.timePerQuestion !== 1 ? 's' : ''}`;
+        }
+
+        function showNotification(message, type = 'info') {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 60px;
+                right: 20px;
+                padding: 16px 24px;
+                border-radius: 12px;
+                color: white;
+                font-weight: 600;
+                z-index: 2000;
+                animation: slideIn 0.3s ease;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            `;
+            
+            // Set background color based on type
+            const colors = {
+                success: '#28a745',
+                error: '#dc3545',
+                warning: '#ffc107',
+                info: '#17a2b8'
+            };
+            
+            notification.style.background = colors[type] || colors.info;
+            notification.textContent = message;
+            
+            // Add slide in animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            document.body.appendChild(notification);
+            
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 1500);
+        }
+
+        // Load settings from localStorage on page load
+        
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+            if (e.ctrlKey && e.key === 's') {
+                e.preventDefault();
+                if (settingsModal.classList.contains('show')) {
+                    saveSettings();
+                }
+            }
+        });
+    </script>
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+
+        // Get data from Django template
+        const data = {{ data|safe }};
+        const subjectIcons = {{ subject_icons|safe }};  // Add this line
+
+        
+        // State management
+        let currentLevel = 'subject';
+        let currentPath = [];
+        let selectedItems = [];
+        let selectedItem = null;
+
+        // DOM elements
+        const cardsContainer = document.getElementById('cards-container');
+        const selectIndividualBtn = document.getElementById('select-individual');
+        const selectedContainer = document.getElementById('selected-container');
+        const selectedCount = document.getElementById('selected-count');
+        const breadcrumb = document.getElementById('breadcrumb');
+        const sectionTitle = document.getElementById('section-title');
+
+        // Initialize app
+        function init() {
+            loadLevel('subject', Object.keys(data));
+            updateBreadcrumb();
+            updateSectionTitle();
+            updateBackButton();
+        }
+
+        // Bind event listeners
+        
+        // Load level content
+        function loadLevel(level, items) {
+            currentLevel = level;
+            cardsContainer.innerHTML = '';
+
+            if (Array.isArray(items)) {
+                // For subjects (array of subject names)
+                items.forEach(item => {
+                    const card = createCard(item, level);
+                    cardsContainer.appendChild(card);
+                });
+            } else {
+                // For units, chapters, topics (object with keys)
+                Object.keys(items).forEach(key => {
+                    const card = createCard(key, level);
+                    cardsContainer.appendChild(card);
+                });
+            }
+        }
+
+        // Create card element
+        function createCard(name, level) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            
+            // Add data attribute for subject-specific styling
+            if (level === 'subject') {
+                card.setAttribute('data-subject', name.toLowerCase().replace(/\s+/g, ''));
+            }
+            
+            const isDisabled = isItemSelected(name, level);
+            if (isDisabled) {
+                card.classList.add('disabled');
+            }
+            
+            // Get first letter for initial box
+            const firstLetter = name.charAt(0).toUpperCase();
+            
+            // Create card title with icon for subjects (if you still want icons)
+            let cardTitle = name;
+            if (level === 'subject' && subjectIcons[name]) {
+                const icon = subjectIcons[name];
+                cardTitle = `<i class="${icon.icon} nfas" style="color: ${icon.icon_color}; margin-right: 8px;"></i>${name}`;
+            }
+            
+            card.innerHTML = `
+                <div class="card-content">
+                    <div class="card-initial-box">${firstLetter}</div>
+                    <div class="card-title">${cardTitle}</div>
+                </div>
+                <div class="card-actions">
+                    <button class="card-btn card-btn-complete">
+                        <span class="card-btn-icon">✓</span>
+                        <span>All</span>
+                    </button>
+                    <button class="card-btn card-btn-individual">
+                        <span class="card-btn-icon">→</span>
+                        <span>Pick</span>
+                    </button>
+                </div>
+            `;
+            
+            if (!isDisabled) {
+                // Handle card selection
+                card.querySelector('.card-content').addEventListener('click', () => {
+                    if (level === 'topic') {
+                        autoSelectTopic(name);
+                    } else {
+                        selectCard(card, name, level);
+                    }
+                });
+                
+                // Handle action buttons
+                card.querySelector('.card-btn-complete').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    selectCompleteFromCard(name);
+                });
+                
+                card.querySelector('.card-btn-individual').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    selectIndividualFromCard(name);
+                });
+            }
+            
+            return card;
+        }
+        function selectCompleteFromCard(itemName) {
+            const hierarchy = [...currentPath, itemName];
+            addToSelected(hierarchy);
+            resetToSubjectLevel();
+        }
+        
+        function selectIndividualFromCard(itemName) {
+            selectedItem = itemName;
+            selectIndividual();
+        }
+        // Select card
+        function selectCard(card, name, level) {
+            document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            selectedItem = name;
+            updateSectionTitle();
+        }
+        
+
+        // Auto-select topic
+        function autoSelectTopic(topicName) {
+            const hierarchy = [...currentPath, topicName];
+            addToSelected(hierarchy);
+            resetToSubjectLevel();
+        }
+
+        // Select complete item
+        function selectComplete() {
+            if (selectedItem) {
+                const hierarchy = [...currentPath, selectedItem];
+                addToSelected(hierarchy);
+                resetToSubjectLevel();
+            }
+        }
+
+        const backBtn = document.getElementById('back-btn');
+
+        // Add event listener for back button
+        backBtn.addEventListener('click', goBack);
+
+        // Function to go back to previous level
+        function goBack() {
+            if (currentPath.length > 0) {
+                // Remove last item from path
+                currentPath.pop();
+                
+                // Reset selected item
+                selectedItem = null;
+                
+                // Determine new level
+                const levels = ['subject', 'unit', 'chapter', 'topic'];
+                currentLevel = levels[currentPath.length] || 'subject';
+                
+                // Load the previous level
+                const currentData = getCurrentLevelData();
+                if (currentData) {
+                    loadLevel(currentLevel, currentData);
+                } else {
+                    loadLevel('subject', Object.keys(data));
+                }
+                
+                // Update UI
+                updateBreadcrumb();
+                updateSectionTitle();
+                updateBackButton();
+                
+                // Add smooth transition effect
+                cardsContainer.style.opacity = '0';
+                setTimeout(() => {
+                    cardsContainer.style.opacity = '1';
+                }, 150);
+            }
+        }
+
+        // Function to update back button visibility
+        function updateBackButton() {
+            if (currentPath.length > 0) {
+                backBtn.classList.remove('hidden');
+                backBtn.style.opacity = '1'; // Override CSS opacity
+            } else {
+                backBtn.classList.add('hidden');
+                backBtn.style.opacity = '0'; // Hide completely
+            }
+        }
+
+        // Select individual items
+        function selectIndividual() {
+            if (selectedItem) {
+                const newPath = [...currentPath, selectedItem];
+                currentPath = newPath;
+
+                const nextLevel = getNextLevel(currentLevel);
+                
+                if (nextLevel) {
+                    const currentData = getCurrentLevelData();
+                    if (currentData && (Array.isArray(currentData) ? currentData.length > 0 : Object.keys(currentData).length > 0)) {
+                        loadLevel(nextLevel, currentData);
+                        updateBreadcrumb();
+                        updateSectionTitle();
+                        updateBackButton();
+                        selectedItem = null;
+                    } else {
+                        console.error('No data found for next level');
+                        resetToSubjectLevel();
+                    }
+                }
+            }
+        }
+
+        // Get current level data
+        function getCurrentLevelData() {
+            let result = data;
+            
+            for (let i = 0; i < currentPath.length; i++) {
+                const item = currentPath[i];
+                if (!result[item]) {
+                    console.error('Item not found:', item, 'in', result);
+                    return null;
+                }
+                result = result[item];
+            }
+
+            return result;
+        }
+
+        // Get next level
+        function getNextLevel(currentLevel) {
+            const levels = ['subject', 'unit', 'chapter', 'topic'];
+            const currentIndex = levels.indexOf(currentLevel);
+            return currentIndex < levels.length - 1 ? levels[currentIndex + 1] : null;
+        }
+
+        // Add to selected items
+        function addToSelected(hierarchy) {
+            // Check if maximum selections reached
+            if (selectedItems.length >= 5) {
+                showNotification('Maximum 5 selections are possible at a time.', 'error');
+                return;
+            }
+            
+            // Check if already exists
+            const hierarchyStr = hierarchy.join(' → ');
+            if (!selectedItems.some(item => item.hierarchy.join(' → ') === hierarchyStr)) {
+                selectedItems.push({
+                    hierarchy: hierarchy,
+                    id: Date.now()
+                });
+                updateSelectedDisplay(true); // Pass true to show add notification
+            }
+        }
+
+        // Check if item is selected
+        function isItemSelected(itemName, level) {
+            const currentHierarchy = [...currentPath, itemName];
+            return selectedItems.some(selected => {
+                const selectedPath = selected.hierarchy;
+                if (selectedPath.length !== currentHierarchy.length) return false;
+                
+                // Check if this exact path or a parent path is already selected
+                for (let i = 0; i < currentHierarchy.length; i++) {
+                    if (selectedPath[i] !== currentHierarchy[i]) return false;
+                }
+                return true;
+            });
+        }
+
+        // Update selected display
+        function updateSelectedDisplay(showAddNotification = false) {
+            selectedCount.textContent = selectedItems.length;
+        
+            if (selectedItems.length === 0) {
+                selectedContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">—</div>
+                        <p>No items selected yet</p>
+                    </div>
+                `;
+            } else {
+                selectedContainer.innerHTML = selectedItems.map(item => `
+                    <div class="selected-item">
+                        <div class="hierarchy-path">${item.hierarchy.join(' → ')}</div>
+                        <button class="remove-btn" onclick="removeSelected(${item.id})">×</button>
+                    </div>
+                `).join('');
+                
+                // Only show notification when explicitly requested (for additions)
+                if (showAddNotification) {
+                    showNotification('Your selection added! You can add more', 'success');
+                }
+            }
+        }
+
+        // Remove selected item
+        function removeSelected(id) {
+            selectedItems = selectedItems.filter(item => item.id !== id);
+            updateSelectedDisplay();
+            
+            // Refresh current level to re-enable cards
+            const currentData = getCurrentLevelData();
+            if (currentData) {
+                loadLevel(currentLevel, currentData);
+            } else {
+                loadLevel('subject', Object.keys(data));
+            }
+            updateBreadcrumb();
+            updateSectionTitle();
+        }
+
+        // Reset to subject level
+        function resetToSubjectLevel() {
+            currentPath = [];
+            currentLevel = 'subject';
+            selectedItem = null;
+            loadLevel('subject', Object.keys(data));
+            updateBreadcrumb();
+            updateSectionTitle();
+            updateBackButton();
+        }
+
+        // Update breadcrumb
+        function updateBreadcrumb() {
+            const pathStr = currentPath.length > 0 ? currentPath.join(' → ') : 'Subjects';
+            breadcrumb.textContent = pathStr;
+        }
+
+        // Update section title
+        function updateSectionTitle() {
+            const levels = {
+                'subject': 'Select Subject',
+                'unit': 'Select Unit',
+                'chapter': 'Select Chapter',
+                'topic': 'Select Topic'
+            };
+            
+            let title = levels[currentLevel] || 'Select';
+            if (selectedItem && currentLevel !== 'topic') {
+                title += ` (${selectedItem} selected)`;
+            }
+            
+        }
+
+        // Show action buttons
+        
+
+        // Hide action buttons
+       
+
+        // Make removeSelected globally accessible
+        window.removeSelected = removeSelected;
+        function searchTopics(term) {
+            const results = [];
+            const termLower = term.toLowerCase();
+            
+            Object.entries(data).forEach(([subject, units]) => {
+                Object.entries(units).forEach(([unit, chapters]) => {
+                    Object.entries(chapters).forEach(([chapter, topics]) => {
+                        topics.forEach(topic => {
+                            const path = [subject, unit, chapter, topic];
+                            const fullPath = path.join('->');
+                            
+                            let matchIndex = -1;
+                            path.forEach((item, index) => {
+                                if (item.toLowerCase().includes(termLower)) {
+                                    matchIndex = index;
+                                }
+                            });
+        
+                            if (matchIndex !== -1) {
+                                results.push(path.slice(0, matchIndex + 1).join('->'));
+                            }
+                        });
+                    });
+                });
+            });
+        
+            return [...new Set(results)];
+        }
+        function displayResults(results) {
+            searchResults.innerHTML = '';
+            
+            if (results.length > 0) {
+                results.forEach(result => {
+                    const div = document.createElement('div');
+                    div.className = 'search-result-item';
+                    div.textContent = result;
+                    div.onclick = () => handleResultClick(result);
+                    searchResults.appendChild(div);
+                });
+                searchResults.style.display = 'block';
+            } else {
+                searchResults.style.display = 'none';
+            }
+        }
+        function handleResultClick(result) {
+            // Check if maximum selections reached
+            if (selectedItems.length >= 5) {
+                showNotification('Maximum 5 selections are possible at a time.', 'error');
+                return;
+            }
+        
+            // Parse the result path
+            const hierarchy = result.split('->');
+            
+            // Check if this selection already exists
+            const hierarchyStr = hierarchy.join(' → ');
+            if (!selectedItems.some(item => item.hierarchy.join(' → ') === hierarchyStr)) {
+                // Add to selected items
+                selectedItems.push({
+                    hierarchy: hierarchy,
+                    id: Date.now()
+                });
+                updateSelectedDisplay();
+                showNotification('Your selection added! You can add more', 'success');
+            }
+        
+            // Clear search
+            searchInput.value = '';
+            searchResults.style.display = 'none';
+        }
+        
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.trim();
+            if (term) {
+                const results = searchTopics(term);
+                displayResults(results);
+            } else {
+                searchResults.style.display = 'none';
+            }
+        });
+        
+        // Close search results when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.style.display = 'none';
+            }
+        });
+        // Initialize the app
+        init();
+    </script>
+    <script>
+        function animateNumber(element, target, duration = 1000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                start += increment;
+                element.textContent = Math.floor(start);
+                if (start >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                }
+            }, 16);
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const totalElement = document.getElementById('totalCounter');
+            const clinicalElement = document.getElementById('clinicalCounter');
+            const imageElement = document.getElementById('imageCounter');
+            
+            animateNumber(totalElement, {{ total_mcqs }});
+            animateNumber(clinicalElement, {{ clinical_mcqs }});
+            animateNumber(imageElement, {{ image_mcqs }});
+        });
+        </script>
+        <script>
+// Practice Mode Handler - Complete Implementation
+
+class PracticeHandler {
+    constructor() {
+        this.selectedMode = null;
+        this.isProcessing = false;
+        this.initializeEventListeners();
+    }
+
+    initializeEventListeners() {
+        // Mode selection handlers
+        const dropdownOptions = document.querySelectorAll('.dropdown-option');
+        dropdownOptions.forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.preventDefault();
+                const mode = option.dataset.mode;
+                this.handleModeSelection(mode);
+            });
+        });
+    }
+
+    /**
+     * Handle mode selection and initiate practice
+     * @param {string} mode - 'test' or 'instant'
+     */
+    handleModeSelection(mode) {
+        if (this.isProcessing) {
+            return;
+        }
+
+        this.selectedMode = mode;
+        
+        // Validate selections first
+        if (!this.validateSelections()) {
+            return;
+        }
+
+        // Validate settings
+        if (!this.validateSettings()) {
+            return;
+        }
+
+        // Show loading state
+        this.showLoadingState();
+
+        // Start practice with selected mode
+        this.startPractice(mode);
+    }
+
+    /**
+     * Validate that user has made selections
+     * @returns {boolean}
+     */
+    validateSelections() {
+        if (!selectedItems || selectedItems.length === 0) {
+            this.showNotification('Please select at least one topic to start practice', 'error');
+            this.closeDropdown();
+            return false;
+        }
+
+        if (selectedItems.length > 5) {
+            this.showNotification('Maximum 5 selections are allowed', 'error');
+            this.closeDropdown();
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Validate settings
+     * @returns {boolean}
+     */
+    validateSettings() {
+        const numQuestions = this.getNumQuestions();
+        
+        if (numQuestions < 1 || numQuestions > 40) {
+            this.showNotification('Number of questions must be between 1 and 40', 'error');
+            this.closeDropdown();
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Collect all selections in the required format
+     * @returns {Array<string>}
+     */
+    collectSelections() {
+        return selectedItems.map(item => item.hierarchy.join('->'));
+    }
+
+    /**
+     * Get current settings from the UI
+     * @returns {Object}
+     */
+    getCurrentSettings() {
+        return {
+            difficulty: this.getDifficultyLevel(),
+            questionType: this.getQuestionType(),
+            numQuestions: this.getNumQuestions(),
+            timePerQuestion: this.getTimePerQuestion()
+        };
+    }
+
+    /**
+     * Get difficulty level from settings
+     * @returns {string}
+     */
+    getDifficultyLevel() {
+        const activeBtn = document.querySelector('#difficultyGroup .toggle-btn.active');
+        return activeBtn ? activeBtn.dataset.value : 'mixed';
+    }
+
+    /**
+     * Get question type from settings
+     * @returns {string}
+     */
+    getQuestionType() {
+        const activeBtn = document.querySelector('#typeGroup .toggle-btn.active');
+        return activeBtn ? activeBtn.dataset.value : 'mixed';
+    }
+
+    /**
+     * Get number of questions from settings
+     * @returns {number}
+     */
+    getNumQuestions() {
+        const numQuestionsInput = document.getElementById('numQuestions');
+        const value = numQuestionsInput ? parseInt(numQuestionsInput.value) : null;
+        
+        // Return default of 25 if no value is set or invalid
+        return (value && value > 0) ? value : 25;
+    }
+
+    /**
+     * Get time per question from settings
+     * @returns {number}
+     */
+    getTimePerQuestion() {
+        const timeRange = document.getElementById('timeRange');
+        return timeRange ? parseFloat(timeRange.value) : 1.0;
+    }
+
+    /**
+     * Show loading state while processing
+     */
+    showLoadingState() {
+        this.isProcessing = true;
+        const startBtn = document.getElementById('startPracticeBtn');
+        const originalContent = startBtn.innerHTML;
+        
+        startBtn.innerHTML = `
+            <span style="display: inline-flex; align-items: center; gap: 8px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation: spin 1s linear infinite;">
+                    <path d="M21 12a9 9 0 11-6.219-8.56"/>
+                </svg>
+                Starting ${this.selectedMode === 'test' ? 'Test' : 'Instant Check'}...
+            </span>
+        `;
+        
+        startBtn.disabled = true;
+
+        // Add spin animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes spin {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Reset button after 5 seconds (failsafe)
+        setTimeout(() => {
+            startBtn.innerHTML = originalContent;
+            startBtn.disabled = false;
+            this.isProcessing = false;
+        }, 5000);
+    }
+
+    /**
+     * Start practice with collected data
+     * @param {string} mode - 'test' or 'instant'
+     */
+    startPractice(mode) {
+        try {
+            // Collect all required data
+            const selections = this.collectSelections();
+            const settings = this.getCurrentSettings();
+            
+            // Prepare query parameters
+            const queryParams = {
+                selections: JSON.stringify(selections),
+                questionType: settings.questionType,
+                difficultyLevel: settings.difficulty,
+                numQuestions: settings.numQuestions.toString(),
+                timePerQuestion: settings.timePerQuestion.toString(),
+                mode: mode
+            };
+
+            // Create query string
+            const queryString = new URLSearchParams(queryParams).toString();
+            
+            // Log for debugging (remove in production)
+            console.log('Starting practice with parameters:', {
+                mode: mode,
+                selections: selections,
+                settings: settings,
+                queryString: queryString
+            });
+
+            // Show success notification
+            this.showNotification(
+                `Starting ${mode === 'test' ? 'Test Mode' : 'Instant Check Mode'}...`, 
+                'success'
+            );
+
+            // Close dropdown
+            this.closeDropdown();
+
+            // Navigate to test page
+            setTimeout(() => {
+                window.location.href = `test/?${queryString}`;
+            }, 500);
+
+        } catch (error) {
+            console.error('Error starting practice:', error);
+            this.showNotification('Error starting practice. Please try again.', 'error');
+            this.resetLoadingState();
+        }
+    }
+
+    /**
+     * Reset loading state
+     */
+    resetLoadingState() {
+        const startBtn = document.getElementById('startPracticeBtn');
+        startBtn.innerHTML = `
+            Start Practice
+            <span class="dropdown-arrow">▼</span>
+        `;
+        startBtn.disabled = false;
+        this.isProcessing = false;
+    }
+
+    /**
+     * Close dropdown menu
+     */
+    closeDropdown() {
+        const startBtn = document.getElementById('startPracticeBtn');
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        const overlay = document.getElementById('overlay');
+        
+        if (startBtn) startBtn.classList.remove('active');
+        if (dropdownMenu) dropdownMenu.classList.remove('active');
+        if (overlay) overlay.classList.remove('active');
+    }
+
+    /**
+     * Show notification to user
+     * @param {string} message 
+     * @param {string} type 
+     */
+    showNotification(message, type = 'info') {
+        // Use existing notification function if available
+        if (typeof window.showNotification === 'function') {
+            window.showNotification(message, type);
+            return;
+        }
+
+        // Fallback notification implementation
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            z-index: 2000;
+            animation: slideInRight 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            max-width: 400px;
+        `;
+
+        const colors = {
+            success: '#10b981',
+            error: '#ef4444',
+            warning: '#f59e0b',
+            info: '#3b82f6'
+        };
+
+        notification.style.backgroundColor = colors[type] || colors.info;
+        notification.textContent = message;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+            notification.style.animation = 'slideOutRight 0.3s ease';
+            setTimeout(() => notification.remove(), 300);
+        }, 3000);
+    }
+}
+
+// Initialize the practice handler
+const practiceHandler = new PracticeHandler();
+
+// Update the existing mode handlers to use the new system
+function handleTestMode() {
+    practiceHandler.handleModeSelection('test');
+}
+
+function handleInstantMode() {
+    practiceHandler.handleModeSelection('instant');
+}
+
+// Add CSS animations
+const animationStyles = document.createElement('style');
+animationStyles.textContent = `
+    @keyframes slideInRight {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    
+    @keyframes slideOutRight {
+        from {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        to {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(animationStyles);
+        </script>
+        <script>
+// Complete Page Reset Solution
+// Add this script at the very beginning of your existing JavaScript code
+
+(function() {
+    'use strict';
+    
+    // Page Reset Manager
+    class PageResetManager {
+        constructor() {
+            this.init();
+        }
+        
+        init() {
+            // Reset everything when page loads or becomes visible
+            this.resetOnPageLoad();
+            this.setupNavigationListeners();
+            this.setupVisibilityListener();
+        }
+        
+        resetOnPageLoad() {
+            // Always reset on page load
+            this.performFullReset();
+        }
+        
+        setupNavigationListeners() {
+            // Listen for browser navigation (back/forward buttons)
+            window.addEventListener('popstate', () => {
+                this.performFullReset();
+            });
+            
+            // Listen for page show event (handles back/forward navigation)
+            window.addEventListener('pageshow', (event) => {
+                // Reset on any page show, including back/forward navigation
+                this.performFullReset();
+            });
+            
+            // Listen for focus event (when user returns to tab)
+            window.addEventListener('focus', () => {
+                this.performFullReset();
+            });
+        }
+        
+        setupVisibilityListener() {
+            // Listen for visibility changes
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden) {
+                    // Page became visible, reset everything
+                    this.performFullReset();
+                }
+            });
+        }
+        
+        performFullReset() {
+            // Wait for DOM to be ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', () => {
+                    this.doReset();
+                });
+            } else {
+                this.doReset();
+            }
+        }
+        
+        doReset() {
+            // Reset all selections
+            this.resetSelections();
+            
+            // Reset all settings to default
+            this.resetSettings();
+            
+            // Reset UI state
+            this.resetUIState();
+            
+            // Reset navigation state
+            this.resetNavigationState();
+            
+            console.log('Page reset completed - all selections and settings cleared');
+        }
+        
+        resetSelections() {
+            // Clear selected items array
+            if (typeof selectedItems !== 'undefined') {
+                selectedItems.length = 0; // Clear array
+            }
+            
+            // Reset selected item
+            if (typeof selectedItem !== 'undefined') {
+                selectedItem = null;
+            }
+            
+            // Update selected display
+            const selectedContainer = document.getElementById('selected-container');
+            const selectedCount = document.getElementById('selected-count');
+            
+            if (selectedContainer) {
+                selectedContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">—</div>
+                        <p>No items selected yet</p>
+                    </div>
+                `;
+            }
+            
+            if (selectedCount) {
+                selectedCount.textContent = '0';
+            }
+        }
+        
+        resetSettings() {
+            // Reset difficulty to default (mixed)
+            const difficultyGroup = document.getElementById('difficultyGroup');
+            if (difficultyGroup) {
+                difficultyGroup.querySelectorAll('.toggle-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.value === 'mixed') {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+            
+            // Reset question type to default (mixed)
+            const typeGroup = document.getElementById('typeGroup');
+            if (typeGroup) {
+                typeGroup.querySelectorAll('.toggle-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.value === 'mixed') {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+            
+            // Reset number of questions
+            const numQuestions = document.getElementById('numQuestions');
+            if (numQuestions) {
+                numQuestions.value = '';
+            }
+            
+            // Reset time per question
+            const timeRange = document.getElementById('timeRange');
+            const timeValue = document.getElementById('timeValue');
+            if (timeRange) {
+                timeRange.value = '1.0';
+            }
+            if (timeValue) {
+                timeValue.textContent = '1 minute';
+            }
+            
+            // Reset global settings object if it exists
+            if (typeof settings !== 'undefined') {
+                settings.difficulty = 'mixed';
+                settings.type = 'mixed';
+                settings.numQuestions = '';
+                settings.timePerQuestion = 1.0;
+            }
+        }
+        
+        resetUIState() {
+            // Remove all card selections
+            document.querySelectorAll('.card').forEach(card => {
+                card.classList.remove('selected', 'disabled');
+            });
+            
+            // Close any open modals
+            const settingsModal = document.getElementById('settingsModal');
+            if (settingsModal) {
+                settingsModal.classList.remove('show');
+            }
+            
+            // Close dropdown menu
+            const startBtn = document.getElementById('startPracticeBtn');
+            const dropdownMenu = document.getElementById('dropdownMenu');
+            const overlay = document.getElementById('overlay');
+            
+            if (startBtn) {
+                startBtn.classList.remove('active');
+                startBtn.disabled = false;
+                startBtn.innerHTML = `
+                    Start Practice
+                    <span class="dropdown-arrow">▼</span>
+                `;
+            }
+            
+            if (dropdownMenu) {
+                dropdownMenu.classList.remove('active');
+            }
+            
+            if (overlay) {
+                overlay.classList.remove('active');
+            }
+            
+            // Clear search
+            const searchInput = document.getElementById('searchInput');
+            const searchResults = document.getElementById('searchResults');
+            
+            if (searchInput) {
+                searchInput.value = '';
+            }
+            
+            if (searchResults) {
+                searchResults.style.display = 'none';
+                searchResults.innerHTML = '';
+            }
+            
+            // Reset body overflow
+            document.body.style.overflow = 'auto';
+        }
+        
+        resetNavigationState() {
+            // Reset navigation state variables
+            if (typeof currentLevel !== 'undefined') {
+                currentLevel = 'subject';
+            }
+            
+            if (typeof currentPath !== 'undefined') {
+                currentPath.length = 0; // Clear array
+            }
+            
+            // Reset to subject level
+            if (typeof data !== 'undefined' && typeof loadLevel === 'function') {
+                loadLevel('subject', Object.keys(data));
+            }
+            
+            // Update breadcrumb
+            const breadcrumb = document.getElementById('breadcrumb');
+            if (breadcrumb) {
+                breadcrumb.textContent = 'Subjects';
+            }
+            
+            // Hide back button
+            const backBtn = document.getElementById('back-btn');
+            if (backBtn) {
+                backBtn.classList.add('hidden');
+                backBtn.style.opacity = '0';
+            }
+            
+            // Update other UI elements
+            if (typeof updateBreadcrumb === 'function') {
+                updateBreadcrumb();
+            }
+            
+            if (typeof updateSectionTitle === 'function') {
+                updateSectionTitle();
+            }
+            
+            if (typeof updateBackButton === 'function') {
+                updateBackButton();
+            }
+        }
+    }
+    
+    // Initialize the reset manager immediately
+    const pageResetManager = new PageResetManager();
+    
+    // Also add a manual reset function that can be called from anywhere
+    window.resetPageToDefault = function() {
+        pageResetManager.performFullReset();
+    };
+    
+    // Clear any stored data in sessionStorage or localStorage that might persist
+    try {
+        sessionStorage.removeItem('selectedItems');
+        sessionStorage.removeItem('settings');
+        sessionStorage.removeItem('currentPath');
+        sessionStorage.removeItem('currentLevel');
+        
+        // Clear any other stored data related to your app
+        const keysToRemove = [];
+        for (let i = 0; i < sessionStorage.length; i++) {
+            const key = sessionStorage.key(i);
+            if (key && (key.startsWith('practice_') || key.startsWith('quiz_') || key.startsWith('mcq_'))) {
+                keysToRemove.push(key);
+            }
+        }
+        keysToRemove.forEach(key => sessionStorage.removeItem(key));
+        
+    } catch (error) {
+        console.log('Storage clear error (can be ignored):', error);
+    }
+    
+    // Prevent form resubmission and data persistence
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+    
+})();
+
+// Additional helper function to ensure clean state
+function ensureCleanState() {
+    // Force reset all global variables
+    if (typeof selectedItems !== 'undefined') {
+        selectedItems.length = 0;
+    }
+    
+    if (typeof selectedItem !== 'undefined') {
+        selectedItem = null;
+    }
+    
+    if (typeof currentPath !== 'undefined') {
+        currentPath.length = 0;
+    }
+    
+    if (typeof currentLevel !== 'undefined') {
+        currentLevel = 'subject';
+    }
+    
+    // Reset practice handler state if it exists
+    if (typeof practiceHandler !== 'undefined') {
+        practiceHandler.selectedMode = null;
+        practiceHandler.isProcessing = false;
+    }
+}
+
+// Call ensure clean state on every script load
+ensureCleanState();
+
+// Override the init function to ensure reset happens
+const originalInit = window.init;
+window.init = function() {
+    // First ensure clean state
+    ensureCleanState();
+    
+    // Then call original init
+    if (originalInit) {
+        originalInit();
+    }
+};
+
+// Also ensure reset happens when the page becomes visible
+document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) {
+        setTimeout(ensureCleanState, 100);
+    }
+});
+
+// Add this CSS to ensure proper reset styling
+const resetStyles = document.createElement('style');
+resetStyles.textContent = `
+    .card.selected {
+        transform: none !important;
+        box-shadow: none !important;
+        border: 1px solid #e5e7eb !important;
+    }
+    
+    .card.disabled {
+        opacity: 0.5 !important;
+        pointer-events: none !important;
+    }
+    
+    .modal.show {
+        display: flex !important;
+        opacity: 1 !important;
+    }
+    
+    .dropdown-menu.active {
+        display: block !important;
+        opacity: 1 !important;
+    }
+    
+    .overlay.active {
+        display: block !important;
+        opacity: 1 !important;
+    }
+`;
+document.head.appendChild(resetStyles);
+
+// Additional safety measures for persistent state
+(function() {
+    'use strict';
+    
+    // Force reset on any navigation event
+    ['hashchange', 'popstate', 'pageshow', 'focus'].forEach(event => {
+        window.addEventListener(event, function() {
+            setTimeout(() => {
+                if (window.resetPageToDefault) {
+                    window.resetPageToDefault();
+                }
+            }, 50);
+        });
+    });
+    
+    // Monitor for any changes to selectedItems and reset if needed
+    
+    // Override localStorage and sessionStorage to prevent persistence
+    const originalSetItem = Storage.prototype.setItem;
+    Storage.prototype.setItem = function(key, value) {
+        // Prevent storing selection or settings data
+        if (key.includes('selected') || key.includes('settings') || key.includes('practice')) {
+            return;
+        }
+        originalSetItem.call(this, key, value);
+    };
+    
+})();
+
+        </script>
+    {%endblock%}
+    {%block pp%}
+
+<li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">
+      
+        <i class="fas fa-user-circle profile-icon"></i>
+      
+      {{ user.username }}
+      
+    </a>
+    <div class="dropdown-content">
+      <a href="#">Settings</a>
+      <a href={% url 'logout' %}>Logout</a>
+    </div>
+  </li>
+
+
+{%endblock%} 
+

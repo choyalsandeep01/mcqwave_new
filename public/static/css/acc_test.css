@@ -1,0 +1,152 @@
+/* styles.css */
+body {
+    margin: 0;
+    display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+   
+    background-color: #eef2f7;
+}
+.info-btn {
+    position: fixed;
+    top: 80%;
+    right: 20px;
+    background-color: crimson;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 1000; /* Make sure it's above other content */
+    transition: background-color 0.3s ease;
+}
+
+.info-btn:hover {
+    background-color: #f15474;
+}
+
+/* Modal styling */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Transparent black background */
+    justify-content: center;
+    align-items: center;
+    z-index: 999; /* Higher than other content but below the info button */
+}
+
+.modal-content {
+    background-color:rgba(220, 20, 60,0.8);
+    padding: 20px;
+    color:white;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.close-btn {
+    color: white;
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: #f15474;
+}
+
+.chart-container {
+    width: 90%;
+    max-width: 1000px; /* Width to allow horizontal scrolling */
+    overflow-x: auto; /* Enables scrolling for large datasets */
+    height: 60vh;
+    
+}
+.sel{
+    list-style-type: disc; /* This will display dots (bullets) */
+    margin-left: 20px; 
+}
+footer {
+    margin-top: 20px;
+    font-size: 0.9em;
+    background:#DC143C !important;
+}
+nav{
+    background:#DC143C;}
+a.active, a:hover {
+        background: #f15474;
+        transition: .5s;
+    }
+    .accuracy-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    .accuracy-table th, .accuracy-table td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    .accuracy-table th {
+        background-color: #DC143C;
+        color: white;
+        font-size: 16px;
+    }
+    
+    .accuracy-table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    
+    .accuracy-table tr:hover {
+        background-color: #f15474; /* Hover effect */
+        color: white; /* Change text color on hover */
+    }
+/* Adjustments for mobile devices */
+@media (max-width: 768px) {
+    .chart-container {
+        height: 50vh;
+    }
+    nav ul{
+        background:#6d0c20;
+    }
+    a:hover, a.active {
+        
+        color: #ffffff;
+    }
+    .accuracy-table {
+        font-size: 12px;
+    }
+    .modal-content {
+        width: 90%;
+    }
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait){
+
+    
+    nav ul{
+        background:#6d0c20;
+    }
+    a:hover, a.active {
+        
+        color: #ffffff;
+    }
+    
+
+
+}

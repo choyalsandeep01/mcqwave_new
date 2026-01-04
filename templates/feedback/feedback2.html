@@ -1,0 +1,514 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Share Your Feedback - MCQwave{% endblock title %}
+
+{% block content %}
+<style>
+    :root {
+        --gradient-start: #1e3a8a;
+        --gradient-end: #dc2626;
+        --soft-blue: #3b82f6;
+        --light-background: #f4f6f9;
+        --text-primary: #1e293b;
+        --card-background: rgba(255, 255, 255, 0.95);
+    }
+
+    body {
+        background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+        min-height: 100vh;
+    }
+
+    .main {
+        min-height: 100vh;
+        display: flex;
+        padding: 40px 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Animated background elements */
+    .bg-circles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 0;
+    }
+
+    .circle {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(5px);
+        border-radius: 50%;
+        animation: float 15s infinite;
+    }
+
+    .circle:nth-child(1) {
+        width: 300px;
+        height: 300px;
+        top: -150px;
+        right: -150px;
+        animation-delay: 0s;
+    }
+
+    .circle:nth-child(2) {
+        width: 200px;
+        height: 200px;
+        top: 50%;
+        left: -100px;
+        animation-delay: -5s;
+    }
+
+    .circle:nth-child(3) {
+        width: 150px;
+        height: 150px;
+        bottom: -75px;
+        right: 10%;
+        animation-delay: -10s;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translate(0, 0) rotate(0deg); }
+        25% { transform: translate(50px, 50px) rotate(90deg); }
+        50% { transform: translate(0, 100px) rotate(180deg); }
+        75% { transform: translate(-50px, 50px) rotate(270deg); }
+    }
+
+    .container {
+        width: 100%;
+        max-width: 600px;
+        margin: auto;
+        position: relative;
+        z-index: 1;
+    }
+
+    .feedback-form {
+        background: var(--card-background);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        padding: 40px;
+        backdrop-filter: blur(20px);
+        transform: translateY(20px);
+        opacity: 0;
+        animation: slideUp 0.8s ease forwards;
+    }
+
+    @keyframes slideUp {
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .feedback-form h2 {
+        text-align: center;
+        color: var(--gradient-start);
+        margin-bottom: 30px;
+        font-weight: 800;
+        font-size: 2rem;
+        position: relative;
+        padding-bottom: 15px;
+    }
+
+    .feedback-form h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 4px;
+        background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+        border-radius: 2px;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+        position: relative;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.5s ease forwards;
+    }
+
+    .form-group:nth-child(2) { animation-delay: 0.2s; }
+    .form-group:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 10px;
+        color: var(--text-primary);
+        font-weight: 600;
+        font-size: 0.95rem;
+        transform: translateY(0);
+        transition: all 0.3s ease;
+    }
+
+    .form-group:focus-within label {
+        transform: translateY(-2px);
+        color: var(--gradient-start);
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 15px;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+        background: rgba(255, 255, 255, 0.9);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        border-color: var(--soft-blue);
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        background: white;
+    }
+
+    .form-group select {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%231e293b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 15px center;
+        background-size: 20px;
+        padding-right: 45px;
+    }
+
+    /* Rating stars */
+    .rating-group {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin: 15px 0;
+    }
+
+    .rating-star {
+        font-size: 24px;
+        color: #cbd5e1;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+
+    .rating-star.active {
+        color: #fbbf24;
+    }
+
+    button {
+        width: 100%;
+        padding: 16px;
+        background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+        color: white;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: 0.5s;
+    }
+
+    button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    button:hover::before {
+        left: 100%;
+    }
+
+    .success-message {
+        display: none;
+        background: linear-gradient(to right, #10b981, #059669);
+        color: white;
+        text-align: center;
+        padding: 20px;
+        margin-top: 25px;
+        border-radius: 12px;
+        font-weight: 500;
+        transform: translateY(10px);
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+
+    .success-message.show {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+        .main {
+            padding: 20px 15px;
+        }
+        .contact-info {
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        .feedback-form {
+            padding: 30px 20px;
+            margin-top:-50px;
+        }
+
+        .feedback-form h2 {
+            font-size: 1.75rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 12px;
+        }
+    }
+    .form-group input:invalid {
+        border-color: #ef4444;
+    }
+
+    .form-group .error-message {
+        color: #ef4444;
+        font-size: 0.875rem;
+        margin-top: 5px;
+        display: none;
+    }
+
+    .form-group input:invalid + .error-message {
+        display: block;
+    }
+    .contact-info {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-bottom: 25px;
+    }
+
+</style>
+
+<div class="main">
+    <div class="bg-circles">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+    </div>
+    
+    <div class="container">
+        <div class="feedback-form">
+            <h2>Share Your Experience</h2>
+            <form id="feedbackForm">
+                <div class="contact-info">
+                    <div class="form-group">
+                        <label for="name">Your Name *</label>
+                        <input 
+                            type="text" 
+                            id="name" 
+                            name="name" 
+                            required 
+                            minlength="2"
+                            maxlength="100"
+                            placeholder="Enter your name"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Your Email *</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            required
+                            placeholder="Enter your email"
+                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                        >
+                        <div class="error-message">Please enter a valid email address</div>
+                    </div>
+
+
+
+                </div>
+                <div class="form-group">
+                    <label for="category">What would you like to tell us about?</label>
+                    <select id="category" name="category" required>
+                        <option value="">Choose a category...</option>
+                        <option value="platform">Platform Experience</option>
+                        <option value="content">Question Content</option>
+                        <option value="feature">Feature Suggestion</option>
+                        <option value="performance">Performance</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="rating">How was your experience?</label>
+                    <div class="rating-group">
+                        <i class="fas fa-star rating-star nfas" data-rating="1"></i>
+                        <i class="fas fa-star rating-star nfas" data-rating="2"></i>
+                        <i class="fas fa-star rating-star nfas" data-rating="3"></i>
+                        <i class="fas fa-star rating-star nfas" data-rating="4"></i>
+                        <i class="fas fa-star rating-star nfas" data-rating="5"></i>
+                    </div>
+                    <input type="hidden" id="rating" name="rating" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Tell us more</label>
+                    <textarea id="message" name="message" rows="5" required 
+                        placeholder="Share your thoughts, suggestions, or concerns..."></textarea>
+                </div>
+
+                <button type="submit">
+                    <span>Submit Feedback</span>
+                </button>
+
+                <div class="success-message" id="successMessage">
+                    <i class="fas fa-check-circle nfas"></i>
+                    Thank you for helping us improve MCQwave! Your feedback is valuable to us.
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+  {% include 'ads/banner_ad.html' %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('feedbackForm');
+    const successMessage = document.getElementById('successMessage');
+    const ratingStars = document.querySelectorAll('.rating-star');
+    const ratingInput = document.getElementById('rating');
+
+    // Star rating functionality
+    ratingStars.forEach(star => {
+        star.addEventListener('click', () => {
+            const rating = star.dataset.rating;
+            ratingInput.value = rating;
+            
+            ratingStars.forEach(s => {
+                if (s.dataset.rating <= rating) {
+                    s.classList.add('active');
+                } else {
+                    s.classList.remove('active');
+                }
+            });
+        });
+
+        star.addEventListener('mouseover', () => {
+            const rating = star.dataset.rating;
+            ratingStars.forEach(s => {
+                if (s.dataset.rating <= rating) {
+                    s.classList.add('active');
+                } else {
+                    s.classList.remove('active');
+                }
+            });
+        });
+    });
+
+    document.querySelector('.rating-group').addEventListener('mouseleave', () => {
+        const rating = ratingInput.value;
+        ratingStars.forEach(s => {
+            if (s.dataset.rating <= rating) {
+                s.classList.add('active');
+            } else {
+                s.classList.remove('active');
+            }
+        });
+    });
+
+    // Form submission
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const button = form.querySelector('button');
+        const buttonText = button.querySelector('span');
+        buttonText.textContent = 'Submitting...';
+        button.disabled = true;
+    
+        // Create form data with new fields
+        const formData = new FormData();
+        formData.append('name', document.getElementById('name').value);
+        formData.append('email', document.getElementById('email').value);
+        formData.append('category', document.getElementById('category').value);
+        formData.append('rating', document.getElementById('rating').value);
+        formData.append('message', document.getElementById('message').value);
+    
+        // Send to Django backend
+        fetch('/submit-feedback2/', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                successMessage.style.display = 'block';
+                setTimeout(() => {
+                    successMessage.classList.add('show');
+                }, 10);
+                
+                form.reset();
+                ratingStars.forEach(star => star.classList.remove('active'));
+                ratingInput.value = '';
+            } else {
+                alert('Error submitting feedback. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error submitting feedback. Please try again.');
+        })
+        .finally(() => {
+            buttonText.textContent = 'Submit Feedback';
+            button.disabled = false;
+        });
+    });
+
+});
+</script>
+<script>
+// Update the form submission in your existing JavaScript
+
+
+// Add this function to get CSRF token
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+</script>
+{% endblock %}
+

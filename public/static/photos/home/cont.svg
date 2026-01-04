@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200">
+  <defs>
+    <linearGradient id="glowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#64B5F6;stop-opacity:0"/>
+      <stop offset="50%" style="stop-color:#2196F3;stop-opacity:0.3"/>
+      <stop offset="100%" style="stop-color:#64B5F6;stop-opacity:0"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Arrow indicating continuation -->
+  <g transform="translate(20, 50)">
+    <path d="M110 50 L150 50 M140 40 L150 50 L140 60" 
+          fill="none" 
+          stroke="#1976D2" 
+          stroke-width="2" 
+          stroke-linecap="round">
+      <animate attributeName="opacity"
+               values="0.6;1;0.6"
+               dur="1.5s"
+               repeatCount="indefinite"/>
+    </path>
+  </g>
+  
+  <!-- Decorative dots -->
+  <g transform="translate(280, 50)">
+    <circle cx="0" cy="50" r="3" fill="#90CAF9">
+      <animate attributeName="opacity"
+               values="0.3;1;0.3"
+               dur="2s"
+               repeatCount="indefinite"
+               begin="0s"/>
+    </circle>
+    <circle cx="15" cy="50" r="3" fill="#90CAF9">
+      <animate attributeName="opacity"
+               values="0.3;1;0.3"
+               dur="2s"
+               repeatCount="indefinite"
+               begin="0.3s"/>
+    </circle>
+    <circle cx="30" cy="50" r="3" fill="#90CAF9">
+      <animate attributeName="opacity"
+               values="0.3;1;0.3"
+               dur="2s"
+               repeatCount="indefinite"
+               begin="0.6s"/>
+    </circle>
+  </g>
+  
+  <!-- Glow effect -->
+  <rect x="0" y="0" width="400" height="200" 
+        fill="url(#glowGradient)" 
+        opacity="0.5">
+    <animate attributeName="opacity"
+             values="0.3;0.5;0.3"
+             dur="3s"
+             repeatCount="indefinite"/>
+  </rect>
+</svg>

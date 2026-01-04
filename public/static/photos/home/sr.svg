@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="resourceGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E3F2FD"/>
+      <stop offset="100%" style="stop-color:#BBDEFB"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="200" height="200" fill="url(#resourceGradient)"/>
+  
+  <!-- Main content group -->
+  <g transform="translate(40,30)">
+    <!-- Laptop -->
+    <path d="M20,20 L120,20 L130,100 L10,100 Z" fill="#455A64"/>
+    <rect x="25" y="25" width="90" height="70" fill="#81D4FA"/>
+    
+    <!-- Books stack -->
+    <g transform="translate(0,90)">
+      <!-- Book 1 -->
+      <rect x="15" y="0" width="60" height="15" fill="#FFA726" rx="2"/>
+      <rect x="20" y="3" width="40" height="9" fill="white" opacity="0.3"/>
+      
+      <!-- Book 2 -->
+      <rect x="10" y="15" width="60" height="15" fill="#66BB6A" rx="2"/>
+      <rect x="15" y="18" width="40" height="9" fill="white" opacity="0.3"/>
+      
+      <!-- Book 3 -->
+      <rect x="5" y="30" width="60" height="15" fill="#42A5F5" rx="2"/>
+      <rect x="10" y="33" width="40" height="9" fill="white" opacity="0.3"/>
+    </g>
+  </g>
+</svg>

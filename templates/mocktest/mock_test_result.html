@@ -1,0 +1,757 @@
+{% extends 'base/base.html' %}
+
+{% block title %}MCQwave-Plans{% endblock title %}
+
+
+
+{% block content %}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/media/css/mocktest/mock_test_result.css">
+<style>
+    /* Question Image Styling */
+    .question-image-container {
+        margin: 15px 0;
+        text-align: center;
+        display: none; /* Hidden by default, shown only when image exists */
+    }
+    
+    .question-image-container img {
+        max-width: 100%;
+        max-height: 300px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        cursor: zoom-in;
+        transition: transform 0.3s ease;
+    }
+    
+    .question-image-container img:hover {
+        transform: scale(1.02);
+    }
+    
+    /* Image Viewer Modal */
+    .image-viewer-modal {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-color: rgba(0,0,0,0.9);
+    }
+    
+    .image-viewer-content {
+        position: relative;
+        margin: auto;
+        padding: 20px;
+        width: 90%;
+        height: 90%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .image-viewer-content img {
+        max-width: 100%;
+        max-height: 90vh;
+        object-fit: contain;
+        transition: transform 0.3s ease;
+    }
+    
+    .image-close-btn {
+        position: absolute;
+        top: 15px;
+        right: 25px;
+        color: #f1f1f1;
+        font-size: 35px;
+        font-weight: bold;
+        transition: 0.3s;
+        cursor: pointer;
+        z-index: 2001;
+    }
+    
+    .image-close-btn:hover,
+    .image-close-btn:focus {
+        color: #bbb;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    
+    /* Zoom Controls */
+    .zoom-controls {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 10px;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 8px;
+        border-radius: 20px;
+    }
+    
+    .zoom-controls button {
+        background-color: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.3s;
+    }
+    
+    .zoom-controls button:hover {
+        background-color: rgba(255, 255, 255, 0.4);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .question-image-container img {
+            max-height: 200px;
+        }
+        
+        .zoom-controls button {
+            width: 35px;
+            height: 35px;
+        }
+    }
+
+</style>
+
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1>Test Results</h1>
+            <div class="test-info">
+                <h2>{{ mock_test.title }}</h2>
+                <span class="category-badge">{{ mock_test.category }}</span>
+                <span class="type-badge">{{ mock_test.get_test_type_display }}</span>
+            </div>
+        </div>
+
+        <!-- Score Summary Section -->
+        <div class="score-summary">
+            <div class="score-card main-score">
+                <div class="score-value">{{ session.score }}</div>
+                <div class="score-label">Total Score</div>
+            </div>
+            
+            <div class="score-stats">
+                
+                <div class="score-card">
+                    <div class="score-value">{{ session.total_correct }}</div>
+                    <div class="score-label">Correct</div>
+                </div>
+                
+                <div class="score-card">
+                    <div class="score-value">{{ session.total_incorrect }}</div>
+                    <div class="score-label">Incorrect</div>
+                </div>
+                
+                <div class="score-card">
+                    <div class="score-value">{{ session.total_skipped }}</div>
+                    <div class="score-label">Skipped</div>
+                </div>
+                
+                <div class="score-card">
+                    <div class="score-value">{{ session.total_attempted }}</div>
+                    <div class="score-label">Attempted</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Time Stats Section -->
+        
+            
+            
+        </div>
+
+        <!-- Performance Charts Section -->
+        <div class="charts-section">
+            <div class="chart-container">
+                <h3>Performance Summary</h3>
+                <canvas id="performanceChart"></canvas>
+            </div>
+            
+            <div class="chart-container">
+                <h3>Time Distribution</h3>
+                <canvas id="timeDistributionChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Question Review Table -->
+        <div class="review-section">
+            <h3>Question Review</h3>
+            <div class="filter-controls">
+                <button class="filter-btn active" data-filter="all">All Questions</button>
+                <button class="filter-btn" data-filter="correct">Correct</button>
+                <button class="filter-btn" data-filter="incorrect">Incorrect</button>
+                <button class="filter-btn" data-filter="skipped">Skipped</button>
+            </div>
+            
+            <div class="question-table-container">
+                <table class="question-table">
+                    <thead>
+                        <tr>
+                            <th>Q.No</th>
+                            <th>Question</th>
+                            <th>Your Answer</th>
+                            <th>Correct Answer</th>
+                            <th>Status</th>
+                            <th>Time (sec)</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for q in questions %}
+                        <tr class="question-row {% if q.selected_option == None %}skipped{% elif q.is_correct %}correct{% else %}incorrect{% endif %}">
+                            <td>{{ q.number }}</td>
+                            <td class="question-text">{{ q.mcq.text|truncatechars:50 }}</td>
+                            <td>{{ q.selected_option|default:"--" }}</td>
+                            <td>{{ q.mcq.correct_option }}</td>
+                            <td>
+                                {% if q.selected_option == None %}
+                                    <span class="status-badge skipped">Skipped</span>
+                                {% elif q.is_correct %}
+                                    <span class="status-badge correct">Correct</span>
+                                {% else %}
+                                    <span class="status-badge incorrect">Incorrect</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ q.time_spent|floatformat:1 }}</td>
+                            <td>
+                                <button class="view-btn" data-question-id="{{ q.number }}">
+                                    <i class="fas fa-eye nfas"></i> View
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Question Detail Modal -->
+        <div id="questionModal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="document.getElementById('questionModal').style.display='none'">&times;</span>
+                <div class="modal-header">
+                    <h3>Question <span id="modalQuestionNumber"></span></h3>
+                    <div id="modalQuestionStatus" class="status-badge"></div>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="question-text" id="modalQuestionText"></div>
+                    <div class="question-image-container" id="modalQuestionImage">
+                        <!-- Image will be inserted here via JavaScript -->
+                    </div>
+                    <div class="question-options">
+                        <div class="option" id="option1">
+                            <span class="option-label">A</span>
+                            <span class="option-text"></span>
+                        </div>
+                        <div class="option" id="option2">
+                            <span class="option-label">B</span>
+                            <span class="option-text"></span>
+                        </div>
+                        <div class="option" id="option3">
+                            <span class="option-label">C</span>
+                            <span class="option-text"></span>
+                        </div>
+                        <div class="option" id="option4">
+                            <span class="option-label">D</span>
+                            <span class="option-text"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="answer-info">
+                        <div class="answer-row">
+                            <span class="answer-label">Your Answer:</span>
+                            <span class="answer-value" id="modalUserAnswer"></span>
+                        </div>
+                        <div class="answer-row">
+                            <span class="answer-label">Correct Answer:</span>
+                            <span class="answer-value" id="modalCorrectAnswer"></span>
+                        </div>
+                        <div class="answer-row">
+                            <span class="answer-label">Time Spent:</span>
+                            <span class="answer-value" id="modalTimeSpent"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="explanation-section">
+                        <h4>Explanation</h4>
+                        <div class="explanation-text" id="modalExplanation"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actions Section -->
+        <div class="actions-section">
+            
+            <a href="#" id="shareResults" class="btn btn-success">
+                <i class="fas fa-share-alt nfas"></i> Share Results
+            </a>
+            <a href="#" id="downloadResults" class="btn btn-info">
+                <i class="fas fa-download nfas"></i> Download PDF
+            </a>
+        </div>
+    </div>
+    <div id="imageViewerModal" class="image-viewer-modal">
+        <span class="image-close-btn">&times;</span>
+        <div class="image-viewer-content">
+            <img id="expandedImage" src="" alt="Expanded question image">
+            <div class="zoom-controls">
+                <button id="zoomIn"><i class="fas fa-search-plus nfas"></i></button>
+                <button id="zoomOut"><i class="fas fa-search-minus nfas"></i></button>
+                <button id="resetZoom"><i class="fas fa-undo nfas"></i></button>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chart.js/3.7.0/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chart.js/3.7.0/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Question data from Django template
+            const questionData = [
+                {% for q in questions %}
+                {
+                    number: {{ q.number }},
+                    text: "{{ q.mcq.text|escapejs }}",
+                    image: "{% if q.mcq.image %}{{ q.mcq.image.url }}{% else %}{% endif %}",
+                    option1: "{{ q.mcq.option_1|escapejs }}",
+                    option2: "{{ q.mcq.option_2|escapejs }}",
+                    option3: "{{ q.mcq.option_3|escapejs }}",
+                    option4: "{{ q.mcq.option_4|escapejs }}",
+                    selected: "{{ q.selected_option|escapejs|default:'' }}",
+                    correct: "{{ q.mcq.correct_option|escapejs }}",
+                    explanation: "{{ q.mcq.explanation|escapejs }}",
+                    isCorrect: {{ q.is_correct|yesno:"true,false" }},
+                    timeSpent: {{ q.time_spent|floatformat:1 }},
+                    status: "{% if q.selected_option == None %}skipped{% elif q.is_correct %}correct{% else %}incorrect{% endif %}"
+                },
+                {% endfor %}
+            ];
+            const imageViewerModal = document.getElementById('imageViewerModal');
+            const expandedImage = document.getElementById('expandedImage');
+            const imageCloseBtn = document.querySelector('.image-close-btn');
+            const modalQuestionImage = document.getElementById('modalQuestionImage');
+            const zoomInBtn = document.getElementById('zoomIn');
+            const zoomOutBtn = document.getElementById('zoomOut');
+            const resetZoomBtn = document.getElementById('resetZoom');
+
+            // Zoom variables
+            let currentZoom = 1;
+            const zoomStep = 0.2;
+            const maxZoom = 3;
+            const minZoom = 0.5;
+            
+            let isDragging = false;
+            let startX, startY;
+            let translateX = 0;
+            let translateY = 0;
+            // Performance Chart
+            const performanceCtx = document.getElementById('performanceChart').getContext('2d');
+            new Chart(performanceCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Correct', 'Incorrect', 'Skipped'],
+                    datasets: [{
+                        data: [
+                            {{ session.total_correct }}, 
+                            {{ session.total_incorrect }}, 
+                            {{ session.total_skipped }}
+                        ],
+                        backgroundColor: [
+                            '#4cc9f0',
+                            '#f72585',
+                            '#f9c74f'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+
+            // Time Distribution Chart
+            const timeDistributionData = [];
+            const timeLabels = [];
+            
+            {% for q in questions %}
+                timeLabels.push('Q{{ q.number }}');
+                timeDistributionData.push({{ q.time_spent|floatformat:1 }});
+            {% endfor %}
+            
+            const timeCtx = document.getElementById('timeDistributionChart').getContext('2d');
+            new Chart(timeCtx, {
+                type: 'bar',
+                data: {
+                    labels: timeLabels,
+                    datasets: [{
+                        label: 'Time Per Question (seconds)',
+                        data: timeDistributionData,
+                        backgroundColor: '#4361ee',
+                        borderColor: '#3a56d4',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Question Filter Functionality
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const questionRows = document.querySelectorAll('.question-row');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    
+                    questionRows.forEach(row => {
+                        if (filter === 'all') {
+                            row.style.display = '';
+                        } else {
+                            if (row.classList.contains(filter)) {
+                                row.style.display = '';
+                            } else {
+                                row.style.display = 'none';
+                            }
+                        }
+                    });
+                });
+            });
+
+            // Modal Functionality
+            const modal = document.getElementById('questionModal');
+            const closeBtn = document.querySelector('.close-btn');
+            const viewButtons = document.querySelectorAll('.view-btn');
+
+            // Modal Functionality
+            viewButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const questionId = parseInt(this.getAttribute('data-question-id'));
+                    const question = questionData.find(q => q.number === questionId);
+                    
+                    if (question) {
+                        document.getElementById('modalQuestionNumber').textContent = question.number;
+                        document.getElementById('modalQuestionText').textContent = question.text;
+                        document.getElementById('modalQuestionStatus').textContent = question.status.charAt(0).toUpperCase() + question.status.slice(1);
+                        document.getElementById('modalQuestionStatus').className = 'status-badge ' + question.status;
+                        
+                        // Set option texts
+                        document.querySelector('#option1 .option-text').innerHTML = decodeEntities(question.option1);
+                        document.querySelector('#option2 .option-text').innerHTML = decodeEntities(question.option2);
+                        document.querySelector('#option3 .option-text').innerHTML = decodeEntities(question.option3);
+                        document.querySelector('#option4 .option-text').innerHTML = decodeEntities(question.option4);
+                        const imageContainer = document.getElementById('modalQuestionImage');
+                        imageContainer.innerHTML = ''; // Clear previous images
+                        
+                        if (question.image && question.image !== '') {
+                            const img = document.createElement('img');
+                            img.src = question.image;
+                            img.alt = "Question image";
+                            img.className = "question-img";
+                            imageContainer.appendChild(img);
+                            imageContainer.style.display = 'block';
+                            
+                            // Add click event to show image viewer
+                            img.addEventListener('click', function() {
+                                expandedImage.src = this.src;
+                                imageViewerModal.style.display = 'block';
+                                currentZoom = 1;
+                                translateX = 0;
+                                translateY = 0;
+                                applyZoom();
+                            });
+                        } else {
+                            imageContainer.style.display = 'none';
+                        }
+            
+           
+                        // Create mapping from option text to option ID
+                        const optionTextToId = {
+                            [question.option1]: 'option1',
+                            [question.option2]: 'option2',
+                            [question.option3]: 'option3',
+                            [question.option4]: 'option4'
+                        };
+                        
+                        // For display in the answer info section
+                        const optionIdToLetter = {
+                            'option1': 'A',
+                            'option2': 'B',
+                            'option3': 'C',
+                            'option4': 'D'
+                        };
+                        
+                        // Reset all option styles
+                        ['option1', 'option2', 'option3', 'option4'].forEach(optionId => {
+                            const optionDiv = document.getElementById(optionId);
+                            optionDiv.classList.remove('user-selected', 'correct-answer', 'incorrect-answer', 'user-correct');
+                        });
+                        
+                        // Get option IDs based on the text of selected and correct answers
+                        const selectedOptionId = optionTextToId[question.selected];
+                        const correctOptionId = optionTextToId[question.correct];
+                        
+                        console.log("Selected text:", question.selected);
+                        console.log("Selected option ID:", selectedOptionId);
+                        console.log("Correct text:", question.correct);
+                        console.log("Correct option ID:", correctOptionId);
+                        
+                        // Mark the selected option
+                        if (selectedOptionId) {
+                            const selectedDiv = document.getElementById(selectedOptionId);
+                            selectedDiv.classList.add('user-selected');
+                            
+                            // Mark it as correct or incorrect
+                            if (selectedOptionId === correctOptionId) {
+                                selectedDiv.classList.add('correct-answer', 'user-correct');
+                            } else {
+                                selectedDiv.classList.add('incorrect-answer');
+                            }
+                        }
+                        
+                        // Always mark the correct answer
+                        if (correctOptionId && correctOptionId !== selectedOptionId) {
+                            const correctDiv = document.getElementById(correctOptionId);
+                            correctDiv.classList.add('correct-answer');
+                        }
+                        
+                        // Display the letter corresponding to the answers
+                        document.getElementById('modalUserAnswer').textContent = question.selected ? question.selected : 'Not answered';                        document.getElementById('modalCorrectAnswer').textContent = question.correct;
+                        document.getElementById('modalTimeSpent').textContent = question.timeSpent + ' seconds';
+                        document.getElementById('modalExplanation').textContent = question.explanation;
+                        
+                        modal.style.display = 'block';
+                    }
+                });
+            });
+            imageCloseBtn.addEventListener('click', function() {
+                imageViewerModal.style.display = 'none';
+            });
+            
+            // Close image viewer when clicking outside the image
+            imageViewerModal.addEventListener('click', function(event) {
+                if (event.target === imageViewerModal) {
+                    imageViewerModal.style.display = 'none';
+                }
+            });
+            
+            // Prevent propagation from image and zoom controls
+            expandedImage.addEventListener('click', function(event) {
+                event.stopPropagation();
+            });
+            
+            document.querySelector('.zoom-controls').addEventListener('click', function(event) {
+                event.stopPropagation();
+            });
+            
+            // Zoom functionality
+            function applyZoom() {
+                expandedImage.style.transform = `scale(${currentZoom})`;
+            }
+            
+            zoomInBtn.addEventListener('click', function() {
+                if (currentZoom < maxZoom) {
+                    currentZoom += zoomStep;
+                    applyZoom();
+                }
+            });
+            
+            zoomOutBtn.addEventListener('click', function() {
+                if (currentZoom > minZoom) {
+                    currentZoom -= zoomStep;
+                    applyZoom();
+                }
+            });
+            
+            resetZoomBtn.addEventListener('click', function() {
+                currentZoom = 1;
+                applyZoom();
+            });
+            function decodeEntities(encodedString) {
+                const textArea = document.createElement('textarea');
+                textArea.innerHTML = encodedString;
+                return textArea.value;
+            }
+            closeBtn.addEventListener('click', function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                modal.style.display = 'none';
+            });
+
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+           
+            
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            document.addEventListener('keydown', function(event) {
+                if (imageViewerModal.style.display === 'block') {
+                    if (event.key === '=' || event.key === '+') {
+                        if (currentZoom < maxZoom) {
+                            currentZoom += zoomStep;
+                            applyZoom();
+                        }
+                        event.preventDefault();
+                    } else if (event.key === '-' || event.key === '_') {
+                        if (currentZoom > minZoom) {
+                            currentZoom -= zoomStep;
+                            applyZoom();
+                        }
+                        event.preventDefault();
+                    } else if (event.key === '0') {
+                        currentZoom = 1;
+                        applyZoom();
+                        event.preventDefault();
+                    } else if (event.key === 'Escape') {
+                        imageViewerModal.style.display = 'none';
+                    }
+                }
+            });
+            let initialDistance = 0;
+            let initialZoom = 1;
+
+            imageViewerModal.addEventListener('touchstart', function(e) {
+                if (e.touches.length === 2) {
+                    initialDistance = Math.hypot(
+                        e.touches[0].pageX - e.touches[1].pageX,
+                        e.touches[0].pageY - e.touches[1].pageY
+                    );
+                    initialZoom = currentZoom;
+                    e.preventDefault();
+                }
+            });
+
+            imageViewerModal.addEventListener('touchmove', function(e) {
+                if (e.touches.length === 2) {
+                    const currentDistance = Math.hypot(
+                        e.touches[0].pageX - e.touches[1].pageX,
+                        e.touches[0].pageY - e.touches[1].pageY
+                    );
+                    
+                    if (initialDistance > 0) {
+                        const delta = currentDistance / initialDistance;
+                        currentZoom = Math.min(Math.max(initialZoom * delta, minZoom), maxZoom);
+                        applyZoom();
+                    }
+                    
+                    e.preventDefault();
+                }
+            });
+            // Share Results Functionality
+            document.getElementById('shareResults').addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Create share data
+                const shareData = {
+                    title: '{{ mock_test.title }} - Test Results',
+                    text: `I scored {{ session.score }} with {{ session.percentile|floatformat:1 }} percentile in {{ mock_test.title }}!`,
+                    url: window.location.href
+                };
+                
+                // Check if Web Share API is supported
+                if (navigator.share) {
+                    navigator.share(shareData)
+                        .then(() => console.log('Shared successfully'))
+                        .catch((error) => console.log('Error sharing:', error));
+                } else {
+                    // Fallback for browsers that don't support the Web Share API
+                    const tempInput = document.createElement('input');
+                    tempInput.value = window.location.href;
+                    document.body.appendChild(tempInput);
+                    tempInput.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(tempInput);
+                    
+                    alert('Link copied to clipboard. You can now share it manually.');
+                }
+            });
+            
+            // Download PDF Functionality
+            document.getElementById('downloadResults').addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const element = document.querySelector('.container');
+                const modals = document.querySelectorAll('.modal');
+                
+                // Hide modals before generating PDF
+                modals.forEach(modal => {
+                    modal.style.display = 'none';
+                });
+                
+                // PDF options
+                const opt = {
+                    margin: 10,
+                    filename: '{{ mock_test.title }}_results.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2 },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+                
+                // Generate PDF
+                html2pdf().set(opt).from(element).save()
+                    .then(() => {
+                        console.log('PDF generated successfully');
+                    })
+                    .catch(error => {
+                        console.error('Error generating PDF:', error);
+                    });
+            });
+        });
+    </script>
+    {% endblock %}
+
+    {%block pp%}
+    
+    <li class="dropdown">
+        <a href="javascript:void(0)" class="dropbtn">
+          
+            <i class="fas fa-user-circle profile-icon"></i>
+          
+          {{ user.username }}
+          
+        </a>
+        <div class="dropdown-content">
+          <a href="#">Settings</a>
+          <a href={% url 'logout' %}>Logout</a>
+        </div>
+      </li>
+    
+    
+    {%endblock%} 

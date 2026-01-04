@@ -1,0 +1,535 @@
+.container-h {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.category {
+    margin-bottom: 40px;
+}
+
+.category h2 {
+    font-size: 20px;
+    color: #0082e6;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Adjusted for smaller squares */
+    gap: 20px;
+}
+
+
+.square-button {
+    background-color: #ffffff ;
+      /* Light blue with transparency */
+    width: 80%; 
+    height:240px;/* Fill grid cell */
+    padding-top: 70%; /* Maintain square aspect ratio */
+    position: relative; /* Needed for inner content alignment */
+    border: solid 2px #004aad;
+    font-size: 16px;
+    font-weight: bold;
+    color: #030303;
+    cursor: pointer;
+    transition: transform 0.6s ease, box-shadow 0.6s ease;
+    transform-style: preserve-3d;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+/* .pm{
+    background-image: url('./pm.png');
+    
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}  */
+.pm::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 100%;
+    height: 65%;
+    background-image: url('../photos/practice.png'); /* Replace with actual image path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 1; /* Adjust opacity here */
+    z-index: 2;
+}
+
+.sr::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 100%;
+    height: 65%;
+    background-image: url('../photos/sr.png'); /* Replace with actual image path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 1; /* Adjust opacity here */
+    z-index: 2;}
+.mt::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 100%;
+    height: 65%;
+    background-image: url('../photos/mock.png'); /* Replace with actual image path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 1; /* Adjust opacity here */
+    z-index: 2;}
+.bk::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0px;
+    width: 100%;
+    height: 65%;
+    background-image: url('../photos/bkmk.png'); /* Replace with actual image path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 1; /* Adjust opacity here */
+    z-index: 2;}
+.rpt::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 100%;
+    height: 65%;
+    background-image: url('../photos/rev.png'); /* Replace with actual image path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 1; /* Adjust opacity here */
+    z-index: 2;}
+.cls{
+    width:100% !important;
+}
+.cls::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 100%;
+    height: 65%;
+    background-image: url('../photos/home/cont.svg'); /* Replace with actual image path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 1; /* Adjust opacity here */
+    z-index: 2;}
+.snt::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 100%;
+    height: 65%;
+    background-image: url('../photos/home/start-new-test.png'); /* Replace with actual image path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 1; /* Adjust opacity here */
+    z-index: 2;}
+.sst::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 100%;
+    height: 65%;
+    background-image: url('../photos/home/select-topic-subject.png'); /* Replace with actual image path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 1; /* Adjust opacity here */
+    z-index: 2;}
+.rs::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 100%;
+    height: 65%;
+    background-image: url('../photos/score.png'); /* Replace with actual image path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 1; /* Adjust opacity here */
+    z-index: 2;}
+.pg::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 100%;
+    height: 65%;
+    background-image: url('../photos/home/progress-graph.png'); /* Replace with actual image path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 1; /* Adjust opacity here */
+    z-index: 2;}
+.ta::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 100%;
+    height: 65%;
+    background-image: url('../photos/home/time-analysis.png'); /* Replace with actual image path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 1; /* Adjust opacity here */
+    z-index: 2;}
+.cr::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 100%;
+    height: 65%;
+    background-image: url('../photos/rank.png'); /* Replace with actual image path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 1; /* Adjust opacity here */
+    z-index: 2;}
+.tp::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 100%;
+    height: 65%;
+    background-image: url('../photos/performer.png'); /* Replace with actual image path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 1; /* Adjust opacity here */
+    z-index: 2;}
+.df::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 100%;
+    height: 65%;
+    background-image: url('../photos/home/discussion-forum.png'); /* Replace with actual image path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 1; /* Adjust opacity here */
+    z-index: 2;}
+.ucmt::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 100%;
+    height: 60%;
+    background-image: url('../photos/upmk.png'); /* Replace with actual image path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 1; /* Adjust opacity here */
+    z-index: 2;}
+.sre::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 100%;
+    height: 65%;
+    background-image: url('../photos/stdr.png'); /* Replace with actual image path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 1; /* Adjust opacity here */
+    z-index: 2;}
+.wa::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 100%;
+    height: 65%;
+    background-image: url('../photos/anno.png'); /* Replace with actual image path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 1; /* Adjust opacity here */
+    z-index: 2;}
+.ss::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 100%;
+    height: 65%;
+    background-image: url('../photos/home/subscription-status.png'); /* Replace with actual image path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 1; /* Adjust opacity here */
+    z-index: 2;}
+.so::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 100%;
+    height: 65%;
+    background-image: url('../photos/home/subscription-offer.png'); /* Replace with actual image path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 1; /* Adjust opacity here */
+    z-index: 2;}
+.faq::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 100%;
+    height: 65%;
+    background-image: url('../photos/faq.png'); /* Replace with actual image path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 1; /* Adjust opacity here */
+    z-index: 2;}
+.cs::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 100%;
+    height: 65%;
+    background-image: url('../photos/cs.png'); /* Replace with actual image path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 1; /* Adjust opacity here */
+    z-index: 2;}
+.ttr::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 100%;
+    height: 65%;
+    background-image: url('../photos/tut.png'); /* Replace with actual image path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 1; /* Adjust opacity here */
+    z-index: 2;
+}
+.h-logout::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 100%;
+    height: 65%;
+    background-image: url('../photos/home/logout.png'); /* Replace with actual image path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 1; /* Adjust opacity here */
+    z-index: 2;
+}
+
+.dash{
+    background-color:  #ffffff !important;
+     /* Light blue with transparency */
+    height:100px !important;
+    width: 100%; /* Fill grid cell */
+    padding-top: 25%; /* Maintain square aspect ratio */
+    position: relative; /* Needed for inner content alignment */
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    user-select: none;
+    text-align: center;
+}
+.pomegranate-container{
+     top:50% !important;
+     color: rgb(6 78 174) !important;
+
+}
+.cls{
+    padding-top: 10%;
+    height: 60px;
+}
+.rs{
+    padding-top: 50%;
+}
+.rpt{
+    padding-top: 50%;
+}
+.h-logout{
+    background-color: rgba(11, 14, 15, 0.8); /* Light blue with transparency */
+    width: 100%; /* Fill grid cell */
+    padding-top: 10%; /* Maintain square aspect ratio */
+    position: relative; /* Needed for inner content alignment */
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    user-select: none;
+}
+
+
+.square-button i {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.square-button div {
+    position: absolute;
+    top: 82%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color:#004aad;
+    padding:5px;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.square-button:hover {
+    transform: rotateY(10deg) scale(1.05);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
+}
+
+
+.pomegranate-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pomegranate-img {
+    width: 60px;
+    height: auto;
+    margin-right: 8px;
+}
+
+.pomegranate-container span {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr; /* 1 square per row on small screens */
+        
+    }
+    .h-logout{
+        padding-top:  20%;
+    }
+    .square-button {
+        /* Fill grid cell */
+        padding-top: 25%; }
+        .pomegranate-img {
+            width: 60px;
+        }
+    
+        .pomegranate-container span {
+            font-size: 0.6rem;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+            gap: 5px;
+        }
+        .square-button {
+            background-color: #ffffff;
+            width: 98%;
+            height: 110px;}
+            .square-button div {
+            font-size: 0.7rem;
+            }
+}
+.card-container {
+    perspective: 1000px;
+}
+
+.card {
+    background-color: #004aad; /* Primary card color */
+    width: 300px;
+    height: 300px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.6s ease, box-shadow 0.6s ease;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+.card-image {
+    height: 50%;
+    overflow: hidden;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.card-title {
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #0056b3; /* Darker color for the bottom half */
+}
+
+.card-title h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.card:hover {
+    transform: rotateY(10deg) scale(1.05);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
+}
+
+.card:hover .card-image img {
+    transform: scale(1.1);
+}

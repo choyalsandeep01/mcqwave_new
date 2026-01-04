@@ -1,0 +1,616 @@
+{% extends 'base/base.html' %}
+{% block title %}POMEGRANATE-Test Performance{% endblock title %}
+
+{% block content %}
+<style>
+    :root {
+        --primary-color: #DC143C;
+        --secondary-color: #f15474;
+        --background-color: #f4f7fa;
+        --text-color: #2c3e50;
+        --card-background: #ffffff;
+    }
+
+    * {
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+    }
+
+    body {
+        
+        background-color: var(--background-color);
+        color: var(--text-color);
+        line-height: 1.6;
+        
+    }
+
+    .dashboard-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background-color: var(--card-background);
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        animation: fadeIn 0.5s ease;
+    }
+
+    .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    .dashboard-title {
+        color: var(--primary-color);
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin: 0;
+        letter-spacing: -1px;
+    }
+
+    .info-btn {
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        font-size: 22px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 10px rgba(220, 20, 60, 0.3);
+        transition: all 0.3s ease;
+    }
+    
+       
+    .info-btn:hover {
+        background-color: var(--secondary-color);
+        transform: scale(1.05);
+    }
+
+    .chart-container {
+        width: 100%;
+        height: 500px;
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        padding: 20px;
+        margin-bottom: 25px;
+    }
+
+    .accuracy-table {
+        width: 100%;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .accuracy-table th {
+        background-color: var(--primary-color);
+        color: white;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .accuracy-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .accuracy-table tr:hover {
+        background-color: rgba(241, 84, 116, 0.1);
+    }
+
+    .sel {
+        color: var(--text-color);
+        list-style-type: none;
+        position: relative;
+        padding-left: 20px;
+    }
+
+    .sel::before {
+        content: '•';
+        color: var(--primary-color);
+        position: absolute;
+        left: 0;
+    }
+
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .modal-content {
+        background-color: white;
+        color: var(--text-color);
+        border-radius: 15px;
+        max-width: 600px;
+        padding: 30px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        position: relative;
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        font-size: 24px;
+        color: var(--primary-color);
+        cursor: pointer;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+        .dashboard-container {
+            padding: 5px;
+        }
+        .chart-container {
+            height: 350px;
+        }
+        .dashboard-title {
+            font-size: 1.8rem;
+        }
+        
+    }
+</style>
+
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1 class="dashboard-title">Performance Dashboard</h1>
+        <button id="infoButton" class="info-btn">ⓘ</button>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="accuracyVsTestChart"></canvas>
+    </div>
+
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <span id="closeButton" class="close-btn">&times;</span>
+            <h2>Performance Analysis Guide</h2>
+            <p>This dashboard visualizes your test performance over time. Key insights:</p>
+            <ul>
+                <li>Fewer than 5 tests: Individual session scores displayed</li>
+                <li>6-10 tests: Grouped by 2 sessions</li>
+                <li>11-20 tests: Grouped by 4 sessions</li>
+                <li>More than 20 tests: Grouped by 10 sessions</li>
+            </ul>
+            <p>Track your progress and identify areas of improvement.</p>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="accuracy-table">
+            <thead>
+                <tr>
+                    <th>Test Segment</th>
+                    <th>Average Accuracy (%)</th>
+                    <th>Selections</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in accuracy_data %}
+                <tr>
+                    <td>{{ data.label }}</td>
+                    <td>{{ data.accuracy|floatformat:2 }}</td>
+                    <td>
+                        <ul>
+                            {% for selection in data.selections %}
+                                <li class="sel">{{ selection }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Existing Chart.js and JavaScript code remains the same -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Register the zoom plugin
+    Chart.register(ChartZoom);
+
+// Pass the accuracy data from Django to JavaScript
+// Function to initialize the chart with all data points
+const accuracyData = {{ accuracy_data|safe }};
+
+// Create a variable to hold the chart instance
+let accuracyVsTestChart;
+
+// Function to initialize the chart with all data points
+// Updated chart initialization function with improved pan functionality
+function initializeChart(accuracyData) {
+    // Extract labels and accuracies from the data
+    const labels = accuracyData.map((data, index) => `Test ${index + 1}`);
+    const accuracies = accuracyData.map(data => Number(data.accuracy));
+    
+    // Get the canvas element
+    const ctx = document.getElementById('accuracyVsTestChart').getContext('2d');
+    
+    // Set up gradient background
+    const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+    gradient.addColorStop(0, 'rgba(220, 20, 60, 0.1)');
+    gradient.addColorStop(1, 'rgba(220, 20, 60, 0.01)');
+    
+    // Chart configuration
+    const data = {
+        labels: labels,
+        datasets: [{
+            label: 'Accuracy (%)',
+            data: accuracies,
+            borderColor: 'rgba(220, 20, 60, 1)',
+            backgroundColor: gradient,
+            tension: 0.3,
+            fill: true,
+            pointRadius: 0, // Hide points by default
+            pointHoverRadius: 5, // Show points on hover
+            borderWidth: 2
+        }]
+    };
+    
+    // Configuration options for the chart
+    const options = {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+            x: {
+                title: {
+                    display: false
+                },
+                grid: { 
+                    display: false
+                },
+                ticks: {
+                    display: false, // Hide x-axis labels for cleaner look
+                    maxTicksLimit: 10 // Limit the number of ticks shown
+                }
+            },
+            y: {
+                beginAtZero: true,
+                max: 100,
+                title: {
+                    display: true,
+                    text: 'Accuracy (%)',
+                    font: { 
+                        size: 14,
+                        weight: 'bold'
+                    },
+                    color: 'rgba(44, 62, 80, 0.9)'
+                },
+                grid: {
+                    color: 'rgba(44, 62, 80, 0.1)'
+                },
+                ticks: {
+                    stepSize: 25 // Show ticks at 0, 25, 50, 75, 100
+                }
+            }
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    title: function(tooltipItems) {
+                        return `Test ${parseInt(tooltipItems[0].dataIndex) + 1}`;
+                    },
+                    label: function(context) {
+                        return `Accuracy: ${context.raw.toFixed(2)}%`;
+                    },
+                    afterLabel: function(context) {
+                        const testData = accuracyData[context.dataIndex];
+                        if (testData && testData.selections) {
+                            return `\nSelections: ${testData.selections.join(', ')}`;
+                        }
+                        return '';
+                    }
+                },
+                backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                titleColor: 'rgba(44, 62, 80, 1)',
+                bodyColor: 'rgba(44, 62, 80, 1)',
+                borderColor: 'rgba(220, 20, 60, 0.7)',
+                borderWidth: 1,
+                padding: 10,
+                displayColors: false
+            },
+            legend: {
+                display: false
+            },
+            zoom: {
+                pan: {
+                    enabled: true,
+                    mode: 'x',
+                    // Remove modifierKey to allow panning without holding Shift
+                    modifierKey: null,
+                    // Set threshold to make panning more responsive
+                    threshold: 10,
+                    // Improve speed and feel of panning
+                    speed: 10,
+                    // Improved handling of pan boundaries
+                    rangeMin: {
+                        x: null
+                    },
+                    rangeMax: {
+                        x: null
+                    }
+                },
+                zoom: {
+                    wheel: {
+                        enabled: true,
+                        speed: 0.1
+                    },
+                    pinch: {
+                        enabled: true
+                    },
+                    mode: 'x',
+                    // Improved touch handling
+                    drag: {
+                        enabled: true,
+                        borderColor: 'rgba(220, 20, 60, 0.4)',
+                        borderWidth: 1,
+                        backgroundColor: 'rgba(220, 20, 60, 0.1)'
+                    }
+                },
+                limits: {
+                    x: {
+                        min: 'original',
+                        max: 'original'
+                    }
+                }
+            }
+        },
+        interaction: {
+            intersect: false,
+            mode: 'index'
+        },
+        // Add a special handler for many data points
+        elements: {
+            line: {
+                borderWidth: (context) => {
+                    // Adjust line width based on data density
+                    return context.chart.data.labels.length > 50 ? 1.5 : 2;
+                }
+            },
+            point: {
+                radius: (context) => {
+                    // Show points only for the first, last, highest, and lowest values
+                    const datasetIndex = context.datasetIndex;
+                    const dataset = context.chart.data.datasets[datasetIndex];
+                    const dataIndex = context.dataIndex;
+                    
+                    if (dataIndex === 0 || dataIndex === dataset.data.length - 1) {
+                        return 3; // Show first and last points
+                    }
+                    
+                    const maxValue = Math.max(...dataset.data);
+                    const minValue = Math.min(...dataset.data);
+                    
+                    if (dataset.data[dataIndex] === maxValue || dataset.data[dataIndex] === minValue) {
+                        return 3; // Show highest and lowest points
+                    }
+                    
+                    return 0; // Hide other points
+                }
+            }
+        }
+    };
+    
+    // Initialize the chart
+    accuracyVsTestChart = new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: options
+    });
+    
+    // Add responsiveness
+    window.addEventListener('resize', () => {
+        const width = window.innerWidth;
+        if (width < 600) {
+            accuracyVsTestChart.options.scales.y.title.font.size = 10;
+            accuracyVsTestChart.update();
+        } else {
+            accuracyVsTestChart.options.scales.y.title.font.size = 14;
+            accuracyVsTestChart.update();
+        }
+    });
+    
+    return accuracyVsTestChart;
+}
+
+// Improved function to add chart navigation controls
+function addChartControls() {
+    // Create container for all chart controls
+    const controlsContainer = document.createElement('div');
+    controlsContainer.className = 'chart-controls';
+    controlsContainer.style.cssText = `
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin: 10px 0;
+        flex-wrap: wrap;
+    `;
+    
+    // Reset zoom button
+    const resetButton = document.createElement('button');
+    resetButton.textContent = 'Reset View';
+    resetButton.className = 'chart-control-btn';
+    resetButton.style.cssText = `
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 12px;
+        cursor: pointer;
+        font-weight: bold;
+    `;
+    resetButton.addEventListener('click', () => {
+        accuracyVsTestChart.resetZoom();
+    });
+    
+    // Zoom in button
+    const zoomInButton = document.createElement('button');
+    zoomInButton.textContent = 'Zoom In';
+    zoomInButton.className = 'chart-control-btn';
+    zoomInButton.style.cssText = `
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 12px;
+        cursor: pointer;
+        font-weight: bold;
+    `;
+    zoomInButton.addEventListener('click', () => {
+        accuracyVsTestChart.zoom(1.2);
+    });
+    
+    // Zoom out button
+    const zoomOutButton = document.createElement('button');
+    zoomOutButton.textContent = 'Zoom Out';
+    zoomOutButton.className = 'chart-control-btn';
+    zoomOutButton.style.cssText = `
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 12px;
+        cursor: pointer;
+        font-weight: bold;
+    `;
+    zoomOutButton.addEventListener('click', () => {
+        accuracyVsTestChart.zoom(0.8);
+    });
+    
+    // Pan left button
+    const panLeftButton = document.createElement('button');
+    panLeftButton.textContent = '← Pan Left';
+    panLeftButton.className = 'chart-control-btn';
+    panLeftButton.style.cssText = `
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 12px;
+        cursor: pointer;
+        font-weight: bold;
+    `;
+    panLeftButton.addEventListener('click', () => {
+        accuracyVsTestChart.pan({x: 50});
+    });
+    
+    // Pan right button
+    const panRightButton = document.createElement('button');
+    panRightButton.textContent = 'Pan Right →';
+    panRightButton.className = 'chart-control-btn';
+    panRightButton.style.cssText = `
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 12px;
+        cursor: pointer;
+        font-weight: bold;
+    `;
+    panRightButton.addEventListener('click', () => {
+        accuracyVsTestChart.pan({x: -50});
+    });
+    
+    // Add instructions text
+    const instructionsText = document.createElement('div');
+    instructionsText.textContent = 'Drag to pan horizontally. Use mouse wheel to zoom.';
+    instructionsText.style.cssText = `
+        width: 100%;
+        text-align: center;
+        color: var(--text-color);
+        margin-top: 8px;
+        font-size: 14px;
+        font-style: italic;
+    `;
+    
+    // Add all buttons to container
+    controlsContainer.appendChild(resetButton);
+    controlsContainer.appendChild(zoomInButton);
+    controlsContainer.appendChild(zoomOutButton);
+    controlsContainer.appendChild(panLeftButton);
+    controlsContainer.appendChild(panRightButton);
+    controlsContainer.appendChild(instructionsText);
+    
+    // Add the controls container below the chart
+    const chartContainer = document.querySelector('.chart-container');
+    chartContainer.insertAdjacentElement('afterend', controlsContainer);
+}
+
+// Update the DOMContentLoaded event listener
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize the chart with the data from Django
+    initializeChart(accuracyData);
+    
+    // Add improved navigation controls
+    addChartControls();
+    
+    // Initialize other elements like before
+    const tableRows = document.querySelectorAll('.accuracy-table tbody tr');
+    tableRows.forEach((row, index) => {
+        const firstCell = row.querySelector('td:first-child');
+        if (firstCell) {
+            firstCell.textContent = `Test ${index + 1}`;
+        }
+    });
+    
+    // Modal functionality
+    const infoButton = document.getElementById('infoButton');
+    const infoModal = document.getElementById('infoModal');
+    const closeButton = document.getElementById('closeButton');
+
+    infoButton.addEventListener('click', () => {
+        infoModal.style.display = 'flex';
+    });
+
+    closeButton.addEventListener('click', () => {
+        infoModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (event) => {
+        if (event.target === infoModal) {
+            infoModal.style.display = 'none';
+        }
+    });
+});
+</script>
+{% endblock %}
+{%block pp%}
+
+<li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">
+      
+        <i class="fas fa-user-circle profile-icon"></i>
+      
+      {{ user.username }}
+      
+    </a>
+    <div class="dropdown-content">
+      <a href="#">Settings</a>
+      <a href={% url 'logout' %}>Logout</a>
+    </div>
+  </li>
+
+
+{%endblock%} 

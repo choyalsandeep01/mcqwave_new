@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Failed</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: #dc3545; color: white; padding: 20px; text-align: center; }
+        .content { padding: 20px; background: #f8f9fa; }
+        .footer { padding: 20px; text-align: center; font-size: 12px; color: #666; }
+        .error-icon { font-size: 48px; color: #dc3545; }
+        .details { background: white; padding: 15px; border-radius: 5px; margin: 15px 0; }
+        .btn { background: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>{{ site_name }}</h1>
+        </div>
+        
+        <div class="content">
+            <div style="text-align: center;">
+                <div class="error-icon">✕</div>
+                <h2>Payment Failed</h2>
+            </div>
+            
+            <p>Dear {{ user.first_name|default:user.username }},</p>
+            
+            <p>We're sorry, but your payment could not be processed successfully.</p>
+            
+            <div class="details">
+                <h3>Transaction Details:</h3>
+                <p><strong>Plan:</strong> {{ transaction.plan.name }}</p>
+                <p><strong>Amount:</strong> ₹{{ transaction.amount }}</p>
+                <p><strong>Transaction ID:</strong> {{ transaction.transaction_id }}</p>
+                {% if transaction.failure_reason %}
+                <p><strong>Reason:</strong> {{ transaction.failure_reason }}</p>
+                {% endif %}
+            </div>
+            
+            <p>Please try again or contact our support team if you continue to face issues.</p>
+            
+            <div style="text-align: center; margin: 20px 0;">
+                <a href="{{ site_url }}/payments/plans/" class="btn">Try Again</a>
+            </div>
+            
+            <p>Best regards,<br>The {{ site_name }} Team</p>
+        </div>
+        
+        <div class="footer">
+            <p>This is an automated email. Please do not reply to this email.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,270 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Roboto Condensed", sans-serif;
+    background-color: #f8f8f8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height:100vh;
+    
+}
+nav{
+    background:#DC143C;
+    -webkit-background: #DC143C; /* For older Safari */}
+a.active, a:hover {
+        background: #f15474;
+        transition: .5s;
+    }
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+    height: 100%;
+    flex-grow: 1; 
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 2.8em;
+    color: #DC143C;
+   
+    font-weight: bold;
+}
+
+.intro {
+    color: #555;
+    font-size: 1.1em;
+    margin-bottom: 30px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    justify-items: center;
+}
+
+.button-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 250px;
+    height: 120px;
+}
+
+.btn {
+    background-color: #DC143C;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 20px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+
+.btn:hover {
+    background-color: #b01031;
+    transform: translateY(-5px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
+}
+footer {
+    margin-top: auto;
+    font-size: 0.9em;
+    background:#DC143C !important;
+}
+.info-icon {
+    background-color: #0056b3;
+    font-size: 1.4em;
+    color: white;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 10;
+    transition: color 0.3s ease, transform 0.3s ease;
+    user-select: none; /* Disables text selection */
+    -webkit-user-select: none; /* For Safari */
+    -moz-user-select: none;    /* For Firefox */
+    -ms-user-select: none; 
+}
+ 
+.info-icon:hover {
+    background-color: #003a75;
+    transform: scale(1.2);
+}
+
+.info-text {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 0.9em;
+    text-align: center;
+    top: 40px;
+    right: 0;
+    transform: translateX(0);
+    opacity: 0;
+    visibility: hidden;
+    z-index: 20;
+    max-width: 500px;
+    word-wrap: break-word;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Make info-text visible on hover */
+.info-icon:hover + .info-text {
+    opacity: 1;
+    visibility: visible;
+}
+.info-text img {
+    width: 300px; /* Smaller size for better fit */
+    height: auto; /* Smaller size for better fit */
+    margin-bottom: 8px;
+}
+@media (min-width: 768px) {
+.container{
+    margin:20px;
+    
+}
+body{
+    overflow: hidden;
+}
+}
+/* Responsive for Mobile */
+@media (max-width: 768px) {
+    
+    .container {
+        padding: 15px;
+    }
+
+    .header h1 {
+        font-size: 2.2em;
+    }
+
+    .intro {
+        font-size: 1em;
+    }
+
+    .btn {
+        font-size: 1em;
+        padding: 15px;
+    }
+
+    .info-text {
+        top: 50px; /* Position it a bit lower for mobile */
+        left: 28%; /* Center the info-text relative to the screen */
+        transform: translateX(-50%); /* Adjust to ensure it's centered below the icon */
+         /* Make sure it doesn't overflow the screen horizontally */
+       width:100%; /* Allow text to wrap */
+    }
+    .button-wrapper:hover .info-text {
+        top: 50px; /* Ensure the text stays below the icon */
+        right: 10px; /* Align within screen boundaries */
+        transform: translateX(-50%); /* Center it if necessary */
+    }
+    .info-text img {
+        width: 180px; /* Smaller size for mobile */
+        height: auto; /* Smaller size for mobile */
+    }
+    nav ul{
+        background:#6d0c20;
+    }
+    a:hover, a.active {
+        
+        color: #ffffff;
+    }
+    .info-icon {
+       
+        width: 80px;
+        height: 80px;
+        
+        right: -45px;
+        top: -15px;}
+}
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: portrait) {
+    /* Styles for iPad in portrait */
+     
+    .container {
+        padding: 15px;
+    }
+
+    .header h1 {
+        font-size: 2.2em;
+    }
+
+    .intro {
+        font-size: 1em;
+    }
+
+    .btn {
+        font-size: 1em;
+        padding: 15px;
+    }
+
+    .info-text {
+        top: 50px; /* Position it a bit lower for mobile */
+        left: 28%; /* Center the info-text relative to the screen */
+        transform: translateX(-50%); /* Adjust to ensure it's centered below the icon */
+         /* Make sure it doesn't overflow the screen horizontally */
+       width:100%; /* Allow text to wrap */
+    }
+    .button-wrapper:hover .info-text {
+        top: 50px; /* Ensure the text stays below the icon */
+        right: 10px; /* Align within screen boundaries */
+        transform: translateX(-50%); /* Center it if necessary */
+    }
+    .info-text img {
+        width: 180px; /* Smaller size for mobile */
+        height: auto; /* Smaller size for mobile */
+    }
+    nav ul{
+        background:#6d0c20;
+    }
+    a:hover, a.active {
+        
+        color: #ffffff;
+    }
+    .info-icon {
+       
+        width: 80px;
+        height: 80px;
+        
+        right: -45px;
+        top: -15px;}
+    /* Additional styles for buttons, containers, etc. */
+}

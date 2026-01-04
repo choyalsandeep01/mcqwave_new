@@ -1,0 +1,317 @@
+{% extends 'base/base.html' %}
+{% block title %}MCQwave-Terms And Conditions{% endblock title %}
+
+{% block content %}
+<title>Terms and Conditions - MCQwave</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #1E40AF;
+            --text-color: #333;
+            --light-bg: #f5f6fa;
+        }
+
+       
+        body {
+            line-height: 1.6;
+            color: var(--text-color);
+
+        }
+
+        .container4 {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        h2 {
+            color: var(--secondary-color);
+            margin: 25px 0 15px 0;
+            font-size: 1.8em;
+        }
+
+        p, .tncul {
+            margin-bottom: 15px;
+        }
+
+        .tncul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .section {
+            background-color: var(--light-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+        }
+
+        .last-updated {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+           
+
+            .container4 {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+        }
+
+        #table-of-contents {
+            background-color: var(--light-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        #table-of-contents ul {
+            list-style-type: none;
+        }
+
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .scroll-to-top:hover {
+            background-color: var(--primary-color);
+        }
+    </style>
+
+    <div class="container4">
+        <h1>Terms and Conditions</h1>
+        
+        <div id="table-of-contents">
+            <h2>Table of Contents</h2>
+            <ul class="tncul">
+                <li><a href="#acceptance">1. Acceptance of Terms</a></li>
+                <li><a href="#services">2. Services Description</a></li>
+                <li><a href="#user-accounts">3. User Accounts</a></li>
+                <li><a href="#subscription">4. Subscription and Payments</a></li>
+                <li><a href="#content">5. Content and Intellectual Property</a></li>
+                <li><a href="#user-conduct">6. User Conduct</a></li>
+                <li><a href="#privacy">7. Privacy and Data Collection</a></li>
+                <li><a href="#sharing">8. Content Sharing</a></li>
+                <li><a href="#disclaimer">9. Disclaimer</a></li>
+                <li><a href="#modifications">10. Modifications to Terms</a></li>
+            </ul>
+        </div>
+
+        <div class="section" id="acceptance">
+            <h2>1. Acceptance of Terms</h2>
+            <p>By accessing or using MCQwave, you agree to be bound by these Terms and Conditions. If you disagree with any part of these terms, you do not have permission to access the service.</p>
+        </div>
+
+        <div class="section" id="services">
+            <h2>2. Services Description</h2>
+            <p class="tncp">MCQwave provides practice questions and preparation materials for medical entrance examinations, including:</p>
+            <ul class="tncul">
+                <li>NEET PG (National Eligibility cum Entrance Test for Post Graduates)</li>
+                <li>INI-CET (Institute of National Importance Combined Entrance Test)</li>
+                <li>NEXT (National Exit Test)</li>
+                <li>FMGE (Foreign Medical Graduate Examination)</li>
+            </ul>
+            <p>Our services include:</p>
+            <ul class="tncul">
+                <li>Original practice MCQs created by MCQwave</li>
+                <li>Memory-based previous year questions</li>
+                <li>Detailed explanations and analysis for each question</li>
+                <li>Performance tracking and progress analysis</li>
+                <li>Content sharing features through our Hive platform</li>
+                <li>Deep analysis through our Pomegranate feature</li>
+            </ul>
+        </div>
+
+        <div class="section" id="user-accounts">
+            <h2>3. User Accounts</h2>
+            <p>To access MCQwave services, users must create an account by providing:</p>
+            <ul class="tncul">
+                <li>First and last name</li>
+                <li>Email address</li>
+                <li>Username</li>
+                <li>Password</li>
+            </ul>
+            <p>Users are responsible for maintaining the confidentiality of their account credentials and for all activities that occur under their account. While account sharing is not restricted, users should be aware that performance analysis and progress tracking will be affected by multiple users accessing the same account.</p>
+        </div>
+
+        <div class="section" id="subscription">
+            <h2>4. Subscription and Payments</h2>
+            <p>MCQwave offers subscription plans with varying durations:</p>
+            <ul class="tncul">
+                <li>1 month</li>
+                <li>3 months</li>
+                <li>6 months</li>
+                <li>9 months</li>
+                <li>12 months</li>
+            </ul>
+            <p>All plans provide access to the same features and content. The only difference is the subscription duration. While currently offered free, these services will transition to paid subscriptions in the future.</p>
+        </div>
+
+        <div class="section" id="content">
+            <h2>5. Content and Intellectual Property</h2>
+            <p>All content provided on MCQwave, including but not limited to questions, explanations, and analysis, is the intellectual property of MCQwave. Users may:</p>
+            <ul class="tncul">
+                <li>Access and use the content for personal study purposes</li>
+                <li>Share content through the platform's designated sharing features</li>
+                <li>Take screenshots for personal use</li>
+            </ul>
+            <p>Users may not:</p>
+            <ul class="tncul">
+                <li>Reproduce, distribute, or commercially exploit the content</li>
+                <li>Create derivative works based on our content</li>
+                <li>Systematically download or copy content</li>
+            </ul>
+        </div>
+
+        <div class="section" id="user-conduct">
+            <h2>6. User Conduct</h2>
+            <p>Users must:</p>
+            <ul class="tncul">
+                <li>Use the service for legitimate exam preparation purposes</li>
+                <li>Respect the intellectual property rights of MCQwave</li>
+                <li>Not engage in any activity that could harm or disrupt the service</li>
+                <li>Not attempt to gain unauthorized access to any part of the service</li>
+            </ul>
+        </div>
+
+        <div class="section" id="privacy">
+            <h2>7. Privacy and Data Collection</h2>
+            <p>MCQwave collects and processes user data including:</p>
+            <ul class="tncul">
+                <li>Personal information provided during registration</li>
+                <li>Performance data and progress tracking information</li>
+                <li>Content sharing and interaction data</li>
+            </ul>
+            <p>This information is used to:</p>
+            <ul class="tncul">
+                <li>Provide personalized learning experiences</li>
+                <li>Track and analyze user progress</li>
+                <li>Improve our services</li>
+            </ul>
+        </div>
+
+        <div class="section" id="sharing">
+            <h2>8. Content Sharing</h2>
+            <p>Users may share their:</p>
+            <ul class="tncul">
+                <li>Solved MCQs</li>
+                <li>Bookmarked questions</li>
+                <li>Test sessions</li>
+            </ul>
+            <p>Shared content must be accessed through the platform's official sharing features (Hive). Users are responsible for any content they share.</p>
+        </div>
+
+        <div class="section" id="disclaimer">
+            <h2>9. Disclaimer</h2>
+            <p>MCQwave provides preparation materials and practice questions. While we strive for accuracy, we do not guarantee:</p>
+            <ul class="tncul">
+                <li>Success in any examination</li>
+                <li>Complete accuracy of all content</li>
+                <li>Uninterrupted access to the service</li>
+            </ul>
+        </div>
+
+        <div class="section" id="modifications">
+            <h2>10. Modifications to Terms</h2>
+            <p>MCQwave reserves the right to modify these terms at any time. Users will be notified of significant changes. Continued use of the service after modifications constitutes acceptance of the updated terms.</p>
+        </div>
+
+        <p class="last-updated">Last Updated: February 8, 2025</p>
+    </div>
+
+    <div class="scroll-to-top">↑</div>
+
+    <script>
+        // Scroll to top button functionality
+        const scrollButton = document.querySelector('.scroll-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollButton.style.display = 'flex';
+            } else {
+                scrollButton.style.display = 'none';
+            }
+        });
+
+        scrollButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Smooth scroll for table of contents links
+        document.querySelectorAll('#table-of-contents a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                document.querySelector(targetId).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+
+    {% endblock %}
+
+    {%block pp%}
+    
+    <li class="dropdown">
+        <a href="javascript:void(0)" class="dropbtn">
+          
+            <i class="fas fa-user-circle profile-icon"></i>
+          
+          {{ user.username }}
+          
+        </a>
+        <div class="dropdown-content">
+          <a href="#">Settings</a>
+          <a href={% url 'logout' %}>Logout</a>
+        </div>
+      </li>
+    
+    
+    {%endblock%} 

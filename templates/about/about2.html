@@ -1,0 +1,357 @@
+{% extends 'base/base.html' %}
+
+{% block title %}About Us{% endblock title %}
+
+{% block content %}
+<style>
+    .navfeed{
+        display: none;
+    }
+
+</style>
+<style>
+    :root {
+        --primary: #1E40AF;
+        --secondary: #1E40AF;
+        --accent: #B91C1C;
+        --text-primary: #1e293b;
+        --text-secondary: #475569;
+        --background: #f8fafc;
+    }
+
+    .main {
+        min-height: 100vh;
+        background: var(--background);
+        overflow-x: hidden;
+    }
+
+    /* Hero Section Styles */
+    .hero-section {
+        position: relative;
+        padding: 6rem 2rem;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        color: white;
+        text-align: left;
+    }
+
+    .hero-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 1s ease forwards;
+    }
+
+    .hero-section h1 {
+        font-size: 4rem;
+        font-weight: 800;
+        margin-bottom: 2rem;
+        line-height: 1.2;
+    }
+
+    .hero-section p {
+        font-size: 1.25rem;
+        max-width: 600px;
+        margin-bottom: 3rem;
+        line-height: 1.6;
+        opacity: 0.9;
+    }
+
+    /* Problem Section Styles */
+    .problems-section {
+        padding: 6rem 2rem;
+        background: white;
+    }
+
+    .problems-grid {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2.5rem;
+    }
+
+    .problem-card {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 1rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transform: translateY(30px);
+        opacity: 0;
+        transition: all 0.5s ease;
+    }
+
+    .problem-card.visible {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .problem-icon {
+        font-size: 2.5rem;
+        color: var(--primary);
+        margin-bottom: 1.5rem;
+    }
+
+    .problem-card h3 {
+        color: var(--text-primary);
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .problem-card p {
+        color: var(--text-secondary);
+        line-height: 1.6;
+    }
+
+    /* Solution Section Styles */
+    .solutions-section {
+        padding: 6rem 2rem;
+        background: linear-gradient(135deg, var(--secondary), var(--accent));
+        clip-path: polygon(0 15%, 100% 0, 100% 85%, 0 100%);
+        color: white;
+    }
+
+    .solutions-content {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .solution-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        padding: 2.5rem;
+        border-radius: 1rem;
+        margin-bottom: 2rem;
+        transform: translateX(-50px);
+        opacity: 0;
+        transition: all 0.5s ease;
+    }
+
+    .solution-card.visible {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    /* Founder's Message Section */
+    .founder-section {
+        padding: 6rem 2rem;
+        background: white;
+    }
+
+    .founder-content {
+        max-width: 1000px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .founder-message {
+        font-size: 1.25rem;
+        line-height: 1.8;
+        color: var(--text-secondary);
+        font-style: italic;
+        position: relative;
+        padding: 2rem;
+        background: var(--background);
+        border-radius: 1rem;
+        margin-top: 2rem;
+    }
+
+    .founder-message::before {
+        content: '"';
+        font-size: 4rem;
+        color: var(--primary);
+        position: absolute;
+        top: -1rem;
+        left: 1rem;
+        opacity: 0.2;
+    }
+
+    /* Features Section */
+    .features-section {
+        padding: 6rem 2rem;
+        background: var(--background);
+    }
+
+    .features-grid {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2.5rem;
+    }
+
+    .feature-card {
+        background: white;
+        padding: 2.5rem;
+        border-radius: 1rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    .feature-card.visible {
+        animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-10px);
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+        100% { transform: translateY(0px); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .hero-section h1 {
+            font-size: 2.5rem;
+        }
+
+        .problems-grid, .features-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .founder-message {
+            font-size: 1.1rem;
+            padding: 1.5rem;
+        }
+    }
+</style>
+
+<div class="main">
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>About Us</h1>
+            <p>At MCQwave, we understand the challenges students face in their exam preparation journey. We're here to revolutionize how you learn and prepare for your tests.</p>
+        </div>
+    </section>
+
+    <section class="problems-section">
+        <div class="problems-grid">
+            <div class="problem-card">
+                <div class="problem-icon">
+                    <i class="fas fa-clock nfas"></i>
+                </div>
+                <h3>Time Management Struggles</h3>
+                <p>Students often struggle to balance their study time effectively across different subjects and topics, leading to last-minute cramming and stress.</p>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">
+                    <i class="fas fa-puzzle-piece nfas"></i>
+                </div>
+                <h3>Question Pattern Confusion</h3>
+                <p>Understanding various question patterns and exam formats can be overwhelming, making it difficult to prepare effectively.</p>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">
+                    <i class="fas fa-chart-line nfas"></i>
+                </div>
+                <h3>Progress Tracking Challenges</h3>
+                <p>Without proper tracking and analytics, students struggle to identify their weak areas and measure their improvement over time.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="solutions-section">
+        <div class="solutions-content">
+            <div class="solution-card">
+                <h3>Personalized Learning Path</h3>
+                <p>Our AI-powered system analyzes your performance and creates a customized study plan that adapts to your learning pace and style.</p>
+            </div>
+            <div class="solution-card">
+                <h3>Comprehensive Question Bank</h3>
+                <p>Access a vast collection of carefully curated questions, covering all major topics and difficulty levels.</p>
+            </div>
+            <div class="solution-card">
+                <h3>Real-time Performance Analytics</h3>
+                <p>Get detailed insights into your progress, strengths, and areas needing improvement through advanced analytics.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="founder-section">
+        <div class="founder-content">
+            <h2>Messages from Our Founders</h2>
+            <div class="founder-message">
+                <p>"We started MCQwave with a simple vision—to create a high-quality, affordable, and accessible platform for NEET PG aspirants. As medical professionals ourselves, we understand the challenges of preparing for competitive exams, and our goal is to bridge the gap between theory and clinical application through well-structured MCQs."</p>
+                <p class="founder-name">- Nirtunjay Prasad, Co-Founder</p>
+            </div>
+            <div class="founder-message">
+                <p>"At MCQwave, we continuously refine our question bank, simulate real-exam scenarios, and ensure an intuitive experience for every user. We also believe that quality education should be affordable, which is why we strive to keep our subscription plans budget-friendly. Additionally, we are exploring ways to integrate NGO donations into our platform, allowing education to be a force for good."</p>
+                <p class="founder-name">- Sandeep Choyal, Co-Founder</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-section">
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-brain nfas"></i>
+                </div>
+                <h3>Smart Learning</h3>
+                <p>Our AI-powered system adapts to your learning style and pace, ensuring optimal progress.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-users nfas"></i>
+                </div>
+                <h3>Community Support</h3>
+                <p>Connect with fellow learners, share experiences, and learn from each other's journeys.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-mobile-alt nfas"></i>
+                </div>
+                <h3>Learn Anywhere</h3>
+                <p>Access your study materials anytime, anywhere with our mobile-responsive platform.</p>
+            </div>
+        </div>
+    </section>
+</div>
+  {% include 'ads/banner_ad.html' %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Intersection Observer for animations
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    // Observe all cards
+    document.querySelectorAll('.problem-card, .solution-card, .feature-card').forEach(card => {
+        observer.observe(card);
+    });
+
+    // Smooth scroll for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,442 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Payment Failed{% endblock %}
+
+{% block content %}
+<style>
+    /* Professional Payment Failed Page Styling */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+    }
+    
+    .my-5 {
+        margin: 4rem 0 !important;
+    }
+    
+    /* Main Container */
+    .row {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 60vh;
+    }
+    
+    .col-md-6 {
+        width: 100%;
+        max-width: 500px;
+        padding: 0;
+    }
+    
+    /* Failed Payment Card */
+    .card {
+        background: white;
+        border: none;
+        border-radius: 20px;
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        position: relative;
+        transform: translateY(0);
+        transition: all 0.3s ease;
+    }
+    
+    .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #e53e3e, #fc8181, #feb2b2);
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Border Danger Override */
+    .border-danger {
+        border: 2px solid #fed7d7 !important;
+        border-top: none !important;
+    }
+    
+    /* Card Body */
+    .card-body {
+        padding: 3rem 2rem;
+        text-align: center;
+        background: linear-gradient(135deg, #fff 0%, #fef5e7 100%);
+        position: relative;
+    }
+    
+    .card-body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23fed7d7' fill-opacity='0.05'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        pointer-events: none;
+    }
+    
+    .card-body > * {
+        position: relative;
+        z-index: 1;
+    }
+    
+    /* Icon Section */
+    .mb-4 {
+        margin-bottom: 2rem !important;
+        position: relative;
+    }
+    
+    .fas.fa-times-circle {
+        font-size: 5rem !important;
+        color: #e53e3e !important;
+        filter: drop-shadow(0 10px 20px rgba(229, 62, 62, 0.3));
+        animation: pulse-error 2s ease-in-out infinite;
+        position: relative;
+    }
+    
+    @keyframes pulse-error {
+        0%, 100% {
+            transform: scale(1);
+            filter: drop-shadow(0 10px 20px rgba(229, 62, 62, 0.3));
+        }
+        50% {
+            transform: scale(1.05);
+            filter: drop-shadow(0 15px 30px rgba(229, 62, 62, 0.4));
+        }
+    }
+    
+    .fas.fa-times-circle::before {
+        position: relative;
+        z-index: 2;
+    }
+    
+    .fas.fa-times-circle::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 120px;
+        height: 120px;
+        background: radial-gradient(circle, rgba(229, 62, 62, 0.1) 0%, transparent 70%);
+        border-radius: 50%;
+        z-index: 1;
+        animation: ripple-error 3s ease-out infinite;
+    }
+    
+    @keyframes ripple-error {
+        0% {
+            transform: translate(-50%, -50%) scale(0.8);
+            opacity: 1;
+        }
+        100% {
+            transform: translate(-50%, -50%) scale(1.5);
+            opacity: 0;
+        }
+    }
+    
+    /* Typography */
+    h2 {
+        color: #e53e3e !important;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        text-shadow: 0 2px 10px rgba(229, 62, 62, 0.1);
+    }
+    
+    .lead {
+        color: #4a5568;
+        font-size: 1.25rem;
+        font-weight: 500;
+        line-height: 1.6;
+        margin-bottom: 2rem;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    /* Button Container */
+    .mt-4 {
+        margin-top: 2.5rem !important;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+    
+    /* Buttons */
+    .btn {
+        display: inline-block;
+        font-weight: 600;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        border: 1px solid transparent;
+        padding: 1rem 2.5rem;
+        font-size: 1.1rem;
+        line-height: 1.5;
+        border-radius: 12px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        text-decoration: none;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        min-width: 160px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Primary Button - Try Again */
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-color: #667eea;
+        color: white;
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    }
+    
+    .btn-primary:hover {
+        background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+        transform: translateY(-3px);
+        box-shadow: 0 12px 35px rgba(102, 126, 234, 0.5);
+        color: white;
+        text-decoration: none;
+    }
+    
+    .btn-primary:active {
+        transform: translateY(-1px);
+    }
+    
+    /* Secondary Button - Go Back */
+    .btn-outline-secondary {
+        background: transparent;
+        border: 2px solid #a0aec0;
+        color: #4a5568;
+        box-shadow: 0 4px 15px rgba(160, 174, 192, 0.2);
+    }
+    
+    .btn-outline-secondary:hover {
+        background: #4a5568;
+        border-color: #4a5568;
+        color: white;
+        text-decoration: none;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(74, 85, 104, 0.4);
+    }
+    
+    /* Button Animation Effects */
+    .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        transition: left 0.5s;
+    }
+    
+    .btn:hover::before {
+        left: 100%;
+    }
+    
+    /* Additional Visual Enhancements */
+    .text-center {
+        text-align: center;
+    }
+    
+    .text-danger {
+        color: #e53e3e !important;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .container {
+            padding: 1rem 0.5rem;
+        }
+        
+        .my-5 {
+            margin: 2rem 0 !important;
+        }
+        
+        .col-md-6 {
+            max-width: 100%;
+            padding: 0 1rem;
+        }
+        
+        .card-body {
+            padding: 2rem 1.5rem;
+        }
+        
+        .fas.fa-times-circle {
+            font-size: 4rem !important;
+        }
+        
+        h2 {
+            font-size: 2rem;
+        }
+        
+        .lead {
+            font-size: 1.1rem;
+        }
+        
+        .btn {
+            padding: 0.875rem 2rem;
+            font-size: 1rem;
+            width: 100%;
+            max-width: 280px;
+        }
+        
+        .mt-4 {
+            margin-top: 2rem !important;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .card-body {
+            padding: 1.5rem 1rem;
+        }
+        
+        .fas.fa-times-circle {
+            font-size: 3.5rem !important;
+        }
+        
+        h2 {
+            font-size: 1.75rem;
+        }
+        
+        .lead {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .mt-4 {
+            gap: 0.75rem;
+        }
+    }
+    
+    /* Loading State (for potential AJAX retry) */
+    .btn.loading {
+        opacity: 0.7;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+    
+    .btn.loading::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 20px;
+        height: 20px;
+        border: 2px solid transparent;
+        border-top: 2px solid currentColor;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+        0% { transform: translate(-50%, -50%) rotate(0deg); }
+        100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    
+    /* Focus States for Accessibility */
+    .btn:focus {
+        outline: 3px solid rgba(229, 62, 62, 0.3);
+        outline-offset: 2px;
+    }
+    
+    .btn-primary:focus {
+        outline-color: rgba(102, 126, 234, 0.5);
+    }
+    
+    /* Additional Error State Animations */
+    .card {
+        animation: shake 0.6s ease-in-out;
+    }
+    
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+        20%, 40%, 60%, 80% { transform: translateX(2px); }
+    }
+    
+    /* Print Styles */
+    @media print {
+        .card {
+            box-shadow: none;
+            border: 2px solid #000;
+        }
+        
+        .btn {
+            display: none;
+        }
+        
+        .fas.fa-times-circle {
+            color: #000 !important;
+            animation: none;
+        }
+        
+        h2 {
+            color: #000 !important;
+        }
+    }
+
+</style>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-danger">
+                <div class="card-body text-center">
+                    <div class="mb-4">
+                        <i class="fas fa-times-circle text-danger nfas" style="font-size: 4rem;"></i>
+                    </div>
+                    <h2 class="text-danger">Payment Failed</h2>
+                    <p class="lead">Sorry, your payment could not be processed. Please try again.</p>
+                    
+                    <div class="mt-4">
+                        <a href="{% url 'payments:payment_plans' %}" class="btn btn-primary">
+                            Try Again
+                        </a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Prevent back navigation to payment gateway
+    (function() {
+        // Clear the history stack
+        history.replaceState(null, null, window.location.href);
+        
+        // Prevent back navigation
+        window.addEventListener('popstate', function(event) {
+            // Redirect to plans page instead of going back
+            window.location.href = '{% url "payments:payment_plans" %}';
+        });
+        
+        // Additional security - push state to prevent back navigation
+        history.pushState(null, null, window.location.href);
+        
+        // Handle back button press
+        window.addEventListener('beforeunload', function() {
+            // This won't prevent navigation but helps with cleanup
+            history.replaceState(null, null, '{% url "payments:payment_plans" %}');
+        });
+    })();
+</script>
+{% endblock %}

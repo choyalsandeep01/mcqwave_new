@@ -1,0 +1,1719 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Bookmarks{% endblock title %}
+
+{% block content %}
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        min-height: 100vh;
+    }
+
+    .main-container {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        min-height: 100vh;
+        padding: 0;
+    }
+
+    .header-section {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        padding: 2rem 0;
+        text-align: center;
+        color: white;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin: 0;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .header-subtitle {
+        font-size: 1.1rem;
+        margin-top: 0.5rem;
+        opacity: 0.9;
+        font-weight: 300;
+    }
+
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .stat-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        display: block;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+        opacity: 0.9;
+        margin-top: 0.5rem;
+    }
+
+    .search-container {
+        position: relative;
+        max-width: 600px;
+        margin: 0 auto 2rem auto;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 1rem 3rem 1rem 1.5rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 50px;
+        font-size: 1rem;
+        outline: none;
+        transition: all 0.3s ease;
+        background: white;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-input:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .search-icon {
+        position: absolute;
+        right: 1.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #64748b;
+        font-size: 1.2rem;
+    }
+
+    .tabs-container {
+        margin-bottom: 2rem;
+    }
+
+    .tabs {
+        display: flex;
+        background: white;
+        border-radius: 12px;
+        padding: 0.5rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        overflow-x: auto;
+    }
+
+    .tab {
+        flex: 1;
+        text-align: center;
+        padding: 1rem 1.5rem;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        white-space: nowrap;
+        min-width: 150px;
+    }
+
+    .tab.active {
+        background: #1E40AF;
+        color: white;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .tab:not(.active):hover {
+        background: #f8fafc;
+    }
+
+    .category-content {
+        display: none;
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .category-content.active {
+        display: block;
+    }
+
+    .mcq-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .mcq-card {
+        background: white;
+        border-radius: 16px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        position: relative;
+        border: 1px solid #e2e8f0;
+    }
+
+    .mcq-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    }
+
+    .mcq-card.hidden {
+        display: none !important;
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+    }
+
+    .question-type-badge {
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .badge-pyq {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+    .badge-mcq {
+        background: #1E40AF;
+        color: white;
+    }
+
+    .bookmark-type-badge {
+        padding: 0.3rem 0.8rem;
+        border-radius: 15px;
+        font-size: 0.7rem;
+        font-weight: 500;
+        margin-left: 0.5rem;
+    }
+
+    .badge-star {
+        background: #fbbf24;
+        color: #92400e;
+    }
+
+    .badge-unstudied {
+        background: #34d399;
+        color: #065f46;
+    }
+
+    .badge-other {
+        background: #a78bfa;
+        color: #5b21b6;
+    }
+
+    .question-text {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+        color: #1e293b;
+        font-weight: 500;
+    }
+
+    .question-image {
+        width: 100%;
+        max-width: 100%;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .mcq-meta {
+        background: #f8fafc;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        font-size: 0.85rem;
+    }
+
+    .meta-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+    }
+
+    .meta-row:last-child {
+        margin-bottom: 0;
+    }
+
+    .meta-label {
+        font-weight: 600;
+        color: #475569;
+    }
+
+    .meta-value {
+        color: #64748b;
+    }
+
+    .exam-info {
+        background: #B91C1C;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        display: inline-block;
+        margin-bottom: 1rem;
+    }
+
+    .options-container {
+        margin-bottom: 1.5rem;
+    }
+
+    .option-button {
+        width: 100%;
+        text-align: left;
+        padding: 0.8rem 1rem;
+        margin-bottom: 0.5rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        background: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+        position: relative;
+    }
+
+    .option-button:hover:not(.disabled) {
+        border-color: #cbd5e1;
+        background: #f8fafc;
+    }
+
+    .option-button.correct {
+        background: #dcfce7;
+        border-color: #16a34a;
+        color: #15803d;
+    }
+
+    .option-button.incorrect {
+        background: #fef2f2;
+        border-color: #dc2626;
+        color: #dc2626;
+    }
+
+    .option-button.disabled {
+        pointer-events: none;
+        opacity: 0.7;
+    }
+
+    .card-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1rem;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .action-btn {
+        padding: 0.5rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 1.1rem;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .delete-btn {
+        background: #fee2e2;
+        color: #dc2626;
+    }
+
+    .delete-btn:hover {
+        background: #fecaca;
+        transform: scale(1.1);
+    }
+
+    .share-btn {
+        background: #dbeafe;
+        color: #2563eb;
+    }
+
+    .share-btn:hover {
+        background: #bfdbfe;
+        transform: scale(1.1);
+    }
+
+    .bookmark-date {
+        font-size: 0.75rem;
+        color: #64748b;
+    }
+
+    .explanation-container {
+        background: #f0f9ff;
+        border: 1px solid #bae6fd;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-top: 1rem;
+        display: none;
+    }
+
+    .explanation-title {
+        font-weight: 600;
+        color: #0369a1;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .explanation-text {
+        color: #0c4a6e;
+        line-height: 1.6;
+    }
+
+    /* Modals */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+        z-index: 1000;
+        backdrop-filter: blur(4px);
+    }
+
+    .modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        border-radius: 16px;
+        padding: 0;
+        max-width: 500px;
+        width: 90%;
+        z-index: 1001;
+        display: none;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-header {
+        padding: 1.5rem 2rem;
+        border-bottom: 1px solid #e2e8f0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .modal-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #1e293b;
+    }
+
+    .modal-close {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #64748b;
+        padding: 0.5rem;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+    }
+
+    .modal-close:hover {
+        background: #f1f5f9;
+        color: #334155;
+    }
+
+    .modal-content {
+        padding: 2rem;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    .modal-footer {
+        padding: 1.5rem 2rem;
+        border-top: 1px solid #e2e8f0;
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+    }
+
+    .btn {
+        padding: 0.7rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+        background: #1E40AF;
+        
+        color: white;
+    }
+
+    .btn-secondary {
+        background: #f1f5f9;
+        color: #475569;
+    }
+
+    .btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Status items for share results */
+    .status-item {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        margin-bottom: 0.5rem;
+        border-radius: 8px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+    }
+
+    .status-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+        font-weight: 600;
+    }
+
+    .success-icon {
+        background: #dcfce7;
+        color: #16a34a;
+    }
+
+    .error-icon {
+        background: #fef2f2;
+        color: #dc2626;
+    }
+
+    .status-details {
+        flex-grow: 1;
+    }
+
+    .status-username {
+        font-weight: 600;
+        margin-bottom: 0.2rem;
+    }
+
+    .status-message {
+        font-size: 0.9rem;
+        color: #64748b;
+    }
+
+    .user-checkbox-container {
+        display: flex;
+        align-items: center;
+        padding: 0.8rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .user-checkbox-container:hover {
+        background: #f8fafc;
+    }
+
+    .user-checkbox {
+        margin-right: 0.8rem;
+        transform: scale(1.2);
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 3rem;
+        color: #64748b;
+    }
+
+    .empty-state-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .container {
+            padding: 1rem;
+        }
+
+        .header-title {
+            font-size: 2rem;
+        }
+
+        .mcq-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .mcq-card {
+            padding: 1rem;
+        }
+
+        .tabs {
+            overflow-x: scroll;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            min-width: 120px;
+            padding: 0.8rem 1rem;
+        }
+
+        .stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .modal {
+            width: 95%;
+        }
+
+        .modal-header,
+        .modal-content,
+        .modal-footer {
+            padding: 1rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .question-text {
+            font-size: 1rem;
+        }
+
+        .card-header {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+    }
+    .filter-container {
+        max-width: 600px;
+        margin: 0 auto 1.5rem auto;
+        background: white;
+        padding: 1rem 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .filter-label {
+        font-weight: 600;
+        color: #475569;
+        font-size: 0.9rem;
+    }
+    
+    .filter-checkboxes {
+        display: flex;
+        gap: 1.5rem;
+    }
+    
+    .filter-checkbox {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #64748b;
+        transition: all 0.3s ease;
+    }
+    
+    .filter-checkbox:hover {
+        color: #1e293b;
+    }
+    
+    .filter-checkbox input[type="checkbox"] {
+        margin-right: 0.5rem;
+        transform: scale(1.2);
+        cursor: pointer;
+    }
+    
+    .filter-checkbox i {
+        margin-left: 0.3rem;
+        font-size: 0.8rem;
+    }
+    
+    @media (max-width: 768px) {
+        .filter-container {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+        
+        .filter-checkboxes {
+            width: 100%;
+            justify-content: space-around;
+        }
+    }
+    
+</style>
+
+<div class="main-container">
+    <div class="header-section">
+        <h1 class="header-title">Your Bookmarks</h1>
+        <p class="header-subtitle">Curated Questions & PYQs for Focused Study</p>
+    </div>
+
+    <div class="container">
+        
+        <!-- Search -->
+        <div class="search-container">
+            <input type="text" class="search-input" id="mcqSearchInput" placeholder="Search by question text, code, or subject...">
+            <i class="fas fa-search search-icon nfas"></i>
+        </div>
+        <!-- Add this right after the search-container div -->
+        <div class="filter-container">
+            <div class="filter-label">Filter by Type:</div>
+            <div class="filter-checkboxes">
+                <label class="filter-checkbox">
+                    <input type="checkbox" id="filter-pyq" checked>
+                    <span class="checkmark"></span>
+                    <i class="fas fa-history nfas"></i> PYQ
+                </label>
+                <label class="filter-checkbox">
+                    <input type="checkbox" id="filter-curated" checked>
+                    <span class="checkmark"></span>
+                    <i class="fas fa-graduation-cap nfas"></i> Curated MCQ
+                </label>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs-container">
+            <div class="tabs">
+                <div class="tab active" data-category="starred">
+                    <i class="fas fa-star nfas"></i> Starred
+                </div>
+                <div class="tab" data-category="unstudied">
+                    <i class="fas fa-book-open nfas"></i> Unstudied
+                </div>
+                <div class="tab" data-category="other">
+                    <i class="fas fa-bookmark nfas"></i> Other
+                </div>
+            </div>
+        </div>
+
+        <!-- Starred Category -->
+        <div class="category-content active" id="starred">
+            {% if star_mcqs %}
+                <div class="mcq-grid">
+                    {% for bookmark in star_mcqs %}
+                        <div class="mcq-card" id="bookmark-{{ bookmark.bkmk_id }}">
+                            <div class="card-header">
+                                <div>
+                                    {% if bookmark.mcq %}
+                                        <span class="question-type-badge badge-mcq">
+                                            <i class="fas fa-graduation-cap nfas"></i> Curated MCQ
+                                        </span>
+                                    {% elif bookmark.pyq %}
+                                        <span class="question-type-badge badge-pyq">
+                                            <i class="fas fa-history nfas"></i> PYQ
+                                        </span>
+                                    {% endif %}
+                                    <span class="bookmark-type-badge badge-star">
+                                        <i class="fas fa-star nfas"></i> Star
+                                    </span>
+                                </div>
+                            </div>
+
+                            {% if bookmark.pyq %}
+                                <!-- PYQ Content -->
+                                {% if bookmark.pyq.pyq_cat or bookmark.pyq.pyq_year or bookmark.pyq.pyq_month %}
+                                    <div class="exam-info">
+                                        <i class="fas fa-calendar-alt nfas"></i> 
+                                        {{ bookmark.pyq.get_exam_display|default:"PYQ" }}
+                                    </div>
+                                {% endif %}
+
+                                <h3 class="question-text">{{ bookmark.pyq.text }}</h3>
+                                
+                                {% if bookmark.pyq.image %}
+                                    <img src="{{ bookmark.pyq.image.url }}" alt="Question Image" class="question-image">
+                                {% endif %}
+
+                                <div class="mcq-meta">
+                                    <div class="meta-row">
+                                        <span class="meta-label">Subject:</span>
+                                        <span class="meta-value">{{ bookmark.pyq.unit.subject.name }}</span>
+                                    </div>
+                                    <div class="meta-row">
+                                        <span class="meta-label">Unit:</span>
+                                        <span class="meta-value">{{ bookmark.pyq.unit.name }}</span>
+                                    </div>
+                                    {% if bookmark.pyq.topic %}
+                                        <div class="meta-row">
+                                            <span class="meta-label">Topic:</span>
+                                            <span class="meta-value">{{ bookmark.pyq.topic }}</span>
+                                        </div>
+                                    {% endif %}
+                                    {% if bookmark.pyq.difficulty %}
+                                        <div class="meta-row">
+                                            <span class="meta-label">Difficulty:</span>
+                                            <span class="meta-value">{{ bookmark.pyq.difficulty.name }}</span>
+                                        </div>
+                                    {% endif %}
+                                    {% if bookmark.pyq.pyqcode %}
+                                        <div class="meta-row">
+                                            <span class="meta-label">Code:</span>
+                                            <span class="meta-value">{{ bookmark.pyq.pyqcode }}</span>
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="options-container">
+                                    <button class="option-button" data-correct="{% if bookmark.pyq.option_1 == bookmark.pyq.correct_option %}true{% else %}false{% endif %}">
+                                        <strong>A.</strong> {{ bookmark.pyq.option_1 }}
+                                    </button>
+                                    <button class="option-button" data-correct="{% if bookmark.pyq.option_2 == bookmark.pyq.correct_option %}true{% else %}false{% endif %}">
+                                        <strong>B.</strong> {{ bookmark.pyq.option_2 }}
+                                    </button>
+                                    <button class="option-button" data-correct="{% if bookmark.pyq.option_3 == bookmark.pyq.correct_option %}true{% else %}false{% endif %}">
+                                        <strong>C.</strong> {{ bookmark.pyq.option_3 }}
+                                    </button>
+                                    <button class="option-button" data-correct="{% if bookmark.pyq.option_4 == bookmark.pyq.correct_option %}true{% else %}false{% endif %}">
+                                        <strong>D.</strong> {{ bookmark.pyq.option_4 }}
+                                    </button>
+                                </div>
+
+                                {% if bookmark.pyq.explanation %}
+                                    <div class="explanation-container">
+                                        <div class="explanation-title">
+                                            <i class="fas fa-lightbulb nfas"></i> Explanation
+                                        </div>
+                                        <div class="explanation-text">{{ bookmark.pyq.explanation|linebreaksbr }}</div>
+                                    </div>
+                                {% endif %}
+
+                            {% elif bookmark.mcq %}
+                                <!-- MCQ Content -->
+                                <h3 class="question-text">{{ bookmark.mcq.text }}</h3>
+                                
+                                {% if bookmark.mcq.image %}
+                                    <img src="{{ bookmark.mcq.image.url }}" alt="Question Image" class="question-image">
+                                {% endif %}
+
+                                <div class="mcq-meta">
+                                    <div class="meta-row">
+                                        <span class="meta-label">Subject:</span>
+                                        <span class="meta-value">{{ bookmark.mcq.topic.chapter.unit.subject.name }}</span>
+                                    </div>
+                                    <div class="meta-row">
+                                        <span class="meta-label">Unit:</span>
+                                        <span class="meta-value">{{ bookmark.mcq.topic.chapter.unit.name }}</span>
+                                    </div>
+                                    <div class="meta-row">
+                                        <span class="meta-label">Chapter:</span>
+                                        <span class="meta-value">{{ bookmark.mcq.topic.chapter.name }}</span>
+                                    </div>
+                                    <div class="meta-row">
+                                        <span class="meta-label">Topic:</span>
+                                        <span class="meta-value">{{ bookmark.mcq.topic.name }}</span>
+                                    </div>
+                                    {% if bookmark.mcq.difficulty %}
+                                        <div class="meta-row">
+                                            <span class="meta-label">Difficulty:</span>
+                                            <span class="meta-value">{{ bookmark.mcq.difficulty.name }}</span>
+                                        </div>
+                                    {% endif %}
+                                    {% if bookmark.mcq.mcqcode %}
+                                        <div class="meta-row">
+                                            <span class="meta-label">Code:</span>
+                                            <span class="meta-value">{{ bookmark.mcq.mcqcode }}</span>
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="options-container">
+                                    <button class="option-button" data-correct="{% if bookmark.mcq.option_1 == bookmark.mcq.correct_option %}true{% else %}false{% endif %}">
+                                        <strong>A.</strong> {{ bookmark.mcq.option_1 }}
+                                    </button>
+                                    <button class="option-button" data-correct="{% if bookmark.mcq.option_2 == bookmark.mcq.correct_option %}true{% else %}false{% endif %}">
+                                        <strong>B.</strong> {{ bookmark.mcq.option_2 }}
+                                    </button>
+                                    <button class="option-button" data-correct="{% if bookmark.mcq.option_3 == bookmark.mcq.correct_option %}true{% else %}false{% endif %}">
+                                        <strong>C.</strong> {{ bookmark.mcq.option_3 }}
+                                    </button>
+                                    <button class="option-button" data-correct="{% if bookmark.mcq.option_4 == bookmark.mcq.correct_option %}true{% else %}false{% endif %}">
+                                        <strong>D.</strong> {{ bookmark.mcq.option_4 }}
+                                    </button>
+                                </div>
+
+                                {% if bookmark.mcq.explanation %}
+                                    <div class="explanation-container">
+                                        <div class="explanation-title">
+                                            <i class="fas fa-lightbulb nfas"></i> Explanation
+                                        </div>
+                                        <div class="explanation-text">{{ bookmark.mcq.explanation|linebreaksbr }}</div>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+
+                            <div class="card-actions">
+                                <div class="bookmark-date">
+                                    <i class="fas fa-clock nfas"></i>
+                                    <span class="local-time" data-utc-time="{{ bookmark.created_at|date:'c' }}"></span>
+                                </div>
+                                <div class="action-buttons">
+                                    <button class="action-btn share-btn" data-id="{% if bookmark.mcq %}{{ bookmark.mcq.uid }}{% else %}{{ bookmark.pyq.uid }}{% endif %}" onclick="openShareModal()">
+                                        <i class="fas fa-share-alt nfas"></i>
+                                    </button>
+                                    <button class="action-btn delete-btn" data-id="{{ bookmark.bkmk_id }}">
+                                        <i class="fas fa-trash nfas"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-state-icon">
+                        <i class="fas fa-star nfas"></i>
+                    </div>
+                    <h3>No starred questions yet</h3>
+                    <p>Start practicing and bookmark your favorite questions!</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Unstudied Category -->
+                <!-- Unstudied Category -->
+        <div class="category-content" id="unstudied">
+            {% if unstudied_mcqs %}
+                <div class="mcq-grid">
+                    {% for bookmark in unstudied_mcqs %}
+                        <div class="mcq-card" id="bookmark-{{ bookmark.bkmk_id }}">
+                            <div class="card-header">
+                                <div>
+                                    {% if bookmark.mcq %}
+                                        <span class="question-type-badge badge-mcq">
+                                            <i class="fas fa-graduation-cap nfas"></i> Curated MCQ
+                                        </span>
+                                    {% elif bookmark.pyq %}
+                                        <span class="question-type-badge badge-pyq">
+                                            <i class="fas fa-history nfas"></i> PYQ
+                                        </span>
+                                    {% endif %}
+                                    <span class="bookmark-type-badge badge-unstudied">
+                                        <i class="fas fa-book-open nfas"></i> Unstudied
+                                    </span>
+                                </div>
+                            </div>
+
+                            {% if bookmark.pyq %}
+                                <!-- PYQ Content -->
+                                {% if bookmark.pyq.pyq_cat or bookmark.pyq.pyq_year or bookmark.pyq.pyq_month %}
+                                    <div class="exam-info">
+                                        <i class="fas fa-calendar-alt nfas"></i> 
+                                        {{ bookmark.pyq.get_exam_display|default:"PYQ" }}
+                                    </div>
+                                {% endif %}
+
+                                <h3 class="question-text">{{ bookmark.pyq.text }}</h3>
+                                
+                                {% if bookmark.pyq.image %}
+                                    <img src="{{ bookmark.pyq.image.url }}" alt="Question Image" class="question-image">
+                                {% endif %}
+
+                                <div class="mcq-meta">
+                                    {% if bookmark.pyq.unit and bookmark.pyq.unit.subject %}
+                                        <div class="meta-row">
+                                            <span class="meta-label">Subject:</span>
+                                            <span class="meta-value">{{ bookmark.pyq.unit.subject.name }}</span>
+                                        </div>
+                                    {% endif %}
+                                    {% if bookmark.pyq.unit %}
+                                        <div class="meta-row">
+                                            <span class="meta-label">Unit:</span>
+                                            <span class="meta-value">{{ bookmark.pyq.unit.name }}</span>
+                                        </div>
+                                    {% endif %}
+                                    {% if bookmark.pyq.topic %}
+                                        <div class="meta-row">
+                                            <span class="meta-label">Topic:</span>
+                                            <span class="meta-value">{{ bookmark.pyq.topic }}</span>
+                                        </div>
+                                    {% endif %}
+                                    {% if bookmark.pyq.difficulty %}
+                                        <div class="meta-row">
+                                            <span class="meta-label">Difficulty:</span>
+                                            <span class="meta-value">{{ bookmark.pyq.difficulty.name }}</span>
+                                        </div>
+                                    {% endif %}
+                                    {% if bookmark.pyq.pyqcode %}
+                                        <div class="meta-row">
+                                            <span class="meta-label">Code:</span>
+                                            <span class="meta-value">{{ bookmark.pyq.pyqcode }}</span>
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="options-container">
+                                    <button class="option-button" data-correct="{% if bookmark.pyq.option_1 == bookmark.pyq.correct_option %}true{% else %}false{% endif %}">
+                                        <strong>A.</strong> {{ bookmark.pyq.option_1 }}
+                                    </button>
+                                    <button class="option-button" data-correct="{% if bookmark.pyq.option_2 == bookmark.pyq.correct_option %}true{% else %}false{% endif %}">
+                                        <strong>B.</strong> {{ bookmark.pyq.option_2 }}
+                                    </button>
+                                    <button class="option-button" data-correct="{% if bookmark.pyq.option_3 == bookmark.pyq.correct_option %}true{% else %}false{% endif %}">
+                                        <strong>C.</strong> {{ bookmark.pyq.option_3 }}
+                                    </button>
+                                    <button class="option-button" data-correct="{% if bookmark.pyq.option_4 == bookmark.pyq.correct_option %}true{% else %}false{% endif %}">
+                                        <strong>D.</strong> {{ bookmark.pyq.option_4 }}
+                                    </button>
+                                </div>
+
+                                {% if bookmark.pyq.explanation %}
+                                    <div class="explanation-container">
+                                        <div class="explanation-title">
+                                            <i class="fas fa-lightbulb nfas"></i> Explanation
+                                        </div>
+                                        <div class="explanation-text">{{ bookmark.pyq.explanation|linebreaksbr }}</div>
+                                    </div>
+                                {% endif %}
+
+                            {% elif bookmark.mcq %}
+                                <!-- MCQ Content (same as your existing MCQ content) -->
+                                <h3 class="question-text">{{ bookmark.mcq.text }}</h3>
+                                
+                                {% if bookmark.mcq.image %}
+                                    <img src="{{ bookmark.mcq.image.url }}" alt="Question Image" class="question-image">
+                                {% endif %}
+
+                                <div class="mcq-meta">
+                                    <div class="meta-row">
+                                        <span class="meta-label">Subject:</span>
+                                        <span class="meta-value">{{ bookmark.mcq.topic.chapter.unit.subject.name }}</span>
+                                    </div>
+                                    <div class="meta-row">
+                                        <span class="meta-label">Unit:</span>
+                                        <span class="meta-value">{{ bookmark.mcq.topic.chapter.unit.name }}</span>
+                                    </div>
+                                    <div class="meta-row">
+                                        <span class="meta-label">Chapter:</span>
+                                        <span class="meta-value">{{ bookmark.mcq.topic.chapter.name }}</span>
+                                    </div>
+                                    <div class="meta-row">
+                                        <span class="meta-label">Topic:</span>
+                                        <span class="meta-value">{{ bookmark.mcq.topic.name }}</span>
+                                    </div>
+                                    {% if bookmark.mcq.difficulty %}
+                                        <div class="meta-row">
+                                            <span class="meta-label">Difficulty:</span>
+                                            <span class="meta-value">{{ bookmark.mcq.difficulty.name }}</span>
+                                        </div>
+                                    {% endif %}
+                                    {% if bookmark.mcq.mcqcode %}
+                                        <div class="meta-row">
+                                            <span class="meta-label">Code:</span>
+                                            <span class="meta-value">{{ bookmark.mcq.mcqcode }}</span>
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="options-container">
+                                    <button class="option-button" data-correct="{% if bookmark.mcq.option_1 == bookmark.mcq.correct_option %}true{% else %}false{% endif %}">
+                                        <strong>A.</strong> {{ bookmark.mcq.option_1 }}
+                                    </button>
+                                    <button class="option-button" data-correct="{% if bookmark.mcq.option_2 == bookmark.mcq.correct_option %}true{% else %}false{% endif %}">
+                                        <strong>B.</strong> {{ bookmark.mcq.option_2 }}
+                                    </button>
+                                    <button class="option-button" data-correct="{% if bookmark.mcq.option_3 == bookmark.mcq.correct_option %}true{% else %}false{% endif %}">
+                                        <strong>C.</strong> {{ bookmark.mcq.option_3 }}
+                                    </button>
+                                    <button class="option-button" data-correct="{% if bookmark.mcq.option_4 == bookmark.mcq.correct_option %}true{% else %}false{% endif %}">
+                                        <strong>D.</strong> {{ bookmark.mcq.option_4 }}
+                                    </button>
+                                </div>
+
+                                {% if bookmark.mcq.explanation %}
+                                    <div class="explanation-container">
+                                        <div class="explanation-title">
+                                            <i class="fas fa-lightbulb nfas"></i> Explanation
+                                        </div>
+                                        <div class="explanation-text">{{ bookmark.mcq.explanation|linebreaksbr }}</div>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+
+                            <div class="card-actions">
+                                <div class="bookmark-date">
+                                    <i class="fas fa-clock nfas"></i>
+                                    <span class="local-time" data-utc-time="{{ bookmark.created_at|date:'c' }}"></span>
+                                </div>
+                                <div class="action-buttons">
+                                    <button class="action-btn share-btn" data-id="{% if bookmark.mcq %}{{ bookmark.mcq.uid }}{% else %}{{ bookmark.pyq.uid }}{% endif %}" onclick="openShareModal()">
+                                        <i class="fas fa-share-alt nfas"></i>
+                                    </button>
+                                    <button class="action-btn delete-btn" data-id="{{ bookmark.bkmk_id }}">
+                                        <i class="fas fa-trash nfas"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-state-icon">
+                        <i class="fas fa-book-open nfas"></i>
+                    </div>
+                    <h3>No unstudied questions</h3>
+                    <p>Questions you mark as unstudied will appear here.</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Other Category -->
+        <div class="category-content" id="other">
+            {% if other_mcqs %}
+                <div class="mcq-grid">
+                    {% for bookmark in other_mcqs %}
+                        <div class="mcq-card" id="bookmark-{{ bookmark.bkmk_id }}">
+                            <div class="card-header">
+                                <div>
+                                    {% if bookmark.mcq %}
+                                        <span class="question-type-badge badge-mcq">
+                                            <i class="fas fa-graduation-cap nfas"></i> Curated MCQ
+                                        </span>
+                                    {% elif bookmark.pyq %}
+                                        <span class="question-type-badge badge-pyq">
+                                            <i class="fas fa-history nfas"></i> PYQ
+                                        </span>
+                                    {% endif %}
+                                    <span class="bookmark-type-badge badge-other">
+                                        <i class="fas fa-bookmark nfas"></i> Other
+                                    </span>
+                                </div>
+                            </div>
+
+                            {% if bookmark.pyq %}
+                                <!-- PYQ Content -->
+                                {% if bookmark.pyq.pyq_cat or bookmark.pyq.pyq_year or bookmark.pyq.pyq_month %}
+                                    <div class="exam-info">
+                                        <i class="fas fa-calendar-alt nfas"></i> 
+                                        {{ bookmark.pyq.get_exam_display|default:"PYQ" }}
+                                    </div>
+                                {% endif %}
+
+                                <h3 class="question-text">{{ bookmark.pyq.text }}</h3>
+                                
+                                {% if bookmark.pyq.image %}
+                                    <img src="{{ bookmark.pyq.image.url }}" alt="Question Image" class="question-image">
+                                {% endif %}
+
+                                <div class="mcq-meta">
+                                    {% if bookmark.pyq.unit and bookmark.pyq.unit.subject %}
+                                        <div class="meta-row">
+                                            <span class="meta-label">Subject:</span>
+                                            <span class="meta-value">{{ bookmark.pyq.unit.subject.name }}</span>
+                                        </div>
+                                    {% endif %}
+                                    {% if bookmark.pyq.unit %}
+                                        <div class="meta-row">
+                                            <span class="meta-label">Unit:</span>
+                                            <span class="meta-value">{{ bookmark.pyq.unit.name }}</span>
+                                        </div>
+                                    {% endif %}
+                                    {% if bookmark.pyq.topic %}
+                                        <div class="meta-row">
+                                            <span class="meta-label">Topic:</span>
+                                            <span class="meta-value">{{ bookmark.pyq.topic }}</span>
+                                        </div>
+                                    {% endif %}
+                                    {% if bookmark.pyq.difficulty %}
+                                        <div class="meta-row">
+                                            <span class="meta-label">Difficulty:</span>
+                                            <span class="meta-value">{{ bookmark.pyq.difficulty.name }}</span>
+                                        </div>
+                                    {% endif %}
+                                    {% if bookmark.pyq.pyqcode %}
+                                        <div class="meta-row">
+                                            <span class="meta-label">Code:</span>
+                                            <span class="meta-value">{{ bookmark.pyq.pyqcode }}</span>
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="options-container">
+                                    <button class="option-button" data-correct="{% if bookmark.pyq.option_1 == bookmark.pyq.correct_option %}true{% else %}false{% endif %}">
+                                        <strong>A.</strong> {{ bookmark.pyq.option_1 }}
+                                    </button>
+                                    <button class="option-button" data-correct="{% if bookmark.pyq.option_2 == bookmark.pyq.correct_option %}true{% else %}false{% endif %}">
+                                        <strong>B.</strong> {{ bookmark.pyq.option_2 }}
+                                    </button>
+                                    <button class="option-button" data-correct="{% if bookmark.pyq.option_3 == bookmark.pyq.correct_option %}true{% else %}false{% endif %}">
+                                        <strong>C.</strong> {{ bookmark.pyq.option_3 }}
+                                    </button>
+                                    <button class="option-button" data-correct="{% if bookmark.pyq.option_4 == bookmark.pyq.correct_option %}true{% else %}false{% endif %}">
+                                        <strong>D.</strong> {{ bookmark.pyq.option_4 }}
+                                    </button>
+                                </div>
+
+                                {% if bookmark.pyq.explanation %}
+                                    <div class="explanation-container">
+                                        <div class="explanation-title">
+                                            <i class="fas fa-lightbulb nfas"></i> Explanation
+                                        </div>
+                                        <div class="explanation-text">{{ bookmark.pyq.explanation|linebreaksbr }}</div>
+                                    </div>
+                                {% endif %}
+
+                            {% elif bookmark.mcq %}
+                                <!-- MCQ Content -->
+                                <h3 class="question-text">{{ bookmark.mcq.text }}</h3>
+                                
+                                {% if bookmark.mcq.image %}
+                                    <img src="{{ bookmark.mcq.image.url }}" alt="Question Image" class="question-image">
+                                {% endif %}
+
+                                <div class="mcq-meta">
+                                    <div class="meta-row">
+                                        <span class="meta-label">Subject:</span>
+                                        <span class="meta-value">{{ bookmark.mcq.topic.chapter.unit.subject.name }}</span>
+                                    </div>
+                                    <div class="meta-row">
+                                        <span class="meta-label">Unit:</span>
+                                        <span class="meta-value">{{ bookmark.mcq.topic.chapter.unit.name }}</span>
+                                    </div>
+                                    <div class="meta-row">
+                                        <span class="meta-label">Chapter:</span>
+                                        <span class="meta-value">{{ bookmark.mcq.topic.chapter.name }}</span>
+                                    </div>
+                                    <div class="meta-row">
+                                        <span class="meta-label">Topic:</span>
+                                        <span class="meta-value">{{ bookmark.mcq.topic.name }}</span>
+                                    </div>
+                                    {% if bookmark.mcq.difficulty %}
+                                        <div class="meta-row">
+                                            <span class="meta-label">Difficulty:</span>
+                                            <span class="meta-value">{{ bookmark.mcq.difficulty.name }}</span>
+                                        </div>
+                                    {% endif %}
+                                    {% if bookmark.mcq.mcqcode %}
+                                        <div class="meta-row">
+                                            <span class="meta-label">Code:</span>
+                                            <span class="meta-value">{{ bookmark.mcq.mcqcode }}</span>
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="options-container">
+                                    <button class="option-button" data-correct="{% if bookmark.mcq.option_1 == bookmark.mcq.correct_option %}true{% else %}false{% endif %}">
+                                        <strong>A.</strong> {{ bookmark.mcq.option_1 }}
+                                    </button>
+                                    <button class="option-button" data-correct="{% if bookmark.mcq.option_2 == bookmark.mcq.correct_option %}true{% else %}false{% endif %}">
+                                        <strong>B.</strong> {{ bookmark.mcq.option_2 }}
+                                    </button>
+                                    <button class="option-button" data-correct="{% if bookmark.mcq.option_3 == bookmark.mcq.correct_option %}true{% else %}false{% endif %}">
+                                        <strong>C.</strong> {{ bookmark.mcq.option_3 }}
+                                    </button>
+                                    <button class="option-button" data-correct="{% if bookmark.mcq.option_4 == bookmark.mcq.correct_option %}true{% else %}false{% endif %}">
+                                        <strong>D.</strong> {{ bookmark.mcq.option_4 }}
+                                    </button>
+                                </div>
+
+                                {% if bookmark.mcq.explanation %}
+                                    <div class="explanation-container">
+                                        <div class="explanation-title">
+                                            <i class="fas fa-lightbulb nfas"></i> Explanation
+                                        </div>
+                                        <div class="explanation-text">{{ bookmark.mcq.explanation|linebreaksbr }}</div>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+
+                            <div class="card-actions">
+                                <div class="bookmark-date">
+                                    <i class="fas fa-clock nfas"></i>
+                                    <span class="local-time" data-utc-time="{{ bookmark.created_at|date:'c' }}"></span>
+                                </div>
+                                <div class="action-buttons">
+                                    <button class="action-btn share-btn" data-id="{% if bookmark.mcq %}{{ bookmark.mcq.uid }}{% else %}{{ bookmark.pyq.uid }}{% endif %}" onclick="openShareModal()">
+                                        <i class="fas fa-share-alt nfas"></i>
+                                    </button>
+                                    <button class="action-btn delete-btn" data-id="{{ bookmark.bkmk_id }}">
+                                        <i class="fas fa-trash nfas"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <div class="empty-state-icon">
+                        <i class="fas fa-bookmark nfas"></i>
+                    </div>
+                    <h3>No other bookmarks</h3>
+                    <p>Questions you categorize as "other" will appear here.</p>
+                </div>
+            {% endif %}
+        </div>
+
+
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal-overlay" id="deleteOverlay"></div>
+<div class="modal" id="deleteModal">
+    <div class="modal-header">
+        <h3 class="modal-title">Confirm Deletion</h3>
+        <button class="modal-close" onclick="closeDeleteModal()">&times;</button>
+    </div>
+    <div class="modal-content">
+        <p>Are you sure you want to delete this bookmark? This action cannot be undone.</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+        <button class="btn btn-primary" id="confirmDelete">Delete Bookmark</button>
+    </div>
+</div>
+
+<!-- Share Modal -->
+<div class="modal-overlay" id="shareOverlay"></div>
+<div class="modal" id="shareModal">
+    <div class="modal-header">
+        <h3 class="modal-title">Share with Connected Users</h3>
+        <button class="modal-close" onclick="closeShareModal()">&times;</button>
+    </div>
+    <div class="modal-content">
+        {% if connected_users %}
+            {% for user in connected_users %}
+                <div class="user-checkbox-container">
+                    <input type="checkbox" class="user-checkbox" value="{{ user.id }}" id="user-{{ user.id }}">
+                    <label for="user-{{ user.id }}">
+                        <i class="fas fa-user"></i> {{ user.username }}
+                    </label>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <p>No connected users found. Connect with other users to share bookmarks.</p>
+            </div>
+        {% endif %}
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeShareModal()">Cancel</button>
+        <button class="btn btn-primary" id="shareButton">Share Selected</button>
+    </div>
+</div>
+
+<!-- Status Modal -->
+<div class="modal-overlay" id="statusOverlay"></div>
+<div class="modal" id="statusModal">
+    <div class="modal-header">
+        <h3 class="modal-title">Sharing Results</h3>
+        <button class="modal-close" onclick="closeStatusModal()">&times;</button>
+    </div>
+    <div class="modal-content" id="statusContent"></div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" onclick="closeStatusModal()">Close</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize components
+    initializeTabs();
+    initializeSearch();
+    initializeMCQOptions();
+    initializeBookmarkActions();
+    initializeDateFormatting();
+});
+
+function initializeTabs() {
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.category-content');
+    
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            // Remove active class from all tabs and contents
+            tabs.forEach(t => t.classList.remove('active'));
+            contents.forEach(c => c.classList.remove('active'));
+            
+            // Add active class to clicked tab and corresponding content
+            tab.classList.add('active');
+            const category = tab.getAttribute('data-category');
+            document.getElementById(category).classList.add('active');
+            
+            // Clear search when switching tabs
+            document.getElementById('mcqSearchInput').value = '';
+            clearSearch();
+        });
+    });
+}
+
+function initializeSearch() {
+    const searchInput = document.getElementById('mcqSearchInput');
+    const pyqFilter = document.getElementById('filter-pyq');
+    const curatedFilter = document.getElementById('filter-curated');
+    
+    function applyFilters() {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        const showPYQ = pyqFilter.checked;
+        const showCurated = curatedFilter.checked;
+        const activeTab = document.querySelector('.tab.active');
+        const currentCategory = activeTab.getAttribute('data-category');
+        const mcqCards = document.querySelectorAll(`#${currentCategory} .mcq-card`);
+        
+        mcqCards.forEach(card => {
+            const questionText = card.querySelector('.question-text').textContent.toLowerCase();
+            const metaInfo = Array.from(card.querySelectorAll('.meta-value')).map(el => el.textContent.toLowerCase()).join(' ');
+            const code = card.querySelector('.mcq-meta') ? card.querySelector('.mcq-meta').textContent.toLowerCase() : '';
+            
+            // Check if card matches search
+            const searchContent = questionText + ' ' + metaInfo + ' ' + code;
+            const matchesSearch = searchContent.includes(searchTerm);
+            
+            // Check if card matches type filter
+            const isPYQ = card.querySelector('.badge-pyq') !== null;
+            const isCurated = card.querySelector('.badge-mcq') !== null;
+            const matchesTypeFilter = (showPYQ && isPYQ) || (showCurated && isCurated);
+            
+            // Show card only if it matches both search and type filter
+            if (matchesSearch && matchesTypeFilter) {
+                card.classList.remove('hidden');
+            } else {
+                card.classList.add('hidden');
+            }
+        });
+    }
+    
+    // Apply filters when search input changes
+    searchInput.addEventListener('input', applyFilters);
+    
+    // Apply filters when checkboxes change
+    pyqFilter.addEventListener('change', applyFilters);
+    curatedFilter.addEventListener('change', applyFilters);
+}
+
+function clearSearch() {
+    const activeTab = document.querySelector('.tab.active');
+    const currentCategory = activeTab.getAttribute('data-category');
+    const mcqCards = document.querySelectorAll(`#${currentCategory} .mcq-card`);
+    
+    // Reset search input
+    document.getElementById('mcqSearchInput').value = '';
+    
+    // Apply current filter state (don't show all cards, respect checkbox filters)
+    const pyqFilter = document.getElementById('filter-pyq');
+    const curatedFilter = document.getElementById('filter-curated');
+    const showPYQ = pyqFilter.checked;
+    const showCurated = curatedFilter.checked;
+    
+    mcqCards.forEach(card => {
+        const isPYQ = card.querySelector('.badge-pyq') !== null;
+        const isCurated = card.querySelector('.badge-mcq') !== null;
+        const matchesTypeFilter = (showPYQ && isPYQ) || (showCurated && isCurated);
+        
+        if (matchesTypeFilter) {
+            card.classList.remove('hidden');
+        } else {
+            card.classList.add('hidden');
+        }
+    });
+}
+
+
+function initializeMCQOptions() {
+    const mcqCards = document.querySelectorAll('.mcq-card');
+    
+    mcqCards.forEach(card => {
+        const options = card.querySelectorAll('.option-button');
+        const explanation = card.querySelector('.explanation-container');
+        
+        options.forEach(option => {
+            option.addEventListener('click', () => {
+                // Disable all options
+                options.forEach(opt => opt.classList.add('disabled'));
+                
+                // Highlight correct/incorrect answers
+                options.forEach(opt => {
+                    if (opt.getAttribute('data-correct') === 'true') {
+                        opt.classList.add('correct');
+                    } else if (opt === option && opt.getAttribute('data-correct') === 'false') {
+                        opt.classList.add('incorrect');
+                    }
+                });
+                
+                // Show explanation
+                if (explanation) {
+                    explanation.style.display = 'block';
+                }
+            });
+        });
+    });
+}
+
+function initializeBookmarkActions() {
+    // Delete bookmark functionality
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const bookmarkId = button.getAttribute('data-id');
+            openDeleteModal(bookmarkId);
+        });
+    });
+    
+    // Share bookmark functionality
+    const shareButtons = document.querySelectorAll('.share-btn');
+    shareButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const bookmarkId = button.getAttribute('data-id');
+            openShareModal(bookmarkId);
+        });
+    });
+}
+
+function initializeDateFormatting() {
+    const timeElements = document.querySelectorAll('.local-time');
+    
+    timeElements.forEach(element => {
+        const utcTime = element.getAttribute('data-utc-time');
+        const date = new Date(utcTime);
+        const formattedDate = date.toLocaleDateString();
+        const formattedTime = date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+        
+        element.textContent = `${formattedDate} ${formattedTime}`;
+    });
+}
+
+// Modal functions
+let currentBookmarkId = null;
+
+function openDeleteModal(bookmarkId) {
+    currentBookmarkId = bookmarkId;
+    document.getElementById('deleteOverlay').style.display = 'block';
+    document.getElementById('deleteModal').style.display = 'block';
+    
+    // Confirm delete button
+    document.getElementById('confirmDelete').onclick = async () => {
+        await deleteBookmark(bookmarkId);
+    };
+}
+
+function closeDeleteModal() {
+    document.getElementById('deleteOverlay').style.display = 'none';
+    document.getElementById('deleteModal').style.display = 'none';
+    currentBookmarkId = null;
+}
+
+function openShareModal(bookmarkId) {
+    currentBookmarkId = bookmarkId;
+    document.getElementById('shareOverlay').style.display = 'block';
+    document.getElementById('shareModal').style.display = 'block';
+    
+    // Clear previous selections
+    document.querySelectorAll('.user-checkbox').forEach(checkbox => {
+        checkbox.checked = false;
+    });
+    
+    // Share button functionality
+    document.getElementById('shareButton').onclick = async () => {
+        await shareBookmark(bookmarkId);
+    };
+}
+
+function closeShareModal() {
+    document.getElementById('shareOverlay').style.display = 'none';
+    document.getElementById('shareModal').style.display = 'none';
+    currentBookmarkId = null;
+}
+
+function showStatusModal(response) {
+    const modal = document.getElementById('statusModal');
+    const overlay = document.getElementById('statusOverlay');
+    const content = document.getElementById('statusContent');
+    
+    content.innerHTML = '';
+    
+    if (response.details) {
+        response.details.forEach(detail => {
+            const statusItem = document.createElement('div');
+            statusItem.className = 'status-item';
+            
+            const icon = document.createElement('div');
+            icon.className = `status-icon ${detail.success ? 'success-icon' : 'error-icon'}`;
+            icon.innerHTML = detail.success ? '<i class="fas fa-check"></i>' : '<i class="fas fa-times"></i>';
+            
+            const details = document.createElement('div');
+            details.className = 'status-details';
+            
+            const username = document.createElement('div');
+            username.className = 'status-username';
+            username.textContent = detail.username;
+            
+            const message = document.createElement('div');
+            message.className = 'status-message';
+            message.textContent = detail.message;
+            
+            details.appendChild(username);
+            details.appendChild(message);
+            
+            statusItem.appendChild(icon);
+            statusItem.appendChild(details);
+            content.appendChild(statusItem);
+        });
+    }
+    
+    modal.style.display = 'block';
+    overlay.style.display = 'block';
+}
+
+function closeStatusModal() {
+    document.getElementById('statusModal').style.display = 'none';
+    document.getElementById('statusOverlay').style.display = 'none';
+}
+
+// API functions
+async function deleteBookmark(bookmarkId) {
+    try {
+        const response = await fetch(`/mcqs/delete-bookmark/${bookmarkId}/`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+            },
+        });
+
+        if (response.ok) {
+            const bookmarkCard = document.getElementById(`bookmark-${bookmarkId}`);
+            bookmarkCard.remove();
+            closeDeleteModal();
+            
+            // Update statistics
+        } else {
+            alert('Error deleting bookmark. Please try again.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error deleting bookmark. Please try again.');
+    }
+}
+
+async function shareBookmark(bookmarkId) {
+    const selectedUsers = Array.from(document.querySelectorAll('.user-checkbox:checked')).map(cb => cb.value);
+    
+    if (selectedUsers.length === 0) {
+        alert('Please select at least one user to share with.');
+        return;
+    }
+    
+    try {
+        const response = await fetch(`/hive/share-bookmark/${bookmarkId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ users: selectedUsers })
+        });
+        
+        const result = await response.json();
+        closeShareModal();
+        showStatusModal(result);
+    } catch (error) {
+        console.error('Error:', error);
+        showStatusModal({
+            details: [{
+                username: 'Error',
+                success: false,
+                message: 'An error occurred while sharing.'
+            }]
+        });
+    }
+}
+
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
+
+{% endblock %}
+
+{% block pp %}
+<li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">
+        <i class="fas fa-user-circle profile-icon"></i>
+        {{ user.username }}
+    </a>
+    <div class="dropdown-content">
+        <a href="{% url 'setting' %}">Settings</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+</li>
+{% endblock %}

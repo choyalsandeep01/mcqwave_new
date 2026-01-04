@@ -1,0 +1,93 @@
+Unit: Algebra
+
+Chapter: Quadratic Equations
+
+Topic: Solving Quadratics
+
+MCQ 1: What is the sum of the roots of the equation x² - 3x + 2 = 0?
+  A. 1
+  B. 2
+  C. 3
+  D. 4
+  Correct: 3
+  Explanation: The sum of the roots is -b/a.
+  Difficulty: Medium
+  Type: General/clinical/image
+
+MCQ 2: What is the product of the roots of the equation x² - 3x + 2 = 0?
+  A. 1
+  B. 2
+  C. 3
+  D. 4
+  Correct: 2
+  Explanation: The product of the roots is c/a.
+  Difficulty: Medium
+  Type: Single-Choice
+
+Topic: Factorizing Quadratics
+MCQ 1: How do you factor the equation x² - 5x + 6 = 0?
+  A. (x-2)(x-3)
+  B. (x+2)(x+3)
+  C. (x+2)(x-3)
+  D. (x-2)(x+3)
+  Correct: (x-2)(x-3)
+  Explanation: Use the quadratic formula to factor.
+  Difficulty: Medium
+  Type: Single-Choice
+
+---
+
+Chapter: Polynomials
+
+Topic: Polynomial Roots
+MCQ 1: What is a root of the polynomial x³ - 3x² + 2x?
+  A. 1
+  B. -1
+  C. 0
+  D. 2
+  Correct: 0
+  Explanation: Set the polynomial equal to zero to find the roots.
+  Difficulty: Medium
+  Type: Single-Choice
+
+---
+
+Unit: Geometry
+
+Chapter: Triangles
+
+Topic: Pythagorean Theorem
+MCQ 1: In a right-angled triangle, what is the square of the hypotenuse equal to?
+  A. The sum of the squares of the other two sides
+  B. The product of the other two sides
+  C. The difference of the squares of the other two sides
+  D. The square of one side
+  Correct: The sum of the squares of the other two sides
+  Explanation: According to the Pythagorean theorem, the square of the hypotenuse is equal to the sum of the squares of the other two sides.
+  Difficulty: Easy
+  Type: Single-Choice
+
+MCQ 2: Which of the following is a Pythagorean triple?
+  A. 3, 4, 5
+  B. 5, 12, 13
+  C. 7, 24, 25
+  D. All of the above
+  Correct: All of the above
+  Explanation: All of these are Pythagorean triples.
+  Difficulty: Easy
+  Type: Multiple-Choice
+
+---
+
+Chapter: Circles
+
+Topic: Circle Geometry
+MCQ 1: What is the radius of a circle with a diameter of 10 units?
+  A. 5
+  B. 10
+  C. 20
+  D. 15
+  Correct: 5
+  Explanation: The radius is half of the diameter.
+  Difficulty: Easy
+  Type: Single-Choice

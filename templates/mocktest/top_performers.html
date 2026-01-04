@@ -1,0 +1,849 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Top Performers | MCQwave{% endblock title %}
+
+{% block content %}
+<style>
+    /* Top Performers Styles */
+    .top-performers-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1.5rem;
+    }
+    
+    .section-header {
+        text-align: center;
+        margin-bottom: 2.5rem;
+        position: relative;
+    }
+    
+    .section-header h1 {
+        font-size: 2.5rem;
+        color: #1a2b4c;
+        margin-bottom: 0.5rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+    }
+    
+    .section-header h1::after {
+        content: '';
+        display: block;
+        width: 60px;
+        height: 4px;
+        background: linear-gradient(90deg, #2563eb, #3b82f6);
+        margin: 0.75rem auto 0;
+        border-radius: 2px;
+    }
+    
+    .section-description {
+        color: #64748b;
+        font-size: 1.1rem;
+        max-width: 600px;
+        margin: 0 auto;
+        font-weight: 400;
+    }
+    
+    /* Category Tabs */
+    .category-tabs {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        border: 1px solid rgba(234, 236, 240, 0.8);
+    }
+    
+    .tab-header {
+        display: flex;
+        background: #f8fafc;
+        border-bottom: 1px solid #eaecf0;
+        overflow-x: auto;
+        scrollbar-width: none; /* Firefox */
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+    
+    .tab-header::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Edge */
+    }
+    
+    .tab-btn {
+        padding: 1.25rem 1.75rem;
+        background: none;
+        border: none;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #64748b;
+        cursor: pointer;
+        white-space: nowrap;
+        position: relative;
+        transition: all 0.3s;
+        letter-spacing: 0.3px;
+    }
+    
+    .tab-btn:hover {
+        color: #2563eb;
+        background-color: rgba(37, 99, 235, 0.04);
+    }
+    
+    .tab-btn.active {
+        color: #2563eb;
+        background-color: rgba(37, 99, 235, 0.08);
+    }
+    
+    .tab-btn.active::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background-color: #2563eb;
+    }
+    
+    .tab-content {
+        display: none;
+        padding: 1.75rem;
+    }
+    
+    .tab-content.active {
+        display: block;
+        animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Test Cards */
+    .test-card {
+        background: white;
+        border-radius: 12px;
+        margin-bottom: 2.5rem;
+        border: 1px solid #eaecf0;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .test-card:last-child {
+        margin-bottom: 0;
+    }
+    
+    .test-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    }
+    
+    .test-header {
+        padding: 1.75rem;
+        border-bottom: 1px solid #eaecf0;
+        background: linear-gradient(to right, #f8fafc, #f1f5f9);
+        position: relative;
+    }
+    
+    .test-header h2 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.5rem;
+        color: #0f172a;
+        font-weight: 700;
+        letter-spacing: -0.3px;
+        padding-right: 110px; /* Make room for the status label */
+    }
+    
+    .test-status {
+        position: absolute;
+        top: 1.75rem;
+        right: 1.75rem;
+        padding: 0.4rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .test-status.live {
+        background-color: rgba(16, 185, 129, 0.1);
+        color: #10b981;
+        border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+    
+    .test-status.completed {
+        background-color: rgba(99, 102, 241, 0.1);
+        color: #6366f1;
+        border: 1px solid rgba(99, 102, 241, 0.2);
+    }
+    
+    .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        margin-right: 6px;
+        display: inline-block;
+    }
+    
+    .test-status.live .status-dot {
+        background-color: #10b981;
+        box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+        animation: pulse 2s infinite;
+    }
+    
+    .test-status.completed .status-dot {
+        background-color: #6366f1;
+        box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+    }
+    
+    @keyframes pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+        }
+        70% {
+            box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+        }
+    }
+    
+    .test-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.25rem;
+        margin-top: 0.75rem;
+    }
+    
+    .meta-item {
+        display: flex;
+        align-items: center;
+        color: #64748b;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+    
+    .meta-item i {
+        margin-right: 0.5rem;
+        color: #3b82f6;
+    }
+    
+    /* Performers Table */
+    .performers-table-wrapper {
+        overflow-x: auto;
+        scrollbar-width: thin;
+        padding: 0.5rem 0;
+    }
+    
+    .performers-table-wrapper::-webkit-scrollbar {
+        height: 6px;
+    }
+    
+    .performers-table-wrapper::-webkit-scrollbar-track {
+        background: #f1f5f9;
+        border-radius: 3px;
+    }
+    
+    .performers-table-wrapper::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 3px;
+    }
+    
+    .performers-table-wrapper::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+    }
+    
+    .performers-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+    
+    .performers-table th,
+    .performers-table td {
+        padding: 1.15rem 1rem;
+        text-align: left;
+    }
+    
+    .performers-table th {
+        background: #f8fafc;
+        color: #475569;
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.7px;
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        box-shadow: 0 1px 0 #e2e8f0;
+    }
+    
+    .performers-table tbody tr {
+        border-bottom: 1px solid #eaecf0;
+        transition: background-color 0.2s;
+    }
+    
+    .performers-table tbody tr:last-child {
+        border-bottom: none;
+    }
+    
+    .performers-table tbody tr:hover {
+        background-color: #f8fafc;
+    }
+    
+    /* Top Rank Styles */
+    .top-rank-1 {
+        background: rgba(255, 215, 0, 0.05);
+    }
+    
+    .top-rank-1:hover {
+        background: rgba(255, 215, 0, 0.1) !important;
+    }
+    
+    .top-rank-2 {
+        background: rgba(192, 192, 192, 0.05);
+    }
+    
+    .top-rank-2:hover {
+        background: rgba(192, 192, 192, 0.1) !important;
+    }
+    
+    .top-rank-3 {
+        background: rgba(205, 127, 50, 0.05);
+    }
+    
+    .top-rank-3:hover {
+        background: rgba(205, 127, 50, 0.1) !important;
+    }
+    
+    .rank-cell {
+        width: 60px;
+        text-align: center;
+    }
+    
+    .rank-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 4px;
+        background: #f1f5f9;
+        color: #475569;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+    
+    .rank-medal {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        margin: 0 auto;
+    }
+    
+    .rank-1 {
+        background: linear-gradient(135deg, #FFD700, #FFA500);
+    }
+    
+    .rank-2 {
+        background: linear-gradient(135deg, #E0E0E0, #A9A9A9);
+    }
+    
+    .rank-3 {
+        background: linear-gradient(135deg, #CD7F32, #A5682A);
+    }
+    
+    /* User Info Styling */
+    .user-info {
+        display: flex;
+        align-items: center;
+    }
+    
+    .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #3b82f6;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 0.75rem;
+        font-weight: bold;
+        box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3);
+        font-size: 1rem;
+    }
+    
+    .user-avatar img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+    
+    .user-name {
+        font-weight: 600;
+        color: #0f172a;
+    }
+    
+    /* Score styling */
+    .score-cell span:last-child {
+        font-weight: 600;
+        color: #2563eb;
+        font-size: 0.95rem;
+    }
+    
+    .correct-cell span:last-child {
+        font-weight: 600;
+        color: #10b981;
+        font-size: 0.95rem;
+    }
+    
+    .incorrect-cell span:last-child {
+        font-weight: 600;
+        color: #ef4444;
+        font-size: 0.95rem;
+    }
+    
+    .percentile-cell span:last-child {
+        font-weight: 600;
+        color: #6366f1;
+        font-size: 0.95rem;
+    }
+    
+    .time-cell span:last-child {
+        font-weight: 600;
+        color: #0d9488;
+        font-size: 0.95rem;
+    }
+    
+    /* No Data Container */
+    .no-data-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 400px;
+    }
+    
+    .no-data-message {
+        text-align: center;
+        padding: 3rem 2rem;
+        color: #64748b;
+        max-width: 550px;
+        border: 2px dashed #e2e8f0;
+        border-radius: 12px;
+        background: #f8fafc;
+    }
+    
+    .no-data-message i {
+        font-size: 4rem;
+        color: #3b82f6;
+        margin-bottom: 1.5rem;
+        opacity: 0.8;
+    }
+    
+    .no-data-message h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #0f172a;
+        margin-bottom: 0.75rem;
+    }
+    
+    .no-data-message p {
+        margin-bottom: 1.5rem;
+        font-size: 1.05rem;
+    }
+    
+    .btn-primary {
+        display: inline-block;
+        background: #2563eb;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 6px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    }
+    
+    .btn-primary:hover {
+        background: #1d4ed8;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+    }
+    
+    /* Mobile-specific styles */
+    .mobile-label {
+        display: none;
+        font-weight: 600;
+        margin-right: 0.5rem;
+        color: #64748b;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 1100px) {
+        .test-header h2 {
+            font-size: 1.3rem;
+        }
+        
+        .performers-table th,
+        .performers-table td {
+            padding: 1rem 0.85rem;
+        }
+        
+        .rank-medal {
+            width: 34px;
+            height: 34px;
+        }
+    }
+    
+    @media (max-width: 992px) {
+        .test-status {
+            position: static;
+            display: inline-flex;
+            margin-bottom: 0.75rem;
+        }
+        
+        .test-header h2 {
+            padding-right: 0;
+            margin-bottom: 0.75rem;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .top-performers-container {
+            padding: 0 1rem;
+        }
+        
+        .section-header h1 {
+            font-size: 2rem;
+        }
+        
+        .performers-table {
+            border: 0;
+        }
+        
+        .performers-table thead {
+            display: none;
+        }
+        
+        .performers-table tr {
+            margin-bottom: 1.25rem;
+            display: block;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+        }
+        
+        .performers-table td {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: right;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        
+        .performers-table td:last-child {
+            border-bottom: 0;
+        }
+        
+        .mobile-label {
+            display: inline-block;
+        }
+        
+        .tab-btn {
+            padding: 0.85rem 1.25rem;
+            font-size: 0.9rem;
+        }
+        
+        .rank-medal {
+            width: 32px;
+            height: 32px;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+        }
+        
+        .user-info {
+            flex: 1;
+            justify-content: flex-start;
+            text-align: left;
+        }
+        
+        .top-rank-1, .top-rank-2, .top-rank-3 {
+            position: relative;
+        }
+        
+        .top-rank-1::before, 
+        .top-rank-2::before, 
+        .top-rank-3::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+        }
+        
+        .top-rank-1::before {
+            background: linear-gradient(to bottom, #FFD700, #FFA500);
+        }
+        
+        .top-rank-2::before {
+            background: linear-gradient(to bottom, #E0E0E0, #A9A9A9);
+        }
+        
+        .top-rank-3::before {
+            background: linear-gradient(to bottom, #CD7F32, #A5682A);
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .test-meta {
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .section-header h1 {
+            font-size: 1.75rem;
+        }
+        
+        .tab-header {
+            justify-content: flex-start;
+        }
+        
+        .tab-btn {
+            flex: 0 0 auto;
+            font-size: 0.85rem;
+            padding: 0.75rem 1rem;
+        }
+        
+        .test-card {
+            margin-bottom: 1.5rem;
+        }
+        
+        .test-header {
+            padding: 1.25rem;
+        }
+        
+        .tab-content {
+            padding: 1.25rem 1rem;
+        }
+    }
+</style>
+
+<div class="top-performers-container">
+    <div class="section-header">
+        <h1>Top Performers</h1>
+        <p class="section-description">Celebrating excellence and dedication across all our assessments</p>
+    </div>
+
+    {% if not categories %}
+        <div class="no-data-container">
+            <div class="no-data-message">
+                <i class="fas fa-user-graduate nfas"></i>
+                <h3>No performance data available yet</h3>
+                <p>Be the first to take a mock test and appear on our leaderboard!</p>
+                <a href="/mock-tests" class="btn-primary">Browse Available Tests</a>
+            </div>
+        </div>
+    {% else %}
+        <div class="category-tabs">
+            <div class="tab-header">
+                {% for category_name in categories.keys %}
+                    <button class="tab-btn {% if forloop.first %}active{% endif %}" 
+                            data-category="{{ category_name|slugify }}">
+                        {{ category_name }}
+                    </button>
+                {% endfor %}
+            </div>
+            
+            {% for category_name, test_items in categories.items %}
+                <div class="tab-content {% if forloop.first %}active{% endif %}" 
+                     id="category-{{ category_name|slugify }}">
+                    
+                    {% for item in test_items %}
+                        <div class="test-card">
+                            <div class="test-header">
+                                <h2>{{ item.test.title }}</h2>
+                                {% if item.test.is_live %}
+                                    <div class="test-status live">
+                                        <span class="status-dot"></span>Test in Progress
+                                    </div>
+                                {% else %}
+                                    <div class="test-status completed">
+                                        <span class="status-dot"></span>Final Results
+                                    </div>
+                                {% endif %}
+                                <div class="test-meta">
+                                    <span class="meta-item">
+                                        <i class="fas fa-users nfas"></i> {{ item.total_participants }} Participants
+                                    </span>
+                                    <span class="meta-item">
+                                        <i class="fas fa-trophy nfas"></i> Top {{ item.top_count }} Performers
+                                    </span>
+                                    <span class="meta-item">
+                                        <i class="fas fa-calendar-alt nfas"></i> {{ item.test.start_time|date:"d M Y" }}
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="performers-table-wrapper">
+                                <table class="performers-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Rank</th>
+                                            <th>Name</th>
+                                            <th>Score</th>
+                                            <th>Correct</th>
+                                            <th>Incorrect</th>
+                                            <th>Percentile</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for session in item.sessions %}
+                                            <tr class="{% if session.rank <= 3 %}top-rank-{{ session.rank }}{% endif %}">
+                                                <td class="rank-cell">
+                                                    {% if session.rank <= 3 %}
+                                                        <div class="rank-medal rank-{{ session.rank }}">
+                                                            {{ session.rank }}
+                                                        </div>
+                                                    {% else %}
+                                                        <div class="rank-number">{{ session.rank }}</div>
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    <div class="user-info">
+                                                        <span class="user-avatar">
+                                                            {% if session.user.profile.avatar_url %}
+                                                                <img src="{{ session.user.profile.avatar_url }}" alt="{{ session.user.username }}">
+                                                            {% else %}
+                                                                {{ session.user.username|first|upper }}
+                                                            {% endif %}
+                                                        </span>
+                                                        <span class="user-name">{{ session.user.get_full_name|default:session.user.username }}</span>
+                                                    </div>
+                                                </td>
+                                                <td class="score-cell">
+                                                    <span class="mobile-label">Score:</span>
+                                                    <span>{{ session.score_format }}</span>
+                                                </td>
+                                                <td class="correct-cell">
+                                                    <span class="mobile-label">Correct:</span>
+                                                    <span>{{ session.total_correct }}</span>
+                                                </td>
+                                                <td class="incorrect-cell">
+                                                    <span class="mobile-label">Incorrect:</span>
+                                                    <span>{{ session.total_incorrect }}</span>
+                                                </td>
+                                                <td class="percentile-cell">
+                                                    <span class="mobile-label">Percentile:</span>
+                                                    <span>{{ session.percentile|floatformat:1 }}%</span>
+                                                </td>
+                                                
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Tab switching functionality with smooth transitions
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons and contents
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => {
+                    content.style.display = 'none';
+                    content.classList.remove('active');
+                });
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Show corresponding content with animation
+                const categorySlug = button.getAttribute('data-category');
+                const activeContent = document.getElementById('category-' + categorySlug);
+                
+                // First set display to block
+                activeContent.style.display = 'block';
+                
+                // Force a reflow to ensure the animation starts properly
+                void activeContent.offsetWidth;
+                
+                // Then add the active class for animation
+                activeContent.classList.add('active');
+            });
+        });
+        
+        // Add smooth animation on table row hover with delay for each row
+        const tableRows = document.querySelectorAll('.performers-table tbody tr');
+        tableRows.forEach((row, index) => {
+            // Add entrance animation with staggered delay
+            setTimeout(() => {
+                row.style.opacity = '1';
+                row.style.transform = 'translateY(0)';
+            }, 50 * index);
+            
+            // Add hover transition
+            row.addEventListener('mouseenter', () => {
+                row.style.transition = 'background-color 0.3s ease, transform 0.2s ease';
+                row.style.transform = 'translateX(3px)';
+            });
+            
+            row.addEventListener('mouseleave', () => {
+                row.style.transform = 'translateX(0)';
+            });
+        });
+        
+        // Make all table rows initially invisible for the entrance animation
+        tableRows.forEach(row => {
+            row.style.opacity = '0';
+            row.style.transform = 'translateY(10px)';
+            row.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        });
+    });
+</script>
+{% endblock %}
+{%block pp%}
+
+<li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">
+      
+        <i class="fas fa-user-circle profile-icon"></i>
+      
+      {{ user.username }}
+      
+    </a>
+    <div class="dropdown-content">
+      <a href="#">Settings</a>
+      <a href={% url 'logout' %}>Logout</a>
+    </div>
+  </li>
+
+
+{%endblock%} 

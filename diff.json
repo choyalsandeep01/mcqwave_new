@@ -1,0 +1,29 @@
+[
+{
+    "model": "mcqs.difficulties",
+    "pk": "310bca2e-60ae-4c01-a2fc-965359b4fa82",
+    "fields": {
+        "created_at": "2024-08-16T09:09:31.962Z",
+        "updated_at": "2024-08-16T09:09:31.962Z",
+        "name": "Medium"
+    }
+},
+{
+    "model": "mcqs.difficulties",
+    "pk": "386c42ea-002a-4cad-883f-523bd7d9d09c",
+    "fields": {
+        "created_at": "2024-08-16T09:09:23.102Z",
+        "updated_at": "2024-08-16T09:09:23.102Z",
+        "name": "Easy"
+    }
+},
+{
+    "model": "mcqs.difficulties",
+    "pk": "731f7be0-d0fc-45f5-b6cd-bb2580c13d6a",
+    "fields": {
+        "created_at": "2024-08-16T09:09:41.223Z",
+        "updated_at": "2024-08-16T09:09:41.223Z",
+        "name": "Tough"
+    }
+}
+]

@@ -1,0 +1,542 @@
+[
+{
+    "model": "mcqs.mcq",
+    "pk": "0829dda2-5c69-4e3c-ad1a-075c45ea5a84",
+    "fields": {
+        "created_at": "2024-08-26T10:35:20.316Z",
+        "updated_at": "2024-08-26T10:35:20.316Z",
+        "bulk_input": "",
+        "topic": "f28f3637-261b-407c-9004-e551bc15ab8a",
+        "text": "What is the primary function of osteoclasts?",
+        "option_1": "Bone resorption",
+        "option_2": "Bone formation",
+        "option_3": "Bone support",
+        "option_4": "Bone mineralization",
+        "correct_option": "Bone resorption",
+        "explanation": "Osteoclasts are specialized cells responsible for breaking down bone tissue, a process known as bone resorption.",
+        "image": "",
+        "difficulty": null,
+        "types": null
+    }
+},
+{
+    "model": "mcqs.mcq",
+    "pk": "082d3db4-64a3-44a9-88c8-45c328624443",
+    "fields": {
+        "created_at": "2024-08-17T05:36:01.945Z",
+        "updated_at": "2024-08-17T05:36:01.945Z",
+        "bulk_input": null,
+        "topic": "1a7752ab-70bd-419a-bd5b-9f118f410702",
+        "text": "Which type of microorganism is responsible for causing fungal infections?",
+        "option_1": "Bacteria",
+        "option_2": "Viruses",
+        "option_3": "Fungi",
+        "option_4": "Protozoa",
+        "correct_option": "Fungi",
+        "explanation": "Fungi are responsible for fungal infections, which can affect the skin, nails, and internal organs. Bacteria cause bacterial infections, viruses cause viral infections, and protozoa are responsible for parasitic infections.",
+        "image": "",
+        "difficulty": "386c42ea-002a-4cad-883f-523bd7d9d09c",
+        "types": "17c9993d-cb58-458d-b956-b9b324518ea7"
+    }
+},
+{
+    "model": "mcqs.mcq",
+    "pk": "0cbacac4-bf3b-4ad3-961f-f732bbe4d2e0",
+    "fields": {
+        "created_at": "2024-08-26T10:35:20.314Z",
+        "updated_at": "2024-08-24T17:04:53.364Z",
+        "bulk_input": "",
+        "topic": "f28f3637-261b-407c-9004-e551bc15ab8a",
+        "text": "Which of the following is the main function of the large intestine?",
+        "option_1": "Nutrient absorption",
+        "option_2": "Protein digestion",
+        "option_3": "Water and electrolyte absorption",
+        "option_4": "Enzyme secretion",
+        "correct_option": "Water and electrolyte absorption",
+        "explanation": "The large intestine absorbs water and electrolytes from indigestible food matter, forming solid waste (feces) that is eventually excreted. It does not significantly absorb nutrients or secrete enzymes.",
+        "image": "",
+        "difficulty": null,
+        "types": null
+    }
+},
+{
+    "model": "mcqs.mcq",
+    "pk": "0f2d0955-1231-4f12-8e3b-d3b0d3c88b95",
+    "fields": {
+        "created_at": "2024-08-17T05:32:03.304Z",
+        "updated_at": "2024-08-17T05:32:03.304Z",
+        "bulk_input": null,
+        "topic": "5b3d806a-7709-4de4-84b8-12f4150dfde1",
+        "text": "Which bacteria are known to cause bacterial meningitis in infants?",
+        "option_1": "Staphylococcus aureus",
+        "option_2": "Neisseria meningitidis",
+        "option_3": "Streptococcus pneumoniae",
+        "option_4": "Escherichia coli",
+        "correct_option": "Escherichia coli",
+        "explanation": "Escherichia coli (E. coli) is a common cause of bacterial meningitis in infants, particularly in neonates. Neisseria meningitidis and Streptococcus pneumoniae are also pathogens that cause bacterial meningitis, but they more commonly affect older children and adults. Staphylococcus aureus is not a typical cause of bacterial meningitis in infants.",
+        "image": "",
+        "difficulty": "386c42ea-002a-4cad-883f-523bd7d9d09c",
+        "types": "17c9993d-cb58-458d-b956-b9b324518ea7"
+    }
+},
+{
+    "model": "mcqs.mcq",
+    "pk": "14893f2d-6cc7-422e-a5ef-c361f28c56f9",
+    "fields": {
+        "created_at": "2024-08-17T05:38:28.285Z",
+        "updated_at": "2024-08-17T05:38:28.285Z",
+        "bulk_input": null,
+        "topic": "a838c63b-abf1-4a24-bb01-99c0f56c97d9",
+        "text": "Which of the following antibiotics inhibits cell wall synthesis in bacteria?",
+        "option_1": "Erythromycin",
+        "option_2": "Ciprofloxacin",
+        "option_3": "Penicillin",
+        "option_4": "Tetracycline",
+        "correct_option": "Penicillin",
+        "explanation": "Penicillin inhibits bacterial cell wall synthesis by interfering with the formation of peptidoglycan cross-links, which is essential for bacterial cell wall integrity. Erythromycin is a macrolide that inhibits protein synthesis, ciprofloxacin is a fluoroquinolone that inhibits DNA gyrase, and tetracycline is a tetracycline that also inhibits protein synthesis.",
+        "image": "",
+        "difficulty": "386c42ea-002a-4cad-883f-523bd7d9d09c",
+        "types": "17c9993d-cb58-458d-b956-b9b324518ea7"
+    }
+},
+{
+    "model": "mcqs.mcq",
+    "pk": "1a00e505-a9a4-4c3a-9d22-94eabc2d2e13",
+    "fields": {
+        "created_at": "2024-08-17T05:29:58.933Z",
+        "updated_at": "2024-08-17T05:29:58.933Z",
+        "bulk_input": null,
+        "topic": "292fc5ae-84a6-4cf7-b5f6-ab779c0924fa",
+        "text": "Which phase of the cardiac cycle is characterized by the relaxation of the ventricles and filling of the ventricles with blood?",
+        "option_1": "Systole",
+        "option_2": "Diastole",
+        "option_3": "Atrial contraction",
+        "option_4": "Isovolumetric contraction",
+        "correct_option": "Diastole",
+        "explanation": "Diastole is the phase of the cardiac cycle when the ventricles relax and fill with blood from the atria. During systole, the ventricles contract and eject blood into the pulmonary artery and aorta. Atrial contraction occurs towards the end of diastole, and isovolumetric contraction is a phase during systole where the ventricles contract without a change in volume.",
+        "image": "",
+        "difficulty": "386c42ea-002a-4cad-883f-523bd7d9d09c",
+        "types": "17c9993d-cb58-458d-b956-b9b324518ea7"
+    }
+},
+{
+    "model": "mcqs.mcq",
+    "pk": "2638ca8a-5fa0-4fa5-9288-3004a4e9ff94",
+    "fields": {
+        "created_at": "2024-08-17T05:37:48.623Z",
+        "updated_at": "2024-08-17T05:37:48.623Z",
+        "bulk_input": null,
+        "topic": "736b9c67-6559-47eb-9193-9b2c85953331",
+        "text": "What is the primary function of a bacteriophage?",
+        "option_1": "To digest bacterial cell walls",
+        "option_2": "To replicate within bacterial cells and destroy them",
+        "option_3": "To neutralize bacterial toxins",
+        "option_4": "To enhance bacterial growth",
+        "correct_option": "To replicate within bacterial cells and destroy them",
+        "explanation": "A bacteriophage is a virus that infects and replicates within bacterial cells, often leading to the destruction of the bacterial cell. Bacteriophages are used in research and as a potential treatment for bacterial infections. They do not digest bacterial cell walls, neutralize toxins, or enhance growth.",
+        "image": "",
+        "difficulty": "386c42ea-002a-4cad-883f-523bd7d9d09c",
+        "types": "17c9993d-cb58-458d-b956-b9b324518ea7"
+    }
+},
+{
+    "model": "mcqs.mcq",
+    "pk": "3a565dde-fa65-4771-843a-35375034466a",
+    "fields": {
+        "created_at": "2024-08-21T16:50:49.685Z",
+        "updated_at": "2024-08-19T06:15:19.850Z",
+        "bulk_input": "",
+        "topic": "e2111f6e-e5a9-4db8-9b55-99c924d08f8a",
+        "text": "Which of the following is an obligate anaerobe?",
+        "option_1": "Clostridium botulinum",
+        "option_2": "Staphylococcus aureus",
+        "option_3": "Bacillus cereus",
+        "option_4": "Escherichia coli",
+        "correct_option": "Clostridium botulinum",
+        "explanation": "Clostridium botulinum is an obligate anaerobe that can only survive in environments without oxygen, unlike the other bacteria listed which can tolerate or require oxygen.",
+        "image": "",
+        "difficulty": "310bca2e-60ae-4c01-a2fc-965359b4fa82",
+        "types": "17c9993d-cb58-458d-b956-b9b324518ea7"
+    }
+},
+{
+    "model": "mcqs.mcq",
+    "pk": "47580a30-2762-44ba-a8ed-389b94072a2b",
+    "fields": {
+        "created_at": "2024-08-24T17:04:53.363Z",
+        "updated_at": "2024-08-24T17:04:06.421Z",
+        "bulk_input": "",
+        "topic": "f28f3637-261b-407c-9004-e551bc15ab8a",
+        "text": "Which of the following bones is the largest in the human body?",
+        "option_1": "Humerus",
+        "option_2": "Tibia",
+        "option_3": "Femur",
+        "option_4": "Pelvis",
+        "correct_option": "Femur",
+        "explanation": "The femur, or thigh bone, is the longest, heaviest, and strongest bone in the human body. It extends from the hip to the knee and supports much of the body's weight during standing, walking, and running.",
+        "image": "",
+        "difficulty": null,
+        "types": null
+    }
+},
+{
+    "model": "mcqs.mcq",
+    "pk": "4a94eb53-182a-449f-ac3f-c7dfc8901ac2",
+    "fields": {
+        "created_at": "2024-08-21T16:50:49.687Z",
+        "updated_at": "2024-08-19T06:15:19.850Z",
+        "bulk_input": "",
+        "topic": "e2111f6e-e5a9-4db8-9b55-99c924d08f8a",
+        "text": "Which vaccine is used to prevent whooping cough?",
+        "option_1": "DTP vaccine",
+        "option_2": "MMR vaccine",
+        "option_3": "Polio vaccine",
+        "option_4": "Hepatitis B vaccine",
+        "correct_option": "DTP vaccine",
+        "explanation": "The DTP (Diphtheria, Tetanus, Pertussis) vaccine is used to prevent whooping cough (pertussis), which is caused by Bordetella pertussis.",
+        "image": "",
+        "difficulty": "310bca2e-60ae-4c01-a2fc-965359b4fa82",
+        "types": "17c9993d-cb58-458d-b956-b9b324518ea7"
+    }
+},
+{
+    "model": "mcqs.mcq",
+    "pk": "4f7c5586-f115-47e5-b8d9-b3102d3dd387",
+    "fields": {
+        "created_at": "2024-08-17T04:39:34.568Z",
+        "updated_at": "2024-08-17T04:39:34.568Z",
+        "bulk_input": null,
+        "topic": "92c74dec-4d04-440f-a4c8-51065c5c51a7",
+        "text": "In the glycolytic pathway, which enzyme catalyzes the conversion of fructose-6-phosphate to fructose-1,6-bisphosphate?",
+        "option_1": "Hexokinase",
+        "option_2": "Phosphofructokinase-1 (PFK-1)",
+        "option_3": "Aldolase",
+        "option_4": "Pyruvate kinase",
+        "correct_option": "Phosphofructokinase-1 (PFK-1)",
+        "explanation": "Phosphofructokinase-1 (PFK-1) is the enzyme responsible for converting fructose-6-phosphate to fructose-1,6-bisphosphate in the glycolytic pathway. Hexokinase catalyzes the phosphorylation of glucose to glucose-6-phosphate, aldolase splits fructose-1,6-bisphosphate into two three-carbon molecules, and pyruvate kinase catalyzes the final step of glycolysis, converting phosphoenolpyruvate to pyruvate.",
+        "image": "",
+        "difficulty": "386c42ea-002a-4cad-883f-523bd7d9d09c",
+        "types": "17c9993d-cb58-458d-b956-b9b324518ea7"
+    }
+},
+{
+    "model": "mcqs.mcq",
+    "pk": "5bcd9ad5-07cf-4ab2-808c-18dfb2edff16",
+    "fields": {
+        "created_at": "2024-08-26T10:12:12.270Z",
+        "updated_at": "2024-08-26T10:12:12.270Z",
+        "bulk_input": "",
+        "topic": "a5a3290c-6fb0-4ed2-8268-5447f6b00b71",
+        "text": "Where is the pituitary gland located?",
+        "option_1": "Sella turcica",
+        "option_2": "Cranial fossa",
+        "option_3": "Foramen magnum",
+        "option_4": "Occipital lobe",
+        "correct_option": "Sella turcica",
+        "explanation": "The pituitary gland sits in the sella turcica, a depression in the sphenoid bone of the skull.",
+        "image": "",
+        "difficulty": null,
+        "types": null
+    }
+},
+{
+    "model": "mcqs.mcq",
+    "pk": "62f1b349-e45f-4978-9ae7-d8b51f3942d0",
+    "fields": {
+        "created_at": "2024-08-17T04:29:30.845Z",
+        "updated_at": "2024-08-17T04:29:30.845Z",
+        "bulk_input": null,
+        "topic": "f28f3637-261b-407c-9004-e551bc15ab8a",
+        "text": "Which of the following arteries supplies the primary blood flow to the cerebellum?",
+        "option_1": "Anterior cerebral artery",
+        "option_2": "Posterior cerebral artery",
+        "option_3": "Superior cerebellar artery",
+        "option_4": "Middle cerebral artery",
+        "correct_option": "Superior cerebellar artery",
+        "explanation": "The cerebellum receives its primary blood supply from the superior cerebellar artery, which is a branch of the basilar artery. The anterior and posterior cerebral arteries supply other parts of the brain, while the middle cerebral artery primarily supplies the lateral aspects of the cerebral hemispheres.",
+        "image": "",
+        "difficulty": "386c42ea-002a-4cad-883f-523bd7d9d09c",
+        "types": "a3ba13d1-6a13-4685-80c6-ebc03994ac55"
+    }
+},
+{
+    "model": "mcqs.mcq",
+    "pk": "7048da05-76ef-4233-8456-7c432321ac72",
+    "fields": {
+        "created_at": "2024-08-21T16:50:49.688Z",
+        "updated_at": "2024-08-17T05:34:51.398Z",
+        "bulk_input": "",
+        "topic": "e2111f6e-e5a9-4db8-9b55-99c924d08f8a",
+        "text": "What is the primary mode of transmission for Hepatitis B virus?",
+        "option_1": "Airborne droplets",
+        "option_2": "Fecal-oral route",
+        "option_3": "Blood and bodily fluids",
+        "option_4": "Insect bites",
+        "correct_option": "Blood and bodily fluids",
+        "explanation": "Hepatitis B virus (HBV) is primarily transmitted through contact with infected blood and bodily fluids. Airborne droplets are associated with respiratory infections, the fecal-oral route is for gastrointestinal infections, and insect bites are related to diseases like malaria and dengue.",
+        "image": "",
+        "difficulty": "310bca2e-60ae-4c01-a2fc-965359b4fa82",
+        "types": "17c9993d-cb58-458d-b956-b9b324518ea7"
+    }
+},
+{
+    "model": "mcqs.mcq",
+    "pk": "79085a97-719a-484a-a797-af7ce7470aef",
+    "fields": {
+        "created_at": "2024-08-26T10:12:12.269Z",
+        "updated_at": "2024-08-26T10:12:12.269Z",
+        "bulk_input": "",
+        "topic": "a5a3290c-6fb0-4ed2-8268-5447f6b00b71",
+        "text": "Which of the following muscles is part of the rotator cuff?",
+        "option_1": "Supraspinatus",
+        "option_2": "Deltoid",
+        "option_3": "Pectoralis major",
+        "option_4": "Biceps brachii",
+        "correct_option": "Supraspinatus",
+        "explanation": "The supraspinatus is one of the four muscles that comprise the rotator cuff, playing a key role in shoulder stability.",
+        "image": "",
+        "difficulty": null,
+        "types": null
+    }
+},
+{
+    "model": "mcqs.mcq",
+    "pk": "9bd02fa4-88b7-49b8-a1af-6970beeb5dce",
+    "fields": {
+        "created_at": "2024-08-17T05:36:54.096Z",
+        "updated_at": "2024-08-17T05:36:54.096Z",
+        "bulk_input": null,
+        "topic": "ddd3f403-3aac-4bb3-a2ed-e38f7c744380",
+        "text": "Which of the following is a key feature of Gram-negative bacteria?",
+        "option_1": "Thick peptidoglycan layer",
+        "option_2": "Presence of an outer membrane",
+        "option_3": "Positive Gram staining",
+        "option_4": "Production of exotoxins",
+        "correct_option": "Presence of an outer membrane",
+        "explanation": "Gram-negative bacteria are characterized by having an outer membrane in addition to a thinner peptidoglycan layer in their cell wall. This outer membrane contains lipopolysaccharides and is responsible for the Gram-negative staining reaction. Gram-positive bacteria have a thicker peptidoglycan layer and do not have an outer membrane.",
+        "image": "",
+        "difficulty": "386c42ea-002a-4cad-883f-523bd7d9d09c",
+        "types": "17c9993d-cb58-458d-b956-b9b324518ea7"
+    }
+},
+{
+    "model": "mcqs.mcq",
+    "pk": "9d6fc526-99a2-40ec-97d9-5257858820a9",
+    "fields": {
+        "created_at": "2024-08-17T05:31:17.888Z",
+        "updated_at": "2024-08-17T05:31:17.888Z",
+        "bulk_input": null,
+        "topic": "a8fe8980-767e-4abe-a659-b05c823062f8",
+        "text": "Which of the following methods is used to sterilize heat-sensitive materials?",
+        "option_1": "Autoclaving",
+        "option_2": "Dry Heat",
+        "option_3": "Ethylene Oxide Gas",
+        "option_4": "Boiling Water",
+        "correct_option": "Ethylene Oxide Gas",
+        "explanation": "Ethylene oxide gas is used for sterilizing heat-sensitive materials, such as plastic and rubber items, that cannot withstand high temperatures. Autoclaving and dry heat are suitable for heat-stable materials, while boiling water is not sufficient for complete sterilization.",
+        "image": "",
+        "difficulty": "386c42ea-002a-4cad-883f-523bd7d9d09c",
+        "types": "17c9993d-cb58-458d-b956-b9b324518ea7"
+    }
+},
+{
+    "model": "mcqs.mcq",
+    "pk": "c40b1d73-02cb-4094-a96c-200a2457860a",
+    "fields": {
+        "created_at": "2024-08-19T06:15:19.850Z",
+        "updated_at": "2024-08-19T06:11:57.103Z",
+        "bulk_input": "",
+        "topic": "e2111f6e-e5a9-4db8-9b55-99c924d08f8a",
+        "text": "What is the primary causative agent of tuberculosis?",
+        "option_1": "Mycobacterium tuberculosis",
+        "option_2": "Mycobacterium leprae",
+        "option_3": "Escherichia coli",
+        "option_4": "Streptococcus pneumoniae",
+        "correct_option": "Mycobacterium tuberculosis",
+        "explanation": "Tuberculosis is primarily caused by Mycobacterium tuberculosis, which is a slow-growing bacterium that primarily affects the lungs.",
+        "image": "",
+        "difficulty": null,
+        "types": null
+    }
+},
+{
+    "model": "mcqs.mcq",
+    "pk": "c50af667-aae6-4ceb-b65f-4cf8fb3a11f9",
+    "fields": {
+        "created_at": "2024-08-17T08:38:09.031Z",
+        "updated_at": "2024-08-17T04:31:31.786Z",
+        "bulk_input": null,
+        "topic": "a5a3290c-6fb0-4ed2-8268-5447f6b00b71",
+        "text": "In the process of DNA replication, which enzyme is responsible for adding nucleotides to the growing DNA strand?",
+        "option_1": "DNA helicase",
+        "option_2": "DNA polymerase",
+        "option_3": "DNA ligase",
+        "option_4": "RNA primase",
+        "correct_option": "DNA polymerase",
+        "explanation": "DNA polymerase is the enzyme responsible for adding nucleotides to the growing DNA strand during replication. DNA helicase unwinds the DNA double helix, DNA ligase joins Okazaki fragments on the lagging strand, and RNA primase synthesizes RNA primers to initiate replication.",
+        "image": "mcq_images/dna.jpg",
+        "difficulty": "386c42ea-002a-4cad-883f-523bd7d9d09c",
+        "types": "17c9993d-cb58-458d-b956-b9b324518ea7"
+    }
+},
+{
+    "model": "mcqs.mcq",
+    "pk": "c9e41f5b-317e-4d46-85e5-49f8b5a404d1",
+    "fields": {
+        "created_at": "2024-08-26T10:11:26.028Z",
+        "updated_at": "2024-08-26T10:11:26.028Z",
+        "bulk_input": "",
+        "topic": "a5a3290c-6fb0-4ed2-8268-5447f6b00b71",
+        "text": "What structure carries oxygenated blood from the lungs to the heart?",
+        "option_1": "Pulmonary veins",
+        "option_2": "Pulmonary arteries",
+        "option_3": "Aorta",
+        "option_4": "Superior vena cava",
+        "correct_option": "Pulmonary veins",
+        "explanation": "The pulmonary veins are responsible for transporting oxygenated blood from the lungs back to the left atrium of the heart.",
+        "image": "",
+        "difficulty": null,
+        "types": null
+    }
+},
+{
+    "model": "mcqs.mcq",
+    "pk": "caee17df-faa5-4774-a7fd-20e9f5f87b12",
+    "fields": {
+        "created_at": "2024-08-26T10:35:20.317Z",
+        "updated_at": "2024-08-26T10:35:20.317Z",
+        "bulk_input": "",
+        "topic": "f28f3637-261b-407c-9004-e551bc15ab8a",
+        "text": "Which artery supplies blood to the small intestine?",
+        "option_1": "Superior mesenteric artery",
+        "option_2": "Inferior mesenteric artery",
+        "option_3": "Celiac artery",
+        "option_4": "Renal artery",
+        "correct_option": "Superior mesenteric artery",
+        "explanation": "The superior mesenteric artery provides blood supply to most of the small intestine and part of the large intestine.",
+        "image": "",
+        "difficulty": null,
+        "types": null
+    }
+},
+{
+    "model": "mcqs.mcq",
+    "pk": "d3f57f75-088e-47f5-b654-cae500990a81",
+    "fields": {
+        "created_at": "2024-08-17T05:27:09.248Z",
+        "updated_at": "2024-08-17T05:27:09.248Z",
+        "bulk_input": null,
+        "topic": "7799e3f2-5b6d-4337-bdea-c2c82a99ffa0",
+        "text": "During the cardiac action potential, which ion is primarily responsible for the depolarization phase?",
+        "option_1": "Sodium (Na+)",
+        "option_2": "Potassium (K+)",
+        "option_3": "Calcium (Ca2+)",
+        "option_4": "Chloride (Cl-)",
+        "correct_option": "Sodium (Na+)",
+        "explanation": "The depolarization phase of the cardiac action potential is primarily caused by the rapid influx of sodium ions (Na+) into the cardiac muscle cells. This influx of Na+ leads to a rapid change in membrane potential from a negative to a positive value. Potassium (K+) is involved in repolarization, and calcium (Ca2+) plays a role in the plateau phase of the action potential, but sodium is the main ion responsible for depolarization.",
+        "image": "",
+        "difficulty": "386c42ea-002a-4cad-883f-523bd7d9d09c",
+        "types": "17c9993d-cb58-458d-b956-b9b324518ea7"
+    }
+},
+{
+    "model": "mcqs.mcq",
+    "pk": "dd456f27-6710-4205-abf3-0d8d615f4cab",
+    "fields": {
+        "created_at": "2024-08-17T05:26:18.382Z",
+        "updated_at": "2024-08-17T05:26:18.382Z",
+        "bulk_input": null,
+        "topic": "50a7fc25-504d-4c10-9dd6-3efe9ae7ff0a",
+        "text": "Which of the following best describes the primary function of the renin-angiotensin-aldosterone system (RAAS)?",
+        "option_1": "Regulation of blood glucose levels",
+        "option_2": "Regulation of blood pressure and fluid balance",
+        "option_3": "Regulation of body temperature",
+        "option_4": "Regulation of respiratory rate",
+        "correct_option": "Regulation of blood pressure and fluid balance",
+        "explanation": "The renin-angiotensin-aldosterone system (RAAS) plays a crucial role in regulating blood pressure and fluid balance. When blood pressure is low, the kidneys release renin, which converts angiotensinogen to angiotensin I. Angiotensin I is then converted to angiotensin II, which causes vasoconstriction and stimulates aldosterone release from the adrenal cortex. Aldosterone increases sodium and water reabsorption by the kidneys, which raises blood pressure and restores fluid",
+        "image": "",
+        "difficulty": "386c42ea-002a-4cad-883f-523bd7d9d09c",
+        "types": "17c9993d-cb58-458d-b956-b9b324518ea7"
+    }
+},
+{
+    "model": "mcqs.mcq",
+    "pk": "de92eaec-7dcf-4675-bb50-58e3e4dde944",
+    "fields": {
+        "created_at": "2024-08-17T05:34:01.904Z",
+        "updated_at": "2024-08-17T05:34:01.904Z",
+        "bulk_input": null,
+        "topic": "908bf784-aa29-4b5f-8365-dc35f2c22690",
+        "text": "Which of the following is a common method for diagnosing tuberculosis?",
+        "option_1": "Gram Staining",
+        "option_2": "Acid-Fast Bacilli (AFB) Staining",
+        "option_3": "Blood Culture",
+        "option_4": "ELISA",
+        "correct_option": "Acid-Fast Bacilli (AFB) Staining",
+        "explanation": "Acid-Fast Bacilli (AFB) staining, such as the Ziehl-Neelsen stain, is used to diagnose tuberculosis (TB) by identifying the characteristic acid-fast bacilli in sputum samples. Gram staining is used for bacterial identification but is not specific for TB, blood culture is used for various infections, and ELISA is used for detecting antibodies.",
+        "image": "",
+        "difficulty": "386c42ea-002a-4cad-883f-523bd7d9d09c",
+        "types": "17c9993d-cb58-458d-b956-b9b324518ea7"
+    }
+},
+{
+    "model": "mcqs.mcq",
+    "pk": "e4387825-2b5c-4a5e-9982-14950a48719e",
+    "fields": {
+        "created_at": "2024-08-26T10:35:20.315Z",
+        "updated_at": "2024-08-24T17:04:53.364Z",
+        "bulk_input": "",
+        "topic": "f28f3637-261b-407c-9004-e551bc15ab8a",
+        "text": "The primary site for gas exchange in the lungs is the:",
+        "option_1": "Bronchi",
+        "option_2": "Alveoli",
+        "option_3": "Trachea",
+        "option_4": "Pleura",
+        "correct_option": "Alveoli",
+        "explanation": "The alveoli are tiny air sacs in the lungs where the exchange of oxygen and carbon dioxide takes place. Their thin walls and close proximity to capillaries allow for efficient gas exchange.",
+        "image": "",
+        "difficulty": null,
+        "types": null
+    }
+},
+{
+    "model": "mcqs.mcq",
+    "pk": "e9fc1df9-8f7a-447a-a12a-8a061ed96390",
+    "fields": {
+        "created_at": "2024-08-17T05:28:50.108Z",
+        "updated_at": "2024-08-17T05:28:50.108Z",
+        "bulk_input": null,
+        "topic": "e73a82ab-6213-4cc4-b115-b12352a39a4a",
+        "text": "Which of the following hormones is primarily responsible for increasing the metabolic rate and promoting growth and development in tissues?",
+        "option_1": "Insulin",
+        "option_2": "Cortisol",
+        "option_3": "Thyroxine",
+        "option_4": "Aldosterone",
+        "correct_option": "Thyroxine",
+        "explanation": "Thyroxine (T4), a thyroid hormone, is primarily responsible for increasing the metabolic rate of cells throughout the body. It plays a crucial role in regulating metabolism, growth, and development. Insulin regulates blood glucose levels, cortisol affects metabolism and stress responses, and aldosterone regulates sodium and potassium balance in the kidneys.",
+        "image": "",
+        "difficulty": "386c42ea-002a-4cad-883f-523bd7d9d09c",
+        "types": "17c9993d-cb58-458d-b956-b9b324518ea7"
+    }
+},
+{
+    "model": "mcqs.mcq",
+    "pk": "f05a49cd-052d-4ca6-b908-476853c9dc3d",
+    "fields": {
+        "created_at": "2024-08-17T04:38:37.796Z",
+        "updated_at": "2024-08-17T04:38:37.796Z",
+        "bulk_input": null,
+        "topic": "a33e5476-73ed-4e8d-8d8f-989e09770414",
+        "text": "Which of the following is the primary function of insulin?",
+        "option_1": "Stimulate glycogenolysis in the liver",
+        "option_2": "Promote glucose uptake and storage in cells",
+        "option_3": "Increase blood glucose levels",
+        "option_4": "Inhibit protein synthesis",
+        "correct_option": "Promote glucose uptake and storage in cells",
+        "explanation": "Insulin is a hormone produced by the pancreas that promotes the uptake of glucose by cells and its storage as glycogen in the liver and muscles. It lowers blood glucose levels by facilitating glucose entry into cells, whereas glycogenolysis (the breakdown of glycogen) and increasing blood glucose levels are functions of glucagon. Insulin also promotes protein synthesis, not inhibition.",
+        "image": "",
+        "difficulty": "386c42ea-002a-4cad-883f-523bd7d9d09c",
+        "types": "a3ba13d1-6a13-4685-80c6-ebc03994ac55"
+    }
+}
+]

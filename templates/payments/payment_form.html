@@ -1,0 +1,596 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Complete Payment{% endblock %}
+
+{% block content %}
+<style>
+    /* Professional Payment Completion Page Styling */
+    
+    
+    .my-5 {
+        margin: 3rem 0 !important;
+    }
+    
+    /* Main Card Container */
+    .row {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .col-md-8 {
+        width: 100%;
+        max-width: 900px;
+        padding: 0;
+    }
+    
+    /* Payment Card */
+    .card {
+        background: white;
+        border: none;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+    }
+    
+    /* Card Header */
+    .card-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-bottom: none;
+        padding: 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .card-header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        animation: float 20s infinite linear;
+    }
+    
+    @keyframes float {
+        0% { transform: translate(-50%, -50%) rotate(0deg); }
+        100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    
+    .card-header h4 {
+        color: white;
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin: 0;
+        position: relative;
+        z-index: 1;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Card Body */
+    .card-body {
+        padding: 2.5rem;
+        background: #fafbfc;
+    }
+    
+    /* Plan Details Section */
+    .card-body .row {
+        margin-bottom: 2rem;
+    }
+    
+    .col-md-6 {
+        padding: 0 1rem;
+    }
+    
+    .card-body h5 {
+        color: #2d3748;
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #e2e8f0;
+        position: relative;
+    }
+    
+    .card-body h5::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 40px;
+        height: 2px;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+    }
+    
+    /* Plan Details Text */
+    .card-body p {
+        color: #4a5568;
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 0.75rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #f7fafc;
+    }
+    
+    .card-body p strong {
+        color: #2d3748;
+        font-weight: 600;
+        min-width: 120px;
+    }
+    
+    /* Payment Methods List */
+    .list-unstyled {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .list-unstyled li {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem 1rem;
+        margin-bottom: 0.5rem;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        color: #4a5568;
+        font-weight: 500;
+    }
+    
+    .list-unstyled li:hover {
+        transform: translateX(5px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+    }
+    
+    .list-unstyled li i {
+        margin-right: 1rem;
+        font-size: 1.25rem;
+        color: #667eea;
+        width: 24px;
+        text-align: center;
+    }
+    
+    /* Horizontal Rule */
+    hr {
+        border: none;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
+        margin: 2rem 0;
+    }
+    
+    /* Debug Alert */
+    .alert-info {
+        background: linear-gradient(135deg, #bee3f8 0%, #90cdf4 100%);
+        border: none;
+        border-radius: 12px;
+        color: #2c5282;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        border-left: 4px solid #3182ce;
+    }
+    
+    .alert-info h6 {
+        color: #2c5282;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+    
+    .alert-info p {
+        margin-bottom: 0.5rem;
+        border-bottom: none;
+        padding: 0;
+    }
+    
+    /* Form and Payment Section */
+    #payuForm {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        margin-top: 1rem;
+    }
+    
+    .text-center {
+        text-align: center;
+    }
+    
+    /* Loading Elements */
+    .mb-3 {
+        margin-bottom: 1.5rem;
+    }
+    
+    .spinner-border {
+        width: 3rem;
+        height: 3rem;
+        border-width: 0.3em;
+        color: #667eea !important;
+    }
+    
+    #loadingText {
+        color: #4a5568;
+        font-size: 1.1rem;
+        font-weight: 500;
+        margin-top: 1rem;
+    }
+    
+    /* Buttons */
+    .btn {
+        display: inline-block;
+        font-weight: 600;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        border: 1px solid transparent;
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        line-height: 1.5;
+        border-radius: 12px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        text-decoration: none;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    /* Primary Pay Button */
+    .btn-success {
+        background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+        border-color: #48bb78;
+        color: white;
+        box-shadow: 0 8px 25px rgba(72, 187, 120, 0.4);
+        font-size: 1.25rem;
+        padding: 1.25rem 3rem;
+        min-width: 280px;
+    }
+    
+    .btn-success:hover {
+        background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+        transform: translateY(-3px);
+        box-shadow: 0 12px 35px rgba(72, 187, 120, 0.5);
+        color: white;
+        text-decoration: none;
+    }
+    
+    .btn-success:active {
+        transform: translateY(-1px);
+    }
+    
+    .btn-success i {
+        margin-right: 0.75rem;
+        font-size: 1.1rem;
+    }
+    
+    /* Secondary Cancel Button */
+    .btn-outline-secondary {
+        background: transparent;
+        border: 2px solid #a0aec0;
+        color: #4a5568;
+        padding: 0.875rem 2rem;
+        font-weight: 500;
+        margin-top: 1rem;
+    }
+    
+    .btn-outline-secondary:hover {
+        background: #4a5568;
+        border-color: #4a5568;
+        color: white;
+        text-decoration: none;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(74, 85, 104, 0.3);
+    }
+    
+    /* Large Button Modifier */
+    .btn-lg {
+        padding: 1.25rem 3rem;
+        font-size: 1.25rem;
+    }
+    
+    /* Security Text */
+    .text-muted {
+        color: #718096 !important;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+    
+    .text-muted i {
+        color: #48bb78;
+        margin-right: 0.5rem;
+    }
+    
+    /* Button Animation Effects */
+    .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+        transition: left 0.5s;
+    }
+    
+    .btn:hover::before {
+        left: 100%;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 992px) {
+        .col-md-8 {
+            max-width: 100%;
+        }
+        
+        .col-md-6 {
+            width: 100%;
+            margin-bottom: 2rem;
+            padding: 0;
+        }
+        
+        .card-body .row .col-md-6:last-child {
+            margin-bottom: 0;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .container {
+            padding: 1rem 0.5rem;
+        }
+        
+        .my-5 {
+            margin: 2rem 0 !important;
+        }
+        
+        .card-header {
+            padding: 1.5rem;
+        }
+        
+        .card-header h4 {
+            font-size: 1.5rem;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        #payuForm {
+            padding: 1.5rem;
+        }
+        
+        .btn-success {
+            font-size: 1.1rem;
+            padding: 1rem 2rem;
+            min-width: auto;
+            width: 100%;
+        }
+        
+        .btn-outline-secondary {
+            width: 100%;
+            margin-top: 1rem;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .card-header h4 {
+            font-size: 1.25rem;
+        }
+        
+        .card-body {
+            padding: 1rem;
+        }
+        
+        .card-body h5 {
+            font-size: 1.1rem;
+        }
+        
+        .card-body p {
+            font-size: 0.95rem;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.25rem;
+        }
+        
+        .card-body p strong {
+            min-width: auto;
+        }
+        
+        .list-unstyled li {
+            padding: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .list-unstyled li i {
+            font-size: 1rem;
+            margin-right: 0.75rem;
+        }
+        
+        #payuForm {
+            padding: 1rem;
+        }
+        
+        .btn-success {
+            font-size: 1rem;
+            padding: 0.875rem 1.5rem;
+        }
+    }
+    
+    /* Loading State */
+    .loading .btn-success {
+        opacity: 0.7;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+    
+    /* Focus States for Accessibility */
+    .btn:focus {
+        outline: 3px solid rgba(102, 126, 234, 0.5);
+        outline-offset: 2px;
+    }
+    
+    /* Animation for Success State */
+    @keyframes success-pulse {
+        0% {
+            box-shadow: 0 8px 25px rgba(72, 187, 120, 0.4);
+        }
+        50% {
+            box-shadow: 0 8px 25px rgba(72, 187, 120, 0.6);
+        }
+        100% {
+            box-shadow: 0 8px 25px rgba(72, 187, 120, 0.4);
+        }
+    }
+    
+    .btn-success:not(:disabled) {
+        animation: success-pulse 2s ease-in-out infinite;
+    }
+    
+    /* Print Styles */
+    @media print {
+        .card {
+            box-shadow: none;
+            border: 1px solid #000;
+        }
+        
+        .btn,
+        .spinner-border,
+        #loadingText {
+            display: none;
+        }
+        
+        .card-header {
+            background: #f5f5f5 !important;
+            color: #000 !important;
+        }
+    }
+ .text-center-footer{
+    margin-top:10px;
+ }
+</style>
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Complete Your Payment</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Plan Details</h5>
+                            <p><strong>Plan:</strong> {{ plan.name }}</p>
+                            <p><strong>Duration:</strong> {{ plan.duration_days }} days</p>
+                            <p><strong>Amount:</strong> ₹{{ plan.price }}</p>
+                            <p><strong>Transaction ID:</strong> {{ transaction.transaction_id }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Payment Methods Available</h5>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-credit-card nfas"></i> Credit/Debit Cards</li>
+                                <li><i class="fas fa-university nfas"></i> Net Banking</li>
+                                <li><i class="fas fa-mobile-alt nfas"></i> UPI</li>
+                                <li><i class="fas fa-wallet nfas"></i> Digital Wallets</li>
+                                <li><i class="fas fa-money-bill-wave nfas"></i> EMI Options</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <!-- Debug Info (Remove in production) -->
+                    {% if debug %}
+                    <div class="alert alert-info">
+                        <h6>Debug Info:</h6>
+                        <p><strong>PayU URL:</strong> {{ payu_url }}</p>
+                        <p><strong>Key:</strong> {{ payu_data.key }}</p>
+                        <p><strong>Amount:</strong> {{ payu_data.amount }}</p>
+                        <p><strong>Email:</strong> {{ payu_data.email }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    <form action="{{ payu_url }}" method="post" id="payuForm">
+                        {% for key, value in payu_data.items %}
+                        <input type="hidden" name="{{ key }}" value="{{ value }}">
+                        {% endfor %}
+                        
+                        <div class="text-center">
+                            <div class="mb-3">
+                                <div class="spinner-border text-primary" role="status" id="loadingSpinner" style="display: none;">
+                                    <span class="visually-hidden">Processing...</span>
+                                </div>
+                                <p id="loadingText" style="display: none;">Redirecting to PayU...</p>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-success btn-lg" id="payButton">
+                                <i class="fas fa-lock nfas"></i> Pay ₹{{ plan.price }} Securely
+                            </button>
+                            
+                            <div class="mt-3">
+                                <a href="{% url 'payments:payment_plans' %}" class="btn btn-outline-secondary">
+                                    Cancel Payment
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                    
+                    <div class="text-center text-center-footer mt-3">
+                        <small class="text-muted">
+                            <i class="fas fa-shield-alt nfas"></i>
+                            Your payment is secured by PayU
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('payuForm');
+    const payButton = document.getElementById('payButton');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    const loadingText = document.getElementById('loadingText');
+    
+    // Handle form submission
+    form.addEventListener('submit', function() {
+        payButton.style.display = 'none';
+        loadingSpinner.style.display = 'inline-block';
+        loadingText.style.display = 'block';
+    });
+    
+    // Optional: Auto-submit after 5 seconds (comment out if not needed)
+    // setTimeout(function() {
+    //     form.submit();
+    // }, 5000);
+});
+</script>
+{% endblock %}
+{% block pp %}
+<li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">
+        <i class="fas fa-user-circle profile-icon"></i>
+        {{ user.username }}
+    </a>
+    <div class="dropdown-content">
+        <a href="#">Settings</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+</li>
+{% endblock %}

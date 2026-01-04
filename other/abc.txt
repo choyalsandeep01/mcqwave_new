@@ -1,0 +1,671 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@100..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/media/css/mcq_view.css">
+<div id="results-section" style="display:none;">
+    <h2>Quiz Results</h2>
+    <div class="result-container">
+        <div class="result-item">
+            <p>Total Questions</p>
+            <div class="progress-bar total">
+                <span id="total-questions" class="progress-value">0</span>
+            </div>
+        </div>
+        <div class="result-item">
+            <p>Correct Answers</p>
+            <div class="progress-bar correct">
+                <span id="correct-answers" class="progress-value">0</span>
+            </div>
+        </div>
+        <div class="result-item">
+            <p>Wrong Answers</p>
+            <div class="progress-bar wrong">
+                <span id="wrong-answers" class="progress-value">0</span>
+            </div>
+        </div>
+        <div class="result-item">
+            <p>Not Attempted</p>
+            <div class="progress-bar not-attempted">
+                <span id="not-attempt" class="progress-value">0</span>
+            </div>
+            <button class="review" id="review-result-button">Review</button>
+        </div>
+    </div>
+    <div class="time-taken-container">
+        <p>Time Taken: <span id="time-taken"></span></p>
+    </div>
+</div>
+<div class="mcq-container">
+    <div class="mcq-header">
+        <div class="menu-icon" id="menu-icon">☰</div> <!-- Menu icon -->
+        <div class="question-info">
+            <div class="review-status" id="review-status"></div>
+            Question <span id="current-question">1</span> of <span id="total-questions">{{ count }}</span>
+        </div>
+        <div class="header-buttons">
+            <button class="back" id="back-button">Back</button>
+            <button class="next" id="next-button">Next</button>
+            <button class="submit" id="submit-button" style="display:none;">Submit</button>
+        </div>
+        <div class="timer">Time left: <span id="timer">10:00</span></div>
+    </div>
+
+    <!-- Question Navigation -->
+    <div class="question-nav" id="question-nav" style="display:none;">
+        <!-- Dynamically generated question numbers will go here -->
+    </div>
+
+    <div class="mcq-content">
+        <div class="question">
+            <p id="question-text">What is the capital of France?</p>
+            <img id="question-image" src="" alt="Question Image">
+        </div>
+
+        <ul class="options">
+            <!-- Options will be dynamically populated here -->
+        </ul>
+
+        <div class="status-text" id="status-text"></div>
+    </div>
+
+    <div class="mcq-footer">
+        <button class="bookmark">Bookmark</button>
+        <button class="save" id="save-button">Save</button>
+        <button class="review" id="review-button">Review</button>
+    </div>
+</div>
+
+<!-- Fullscreen Image Viewer -->
+<div class="image-viewer" id="image-viewer" style="display:none;">
+    <img src="" alt="Enlarged Question Image" id="enlarged-image">
+</div>
+<div class="confirmation-modal" id="confirmation-modal" style="display:none;">
+    <div class="modal-content">
+        <span class="modal-close" id="modal-close">&times;</span>
+        <h2>Confirm Submission</h2>
+        <p>Are you sure you want to submit the quiz? You won’t be able to make changes after submission.</p>
+        
+        <div class="modal-summary">
+            <h3>Unanswered Questions:</h3>
+            <ul id="unanswered-list"></ul>
+            
+            <h3>Questions Under Review:</h3>
+            <ul id="review-list"></ul>
+        </div>
+    </div>
+    
+    <!-- Buttons Container -->
+    <div class="modal-buttons">
+        <button id="confirm-submit" class="btan btn-confirm">Confirm</button>
+        <button id="cancel-submit" class="btan btn-cancel">Cancel</button>
+    </div>
+</div>
+
+<script>
+    const mcqs = JSON.parse('{{ mcqs|escapejs }}'); // Parse the JSON data
+    let currentQuestionIndex = 0;
+    let selectedAnswers = {}; // Store selected answers by question index
+    let reviewQuestions = {}; // Store review status by question index
+    let isReviewMode = false;
+
+
+    function loadQuestion(index) {
+        if (index < 0 || index >= mcqs.length) return; // Bounds check
+    
+        const mcq = mcqs[index];
+        document.getElementById('question-text').innerText = mcq.fields.text;
+    
+        const questionImage = document.getElementById('question-image');
+        if (mcq.fields.image) {
+            questionImage.src = /media/${mcq.fields.image};
+            questionImage.style.display = 'block'; // Show image
+        } else {
+            questionImage.src = '';
+            questionImage.style.display = 'none'; // Hide image
+        }
+    
+        const optionsList = document.querySelector('.options');
+        optionsList.innerHTML = ''; // Clear existing options
+    
+        const options = [
+            { value: 'A', text: mcq.fields.option_1 },
+            { value: 'B', text: mcq.fields.option_2 },
+            { value: 'C', text: mcq.fields.option_3 },
+            { value: 'D', text: mcq.fields.option_4 }
+        ];
+    
+        const userAnswer = selectedAnswers[index]; // User's selected option (A, B, C, or D)
+        const correctAnswerText = mcq.fields.correct_option; // Correct answer text
+    
+        // Find the correct option value from the text
+        const correctOption = options.find(opt => opt.text === correctAnswerText)?.value;
+    
+        options.forEach(option => {
+            const li = document.createElement('li');
+            li.innerHTML = 
+                <input type="radio" name="option" value="${option.value}" class="option-radio" ${isReviewMode ? 'disabled' : ''}> 
+                ${option.text}
+            ;
+    
+            // Apply event listener only if not in review mode
+            if (!isReviewMode) {
+                li.addEventListener('click', () => selectOption(li, index));
+            }
+    
+            // Highlight the options during review mode
+            if (isReviewMode) {
+                if (userAnswer === option.value) {
+                    console.log('user:',userAnswer);
+                    console.log('opt_val:',option.value);
+                    console.log('corr:',correctOption)
+                    if (option.value === correctOption) {
+                        li.classList.add('user-correct'); // User's correct choice
+                    } else {
+                        li.classList.add('user-incorrect'); // User's incorrect choice
+                    }
+                } else if (option.value === correctOption) {
+                    li.classList.add('correct-answer'); // Correct answer
+                }
+            }
+    
+            optionsList.appendChild(li);
+        });
+    
+        // Restore selected answer if any
+        if (userAnswer) {
+            const selectedOption = optionsList.querySelector(input[value="${userAnswer}"]);
+            if (selectedOption) {
+                selectedOption.checked = true;
+                selectedOption.parentElement.classList.add('selected');
+            }
+        }
+    
+        // Display review status if marked
+        const statusText = document.getElementById('status-text');
+        statusText.innerText = reviewQuestions[index] ? "Question under review" : "";
+    
+        // Update review status circle
+        const reviewStatus = document.getElementById('review-status');
+        if (reviewQuestions[index]) {
+            reviewStatus.style.backgroundColor = 'yellow'; // Yellow for review
+        } else if (userAnswer) {
+            reviewStatus.style.backgroundColor = 'green'; // Green for saved
+        } else {
+            reviewStatus.style.backgroundColor = 'transparent'; // No color if not reviewed or saved
+        }
+    
+        document.getElementById('current-question').innerText = index + 1;
+    
+        // Hide 'Next' and show 'Submit' if on the last question and not in review mode
+        if (index === mcqs.length - 1) {
+            document.getElementById('next-button').style.display = 'none';
+            document.getElementById('submit-button').style.display = !isReviewMode ? 'inline-block' : 'none';
+        } else {
+            document.getElementById('next-button').style.display = 'inline-block';
+            document.getElementById('submit-button').style.display = isReviewMode ? 'none' : 'inline-block';
+        }
+    
+        updateNav();
+    }
+    
+    
+
+
+
+    function selectOption(selectedLi, index) {
+        const optionsList = document.querySelectorAll('.options li');
+        const selectedInput = selectedLi.querySelector('input');
+        
+        const selectedValue = selectedInput.value;
+        const selectedText = selectedLi.textContent.trim();
+        // Check if the selected option is already checked
+        const isAlreadySelected = selectedLi.classList.contains('selected');
+
+        // Unselect all options
+        optionsList.forEach(li => {
+            li.classList.remove('selected'); // Remove 'selected' class from all options
+            li.querySelector('input').checked = false; // Uncheck all options
+        });
+
+        if (!isAlreadySelected) {
+            // Select the clicked option
+            selectedLi.classList.add('selected');
+            selectedInput.checked = true;
+            selectedAnswers[index] = selectedValue;
+            selectedAnswerTexts[index] = selectedText;
+        } else {
+            // Unselect the clicked option
+            selectedAnswers[index] = null;
+            selectedAnswerTexts[index] = null;
+        }
+
+        // Update the navigation button color based on the new selection state
+        updateNavButtonColor(index, selectedAnswers[index] ? 'green' : reviewQuestions[index] ? 'yellow' : 'white');
+        
+        // Update the review status circle
+        updateReviewStatusCircle();
+    }
+    let selectedAnswerTexts = {};
+    function markForReview() {
+        reviewQuestions[currentQuestionIndex] = true;
+        document.getElementById('status-text').innerText = "Question under review";
+
+        // Update the navigation button color to yellow
+        updateNavButtonColor(currentQuestionIndex, 'yellow');
+
+        // Update the review status circle
+        updateReviewStatusCircle();
+    }
+
+    function saveAnswer() {
+        if (selectedAnswers[currentQuestionIndex]) {
+            reviewQuestions[currentQuestionIndex] = false; // Remove review status
+            document.getElementById('status-text').innerText = ""; // Clear review status text
+
+            // Update the navigation button color to green
+            updateNavButtonColor(currentQuestionIndex, 'green');
+        }
+
+        // Update the review status circle
+        updateReviewStatusCircle();
+    }
+
+    function updateReviewStatusCircle() {
+        const reviewStatus = document.getElementById('review-status');
+        if (reviewQuestions[currentQuestionIndex]) {
+            reviewStatus.style.backgroundColor = 'yellow'; // Yellow for review
+        } else if (selectedAnswers[currentQuestionIndex]) {
+            reviewStatus.style.backgroundColor = 'green'; // Green for saved
+        } else {
+            reviewStatus.style.backgroundColor = 'transparent'; // No color if not reviewed or saved
+        }
+    }
+
+    function updateNavButtonColor(index, color) {
+        const nav = document.getElementById('question-nav');
+        const buttons = nav.querySelectorAll('button');
+
+        buttons.forEach(button => {
+            if (parseInt(button.innerText) === index + 1) {
+                button.style.backgroundColor = color;
+            }
+        });
+    }
+
+    function updateNav() {
+        const nav = document.getElementById('question-nav');
+        nav.innerHTML = '';
+    
+        const questionsPerPage = 10;
+        const startQuestion = Math.floor(currentQuestionIndex / questionsPerPage) * questionsPerPage;
+        const endQuestion = Math.min(startQuestion + questionsPerPage, mcqs.length);
+    
+        if (startQuestion > 0) {
+            const backButton = document.createElement('button');
+            backButton.innerText = 'Back';
+            backButton.addEventListener('click', (event) => {
+                currentQuestionIndex = startQuestion - 1; // Go back to the last question of the previous page
+                loadQuestion(currentQuestionIndex);
+                updateNav(); // Update navigation after changing the currentQuestionIndex
+                event.stopPropagation(); // Prevent click event from closing the navigation
+            });
+            nav.appendChild(backButton);
+        }
+    
+        for (let i = startQuestion; i < endQuestion; i++) {
+            const button = document.createElement('button');
+            button.innerText = i + 1;
+            button.addEventListener('click', (event) => {
+                loadQuestion(i);
+                currentQuestionIndex = i; // Set the currentQuestionIndex only when a question number is clicked
+                updateNav(); // Update navigation to reflect the current active question
+                event.stopPropagation(); // Prevent click event from closing the navigation
+            });
+            if (i === currentQuestionIndex) button.classList.add('active');
+            if (isReviewMode) {
+                if (selectedAnswerTexts[i] === mcqs[i].fields.correct_option) {
+                    button.style.backgroundColor = 'green'; // Correct answer
+                } else if (selectedAnswerTexts[i]) {
+                    button.style.backgroundColor = 'red'; // Wrong answer
+                } else {
+                    button.style.backgroundColor = 'transparent'; // Not attempted
+                }
+            } else{
+            // Set the button color based on answer selection or review status
+            if (selectedAnswers[i]) {
+                button.style.backgroundColor = 'green';
+            }
+            if (reviewQuestions[i]) {
+                button.style.backgroundColor = 'yellow';
+            }
+        }
+            nav.appendChild(button);
+        }
+    
+        if (endQuestion < mcqs.length) {
+            const moreButton = document.createElement('button');
+            moreButton.innerText = '...';
+            moreButton.addEventListener('click', (event) => {
+                currentQuestionIndex = endQuestion; // Move to the first question of the next set
+                loadQuestion(currentQuestionIndex);
+                updateNav(); // Update navigation after changing the currentQuestionIndex
+                event.stopPropagation(); // Prevent click event from closing the navigation
+            });
+            nav.appendChild(moreButton);
+        }
+    }
+
+
+
+
+
+    function submitQuiz() {
+        const totalQuestions = mcqs.length;
+        let correctAnswers = 0;
+        let wrongAnswers=0;
+        let notAttempt=0;
+        
+        mcqs.forEach((mcq, index) => {
+            if (selectedAnswerTexts[index] === mcq.fields.correct_option) {
+                correctAnswers++;
+            }
+            if(selectedAnswerTexts[index]!=undefined && selectedAnswerTexts[index]!=mcq.fields.correct_option  ){
+                wrongAnswers++;
+            }
+            if(selectedAnswerTexts[index]== undefined){
+                notAttempt++
+            }
+            console.log(mcq.fields.correct_option)
+            console.log(selectedAnswerTexts[index])
+        });
+        stopTimer()
+        let timetaken = calculateTimeTaken();
+        document.getElementById("total-questions").innerText = totalQuestions;
+        document.getElementById("correct-answers").innerText = correctAnswers;
+        document.getElementById("wrong-answers").innerText = wrongAnswers;
+        document.getElementById("time-taken").innerText = timetaken;
+        document.getElementById("not-attempt").innerText = notAttempt;
+        
+
+        const totalBar = document.querySelector('.progress-bar.total');
+        const correctBar = document.querySelector('.progress-bar.correct');
+        const wrongBar = document.querySelector('.progress-bar.wrong');
+        const notAttemptedBar = document.querySelector('.progress-bar.not-attempted');
+
+
+        totalBar.style.width = '0';
+        correctBar.style.width = '0';
+        wrongBar.style.width = '0';
+        notAttemptedBar.style.width = '0';
+
+        setTimeout(() => {
+            totalBar.style.width = '100%';
+            correctBar.style.width = (correctAnswers / totalQuestions) * 100 + '%';
+            wrongBar.style.width = (wrongAnswers / totalQuestions) * 100 + '%';
+            notAttemptedBar.style.width = (notAttempt / totalQuestions) * 100 + '%';
+        }, 100);
+    
+        
+        // Display the score
+        //alert(You answered ${correctAnswers} out of ${totalQuestions} questions correctly.);
+        document.getElementById("results-section").style.display = "block";
+        // Hide the MCQ interface and only show the Back button
+        
+        document.querySelector('.mcq-container').style.display = 'none';
+        document.querySelector('.back').style.display = 'inline-block';
+    }
+
+    document.getElementById('next-button').addEventListener('click', () => {
+        if (currentQuestionIndex < mcqs.length - 1) {
+            currentQuestionIndex++;
+            loadQuestion(currentQuestionIndex);
+        }
+    });
+    
+    document.getElementById('back-button').addEventListener('click', () => {
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            loadQuestion(currentQuestionIndex);
+        }
+    });
+
+    function showConfirmationModal() {
+    const unansweredList = document.getElementById('unanswered-list');
+    const reviewList = document.getElementById('review-list');
+    unansweredList.innerHTML = '';
+    reviewList.innerHTML = '';
+
+    mcqs.forEach((mcq, index) => {
+        if (!selectedAnswers[index]) {
+            const li = document.createElement('li');
+            li.innerText = Question ${index + 1};
+            unansweredList.appendChild(li);
+        }
+        if (reviewQuestions[index]) {
+            const li = document.createElement('li');
+            li.innerText = Question ${index + 1};
+            reviewList.appendChild(li);
+        }
+    });
+
+    document.getElementById('confirmation-modal').style.display = 'flex';
+}
+
+function hideConfirmationModal() {
+    document.getElementById('confirmation-modal').style.display = 'none';
+}
+
+document.getElementById('submit-button').addEventListener('click', showConfirmationModal);
+
+document.getElementById('modal-close').addEventListener('click', hideConfirmationModal);
+
+document.getElementById('cancel-submit').addEventListener('click', hideConfirmationModal);
+
+document.getElementById('confirm-submit').addEventListener('click', () => {
+    submitQuiz(); // Call the existing submitQuiz function
+    hideConfirmationModal();
+});
+
+    document.getElementById('review-button').addEventListener('click', markForReview);
+    document.getElementById('save-button').addEventListener('click', saveAnswer);
+    document.getElementById('menu-icon').addEventListener('click', () => {
+        const nav = document.getElementById('question-nav');
+        nav.style.display = nav.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // Close the question navigation when clicking outside
+    document.addEventListener('click', (event) => {
+        if (!event.target.closest('#menu-icon') && !event.target.closest('#question-nav')) {
+            document.getElementById('question-nav').style.display = 'none';
+        }
+    });
+    document.getElementById('question-image').addEventListener('click', () => {
+        document.getElementById('enlarged-image').src = document.getElementById('question-image').src;
+        document.getElementById('image-viewer').style.display = 'flex';
+    });
+
+    document.getElementById('image-viewer').addEventListener('click', () => {
+        document.getElementById('image-viewer').style.display = 'none';
+    });
+    let totalTime =600
+    let timeLeft = totalTime; // Time in seconds (e.g., 10 minutes)
+    let intervalId;
+    function startTimer() {
+        const timerElement = document.getElementById('timer');
+        intervalId = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(intervalId);
+                alert('Time is up! The quiz will now be submitted.');
+                submitQuiz(); // Automatically submit the quiz when time runs out
+            } else {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerElement.innerText = ${minutes}:${seconds < 10 ? '0' : ''}${seconds};
+            }
+        }, 1000);
+    }
+    function stopTimer() {
+    clearInterval(intervalId);
+}
+function calculateTimeTaken() {
+    const timeTaken = totalTime - timeLeft;
+    const minutesTaken = Math.floor(timeTaken / 60);
+    const secondsTaken = timeTaken % 60;
+    return ${minutesTaken}:${secondsTaken < 10 ? '0' : ''}${secondsTaken};
+}
+document.getElementById('review-result-button').addEventListener('click', () => {
+    showReviewMode();
+});
+function showReviewMode() {
+    // Hide result section and show MCQ container
+    isReviewMode = true; // Enter review mode
+    document.getElementById('results-section').style.display = 'none'; // Hide results section
+    document.querySelector('.mcq-container').style.display = 'block'; // Show MCQ container
+    ensureScroll();
+    const footer = document.querySelector('.mcq-footer');
+    
+    footer.classList.add('review-mode');
+    
+        
+    
+    loadQuestion(0);
+}
+// Call startTimer when the page loads or the quiz starts
+function ensureScroll() {
+    const mcqContainer = document.querySelector('.mcq-container');
+    const mcqContent = document.querySelector('.mcq-content');
+
+    // Hide and show mcq-container to force reflow
+    mcqContainer.style.display = 'none'; // Hide to force reflow
+    mcqContainer.offsetHeight; // Trigger reflow
+    mcqContainer.style.display = 'flex'; // Show again
+
+    // Add a short delay to ensure repaint
+    if (mcqContent) {
+        // Ensure that mcq-content is scrollable
+        mcqContent.style.overflowY = 'auto'; // Ensure overflow is enabled
+        mcqContent.scrollTop = 0; // Optionally scroll to the top
+    }
+}
+    loadQuestion(0);
+    startTimer(); // Load the first question initially
+</script>
+{% endblock %}
+
+{%block pp%}
+
+<li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">
+      
+        <i class="fas fa-user-circle profile-icon"></i>
+      
+      {{ user.username }}
+      
+    </a>
+    <div class="dropdown-content">
+      <a href="#">Settings</a>
+      <a href={% url 'logout' %}>Logout</a>
+    </div>
+  </li>
+
+  
+cd c:\office 2021
+setup.exe /configure configuration.xml
+
+{%endblock%} this is my mcq.html , in this when this  starts it provides mcq and after submiting it shows result section and in that result section it has review button clicking on it opens mcq container but in review mode which is different from before in some features. int this code u can see a query is passed in this page , const mcqs = JSON.parse('{{ mcqs|escapejs }}'); and than  const mcq = mcqs[index]; all parts of mcq which are passed :-mcqs_json = serialize('json', mcqs, fields=('uid','text', 'option_1', 'option_2', 'option_3', 'option_4', 'correct_option','explanation', 'image',), use_natural_primary_keys=True)
+    return render(request, 'mcq/mcq.html', {'mcqs': mcqs_json, 'count': mcqs_count})
+    , so i want than when mcq container is in reviewmode than also add a text box under the options of mcq in which its explaination will be there
+
+
+
+
+    anat 2:-1,2    |1,2,3,4,5
+    physio 3:-1,2 |1
+    biochem 4:-1  | 1,2
+    micro 1:-1,2,3,4,5   | 1,2,3,4,5,6,7,8,9,10
+
+
+
+
+
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'MCQwave',
+        'USER': 'postgres',
+        'PASSWORD':'admin',
+        'HOST':'localhost',
+        'PORT':''
+    }
+}
+export DATABASE_URL='postgresql://mcqwavedb_user:3bWE88yeti5VX6bHd0NqwP7keE0DO6pU@dpg-crq1se3v2p9s738ejq1g-a/mcqwavedb'
+
+
+pg_dump -U postgres -h localhost -d MCQwave -F c -b -v -f "C:\Games\local_db.sql"
+
+psql "postgresql://mcqwavedb_user:3bWE88yeti5VX6bHd0NqwP7keE0DO6pU@dpg-crq1se3v2p9s738ejq1g-a.oregon-postgres.render.com/mcqwavedb" -f "C:\Games\local_db.sql"
+
+pg_restore -U mcqwavedb_user -h dpg-crq1se3v2p9s738ejq1g-a.oregon-postgres.render.com -d mcqwavedb --verbose "C:\Games\mcq.sql"
+
+
+To ensure your MCQwave web app can handle many AJAX requests efficiently, especially with 100+ live users, here's a complete roadmap:
+
+### 1. **Optimize Database Queries**
+   - **Minimize DB Hits**: Ensure each AJAX request fetches and saves only essential data. Use Django’s **`select_related`** and **`prefetch_related`** to minimize the number of queries, especially when dealing with relationships (e.g., foreign keys).
+   - **Indexes**: Add indexes on frequently queried fields (e.g., `user_id`, `question_id`, `test_session_id`). This will speed up lookups and updates for your AJAX requests.
+   - **Caching**: Use caching to store frequently accessed data (e.g., user details, test settings, question metadata). Tools like **Redis** or Django’s built-in caching framework can help here.
+
+### 2. **Efficient AJAX Handling**
+   - **Debouncing Clicks**: Use a debouncing mechanism for button clicks (e.g., bookmark button). This ensures that rapid, repeated clicks don’t fire multiple requests unnecessarily. You can set a small delay (e.g., 300ms) before the next AJAX request is allowed.
+   - **AJAX Request Queueing**: Queue up AJAX requests so that one is processed before another begins. This prevents overloading the server with too many simultaneous requests.
+   - **Progress Indicators**: Use loaders or disabled states (e.g., spinning wheel, dim button) immediately when the button is clicked to indicate that an action is in progress, making users less likely to click repeatedly.
+
+### 3. **AJAX Response Optimization**
+   - **Use Asynchronous Tasks**: For longer tasks (e.g., saving test results, logging time spent), offload these to a task queue like **Celery** with **Redis** or **RabbitMQ**. Your AJAX request can return a quick "acknowledgement," while the task continues processing asynchronously.
+   - **Minimize Payloads**: Send the smallest amount of data possible in the response. Use lightweight data formats like **JSON** and avoid returning unnecessary data.
+
+### 4. **Server-Side Improvements**
+   - **Horizontal Scaling**: For 100+ live users, consider scaling horizontally by adding more app servers behind a load balancer. This will distribute the load of incoming AJAX requests across multiple servers.
+   - **Web Server Optimizations**: Use **gunicorn** or **uWSGI** with worker processes tuned according to your server’s CPU and memory. Set optimal values for the number of workers (e.g., `(2 x CPUs) + 1`).
+   - **Use Connection Pooling**: Configure database connection pooling using tools like **pgBouncer** for PostgreSQL. This ensures fast, persistent connections to the database for every AJAX request.
+
+### 5. **Client-Side Caching**
+   - **AJAX Response Caching**: For responses that don’t change frequently (e.g., question details), cache the result on the client-side using browser storage (e.g., **localStorage** or **sessionStorage**) to avoid redundant requests.
+   - **Cache-Control Headers**: Use proper caching headers (e.g., `ETag`, `Last-Modified`) to minimize unnecessary re-fetching of unchanged resources.
+
+### 6. **Use Content Delivery Networks (CDNs)**
+   - Serve static assets (e.g., JavaScript, CSS) via a CDN. This reduces the load on your server and ensures quicker asset delivery, improving the user experience overall.
+
+### 7. **WebSocket for Real-Time Data**
+   - Consider **WebSockets** for real-time updates instead of polling with AJAX requests. WebSockets allow a persistent connection where updates can be pushed from the server to the client without requiring frequent requests.
+
+### 8. **Load Balancing and Rate Limiting**
+   - Use a load balancer like **NGINX** or **HAProxy** to distribute traffic across your servers. Also, implement rate limiting to protect against sudden spikes of AJAX requests (e.g., from users clicking repeatedly).
+   
+### 9. **Performance Monitoring and Optimization**
+   - Use tools like **New Relic**, **Sentry**, or **Prometheus** to monitor performance and identify bottlenecks. These tools can track request times, database query speeds, and overall server health.
+
+### 10. **High-Performance Hosting**
+   - Ensure your hosting provider supports autoscaling and is optimized for Django apps (e.g., **AWS**, **Google Cloud**, **DigitalOcean**). Set up your infrastructure for dynamic scaling based on load to handle peaks in user activity.
+
+By following these steps, you can significantly boost the speed and responsiveness of your AJAX requests, ensuring a smoother experience even with a high number of concurrent users.
+
+
+
+
+------------------------------------------------------------------------------------------------
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'mcqwave',
+        'USER': 'postgres',
+        'PASSWORD':'postgresmcqwave',
+        'HOST':'database.cd84saeowy0p.eu-north-1.rds.amazonaws.com',
+        'PORT':''
+    }
+}

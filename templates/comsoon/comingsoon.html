@@ -1,0 +1,243 @@
+{% extends 'base/base.html' %}
+
+{% block title %}MCQwave-ComingSoon{% endblock title %}
+
+
+
+{% block content %}
+<style>
+    :root {
+        --gradient-start: #0077be;
+        --gradient-end: #ff3366;
+        --text-color: #ffffff;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body, html {
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .coming-soon-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+        color: var(--text-color);
+        text-align: center;
+        padding: 20px;
+        perspective: 1000px;
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        animation: fadeIn 2s ease-out;
+        transform:translateY(-10%);
+    }
+
+    .image-container {
+        max-width: 500px;
+        width: 80%;
+        margin-bottom: 30px;
+        transform: rotateX(-10deg);
+        transition: all 0.5s ease;
+    }
+
+    .image-container img {
+        width: 100%;
+        height: auto;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        transition: transform 0.3s ease;
+    }
+
+    .image-container:hover {
+        transform: rotateX(0) scale(1.05);
+    }
+
+    .title {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        animation: slideUp 1.5s ease-out;
+    }
+
+    .subtitle {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        max-width: 600px;
+        opacity: 0.9;
+        animation: fadeIn 2.5s ease-out;
+    }
+
+    .cta-buttons {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .btn {
+        padding: 12px 30px;
+        border: 2px solid var(--text-color);
+        background: transparent;
+        color: var(--text-color);
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: rgba(255,255,255,0.2);
+        transition: 0.5s;
+        transform: skewX(-45deg);
+    }
+
+    .btn:hover::before {
+        left: 100%;
+    }
+
+    .btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(50px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+        .title { font-size: 2rem; }
+        .subtitle { font-size: 1rem; }
+        .cta-buttons { flex-direction: column; }
+    }
+
+    .particle {
+        position: absolute;
+        background: rgba(255,255,255,0.2);
+        border-radius: 50%;
+        pointer-events: none;
+    }
+</style>
+
+<div class="coming-soon-container">
+    <div class="content">
+        <div class="image-container">
+            <img src="/media/photos/css.jpg" alt="Coming Soon">
+        </div>
+        <h1 class="title">Coming Soon</h1>
+        <p class="subtitle">Something extraordinary is on its way! We're working hard to bring you an amazing experience that will exceed your expectations.</p>
+        
+        <div class="cta-buttons">
+            <button class="btn" id="notifyBtn">Notify Me</button>
+            
+        </div>
+    </div>
+</div>
+
+<script>
+    // Particle Animation
+    function createParticles() {
+        const container = document.querySelector('.coming-soon-container');
+        const particleCount = 50;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            particle.style.width = `${Math.random() * 10}px`;
+            particle.style.height = particle.style.width;
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+            particle.style.animationDuration = `${Math.random() * 5 + 3}s`;
+            particle.style.animationDelay = `${Math.random() * 3}s`;
+
+            container.appendChild(particle);
+        }
+
+        // Animate particles
+        const particles = document.querySelectorAll('.particle');
+        particles.forEach(particle => {
+            particle.animate([
+                { transform: 'translate(-50%, -50%) scale(0)', opacity: 0 },
+                { transform: 'translate(calc(var(--x, 0) * 1vw), calc(var(--y, 0) * 1vh)) scale(1)', opacity: 1 },
+                { transform: 'translate(calc(var(--x, 0) * 2vw), calc(var(--y, 0) * 2vh)) scale(0)', opacity: 0 }
+            ], {
+                duration: 5000,
+                iterations: Infinity,
+                easing: 'ease-in-out'
+            });
+        });
+    }
+
+    // Button Interactions
+    function setupButtonInteractions() {
+        const buttons = document.querySelectorAll('.btn');
+        
+        buttons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.style.transform = 'scale(0.9)';
+                setTimeout(() => {
+                    btn.style.transform = 'scale(1)';
+                    alert('Feature coming soon! Stay tuned.');
+                }, 200);
+            });
+        });
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+        createParticles();
+        setupButtonInteractions();
+    });
+</script>
+
+{% endblock %}
+
+{%block pp%}
+
+<li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">
+      
+        <i class="fas fa-user-circle profile-icon"></i>
+      
+      {{ user.username }}
+      
+    </a>
+    <div class="dropdown-content">
+      <a href="#">Settings</a>
+      <a href={% url 'logout' %}>Logout</a>
+    </div>
+  </li>
+
+
+{%endblock%} 

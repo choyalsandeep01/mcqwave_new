@@ -1,0 +1,90 @@
+[
+{
+    "model": "mcqs.chapter",
+    "pk": "02286166-9bae-4bf8-9d3b-f28546765d38",
+    "fields": {
+        "created_at": "2024-08-17T05:16:11.566Z",
+        "updated_at": "2024-08-17T04:20:34.029Z",
+        "unit": "0d6d72a4-a5d8-4685-929d-28f8140107ca",
+        "order": 0,
+        "name": "Cell Communication"
+    }
+},
+{
+    "model": "mcqs.chapter",
+    "pk": "2c436f68-dba1-4c9a-9073-0a357cf263a9",
+    "fields": {
+        "created_at": "2024-08-17T05:18:34.720Z",
+        "updated_at": "2024-08-17T05:17:49.771Z",
+        "unit": "13707438-8375-4dc6-a0c0-da08920cebe1",
+        "order": 0,
+        "name": "Microbial Cell Structure and Function"
+    }
+},
+{
+    "model": "mcqs.chapter",
+    "pk": "3aa17dfe-b0b5-4978-9482-7d4d40c2e1cf",
+    "fields": {
+        "created_at": "2024-08-17T04:30:28.093Z",
+        "updated_at": "2024-08-16T15:04:23.117Z",
+        "unit": "2b3bf52d-b040-4933-92f9-f864cc583356",
+        "order": 1,
+        "name": "sdfsdvs"
+    }
+},
+{
+    "model": "mcqs.chapter",
+    "pk": "b028e465-447c-41f2-8233-154c8ae79709",
+    "fields": {
+        "created_at": "2024-08-17T05:18:28.771Z",
+        "updated_at": "2024-08-17T05:17:49.770Z",
+        "unit": "13707438-8375-4dc6-a0c0-da08920cebe1",
+        "order": 0,
+        "name": "Introduction to Microbiology"
+    }
+},
+{
+    "model": "mcqs.chapter",
+    "pk": "b324bb00-5dfd-40d7-aec7-216efd971984",
+    "fields": {
+        "created_at": "2024-08-17T05:16:05.764Z",
+        "updated_at": "2024-08-17T04:20:34.030Z",
+        "unit": "0d6d72a4-a5d8-4685-929d-28f8140107ca",
+        "order": 0,
+        "name": "Cellular Organelles and Their Functions"
+    }
+},
+{
+    "model": "mcqs.chapter",
+    "pk": "c5d664ab-16bd-4e26-bdb8-eea4164c8d94",
+    "fields": {
+        "created_at": "2024-08-17T04:19:06.686Z",
+        "updated_at": "2024-08-17T04:18:22.241Z",
+        "unit": "dae2487b-2dcf-42f7-9568-23e37febe75c",
+        "order": 0,
+        "name": "Carbohydrates"
+    }
+},
+{
+    "model": "mcqs.chapter",
+    "pk": "efa74752-f62d-4dfc-a9cf-42f1c59be7b8",
+    "fields": {
+        "created_at": "2024-08-17T05:23:05.384Z",
+        "updated_at": "2024-08-17T05:18:11.668Z",
+        "unit": "008fdef1-4fe3-4419-a5e6-25f0b09a2cd4",
+        "order": 0,
+        "name": "Pathogenic Bacteria"
+    }
+},
+{
+    "model": "mcqs.chapter",
+    "pk": "fb96e7e9-fb22-41cb-a308-28bb4e964594",
+    "fields": {
+        "created_at": "2024-08-17T05:23:01.403Z",
+        "updated_at": "2024-08-17T05:18:11.668Z",
+        "unit": "008fdef1-4fe3-4419-a5e6-25f0b09a2cd4",
+        "order": 0,
+        "name": "Bacterial Classification and Identification"
+    }
+}
+]

@@ -1,0 +1,374 @@
+{% extends 'base/base.html' %}
+{% block title %}POMEGRANATE-Custom{% endblock title %}
+
+{% block content %}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            
+            background-color: #f7f2f2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: crimson;
+            margin-top:15px;
+        }
+
+        .dropdowns, .comparison-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .dropdowns select, .comparison-section select {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+        }
+        button.analyze-btn{
+            margin-top:5px;
+        }
+        button.analyze-btn, .ana-btn {
+            background-color: crimson;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        button.analyze-btn:disabled {
+            background-color: #ddd;
+            cursor: not-allowed;
+        }
+
+        button.analyze-btn:hover, .ana-btn:hover {
+            background-color: darkred;
+        }
+
+        .test-analysis-section {
+            margin-top: 40px;
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .ana-btn {
+            padding: 8px 12px;
+            background-color: crimson;
+        }
+
+        @media only screen and (max-width: 768px) {
+            table, th, td {
+                font-size: 12px;
+            }
+            th, td {
+                padding: 3px;
+            }
+            
+        }
+
+        @media only screen and (max-width: 576px) {
+            .dropdowns, .comparison-section {
+                grid-template-columns: 1fr;
+            }
+            table, th, td {
+                font-size: 10px;
+            }
+           
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Custom Analysis</h1>
+
+        <!-- First Section - Dropdown Filters -->
+        <div class="dropdowns">
+            <select id="subjectDropdown" onchange="handleSubjectChange()">
+                <option value="">Select Subject</option>
+                {% for subject, units in data.items %}
+                    <option value="{{ subject }}">{{ subject }}</option>
+                {% endfor %}
+            </select>
+
+            <select id="unitDropdown" onchange="handleUnitChange()">
+                <option value="">Select Unit</option>
+            </select>
+
+            <select id="chapterDropdown" onchange="handleChapterChange()">
+                <option value="">Select Chapter</option>
+            </select>
+
+            <select id="topicDropdown" >
+                <option value="">Select Topic</option>
+            </select>
+        </div>
+
+        <button class="analyze-btn" id="analyzeBtn" onclick="analyze()" disabled>Analyze</button>
+        <div class="result" id="resultMessage"></div>
+
+        <!-- Second Section - Topic Comparison -->
+        
+        <!-- Third Section - Test-Wise Analysis -->
+        <h2>Test-Wise Analysis</h2>
+        <div class="test-analysis-section">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Test Number</th>
+                        <th>Created At</th>
+                        <th>Selections</th>
+                        <th>Total Questions</th>
+                        <th>Score</th>
+                        <th>Analyze</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for test in test_sessions %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td><span class="local-time" 
+                            data-utc-time="{{ test.created_at|date:'c' }}">
+                      </span></td>
+                        <td>
+                            {% for selection in test.selections %}
+                                {{ selection }}{{ forloop.last|yesno:",," }},
+                            {% endfor %}
+                        </td>
+                        <td>{{ test.total_questions|floatformat:0 }}</td>
+                        <td>{{ test.score|floatformat:0 }}</td>
+                        <td><button class="ana-btn" onclick="analyzeTest('{{ test.test_id }}')">Ana</button></td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6">No submitted tests found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const timeElements = document.querySelectorAll('.local-time');
+            
+            timeElements.forEach(element => {
+                const utcTime = element.getAttribute('data-utc-time');
+                const date = new Date(utcTime);
+                const formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear().toString().slice(-2)}`;
+                const formattedTime = date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+                
+                element.textContent = `${formattedDate} ${formattedTime}`;
+            });
+        });
+        </script>
+    <script>
+        const data = {{ data|safe }};
+
+        // Custom Analysis Section Functions
+        function handleSubjectChange() {
+            const subjectDropdown = document.getElementById("subjectDropdown");
+            const unitDropdown = document.getElementById("unitDropdown");
+            const chapterDropdown = document.getElementById("chapterDropdown");
+            const topicDropdown = document.getElementById("topicDropdown");
+            const analyzeBtn = document.getElementById("analyzeBtn");
+            const selectedSubject = subjectDropdown.value;
+            unitDropdown.innerHTML = '<option value="">Select Unit</option>';
+            chapterDropdown.innerHTML = '<option value="">Select Chapter</option>';
+            topicDropdown.innerHTML = '<option value="">Select Topic</option>';
+            analyzeBtn.disabled = true; // Disable button initially
+            if (selectedSubject && data[selectedSubject]) {
+                Object.keys(data[selectedSubject]).forEach(unit => {
+                    unitDropdown.innerHTML += `<option value="${unit}">${unit}</option>`;
+                });
+            }
+        }
+
+        function handleUnitChange() {
+            const subjectDropdown = document.getElementById("subjectDropdown");
+            const unitDropdown = document.getElementById("unitDropdown");
+            const chapterDropdown = document.getElementById("chapterDropdown");
+            const topicDropdown = document.getElementById("topicDropdown");
+            const analyzeBtn = document.getElementById("analyzeBtn");
+
+    // Enable the "Analyze" button only when a unit is selected
+           
+            const selectedSubject = subjectDropdown.value;
+            const selectedUnit = unitDropdown.value;
+            chapterDropdown.innerHTML = '<option value="">Select Chapter</option>';
+            topicDropdown.innerHTML = '<option value="">Select Topic</option>';
+            analyzeBtn.disabled = !unitDropdown.value; // Disable if unit is not selected, enable otherwise
+            if (selectedSubject && selectedUnit && data[selectedSubject][selectedUnit]) {
+                Object.keys(data[selectedSubject][selectedUnit]).forEach(chapter => {
+                    chapterDropdown.innerHTML += `<option value="${chapter}">${chapter}</option>`;
+                });
+            }
+        }
+
+        function handleChapterChange() {
+            const subjectDropdown = document.getElementById("subjectDropdown");
+            const unitDropdown = document.getElementById("unitDropdown");
+            const chapterDropdown = document.getElementById("chapterDropdown");
+            const topicDropdown = document.getElementById("topicDropdown");
+
+            const selectedSubject = subjectDropdown.value;
+            const selectedUnit = unitDropdown.value;
+            const selectedChapter = chapterDropdown.value;
+            topicDropdown.innerHTML = '<option value="">Select Topic</option>';
+
+            if (selectedSubject && selectedUnit && selectedChapter && data[selectedSubject][selectedUnit][selectedChapter]) {
+                data[selectedSubject][selectedUnit][selectedChapter].forEach(topic => {
+                    topicDropdown.innerHTML += `<option value="${topic}">${topic}</option>`;
+                });
+            }
+        }
+
+        // Comparison Section Functions
+        function handleComparisonSubjectChange() {
+            const subjectDropdown = document.getElementById("comparisonSubjectDropdown");
+            const unitDropdown = document.getElementById("comparisonUnitDropdown");
+            const chapterDropdown = document.getElementById("comparisonChapterDropdown");
+            const compareBtn = document.getElementById("compareBtn");
+
+            const selectedSubject = subjectDropdown.value;
+            unitDropdown.innerHTML = '<option value="">Select Unit</option>';
+            chapterDropdown.innerHTML = '<option value="">Select Chapter</option>';
+            compareBtn.disabled = true; // Disable button initially
+           
+            if (selectedSubject && data[selectedSubject]) {
+                Object.keys(data[selectedSubject]).forEach(unit => {
+                    unitDropdown.innerHTML += `<option value="${unit}">${unit}</option>`;
+                });
+            }
+        }
+
+        function handleComparisonUnitChange() {
+            const subjectDropdown = document.getElementById("comparisonSubjectDropdown");
+            const unitDropdown = document.getElementById("comparisonUnitDropdown");
+            const chapterDropdown = document.getElementById("comparisonChapterDropdown");
+            const compareBtn = document.getElementById("compareBtn");
+
+            const selectedSubject = subjectDropdown.value;
+            const selectedUnit = unitDropdown.value;
+            chapterDropdown.innerHTML = '<option value="">Select Chapter</option>';
+            compareBtn.disabled = true; // Disable button initially
+
+            if (selectedSubject && selectedUnit && data[selectedSubject][selectedUnit]) {
+                Object.keys(data[selectedSubject][selectedUnit]).forEach(chapter => {
+                    chapterDropdown.innerHTML += `<option value="${chapter}">${chapter}</option>`;
+                });
+            }
+        }
+
+        function handleComparisonChapterChange() {
+            const subjectDropdown = document.getElementById("comparisonSubjectDropdown");
+            const unitDropdown = document.getElementById("comparisonUnitDropdown");
+            const chapterDropdown = document.getElementById("comparisonChapterDropdown");
+            const compareBtn = document.getElementById("compareBtn");
+
+            const selectedSubject = subjectDropdown.value;
+            const selectedUnit = unitDropdown.value;
+            const selectedChapter = chapterDropdown.value;
+            compareBtn.disabled = !chapterDropdown.value; // Disable if chapter is not selected, enable otherwise
+
+            // Further logic for chapter change can be added here
+        }
+        function analyze() {
+            const subject = document.getElementById("subjectDropdown").value;
+            const unit = document.getElementById("unitDropdown").value;
+            const chapter = document.getElementById("chapterDropdown").value;
+            const topic = document.getElementById("topicDropdown").value;
+
+            // Construct the query string
+            let query = `?subject=${encodeURIComponent(subject)}&unit=${encodeURIComponent(unit)}`;
+
+            if (chapter) {
+                query += `&chapter=${encodeURIComponent(chapter)}`;
+            }
+            if (topic) {
+                query += `&topic=${encodeURIComponent(topic)}`;
+            }
+
+            // Redirect to the new URL with the query string
+            window.location.href = `pom_cus_cus/${query}`;
+        }
+        function analyze_top_com() {
+            const subject = document.getElementById("comparisonSubjectDropdown").value;
+            const unit = document.getElementById("comparisonUnitDropdown").value;
+            const chapter = document.getElementById("comparisonChapterDropdown").value;
+            
+
+            // Construct the query string
+            let query = `?subject=${encodeURIComponent(subject)}&unit=${encodeURIComponent(unit)}`;
+
+            if (chapter) {
+                query += `&chapter=${encodeURIComponent(chapter)}`;
+            }
+            
+
+            // Redirect to the new URL with the query string
+            window.location.href = `pom_cus_top_comp/${query}`;
+        }
+          
+          
+            function analyzeTest(test_id) {
+              // Construct the URL with the test_id as a query parameter
+              const url = `test_wise_parti/?test_id=${test_id}`;
+              
+              // Redirect to the constructed URL
+              window.location.href = url;
+            }
+        
+          
+
+    </script>
+
+    {% endblock %}
+
+    {% block pp %}
+      <li class="dropdown">
+        <a href="javascript:void(0)" class="dropbtn">
+          <i class="fas fa-user-circle profile-icon"></i>
+          {{ user.username }}
+        </a>
+        <div class="dropdown-content">
+          <a href="#">Settings</a>
+          <a href="{% url 'logout' %}">Logout</a>
+        </div>
+      </li>
+    {% endblock %}

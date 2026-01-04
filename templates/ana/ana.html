@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis by Difficulty</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
+        .container {
+            width: 90%;
+            margin: auto;
+            max-width: 1200px;
+            padding: 20px;
+        }
+        .form-section, .results-section {
+            margin: 20px 0;
+        }
+        .graph-container {
+            position: relative; /* Allows canvas to resize correctly */
+            width: 100%;
+            margin-top: 20px;
+            height: 400px; /* Set a fixed height for better control */
+        }
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%; /* Match height of the container */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        @media (max-width: 768px) {
+            th, td {
+                font-size: 12px;
+                padding: 5px;
+            }
+        }
+        @media (max-width: 480px) {
+            th, td {
+                font-size: 10px;
+                padding: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Analysis by Difficulty</h1>
+        
+        <!-- Difficulty Selection Form -->
+        <div class="form-section">
+            <form method="POST">
+                {% csrf_token %}
+                <label for="difficulty">Select Difficulty:</label>
+                <select name="difficulty" id="difficulty">
+                    <option value="">-- Select Difficulty --</option>
+                    {% for difficulty in difficulties %}
+                    <option value="{{ difficulty }}">{{ difficulty }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Analyze</button>
+            </form>
+        </div>
+
+        <!-- Analysis Results -->
+        {% if difficulty %}
+        <div class="results-section">
+            <h2>Results for {{ difficulty }}</h2>
+            <p>Total Questions: {{ total_questions }}</p>
+            <p>Correct Questions: {{ correct_questions }}</p>
+            <p>Incorrect Questions: {{ incorrect_questions }}</p>
+            <p>Average Time Spent: {{ average_time|floatformat:2 }} seconds</p>
+
+            <!-- Graph for Test Sessions -->
+            <div class="graph-container">
+                <canvas id="difficultyGraph"></canvas>
+            </div>
+
+            <!-- Detailed Session Analysis -->
+            <h3>Test Session Details</h3>
+            <table>
+                <tr>
+                    <th>Test Session</th>
+                    <th>Total Questions</th>
+                    <th>Correct</th>
+                    <th>Incorrect</th>
+                    <th>Average Time (s)</th>
+                </tr>
+                {% for session in test_sessions %}
+                <tr>
+                    <td>{{ session.session.id }}</td>
+                    <td>{{ session.total_questions }}</td>
+                    <td>{{ session.correct }}</td>
+                    <td>{{ session.incorrect }}</td>
+                    <td>{{ session.average_time|floatformat:2 }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <!-- Debugging: Display graph data -->
+        <pre id="graphData">{{ graph_data|json_script:"graphData" }}</pre>
+
+        <!-- Graph Script -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Retrieve graph data from the <script> tag
+                const graphData = JSON.parse(document.getElementById('graphData').textContent);
+
+                // Function to truncate Y-axis labels for mobile devices
+                function truncateLabel(label) {
+                    return window.innerWidth <= 768 && label.length > 5 ? label.substring(0, 5) + '...' : label;
+                }
+
+                // Render the chart
+                const ctx = document.getElementById('difficultyGraph').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: graphData.labels.map(truncateLabel),
+                        datasets: [{
+                            label: 'Total Questions',
+                            data: graphData.total_questions,
+                            borderColor: 'blue',
+                            fill: false,
+                            tension: 0.4
+                        }, {
+                            label: 'Correct Questions',
+                            data: graphData.correct,
+                            borderColor: 'green',
+                            fill: false,
+                            tension: 0.4
+                        }, {
+                            label: 'Incorrect Questions',
+                            data: graphData.incorrect,
+                            borderColor: 'red',
+                            fill: false,
+                            tension: 0.4
+                        }, {
+                            label: 'Average Time (s)',
+                            data: graphData.average_time,
+                            borderColor: 'purple',
+                            fill: false,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    boxWidth: 12,
+                                    font: {
+                                        size: 12
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    title: function(context) {
+                                        return graphData.labels[context[0].dataIndex];
+                                    }
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Performance by Test Sessions',
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                ticks: {
+                                    maxRotation: 45,
+                                    minRotation: 0,
+                                    font: {
+                                        size: 10
+                                    }
+                                }
+                            },
+                            y: {
+                                ticks: {
+                                    font: {
+                                        size: 10
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
+        {% endif %}
+    </div>
+</body>
+</html>

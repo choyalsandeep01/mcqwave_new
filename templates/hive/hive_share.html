@@ -1,0 +1,533 @@
+{% extends 'base/base.html' %}
+{% block title %}Shared Content with {{ connected_user.username }}{% endblock %}
+
+
+{% block content %}
+    <link rel="stylesheet" href="/media/css/hive/hive_share.css">
+    <div id="testModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h3>Test Session Details</h3>
+            <div class="test-details">
+                <p><strong>Total Questions:</strong> <span id="modalTotalQuestions"></span></p>
+                <p><strong>Total Time:</strong> <span id="modalTotalTime"></span> minutes</p>
+                <p><strong>Mode:</strong> <span id="modalMode"></span></p>
+                <p><strong>Selections:</strong> <span id="modalSelections"></span></p>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-button cancel-button" onclick="closeModal()">Cancel</button>
+                <button class="modal-button confirm-button" id="confirmStartTest">Start Test</button>
+            </div>
+        </div>
+    </div>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2><strong> {{ connected_user.username }}</strong></h2>
+        </div>
+
+        <div class="chat-content" id="chat-content">
+            {% if items %}
+                <div class="chat-messages">
+                    {% for item in items %}
+                        {% if item.type == 'mcq' %}
+                            <div class="message {% if item.data.shared_by == 'me' %}message-sent{% else %}message-received{% endif %}">
+                                <div class="message-content mcq-container">
+                                    <strong>{{ item.data.shared_by }} :</strong>
+                                    
+                                    <p>Question: <strong>{{ item.data.text }}</strong></p>
+                                    {% if item.data.image %}
+                                        <div class="mcq-image">
+                                            <img src="{{ item.data.image }}" alt="MCQ Image">
+                                        </div>
+                                    {% endif %}
+                                    <ul class="mcq-options" data-correct-option="{{ item.data.correct_option }}">
+                                        {% for option in item.data.options %}
+                                            <li class="mcq-option" data-option="{{ option }}">
+                                                {{ option }}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+
+                                    <div class="mcq-hierarchy">
+                                        <p><strong>Topic:</strong> {{ item.data.hierarchy }}</p>
+                                        <p><strong>Difficulty:</strong> {{ item.data.difficulty }}</p>
+                                        <p><strong>Type:</strong> {{ item.data.type }}</p>
+                                    </div>
+                                    <div class="mcq-explanation" style="display: none;">
+                                        <p><strong>Explanation:</strong> {{ item.data.explanation | linebreaksbr}}</p>
+                                    </div>
+                                </div>
+                                <strong><span class="local-time" 
+                                        data-utc-time="{{ item.data.shared_at|date:'c' }}">
+                                  </span></strong>
+                            </div>
+                            {% elif item.type == 'test_session' %}
+                            <div class="message {% if item.data.shared_by == 'me' %}message-sent{% else %}message-received{% endif %} testsent">
+                                <div class="message-content test-container">
+                                    <div>
+                                    <strong>{{ item.data.shared_by }} shared a Test Session at <span class="local-time" 
+                                        data-utc-time="{{ item.data.shared_at|date:'c' }}">
+                                  </span></strong>
+                                  {% if item.data.shared_by != 'me' %}
+                                    <button 
+                                    class="start-test-link" 
+                                    onclick="showTestModal('{{ item.data.test_id }}', '{{ item.data.st_uid }}')"
+                                    data-test-id="{{ item.data.test_id }}"
+                                    data-st-uid="{{ item.data.st_uid }}"
+                                >
+                                    Start this test
+                                </button> 
+                                {% endif %}  
+                            </div> 
+                            {% if item.data.shared_by != 'me' %}    
+                            <button 
+                                    class="show-test-status" 
+                                    style="display: none;"
+                                    
+                                    data-st-uid="{{ item.data.st_uid }}"
+                                >
+                                    Show Status
+                                </button>   
+                            <div class="started-symbol" style="display: none;">✓</div>
+                            {% endif %}
+                        
+                            </div>
+                            </div>
+                        
+                            
+                        
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>No shared content yet.</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="loading-overlay" style="display: none;">
+        <div class="loading-spinner"></div>
+      </div>
+      <div class="modal-overlay" id="testStatusModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Test Status</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="test-info">
+                    
+                    <div class="info-row">
+                        <label>Total Questions:</label>
+                        <span id="totalq"></span>
+                    </div>
+                    <div class="info-row">
+                        <label>Total Time:</label>
+                        <span id="totalTime"></span>
+                    </div>
+                    <div class="info-row">
+                        <label>Selections:</label>
+                        <div id="selectionsList"></div>
+                    </div>
+                    
+                    <div class="info-row">
+                        <label>Mode:</label>
+                        <div id="mode"></div>
+                    </div>
+                    <div class="info-row">
+                        <label>Submit:</label>
+                        <div id="submitted"></div>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button id="actionButton" class="action-btn"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const timeElements = document.querySelectorAll('.local-time');
+            
+            timeElements.forEach(element => {
+                const utcTime = element.getAttribute('data-utc-time');
+                const date = new Date(utcTime);
+                const formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear().toString().slice(-2)}`;
+                const formattedTime = date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+                
+                element.textContent = `${formattedDate} ${formattedTime}`;
+            });
+        });
+        </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click event listeners to all show-test-status buttons
+            const statusButtons = document.querySelectorAll('.show-test-status');
+            statusButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const stUid = this.dataset.stUid;
+                    fetchTestStatus(stUid);
+                });
+            });
+        
+            // Close modal when clicking the close button or outside the modal
+            const modal = document.getElementById('testStatusModal');
+            const closeBtn = modal.querySelector('.close-modal');
+        
+            closeBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+        
+            window.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+        
+        function fetchTestStatus(stUid) {
+            fetch(`/hive/get-test-status/${stUid}/`, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json',
+                },
+                credentials: 'same-origin'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                displayTestStatus(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error fetching test status');
+            });
+        }
+        
+        function displayTestStatus(data) {
+            const modal = document.getElementById('testStatusModal');
+            
+            // Update modal content
+            document.getElementById('totalq').textContent = data.total_questions;
+            document.getElementById('totalTime').textContent = `${data.total_minutes.toFixed(2)} minutes`;
+            document.getElementById('mode').textContent = data.mode;
+            if (data.is_submitted){ 
+                document.getElementById('submitted').textContent = "Completed";
+                }
+            else{
+                document.getElementById('submitted').textContent = "Pending";
+            }
+            
+            // Display selections
+            const selectionsListElement = document.getElementById('selectionsList');
+            selectionsListElement.innerHTML = '';
+            if (data.selections && data.selections.length > 0) {
+                const selectionsList = document.createElement('ul');
+                data.selections.forEach(selection => {
+                    const li = document.createElement('li');
+                    li.textContent = selection;
+                    selectionsList.appendChild(li);
+                });
+                selectionsListElement.appendChild(selectionsList);
+            } else {
+                selectionsListElement.textContent = 'No selections made';
+            }
+        
+            // Set action button
+            const actionButton = document.getElementById('actionButton');
+            if (data.is_submitted) {
+                actionButton.textContent = 'Review Test';
+                actionButton.onclick = () => window.location.href = `/hive/review-test/${data.test_id}/`;
+            } else {
+                actionButton.textContent = 'Continue Test';
+                actionButton.onclick = () => window.location.href = `/hive/continue-test/${data.test_id}/`;
+            }
+        
+            // Show modal
+            modal.style.display = 'flex';
+        }
+        </script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const chatContent = document.getElementById("chat-content");
+            const chatMessages = chatContent.querySelector(".chat-messages");
+
+            // Scroll to the bottom of the chat when the page loads
+            if (chatMessages) {
+                chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
+            }
+
+    
+            document.querySelectorAll('.mcq-options').forEach(optionList => {
+                const correctOption = optionList.getAttribute('data-correct-option');  // Get correct option from data attribute
+    
+                // Ensure correctOption exists
+                if (!correctOption) {
+                    console.error("No correct option found.");
+                    return;
+                }
+    
+                let startY = 0;
+                let isScrolling = false; // Flag to track if we are scrolling
+    
+                // Function to handle option selection
+                function handleOptionSelection(option, optionList) {
+                    // Check if an option has already been selected
+                    if (optionList.querySelector('.selected')) {
+                        console.log("An option has already been selected.");
+                        return; // If an option is already selected, prevent further selections
+                    }
+    
+                    const selectedOption = option.getAttribute('data-option');  // Get clicked option's data-option
+                    console.log("Selected option:", selectedOption);  // Added for debugging
+    
+                    // Disable further selections
+                    optionList.querySelectorAll('.mcq-option').forEach(opt => {
+                        opt.style.pointerEvents = 'none';  // Disable all options after a selection
+                    });
+    
+                    // Mark the selected option
+                    option.classList.add('selected');  // Highlight the clicked option
+    
+                    // Check if the selected option is correct
+                    if (selectedOption === correctOption) {
+                        option.classList.add('correct');  // Mark the option as correct
+                        console.log("Correct answer selected!");
+                    } else {
+                        option.classList.add('incorrect');  // Mark the option as incorrect
+                        console.log("Incorrect answer selected!");
+                        // Highlight the correct option
+                        const correctOptElement = optionList.querySelector(`[data-option="${correctOption}"]`);
+                        if (correctOptElement) {
+                            correctOptElement.classList.add('correct');  // Mark the correct answer with the 'correct' class
+                        }
+                    }
+    
+                    // Show explanation after selection
+                    const explanationElement = optionList.parentElement.querySelector('.mcq-explanation');  // Find explanation div
+                    if (explanationElement) {
+                        explanationElement.style.display = 'block';  // Display the explanation below the question
+                    }
+                }
+    
+                // Attach event listeners for touch events
+                optionList.querySelectorAll('.mcq-option').forEach(option => {
+                    option.addEventListener('touchstart', function(e) {
+                        startY = e.touches[0].clientY; // Get the initial touch position
+                        isScrolling = false; // Reset scrolling flag
+                    });
+    
+                    option.addEventListener('touchmove', function(e) {
+                        let currentY = e.touches[0].clientY;
+                        let distance = currentY - startY;
+    
+                        // If the distance moved exceeds a certain threshold, we are scrolling
+                        if (Math.abs(distance) > 10) {
+                            isScrolling = true; // Set flag to true
+                        }
+                    });
+    
+                    option.addEventListener('touchend', function(e) {
+                        if (isScrolling) {
+                            // If we were scrolling, don't handle selection
+                            return; 
+                        }
+    
+                        // If not scrolling, handle option selection
+                        handleOptionSelection(option, optionList);
+                    });
+    
+                    // Add click event as fallback for non-touch devices
+                    option.addEventListener('click', function() {
+                        handleOptionSelection(option, optionList);
+                    });
+                });
+            });
+           
+            const csrftoken = getCookie('csrftoken');
+            const loadingOverlay = {
+                element: document.querySelector('.loading-overlay'),
+                
+                show() {
+                    document.body.classList.add('loading');
+                    this.element.style.display = 'flex';
+                    // Small delay to ensure the display change happens before adding active class
+                    setTimeout(() => {
+                        this.element.classList.add('active');
+                    }, 10);
+                },
+                
+                hide() {
+                    this.element.classList.remove('active');
+                    // Wait for fade out animation to complete before hiding
+                    setTimeout(() => {
+                        this.element.style.display = 'none';
+                        document.body.classList.remove('loading');
+                    }, 300);
+                }
+            };
+            // Check for started test sessions
+            checkStartedTests();
+
+            
+            
+            // Modified checkStartedTests function
+            async function checkStartedTests() {
+                loadingOverlay.show();
+                
+                const testButtons = document.querySelectorAll('.start-test-link');
+                
+                try {
+                    for (const button of testButtons) {
+                        const stUid = button.getAttribute('data-st-uid');
+                        if (!stUid) continue;
+            
+                        try {
+                            const response = await fetch(`/hive/shared-test-status/${stUid}/`, {
+                                method: 'GET',
+                                headers: {
+                                    'X-CSRFToken': csrftoken,
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                                credentials: 'same-origin'
+                            });
+            
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! status: ${response.status}`);
+                            }
+            
+                            const data = await response.json();
+                            
+                            if (data.started) {
+                                const container = button.closest('.test-container');
+                                const startedSymbol = container.querySelector('.started-symbol');
+                                const showstat = container.querySelector('.show-test-status');
+
+                                if (container && startedSymbol) {
+                                    button.style.display = 'none';
+                                    startedSymbol.style.display = 'inline-block';
+                                    showstat.style.display = 'inline-block';
+
+                                }
+                            }
+                        } catch (error) {
+                            console.error('Error checking test status:', error);
+                        }
+                    }
+                } finally {
+                    loadingOverlay.hide();
+                }
+            }
+
+            
+         });
+         function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        
+        function showTestModal(testId, stUid) {
+            if (!testId || !stUid) {
+                console.error('Missing testId or stUid');
+                return;
+            }
+            const csrftoken = getCookie('csrftoken');
+            const modal = document.getElementById('testModal');
+            const confirmButton = document.getElementById('confirmStartTest');
+
+            // Fetch test session details
+            fetch(`/hive/test-session-details/${testId}/?stUid=${stUid}`, {
+                method: 'GET',
+                headers: {
+                    'X-CSRFToken': csrftoken,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'same-origin'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('modalTotalQuestions').textContent = data.total_questions;
+                document.getElementById('modalTotalTime').textContent = data.totaltime;
+                document.getElementById('modalMode').textContent = data.mode || 'test';
+                const selectionsElement = document.getElementById('modalSelections');
+                if (Array.isArray(data.selections) && data.selections.length > 0) {
+                    // Create a formatted list of selections
+                    const selectionsHtml = data.selections
+                        .map((text, index) => `${index + 1}. ${text}`)
+                        .join('<br>');
+                    selectionsElement.innerHTML = selectionsHtml;
+                } else {
+                    selectionsElement.textContent = 'No selections available';
+                }
+                modal.style.display = 'block';
+                
+                confirmButton.onclick = function() {
+                    
+                    window.location.href = `/hive/start_shared_test/${testId}/?stUid=${stUid}`;
+                };
+            })
+            .catch(error => {
+                console.error('Error fetching test details:', error);
+                alert('Error loading test details. Please try again.');
+            });
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('testModal');
+            modal.style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('testModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Close modal with escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modal = document.getElementById('testModal');
+                modal.style.display = 'none';
+            }
+        });       
+        
+    </script>
+
+{% endblock %}
+
+{% block pp %}
+    <li class="dropdown">
+        <a href="javascript:void(0)" class="dropbtn">
+            <i class="fas fa-user-circle profile-icon"></i>
+            {{ user.username }}
+        </a>
+        <div class="dropdown-content">
+            <a href="#">Settings</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+    </li>
+{% endblock %}

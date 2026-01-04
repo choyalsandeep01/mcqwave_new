@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="bookGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E3F2FD"/>
+      <stop offset="100%" style="stop-color:#BBDEFB"/>
+    </linearGradient>
+    <filter id="bookShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+      <feOffset dx="2" dy="2" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.2"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="200" height="200" fill="url(#bookGradient)"/>
+  
+  <!-- Decorative elements -->
+  <circle cx="40" cy="40" r="60" fill="#2196F3" opacity="0.1"/>
+  <circle cx="160" cy="160" r="80" fill="#64B5F6" opacity="0.1"/>
+  
+  <!-- Stack of books -->
+  <g transform="translate(40,40)" filter="url(#bookShadow)">
+    <!-- Book 1 -->
+    <g transform="rotate(-10)">
+      <rect x="0" y="0" width="120" height="30" fill="#F44336" rx="2"/>
+      <rect x="10" y="5" width="80" height="20" fill="white" opacity="0.3"/>
+      <path d="M0,0 L0,30 L-5,28 L-5,2 Z" fill="#D32F2F"/>
+    </g>
+    
+    <!-- Book 2 -->
+    <g transform="rotate(-5)">
+      <rect x="0" y="40" width="120" height="30" fill="#4CAF50" rx="2"/>
+      <rect x="10" y="45" width="80" height="20" fill="white" opacity="0.3"/>
+      <path d="M0,40 L0,70 L-5,68 L-5,42 Z" fill="#388E3C"/>
+    </g>
+    
+    <!-- Book 3 -->
+    <g>
+      <rect x="0" y="80" width="120" height="30" fill="#2196F3" rx="2"/>
+      <rect x="10" y="85" width="80" height="20" fill="white" opacity="0.3"/>
+      <path d="M0,80 L0,110 L-5,108 L-5,82 Z" fill="#1976D2"/>
+    </g>
+    
+    <!-- Bookmark ribbons -->
+    <path d="M30,75 L40,75 L35,90 L30,75" fill="#FFD54F"/>
+    <path d="M90,35 L100,35 L95,50 L90,35" fill="#FF7043"/>
+    <path d="M60,115 L70,115 L65,130 L60,115" fill="#81C784"/>
+  </g>
+</svg>

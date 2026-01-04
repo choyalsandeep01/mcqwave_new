@@ -1,0 +1,1071 @@
+{% extends 'base/base.html' %}
+{% block title %}MCQwave-Payment Result{% endblock title %}
+
+{% block content %}
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .container {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(71, 85, 105, 0.12);
+            max-width: 420px;
+            width: 90%;
+            min-height: 70vh;
+            max-height: 80vh;
+            border: 1px solid #e2e8f0;
+            position: relative;
+            margin: 15px;
+            animation: slideUp 0.4s ease-out;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-y: auto;
+        }
+        
+        /* Enhanced container for success state */
+        .container.success-state {
+            padding: 24px 20px;
+            justify-content: flex-start;
+        }
+        
+        /* Success Styles */
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .container.success-state .success-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 16px;
+        }
+        
+        .success-icon::before {
+            content: '';
+            position: absolute;
+            width: 95px;
+            height: 95px;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.1);
+            animation: ripple 2s ease-out infinite;
+        }
+        
+        .container.success-state .success-icon::before {
+            width: 75px;
+            height: 75px;
+        }
+        
+        /* Failure Styles */
+        .failure-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: shake 0.5s ease-in-out;
+        }
+        
+        .failure-icon::before {
+            content: '';
+            position: absolute;
+            width: 95px;
+            height: 95px;
+            border-radius: 50%;
+            background: rgba(239, 68, 68, 0.1);
+        }
+        
+        .icon-symbol {
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+            z-index: 1;
+        }
+        
+        .container.success-state .icon-symbol {
+            font-size: 28px;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes ripple {
+            0% { transform: scale(0.8); opacity: 1; }
+            100% { transform: scale(1.2); opacity: 0; }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-3px); }
+            75% { transform: translateX(3px); }
+        }
+        
+        .title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+        
+        .container.success-state .title {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        
+        .title.success {
+            color: #065f46;
+        }
+        
+        .title.failure {
+            color: #991b1b;
+        }
+        
+        .subtitle {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+        
+        .container.success-state .subtitle {
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .subtitle.success {
+            color: #10b981;
+        }
+        
+        .subtitle.failure {
+            color: #ef4444;
+        }
+        
+        .message {
+            font-size: 15px;
+            color: #64748b;
+            line-height: 1.4;
+            margin-bottom: 24px;
+            padding: 16px 14px;
+            border-radius: 10px;
+            border-left: 4px solid;
+        }
+        
+        .container.success-state .message {
+            font-size: 13px;
+            padding: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .message.success {
+            background: #ecfdf5;
+            border-left-color: #10b981;
+            color: #065f46;
+        }
+        
+        .message.failure {
+            background: #fef2f2;
+            border-left-color: #ef4444;
+            color: #991b1b;
+        }
+        
+        /* Success content wrapper for scrolling */
+        .success-content-wrapper {
+            flex-grow: 1;
+            overflow-y: auto;
+            max-height: calc(80vh - 220px);
+            padding-right: 8px;
+            margin-right: -8px;
+        }
+        
+        /* Custom scrollbar for success content */
+        .success-content-wrapper::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .success-content-wrapper::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 2px;
+        }
+        
+        .success-content-wrapper::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 2px;
+        }
+        
+        .success-content-wrapper::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        
+        .transaction-details {
+            background: #fafafa;
+            border-radius: 12px;
+            padding: 20px 16px;
+            margin-bottom: 24px;
+            border: 1px solid #e5e7eb;
+            flex-grow: 1;
+        }
+        
+        .transaction-details.compact {
+            background: #fafafa;
+            border-radius: 10px;
+            padding: 16px 12px;
+            margin-bottom: 16px;
+            border: 1px solid #e5e7eb;
+            flex-grow: 0;
+        }
+        
+        /* Combined details section for success to save space */
+        .combined-details {
+            background: #fafafa;
+            border-radius: 10px;
+            padding: 16px 12px;
+            margin-bottom: 16px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .combined-details .details-section {
+            margin-bottom: 12px;
+        }
+        
+        .combined-details .details-section:last-child {
+            margin-bottom: 0;
+        }
+        
+        .combined-details .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+            text-align: left;
+            padding-bottom: 4px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .details-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+        
+        .transaction-details.compact .details-title {
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 14px;
+        }
+        
+        .transaction-details.compact .detail-row {
+            padding: 6px 0;
+            font-size: 12px;
+        }
+        
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        
+        .detail-label {
+            color: #6b7280;
+            font-weight: 500;
+        }
+        
+        .detail-value {
+            color: #111827;
+            font-weight: 600;
+            font-family: 'Monaco', 'Menlo', monospace;
+            background: #e0f2fe;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+        }
+        
+        .transaction-details.compact .detail-value {
+            font-size: 11px;
+            padding: 3px 6px;
+        }
+        
+        .detail-value.success {
+            background: #dcfce7;
+            color: #166534;
+        }
+        
+        .detail-value.failure {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .progress-container {
+            margin: 20px 0;
+        }
+        
+        .progress-container.compact {
+            margin: 12px 0;
+        }
+        
+        .progress-text {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .progress-container.compact .progress-text {
+            font-size: 12px;
+            margin-bottom: 6px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress-container.compact .progress-bar {
+            height: 4px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 3px;
+            animation: progress 2s ease-in-out;
+        }
+        
+        .progress-fill.success {
+            background: linear-gradient(90deg, #10b981, #059669);
+        }
+        
+        .progress-fill.failure {
+            background: linear-gradient(90deg, #ef4444, #dc2626);
+        }
+        
+        @keyframes progress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+        
+        .button-container {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+        
+        .button-container.compact {
+            margin-top: 16px;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            min-width: 100px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            box-shadow: 0 3px 8px rgba(59, 130, 246, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4);
+            font-size: 18px;
+            font-weight: 700;
+            padding: 16px 32px;
+            min-width: 200px;
+            border-radius: 12px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6);
+        }
+        
+        @keyframes glow {
+            0% { box-shadow: 0 4px 16px rgba(16, 185, 129, 0.4); }
+            100% { box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6); }
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            box-shadow: 0 3px 8px rgba(239, 68, 68, 0.3);
+        }
+        
+        .btn-danger:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #f8fafc;
+            color: #475569;
+            border: 1px solid #e2e8f0;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 12px 20px;
+            min-width: 120px;
+            border-radius: 10px;
+        }
+        
+        .btn-secondary:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+            transform: translateY(-1px);
+        }
+        
+        .support-notice {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 16px;
+            padding: 12px;
+            background: #fffbeb;
+            border-radius: 8px;
+            border: 1px solid #fbbf24;
+        }
+        
+        .auto-close-notice {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-top: 12px;
+            padding: 8px;
+            background: #f8fafc;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .auto-close-notice.compact {
+            font-size: 10px;
+            margin-top: 8px;
+            padding: 6px;
+        }
+        
+        /* Prominent Go Home button styles */
+        .go-home-prominent {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+            color: white !important;
+            font-size: 20px !important;
+            font-weight: 800 !important;
+            padding: 18px 36px !important;
+            border-radius: 14px !important;
+            box-shadow: 0 8px 25px rgba(5, 150, 105, 0.4) !important;
+            transform: scale(1.02);
+            animation: prominentGlow 2s ease-in-out infinite alternate !important;
+            border: 3px solid #10b981 !important;
+            min-width: 220px !important;
+            order: -1 !important;
+            margin-bottom: 12px !important;
+        }
+        
+        .button-container.compact .go-home-prominent {
+            font-size: 16px !important;
+            padding: 12px 24px !important;
+            min-width: 160px !important;
+            margin-bottom: 8px !important;
+        }
+        
+        .go-home-prominent:hover {
+            transform: scale(1.05) translateY(-3px) !important;
+            box-shadow: 0 12px 35px rgba(5, 150, 105, 0.6) !important;
+        }
+        
+        @keyframes prominentGlow {
+            0% { 
+                box-shadow: 0 8px 25px rgba(5, 150, 105, 0.4);
+                border-color: #10b981;
+            }
+            100% { 
+                box-shadow: 0 12px 35px rgba(5, 150, 105, 0.6);
+                border-color: #059669;
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-height: 800px) {
+            .container {
+                padding: 24px 20px;
+                min-height: 65vh;
+                max-height: 75vh;
+            }
+            
+            .container.success-state {
+                padding: 20px 16px;
+                min-height: 65vh;
+                max-height: 75vh;
+            }
+            
+            .success-icon, .failure-icon {
+                width: 70px;
+                height: 70px;
+                margin-bottom: 16px;
+            }
+            
+            .container.success-state .success-icon {
+                width: 50px;
+                height: 50px;
+                margin-bottom: 12px;
+            }
+            
+            .icon-symbol {
+                font-size: 28px;
+            }
+            
+            .container.success-state .icon-symbol {
+                font-size: 24px;
+            }
+            
+            .title {
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+            
+            .container.success-state .title {
+                font-size: 20px;
+                margin-bottom: 6px;
+            }
+            
+            .subtitle {
+                font-size: 16px;
+                margin-bottom: 16px;
+            }
+            
+            .container.success-state .subtitle {
+                font-size: 14px;
+                margin-bottom: 12px;
+            }
+            
+            .message {
+                font-size: 13px;
+                padding: 12px;
+                margin-bottom: 20px;
+            }
+            
+            .transaction-details {
+                padding: 16px 12px;
+                margin-bottom: 20px;
+            }
+            
+            .success-content-wrapper {
+                max-height: calc(75vh - 200px);
+            }
+            
+            .go-home-prominent {
+                font-size: 18px !important;
+                padding: 14px 28px !important;
+                min-width: 180px !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px 16px;
+                border-radius: 12px;
+                max-width: 95vw;
+                min-height: 70vh;
+                max-height: 80vh;
+            }
+            
+            .container.success-state {
+                padding: 16px 12px;
+                min-height: 70vh;
+                max-height: 80vh;
+            }
+            
+            .success-icon, .failure-icon {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .container.success-state .success-icon {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .icon-symbol {
+                font-size: 24px;
+            }
+            
+            .container.success-state .icon-symbol {
+                font-size: 20px;
+            }
+            
+            .title {
+                font-size: 22px;
+            }
+            
+            .container.success-state .title {
+                font-size: 18px;
+            }
+            
+            .subtitle {
+                font-size: 15px;
+            }
+            
+            .container.success-state .subtitle {
+                font-size: 13px;
+            }
+            
+            .detail-row {
+                font-size: 12px;
+                padding: 6px 0;
+            }
+            
+            .detail-value {
+                font-size: 10px;
+                padding: 3px 6px;
+            }
+            
+            .combined-details .detail-row {
+                font-size: 10px;
+            }
+            
+            .combined-details .detail-value {
+                font-size: 9px;
+                padding: 2px 4px;
+            }
+            
+            .success-content-wrapper {
+                max-height: calc(80vh - 180px);
+            }
+            
+            .button-container {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .btn {
+                width: 100%;
+                font-size: 13px;
+                padding: 10px 16px;
+            }
+            
+            .go-home-prominent {
+                order: -1;
+                font-size: 17px !important;
+                padding: 14px !important;
+                margin-bottom: 10px !important;
+                min-width: 100% !important;
+            }
+        }
+        
+        /* Animation for entrance */
+        @keyframes slideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Prevent scrolling */
+        html, body {
+            overflow: hidden;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+            justify-content: center;
+            background: #f8fafc;
+        }
+    </style>
+    
+       
+        
+    <script>
+        // Strict Navigation Prevention
+        (function() {
+            'use strict';
+
+            sessionStorage.setItem('isPaymentResultPage', 'true');
+            
+            if (window.history && window.history.replaceState) {
+                window.history.replaceState(null, null, window.location.href);
+            }
+
+            function disableNavigation() {
+                window.history.pushState(null, null, window.location.href);
+                
+                window.addEventListener('popstate', function(event) {
+                    window.history.pushState(null, null, window.location.href);
+                    alert('Navigation is not allowed on this page for security reasons.');
+                    event.preventDefault();
+                    return false;
+                });
+            }
+
+            function disableKeyboardNavigation() {
+                document.addEventListener('keydown', function(e) {
+                    if (e.altKey && (e.keyCode === 37 || e.keyCode === 39)) {
+                        e.preventDefault();
+                        return false;
+                    }
+                    
+                    if (e.keyCode === 8 && 
+                        e.target.tagName !== 'INPUT' && 
+                        e.target.tagName !== 'TEXTAREA' && 
+                        !e.target.isContentEditable) {
+                        e.preventDefault();
+                        return false;
+                    }
+                    
+                    if (e.keyCode === 116) {
+                        e.preventDefault();
+                        alert('Page refresh is not allowed for security reasons.');
+                        return false;
+                    }
+                    
+                    if (e.ctrlKey && e.keyCode === 82) {
+                        e.preventDefault();
+                        alert('Page refresh is not allowed for security reasons.');
+                        return false;
+                    }
+                    
+                    if (e.ctrlKey && e.keyCode === 116) {
+                        e.preventDefault();
+                        alert('Page refresh is not allowed for security reasons.');
+                        return false;
+                    }
+                });
+            }
+
+            function disableContextMenu() {
+                document.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                    return false;
+                });
+            }
+
+            function handlePageVisibility() {
+                document.addEventListener('visibilitychange', function() {
+                    if (!document.hidden) {
+                        disableNavigation();
+                    }
+                });
+            }
+
+            function preventCaching() {
+                var meta1 = document.createElement('meta');
+                meta1.httpEquiv = 'cache-control';
+                meta1.content = 'no-cache, no-store, must-revalidate';
+                document.head.appendChild(meta1);
+                
+                var meta2 = document.createElement('meta');
+                meta2.httpEquiv = 'pragma';
+                meta2.content = 'no-cache';
+                document.head.appendChild(meta2);
+                
+                var meta3 = document.createElement('meta');
+                meta3.httpEquiv = 'expires';
+                meta3.content = '0';
+                document.head.appendChild(meta3);
+            }
+
+            function setupPageExit() {
+                window.addEventListener('beforeunload', function(e) {
+                    sessionStorage.removeItem('isPaymentResultPage');
+                    
+                    if (window.history && window.history.replaceState) {
+                        window.history.replaceState(null, null, '/');
+                    }
+                });
+                
+                window.addEventListener('pagehide', function(e) {
+                    sessionStorage.removeItem('isPaymentResultPage');
+                });
+            }
+
+            function initializeSecurity() {
+                disableNavigation();
+                disableKeyboardNavigation();
+                disableContextMenu();
+                handlePageVisibility();
+                preventCaching();
+                setupPageExit();
+            }
+
+            window.onload = function() {
+                initializeSecurity();
+                
+                const result = {
+                    success: {{ success|yesno:"true,false" }},
+                    message: "{{ message|escapejs }}",
+                    {% if transaction %}
+                    transaction_id: "{{ transaction.transaction_id }}",
+                    {% endif %}
+                    {% if subscription %}
+                    subscription_id: "{{ subscription.uid }}",
+                    {% endif %}
+                };
+                
+                if (window.opener) {
+                    window.opener.postMessage({
+                        type: 'PAYMENT_RESULT',
+                        data: result
+                    }, '*');
+                    
+                    let userInteracted = false;
+                    let redirectTimeout = setTimeout(() => {
+                        if (!userInteracted) {
+                            sessionStorage.removeItem('isPaymentResultPage');
+                            window.location.href = '/';
+                        }
+                    }, 5000);
+
+                    document.addEventListener('click', () => {
+                        userInteracted = true;
+                        clearTimeout(redirectTimeout);
+                    });
+
+                    document.addEventListener('keydown', () => {
+                        userInteracted = true;
+                        clearTimeout(redirectTimeout);
+                    });
+
+                    document.addEventListener('mousemove', () => {
+                        userInteracted = true;
+                        clearTimeout(redirectTimeout);
+                    });
+                } else {
+                    parent.postMessage({
+                        type: 'PAYMENT_RESULT',
+                        data: result
+                    }, '*');
+                }
+            };
+
+            window.goHome = function() {
+                sessionStorage.removeItem('isPaymentResultPage');
+                if (window.opener) {
+                    window.opener.location.href = '/';
+                    window.close();
+                } else {
+                    window.location.replace('/');
+                }
+            };
+
+            window.closeWindow = function() {
+                sessionStorage.removeItem('isPaymentResultPage');
+                if (window.opener) {
+                    window.close();
+                } else {
+                    window.location.replace('/');
+                }
+            };
+
+            window.retryPayment = function() {
+                sessionStorage.removeItem('isPaymentResultPage');
+                if (window.opener) {
+                    window.opener.location.href = '/payments/plans/';
+                    window.close();
+                } else {
+                    window.location.replace('/payments/plans/');
+                }
+            };
+
+            window.contactSupport = function() {
+                sessionStorage.removeItem('isPaymentResultPage');
+                if (window.opener) {
+                    window.opener.location.href = '/support/';
+                    window.close();
+                } else {
+                    window.location.replace('/support/');
+                }
+            };
+        })();
+
+        (function() {
+            if (document.referrer && !sessionStorage.getItem('isPaymentResultPage')) {
+                window.location.replace('/');
+            }
+        })();
+    </script>
+
+    <div class="container">
+        <!-- Success State -->
+        {% if success %}
+        <div class="success-icon">
+            <div class="icon-symbol">✓</div>
+        </div>
+        
+        <h1 class="title success">Payment Successful!</h1>
+        <p class="subtitle success">Transaction Completed</p>
+        
+        <div class="message success">
+            {{ message }}
+        </div>
+        
+        {% if subscription %}
+        <div class="transaction-details">
+            <h3 class="details-title">Subscription Details</h3>
+            {% if plan_name %}
+            <div class="detail-row">
+                <span class="detail-label">Plan</span>
+                <span class="detail-value success">{{ plan_name }}</span>
+            </div>
+            {% endif %}
+            {% if amount_paid %}
+            <div class="detail-row">
+                <span class="detail-label">Amount</span>
+                <span class="detail-value success">₹{{ amount_paid }}</span>
+            </div>
+            {% endif %}
+            {% if end_date %}
+            <div class="detail-row">
+                <span class="detail-label">Valid Until</span>
+                <span class="detail-value">{{ end_date|date:"M d, Y" }}</span>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        {% if transaction %}
+        <div class="transaction-details">
+            <h3 class="details-title">Transaction Details</h3>
+            <div class="detail-row">
+                <span class="detail-label">ID</span>
+                <span class="detail-value">{{ transaction.transaction_id }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Status</span>
+                <span class="detail-value success">Completed</span>
+            </div>
+        </div>
+        {% endif %}
+        
+        <div class="progress-container">
+            <div class="progress-text">Processing complete!</div>
+            <div class="progress-bar">
+                <div class="progress-fill success"></div>
+            </div>
+        </div>
+        
+        <div class="button-container">
+            <button class="btn go-home-prominent" onclick="goHome()">
+                🏠 Continue Learning
+            </button>
+        </div>
+        
+        <!-- Failure State -->
+        {% else %}
+        <div class="failure-icon">
+            <div class="icon-symbol">✕</div>
+        </div>
+        
+        <h1 class="title failure">Payment Failed</h1>
+        <p class="subtitle failure">Transaction Unsuccessful</p>
+        
+        <div class="message failure">
+            {{ message }}
+        </div>
+        
+        {% if transaction %}
+        <div class="transaction-details">
+            <h3 class="details-title">Transaction Details</h3>
+            <div class="detail-row">
+                <span class="detail-label">ID</span>
+                <span class="detail-value">{{ transaction.transaction_id }}</span>
+            </div>
+            <div class="detail-row">
+                <span class="detail-label">Status</span>
+                <span class="detail-value failure">Failed</span>
+            </div>
+        </div>
+        {% endif %}
+        
+        <div class="progress-container">
+            <div class="progress-text">Transaction failed</div>
+            <div class="progress-bar">
+                <div class="progress-fill failure"></div>
+            </div>
+        </div>
+        
+        <div class="button-container">
+            <button class="btn go-home-prominent" onclick="goHome()">
+                🏠 Go Home
+            </button>
+            {% if show_retry %}
+            <button class="btn btn-primary" onclick="retryPayment()">
+                Try Again
+            </button>
+            {% endif %}
+            {% if contact_support %}
+            <button class="btn btn-danger" onclick="contactSupport()">
+                Support
+            </button>
+            {% endif %}
+        </div>
+        
+        {% if contact_support %}
+        <div class="support-notice">
+            <strong>Need Help?</strong> Contact support with your transaction ID.
+        </div>
+        {% endif %}
+        {% endif %}
+        
+        <div class="auto-close-notice">
+            Auto-close in 5 seconds if no action taken
+        </div>
+    </div>
+    {%endblock%} 
+    {%block pp%}
+    
+    <li class="dropdown">
+        <a href="javascript:void(0)" class="dropbtn">
+          
+            <i class="fas fa-user-circle profile-icon"></i>
+          
+          {{ user.username }}
+          
+        </a>
+        <div class="dropdown-content">
+          <a href="#">Settings</a>
+          <a href={% url 'logout' %}>Logout</a>
+        </div>
+      </li>
+    
+    
+    {%endblock%} 

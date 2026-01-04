@@ -1,0 +1,489 @@
+{% extends 'base/base.html' %}
+
+{% block title %}MCQwave-Register{% endblock title %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<link rel="stylesheet" href="/media/css/signup.css">
+
+<style>
+    .navfeed{
+        display: none;
+    }
+
+</style>
+<style>
+    .college-dropdown {
+        display: none;
+        position: absolute;
+        z-index: 1000;
+        top: 100%;
+        left: 0;
+        right: 0;
+        max-height: 200px;
+        overflow-y: auto;
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    .college-dropdown.show {
+        display: block;
+    }
+    
+    .college-option {
+        padding: 10px 15px;
+        cursor: pointer;
+    }
+    
+    .college-option:hover {
+        background-color: #f5f5f5;
+    }
+    
+    .college-option.other-option {
+        border-top: 1px solid #ddd;
+        font-weight: bold;
+    }
+    
+    .selected-college {
+        margin-top: 5px;
+        padding: 8px 12px;
+        background-color: #f0f7ff;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    
+    .remove-selection {
+        cursor: pointer;
+        color: #ff4d4d;
+    }
+    
+    .input-group {
+        position: relative;
+    }
+</style>
+<div class="signup-container">
+    <div class="signup-box">
+        <div class="login-header">
+            <h2>Create Account</h2>
+            <p class="subtitle">Please fill in your details to register</p>
+        </div>
+        <div class="alert error" id="alertError">
+            <i class="fas fa-exclamation-circle"></i>
+            <span id="alertMessage"></span>
+        </div>
+        <form id="signupForm" class="login-form">            {% csrf_token %}
+            {% include "base/alert.html" %}
+            
+            <div class="form-group">
+                <div class="input-group">
+                    <i class="fas fa-user input-icon si"></i>
+                    <input type="text" id="first_name" name="first_name" placeholder="Enter your first name">
+                </div>
+                <small class="error-feedback" id="first_name_error"></small>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <i class="fas fa-user input-icon si"></i>
+                    <input type="text" id="last_name" name="last_name" placeholder="Enter your last name">
+                </div>
+                <small class="error-feedback" id="last_name_error"></small>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <i class="fas fa-at input-icon si"></i>
+                    <input type="text" id="username" name="username" placeholder="Choose a username">
+                </div>
+                <small class="error-feedback" id="username_error">
+                    Username must contain only lowercase letters and numbers, no spaces or special characters.
+                </small>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <i class="fas fa-envelope input-icon si"></i>
+                    <input type="email" id="email" name="email" placeholder="Enter your email">
+                </div>
+                <small class="error-feedback" id="email_error"></small>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <i class="fas fa-graduation-cap input-icon si"></i>
+                    <input type="text" id="college_search" placeholder="Search for your medical college..." autocomplete="off">
+                    <div id="college_dropdown" class="college-dropdown">
+                        <!-- Colleges will be populated here -->
+                    </div>
+                    <input type="hidden" id="medical_college" name="medical_college">
+                </div>
+                <div id="selected_college" class="selected-college" style="display: none;"></div>
+                <small class="error-feedback" id="medical_college_error"></small>
+            </div>
+            
+            <div class="form-group" id="other_college_container" style="display: none;">
+                <div class="input-group">
+                    <i class="fas fa-building input-icon si"></i>
+                    <input type="text" id="other_college" name="other_college" placeholder="Enter your city name">
+                </div>
+                <small class="error-feedback" id="other_college_error"></small>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <i class="fas fa-lock input-icon si"></i>
+                    <input type="password" id="password" name="password" placeholder="Create a password">
+                    <i class="far fa-eye-slash toggle-password" onclick="togglePassword('password')"></i>
+                </div>
+                <small class="error-feedback" id="password_error"></small>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <i class="fas fa-lock input-icon si"></i>
+                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password">
+                    <i class="far fa-eye-slash toggle-password" onclick="togglePassword('confirm_password')"></i>
+                </div>
+                <small class="error-feedback" id="confirm_password_error"></small>
+            </div>
+
+            <button type="submit" class="login-btn" id="submitBtn">
+                <span>Create Account</span>
+                <div class="spinner" id="submitSpinner"></div>
+            </button>
+
+            <div class="additional-links">
+                <p>Already have an account? <a href="/login" class="highlight-link">Login</a></p>
+                <p>Email not verified? <a href="/resend_email" class="highlight-link">Resend Verification Link</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+  {% include 'ads/banner_ad.html' %}
+
+<script>
+// Add to your existing script section
+document.addEventListener('DOMContentLoaded', function() {
+    const collegeSearch = document.getElementById('college_search');
+    const collegeDropdown = document.getElementById('college_dropdown');
+    const medicalCollegeInput = document.getElementById('medical_college');
+    const selectedCollege = document.getElementById('selected_college');
+    const otherCollegeContainer = document.getElementById('other_college_container');
+    
+    // Medical colleges data (will be populated from backend)
+    const colleges = [
+        // This will be populated from Django template
+        {% for college in medical_colleges %}
+            {
+                id: {{ college.id }},
+                name: "{{ college.name }}",
+                location: "{{ college.location }}",
+                state: "{{ college.state.name }}"
+            },
+        {% endfor %}
+    ];
+    
+    // Create dropdown options
+    function populateDropdown(searchText = '') {
+        collegeDropdown.innerHTML = '';
+        
+        // Filter colleges based on search text
+        const filteredColleges = colleges.filter(college => {
+            const searchLower = searchText.toLowerCase();
+            return college.name.toLowerCase().includes(searchLower) || 
+                   college.location.toLowerCase().includes(searchLower) || 
+                   college.state.toLowerCase().includes(searchLower);
+        });
+        
+        // Add filtered colleges to dropdown
+        filteredColleges.forEach(college => {
+            const option = document.createElement('div');
+            option.className = 'college-option';
+            option.textContent = `${college.name}, ${college.location}, ${college.state}`;
+            option.dataset.id = college.id;
+            option.dataset.name = `${college.name}, ${college.location}, ${college.state}`;
+            
+            option.addEventListener('click', function() {
+                selectCollege(college.id, this.dataset.name);
+            });
+            
+            collegeDropdown.appendChild(option);
+        });
+        
+        // Add "Other" option
+        const otherOption = document.createElement('div');
+        otherOption.className = 'college-option other-option';
+        otherOption.textContent = 'Other';
+        otherOption.dataset.id = 'other';
+        
+        otherOption.addEventListener('click', function() {
+            selectCollege('other', 'Other');
+        });
+        
+        collegeDropdown.appendChild(otherOption);
+    }
+    
+    // Select a college
+    function selectCollege(id, name) {
+        medicalCollegeInput.value = id;
+        selectedCollege.innerHTML = `
+            <span>${name}</span>
+            <span class="remove-selection">×</span>
+        `;
+        selectedCollege.style.display = 'flex';
+        collegeSearch.style.display = 'none';
+        collegeDropdown.classList.remove('show');
+        
+        // Show/hide other college field
+        if (id === 'other') {
+            otherCollegeContainer.style.display = 'block';
+        } else {
+            otherCollegeContainer.style.display = 'none';
+        }
+        
+        // Add event listener to remove button
+        const removeBtn = selectedCollege.querySelector('.remove-selection');
+        removeBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            clearSelection();
+        });
+    }
+    
+    // Clear selection
+    function clearSelection() {
+        medicalCollegeInput.value = '';
+        selectedCollege.style.display = 'none';
+        collegeSearch.style.display = 'block';
+        collegeSearch.value = '';
+        otherCollegeContainer.style.display = 'none';
+    }
+    
+    // Show dropdown when clicking on search input
+    collegeSearch.addEventListener('focus', function() {
+        populateDropdown(this.value);
+        collegeDropdown.classList.add('show');
+    });
+    
+    // Update dropdown when typing
+    collegeSearch.addEventListener('input', function() {
+        populateDropdown(this.value);
+        collegeDropdown.classList.add('show');
+    });
+    
+    // Hide dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!collegeSearch.contains(e.target) && !collegeDropdown.contains(e.target)) {
+            collegeDropdown.classList.remove('show');
+        }
+    });
+    
+    // Initialize dropdown
+    populateDropdown();
+});
+</script>
+<script>
+    const form = document.getElementById('signupForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const submitSpinner = document.getElementById('submitSpinner');
+    const alertError = document.getElementById('alertError');
+    const alertMessage = document.getElementById('alertMessage');
+
+    // Real-time username validation
+    document.getElementById('username').addEventListener('input', function() {
+        const username = this.value.toLowerCase().trim();
+        const feedback = document.getElementById('username_error');
+        const isValid = /^[a-z0-9]+$/.test(username);
+        
+        this.value = username; // Remove any spaces and convert to lowercase
+        feedback.style.display = username && !isValid ? 'block' : 'none';
+        this.classList.toggle('field-error', username && !isValid);
+    });
+
+    // Real-time email validation
+    document.getElementById('email').addEventListener('input', function() {
+        const email = this.value.trim();
+        const feedback = document.getElementById('email_error');
+        const isValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
+        
+        feedback.textContent = email && !isValid ? 'Please enter a valid email address' : '';
+        feedback.style.display = email && !isValid ? 'block' : 'none';
+        this.classList.toggle('field-error', email && !isValid);
+    });
+
+    // Password visibility toggle
+    function togglePassword(inputId) {
+        const passwordInput = document.getElementById(inputId);
+        const toggleIcon = passwordInput.nextElementSibling;
+        
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleIcon.classList.remove('fa-eye-slash');
+            toggleIcon.classList.add('fa-eye');
+        } else {
+            passwordInput.type = 'password';
+            toggleIcon.classList.remove('fa-eye');
+            toggleIcon.classList.add('fa-eye-slash');
+        }
+    }
+
+    // Real-time password matching validation
+    document.getElementById('confirm_password').addEventListener('input', function() {
+        const password = document.getElementById('password').value;
+        const confirmPassword = this.value;
+        const feedback = document.getElementById('confirm_password_error');
+        const passwordsMatch = password === confirmPassword;
+        
+        feedback.textContent = confirmPassword && !passwordsMatch ? 'Passwords do not match' : '';
+        feedback.style.display = confirmPassword && !passwordsMatch ? 'block' : 'none';
+        this.classList.toggle('field-error', confirmPassword && !passwordsMatch);
+        
+        // Enable/disable submit button based on password match
+        submitBtn.disabled = !passwordsMatch && confirmPassword;
+    });
+
+    // Form submission with AJAX
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Reset previous errors
+        alertError.style.display = 'none';
+        document.querySelectorAll('.error-feedback').forEach(el => el.style.display = 'none');
+        document.querySelectorAll('input').forEach(el => el.classList.remove('field-error'));
+        let isValid = true;
+
+        const medicalCollegeId = document.getElementById('medical_college').value;
+        if (!medicalCollegeId) {
+            isValid = false;
+            document.getElementById('college_search').classList.add('field-error');
+            document.getElementById('medical_college_error').textContent = 'Please select a college';
+            document.getElementById('medical_college_error').style.display = 'block';
+        }
+        if (medicalCollegeId === 'other') {
+            const otherCollege = document.getElementById('other_college').value.trim();
+            if (!otherCollege) {
+                isValid = false;
+                document.getElementById('other_college').classList.add('field-error');
+                document.getElementById('other_college_error').textContent = 'Please enter your city name';
+                document.getElementById('other_college_error').style.display = 'block';
+            }
+        }
+        // Basic validation
+        const formData = new FormData(form);
+        
+        // Validate required fields
+        for (let [key, value] of formData.entries()) {
+            value = value.trim();
+            const input = document.getElementById(key);
+            if (key === 'other_college' && medicalCollegeId !== 'other') {
+                continue; // Skip this field
+            }
+            
+            // Skip validation if the input doesn't exist (useful for hidden fields)
+            if (!input) {
+                continue;
+            }
+            const error = document.getElementById(`${key}_error`);
+            
+            if (!value) {
+                isValid = false;
+                input.classList.add('field-error');
+                error.textContent = 'This field is required';
+                error.style.display = 'block';
+            }
+        }
+
+        // Validate email format
+        const email = formData.get('email').trim();
+        if (email && !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+            isValid = false;
+            document.getElementById('email').classList.add('field-error');
+            document.getElementById('email_error').textContent = 'Please enter a valid email address';
+            document.getElementById('email_error').style.display = 'block';
+        }
+
+        // Validate username format
+        const username = formData.get('username').trim().toLowerCase();
+        if (username && !/^[a-z0-9]+$/.test(username)) {
+            isValid = false;
+            document.getElementById('username').classList.add('field-error');
+            document.getElementById('username_error').style.display = 'block';
+        }
+
+        // Validate password match
+        const password = formData.get('password');
+        const confirmPassword = formData.get('confirm_password');
+        if (password !== confirmPassword) {
+            isValid = false;
+            document.getElementById('confirm_password').classList.add('field-error');
+            document.getElementById('confirm_password_error').textContent = 'Passwords do not match';
+            document.getElementById('confirm_password_error').style.display = 'block';
+        }
+
+        if (!isValid) return;
+
+        // Show loading state
+        submitBtn.disabled = true;
+        submitSpinner.style.display = 'block';
+
+        // AJAX submission
+        fetch('/signup/', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                // Show success message
+                alertError.style.display = 'none';  // Hide any previous error
+                alertError.className = 'alert success';  // Change to success style
+                alertError.innerHTML = `
+                    <i class="fas fa-check-circle"></i>
+                    <span>${data.message}</span>
+                `;
+                alertError.style.display = 'flex';
+        
+                // Redirect after delay
+                setTimeout(() => {
+                    window.location.href = data.redirect_url;
+                }, data.redirect_delay || 3000);
+            } else {
+                // Show error message
+                alertError.className = 'alert error';  // Ensure error styling
+                alertError.innerHTML = `
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>${data.message || 'An error occurred. Please try again.'}</span>
+                `;
+                alertError.style.display = 'flex';
+        
+                // Show field-specific errors
+                if (data.errors) {
+                    Object.entries(data.errors).forEach(([field, error]) => {
+                        const input = document.getElementById(field);
+                        const errorElement = document.getElementById(`${field}_error`);
+                        if (input && errorElement) {
+                            input.classList.add('field-error');
+                            errorElement.textContent = error;
+                            errorElement.style.display = 'block';
+                        }
+                    });
+                }
+            }
+        })
+        .catch(error => {
+            alertMessage.textContent = 'An error occurred. Please try again.';
+            alertError.style.display = 'flex';
+        })
+        .finally(() => {
+            submitBtn.disabled = false;
+            submitSpinner.style.display = 'none';
+        });
+    });
+</script>
+{% endblock %}

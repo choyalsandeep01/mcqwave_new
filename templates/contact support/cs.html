@@ -1,0 +1,450 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Contact Us{% endblock title %}
+
+{% block content %}
+
+<style>
+    :root {
+        --gradient-start: #1e3a8a;
+        --gradient-end: #dc2626;
+        --soft-blue: #3b82f6;
+        --light-background: #f4f6f9;
+        --text-primary: #1e293b;
+        --card-background: rgba(255, 255, 255, 0.95);
+    }
+
+    body {
+        background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+        min-height: 100vh;
+    }
+
+    .main {
+        min-height: 100vh;
+        display: flex;
+        padding: 40px 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Animated background elements */
+    .bg-circles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 0;
+    }
+
+    .circle {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(5px);
+        border-radius: 50%;
+        animation: float 15s infinite;
+    }
+
+    .circle:nth-child(1) {
+        width: 300px;
+        height: 300px;
+        top: -150px;
+        left: -150px;
+        animation-delay: 0s;
+    }
+
+    .circle:nth-child(2) {
+        width: 200px;
+        height: 200px;
+        top: 50%;
+        right: -100px;
+        animation-delay: -5s;
+    }
+
+    .circle:nth-child(3) {
+        width: 150px;
+        height: 150px;
+        bottom: -75px;
+        left: 10%;
+        animation-delay: -10s;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translate(0, 0) rotate(0deg); }
+        25% { transform: translate(50px, 50px) rotate(90deg); }
+        50% { transform: translate(0, 100px) rotate(180deg); }
+        75% { transform: translate(-50px, 50px) rotate(270deg); }
+    }
+
+    .container {
+        width: 100%;
+        max-width: 600px;
+        margin: auto;
+        position: relative;
+        z-index: 1;
+    }
+
+    .contact-form {
+        background: var(--card-background);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        padding: 40px;
+        backdrop-filter: blur(20px);
+        transform: translateY(20px);
+        opacity: 0;
+        animation: slideUp 0.8s ease forwards;
+    }
+
+    @keyframes slideUp {
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .contact-form h2 {
+        text-align: center;
+        color: var(--gradient-start);
+        margin-bottom: 30px;
+        font-weight: 800;
+        font-size: 2rem;
+        position: relative;
+        padding-bottom: 15px;
+    }
+
+    .contact-form h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 4px;
+        background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+        border-radius: 2px;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+        position: relative;
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.5s ease forwards;
+    }
+
+    .form-group:nth-child(2) { animation-delay: 0.2s; }
+    .form-group:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 10px;
+        color: var(--text-primary);
+        font-weight: 600;
+        font-size: 0.95rem;
+        transform: translateY(0);
+        transition: all 0.3s ease;
+    }
+
+    .form-group:focus-within label {
+        transform: translateY(-2px);
+        color: var(--gradient-start);
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 15px;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+        background: rgba(255, 255, 255, 0.9);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        border-color: var(--soft-blue);
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        background: white;
+    }
+
+    .form-group select {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%231e293b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 15px center;
+        background-size: 20px;
+        padding-right: 45px;
+    }
+
+    button {
+        width: 100%;
+        padding: 16px;
+        background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+        color: white;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: 0.5s;
+    }
+
+    button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    button:hover::before {
+        left: 100%;
+    }
+
+    .success-message {
+        display: none;
+        background: linear-gradient(to right, #10b981, #059669);
+        color: white;
+        text-align: center;
+        padding: 20px;
+        margin-top: 25px;
+        border-radius: 12px;
+        font-weight: 500;
+        transform: translateY(10px);
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+
+    .success-message.show {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .contact-info {
+        text-align: center;
+        color: white;
+        margin-top: 25px;
+        padding: 20px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    .contact-info i {
+        margin-right: 8px;
+        color: var(--soft-blue);
+    }
+
+    @media (max-width: 768px) {
+        .main {
+            padding: 20px 15px;
+        }
+        
+        .contact-form {
+            padding: 30px 20px;
+            margin-top:-50px;
+        }
+
+        .contact-form h2 {
+            font-size: 1.75rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 12px;
+        }
+    }
+</style>
+
+<div class="main">
+    <div class="bg-circles">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+    </div>
+    
+    <div class="container">
+        <div class="contact-form">
+            <h2>Get in Touch</h2>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="subject">How can we help?</label>
+                    <select id="subject" name="subject" required>
+                        <option value="">Choose a topic...</option>
+                        <option value="technical">Technical Support</option>
+                        <option value="billing">Billing Inquiry</option>
+                        <option value="account">Account Help</option>
+                        <option value="other">Other Assistance</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Tell us more</label>
+                    <textarea id="message" name="message" rows="5" required 
+                        placeholder="Describe your issue or inquiry in detail..."></textarea>
+                </div>
+
+                <button type="submit">
+                    <span>Send Message</span>
+                </button>
+
+                <div class="success-message" id="successMessage">
+                    <i class="fas fa-check-circle nfas"></i>
+                    Thank you! We've received your message and will respond shortly.
+                </div>
+            </form>
+        </div>
+
+        <div class="contact-info">
+            <p><i class="fas fa-clock nfas"></i> Support Hours: Monday - Friday, 9 AM - 6 PM IST</p>
+            <p><i class="fas fa-envelope nfas"></i> Email: mcqwave@gmail.com</p>
+        </div>
+    </div>
+</div>
+  {% include 'ads/banner_ad.html' %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contactForm');
+    const successMessage = document.getElementById('successMessage');
+
+    // Add floating label effect
+    const inputs = document.querySelectorAll('.form-group input, .form-group textarea, .form-group select');
+    inputs.forEach(input => {
+        input.addEventListener('focus', () => {
+            input.parentElement.classList.add('focused');
+        });
+        input.addEventListener('blur', () => {
+            if (!input.value) {
+                input.parentElement.classList.remove('focused');
+            }
+        });
+    });
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const button = form.querySelector('button');
+        const buttonText = button.querySelector('span');
+        buttonText.textContent = 'Sending...';
+        button.disabled = true;
+
+        // Get CSRF token from cookie
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getCookie('csrftoken');
+
+        // Gather form data
+        const formData = {
+            subject: document.getElementById('subject').value,
+            message: document.getElementById('message').value,
+        };
+
+        // Add name and email if they exist (for non-logged-in users)
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        if (nameInput && emailInput) {
+            formData.name = nameInput.value;
+            formData.email = emailInput.value;
+        }
+
+        // Send AJAX request
+        fetch('/contact-submit/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken  // Add CSRF token
+            },
+            credentials: 'same-origin',  // Required for CSRF
+            body: JSON.stringify(formData)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.status === 'success') {
+                successMessage.style.display = 'block';
+                setTimeout(() => {
+                    successMessage.classList.add('show');
+                }, 10);
+                
+                form.reset();
+            } else {
+                alert(data.message || 'An error occurred');
+            }
+        })
+        .catch(error => {
+            alert('An error occurred while sending your message');
+            console.error('Error:', error);
+        })
+        .finally(() => {
+            buttonText.textContent = 'Send Message';
+            button.disabled = false;
+
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successMessage.classList.remove('show');
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 300);
+            }, 5000);
+        });
+    });
+});
+</script>
+{% endblock %}
+
+{% block pp %}
+<li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">
+        <i class="fas fa-user-circle profile-icon"></i>
+        {{ user.username }}
+    </a>
+    <div class="dropdown-content">
+        <a href="#">Settings</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+</li>
+{% endblock %}

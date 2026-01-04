@@ -1,0 +1,68 @@
+{% extends 'base/base.html' %}
+{% block title %}POMEGRANATE-Subject-wise{% endblock title %}
+
+{% block content %}
+
+  <link rel="stylesheet" href="/media/css/pomegranate/pom_sub_home.css">
+<div class="main">
+  <div class="container">
+    <div class="header">
+      <h1>MCQwave POMEGRANATE</h1>
+      <p>Select your subject for analysis</p>
+    </div>
+    
+    <div class="dropdown-container-sub-home">
+      <select id="subject-dropdown" class="dropdown_sub_home" onchange="showSelection()">
+        <option value="" disabled selected>Select Subject</option>
+        {% for subject in subjects %}
+          <option value="{{ subject.name }}">{{ subject.name }}</option>
+        {% endfor %}
+      </select>
+      <button class="submit-button" onclick="submitSelection()">Submit</button>
+    </div>
+
+    <div id="subject-info" class="info-section"></div>
+  </div>
+</div>
+  <script>
+    function showSelection() {
+        const dropdown = document.getElementById("subject-dropdown");
+        const infoSection = document.getElementById("subject-info");
+        const selectedSubject = dropdown.options[dropdown.selectedIndex].value;
+      
+        if (selectedSubject) {
+          infoSection.innerHTML = `You selected: ${selectedSubject}`;
+          infoSection.style.opacity = 1;
+        } else {
+          infoSection.innerHTML = "Please select a subject!";
+          infoSection.style.opacity = 1;
+        }
+    }
+
+    function submitSelection() {
+        const dropdown = document.getElementById("subject-dropdown");
+        const selectedSubject = dropdown.options[dropdown.selectedIndex].value;
+        
+        if (selectedSubject) {
+          // Use encodeURIComponent to ensure special characters are handled properly in the URL
+          window.location.href = `pom_sub_ana/?subject=${encodeURIComponent(selectedSubject)}`;
+        } else {
+          alert("Please select a subject!");
+        }
+    }
+  </script>
+
+{% endblock %}
+
+{% block pp %}
+  <li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">
+      <i class="fas fa-user-circle profile-icon"></i>
+      {{ user.username }}
+    </a>
+    <div class="dropdown-content">
+      <a href="#">Settings</a>
+      <a href="{% url 'logout' %}">Logout</a>
+    </div>
+  </li>
+{% endblock %}

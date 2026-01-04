@@ -1,0 +1,148 @@
+{% extends 'base/base.html' %}
+
+{% block title %}MCQwave-Plans{% endblock title %}
+
+
+
+{% block content %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #1E40AF, #DC2626);
+            min-height: 100vh;
+            font-family: "Roboto Condensed", sans-serif !important;
+
+        }
+        .card {
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .original-price {
+            text-decoration: line-through;
+            color: #888;
+        }
+        .fea  li::before {
+            content: '✅';
+            
+            
+        }
+        .main{
+            margin-bottom:100px;
+        }
+    </style>
+
+<div class="flex items-center justify-center p-6 main">
+    <div class="container mx-auto">
+        <h1 class="text-4xl font-bold text-center text-white mb-12">Subscription Plans</h1>
+        
+        <div class="grid md:grid-cols-4 gap-6">
+            <!-- 1 Month Plan -->
+            <div class="card p-6 rounded-xl text-center text-white">
+                <h2 class="text-2xl font-semibold mb-4">1 Month</h2>
+                <div class="mb-4">
+                    <span class="original-price text-lg mr-2">₹119</span>
+                    <span class="text-3xl font-bold">₹89</span>
+                    
+                </div>
+                <ul class="mb-6 space-y-2 fea">
+                    <li>Practice High Yield MCQs</li>
+                    <li>PYQs Practice</li>
+                    <li>MOCK Test</li>
+                    <li>Pomegranate AI-Analysis</li>
+                    <li>HIVE MCQ Sharing</li>
+                </ul>
+                <button class="w-full bg-white text-blue-800 py-3 rounded-lg font-bold hover:bg-blue-100 transition">Select Plan</button>
+            </div>
+
+            <!-- 3 Month Plan -->
+            <div class="card p-6 rounded-xl text-center text-white">
+                <h2 class="text-2xl font-semibold mb-4">3 Months</h2>
+                <div class="mb-4">
+                    <span class="original-price text-lg mr-2">₹362</span>
+                    <span class="text-3xl font-bold">₹254</span>
+                    
+                </div>
+                <ul class="mb-6 space-y-2 fea">
+                    <li>Practice High Yield MCQs</li>
+                    <li>PYQs Practice</li>
+                    <li>MOCK Test</li>
+                    <li>Pomegranate AI-Analysis</li>
+                    <li>HIVE MCQ Sharing</li>
+                </ul>
+                <button class="w-full bg-white text-blue-800 py-3 rounded-lg font-bold hover:bg-blue-100 transition">Select Plan</button>
+            </div>
+
+            <!-- 6 Month Plan -->
+            <div class="card p-6 rounded-xl text-center text-white">
+                <h2 class="text-2xl font-semibold mb-4">6 Months</h2>
+                <div class="mb-4">
+                    <span class="original-price text-lg mr-2">₹702</span>
+                    <span class="text-3xl font-bold">₹491</span>
+                    
+                </div>
+                <ul class="mb-6 space-y-2 fea">
+                    <li>Practice High Yield MCQs</li>
+                    <li>PYQs Practice</li>
+                    <li>MOCK Test</li>
+                    <li>Pomegranate AI-Analysis</li>
+                    <li>HIVE MCQ Sharing</li>
+                </ul>
+                <button class="w-full bg-white text-blue-800 py-3 rounded-lg font-bold hover:bg-blue-100 transition">Select Plan</button>
+            </div>
+
+            <!-- 12 Month Plan -->
+            <div class="card p-6 rounded-xl text-center text-white relative">
+                <div class="absolute top-0 right-0 bg-red-500 text-white px-3 py-1 rounded-bl-lg">Best Value</div>
+                <h2 class="text-2xl font-semibold mb-4">12 Months</h2>
+                <div class="mb-4">
+                    <span class="original-price text-lg mr-2">₹1340</span>
+                    <span class="text-3xl font-bold">₹940</span>
+                    
+                </div>
+                <ul class="mb-6 space-y-2 fea">
+                    <li>Practice High Yield MCQs</li>
+                    <li>PYQs Practice</li>
+                    <li>MOCK Test</li>
+                    <li>Pomegranate AI-Analysis</li>
+                    <li>HIVE MCQ Sharing</li>
+                </ul>
+                <button class="w-full bg-white text-blue-800 py-3 rounded-lg font-bold hover:bg-blue-100 transition">Select Plan</button>
+            </div>
+        </div>
+    </div>
+</div>
+    <script>
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function() {
+                const planDuration = this.closest('.card').querySelector('h2').textContent;
+                const planPrice = this.closest('.card').querySelector('.text-3xl').textContent;
+                alert(`You selected the ${planDuration} plan at ${planPrice}`);
+            });
+        });
+    </script>
+{% endblock %}
+
+{%block pp%}
+
+<li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">
+      
+        <i class="fas fa-user-circle profile-icon"></i>
+      
+      {{ user.username }}
+      
+    </a>
+    <div class="dropdown-content">
+      <a href="#">Settings</a>
+      <a href={% url 'logout' %}>Logout</a>
+    </div>
+  </li>
+
+
+{%endblock%} 

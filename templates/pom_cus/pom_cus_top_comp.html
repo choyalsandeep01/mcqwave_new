@@ -1,0 +1,489 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+    
+    <link rel="stylesheet" href="/media/css/pomegranate/pom_cus_top_comp.css">
+    <!-- Add Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <div class="container">
+        
+        <h1>MCQ Practice Stats</h1>
+        <div class="content">
+            <div class="chart-card">
+            <!-- Topic Comparison by Accuracy, Attempts, Correct, Incorrect, Not Attempted -->
+            <h2>Topic Comparison (Attempts, Correct, Incorrect, Not Attempted)</h2>
+                <div class="chart-container chart-container-scrollable" style="height:400px;">
+                    <canvas id="topicComparisonChart"></canvas>
+                </div>
+        </div>
+            <div class="separator"></div>
+            <div class="chart-card">
+            <!-- Difficulty-Wise Comparison -->
+            <h2>Difficulty-Wise Comparison</h2>
+            <div class="button-group">
+                <button id="easyButton" class="action-button">Easy</button>
+                <button id="mediumButton" class="action-button">Medium</button>
+                <button id="toughButton" class="action-button">Tough</button>
+            </div>
+            <div class="chart-container" style="display: none;">
+                <canvas id="difficultyComparisonChart"></canvas>
+            </div>
+        </div>
+        <div class="chart-card">
+            <!-- Type-Wise Comparison -->
+            <h2>Type-Wise Comparison</h2>
+            <div class="button-group">
+                <button id="clinicalButton" class="action-button">Clinical</button>
+                <button id="imageButton" class="action-button">Image</button>
+                <button id="generalButton" class="action-button">General</button>
+            </div>
+            <div class="chart-container" style="display: none;">
+                <canvas id="typeComparisonChart"></canvas>
+            </div>
+        </div>
+            <div class="separator"></div>
+            <div class="chart-card">
+            <!-- Average Time Spent Per Question Section -->
+            <h2>Average Time Spent Per Question</h2>
+
+            <!-- Difficulty-Wise Time Comparison -->
+            <h3>Difficulty-Wise Time Comparison</h3>
+            <div class="button-group">
+                <button id="easyTimeButton" class="action-button">Easy</button>
+                <button id="mediumTimeButton" class="action-button">Medium</button>
+                <button id="toughTimeButton" class="action-button">Tough</button>
+            </div>
+            <div class="chart-container" style="display: none;">
+                <canvas id="difficultyTimeChart"></canvas>
+            </div>
+        </div>
+            <div class="chart-card">
+            <!-- Type-Wise Time Comparison -->
+            <h3>Type-Wise Time Comparison</h3>
+            <div class="button-group" >
+                <button id="clinicalTimeButton" class="action-button">Clinical</button>
+                <button id="imageTimeButton" class="action-button">Image</button>
+                <button id="generalTimeButton" class="action-button">General</button>
+            </div>
+            <div class="chart-container" style="display: none;">
+                <canvas id="typeTimeChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Your existing script here (no changes required in the script logic) -->
+   
+
+
+    <!-- Script to handle chart logic -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const canvases = document.querySelectorAll('canvas:not(#topicComparisonChart)');
+    
+    // Hide all charts except the #topicComparisonChart on initial load
+    canvases.forEach(canvas => {
+        canvas.style.height = '250px';  // Set initial height to 0 to hide the canvas
+        canvas.style.display = 'none'; // Ensure no space is taken
+    });
+    // Data placeholder for demonstration purposes.
+    
+    // General Topic Comparison Data
+    const topicLabels = {{ topic_labels|safe }};
+    const attemptsData = {{ total_faced_data|safe }};
+    const correctData = {{ correct_data|safe }};
+    const incorrectData = {{ incorrect_data|safe }};
+    const notAttemptedData = {{ not_attempted_data|safe }};
+    
+    // Topic comparison chart
+    const topicComparisonCtx = document.getElementById('topicComparisonChart').getContext('2d');
+    const topicComparisonChart = new Chart(topicComparisonCtx, {
+        type: 'bar',
+        data: {
+            labels: topicLabels,
+            datasets: [
+                {
+                    label: 'Total Faced',
+                    data: attemptsData,
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                },
+                {
+                    label: 'Correct',
+                    data: correctData,
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                },
+                {
+                    label: 'Incorrect',
+                    data: incorrectData,
+                    backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                },
+                {
+                    label: 'Not Attempted',
+                    data: notAttemptedData,
+                    backgroundColor: 'rgba(201, 203, 207, 0.6)',
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Topic Comparison by Total Faced, Correct, Incorrect, and Not Attempted'
+                }
+            }
+        },
+    });
+
+    // Difficulty-Wise Data (Easy, Medium, Tough)
+    const difficultyData = {
+        {% for difficulty, stats in difficulty_stats.items %}
+            "{{ difficulty }}": {
+                totalFaced: {{ stats.total_faced|safe }},
+                correct: {{ stats.correct|safe }},
+                incorrect: {{ stats.incorrect|safe }},
+                notAttempted: {{ stats.not_attempted|safe }}
+            },
+        {% endfor %}
+    };
+    // Type-Wise Data (Clinical, Image, General)
+    const typeData = {
+        Clinical: {
+            totalFaced: {{ type_stats.Clinical.total_faced|safe }},
+            correct: {{ type_stats.Clinical.correct|safe }},
+            incorrect: {{ type_stats.Clinical.incorrect|safe }},
+            notAttempted: {{ type_stats.Clinical.not_attempted|safe }},
+        },
+        Image: {
+            totalFaced: {{ type_stats.Image.total_faced|safe }},
+            correct: {{ type_stats.Image.correct|safe }},
+            incorrect: {{ type_stats.Image.incorrect|safe }},
+            notAttempted: {{ type_stats.Image.not_attempted|safe }},
+        },
+        General: {
+            totalFaced: {{ type_stats.General.total_faced|safe }},
+            correct: {{ type_stats.General.correct|safe }},
+            incorrect: {{ type_stats.General.incorrect|safe }},
+            notAttempted: {{ type_stats.General.not_attempted|safe }},
+        }
+    };
+    // Difficulty comparison chart
+    const difficultyComparisonCtx = document.getElementById('difficultyComparisonChart').getContext('2d');
+    let difficultyComparisonChart = new Chart(difficultyComparisonCtx, {
+        type: 'bar',
+        data: {
+            labels: topicLabels,
+            datasets: []
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Difficulty-Wise Comparison'
+                }
+            }
+        }
+    });
+    // Type comparison chart
+    const typeComparisonCtx = document.getElementById('typeComparisonChart').getContext('2d');
+    let typeComparisonChart = new Chart(typeComparisonCtx, {
+        type: 'bar',
+        data: {
+            labels: {{ topic_labels|safe }},
+            datasets: []
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Type-Wise Comparison'
+                }
+            }
+        }
+    });
+
+    // Function to update difficulty chart
+    function updateDifficultyChart(difficulty) {
+        const data = difficultyData[difficulty];
+        difficultyComparisonChart.data.datasets = [
+            {
+                label: 'Total Faced',
+                data: data.totalFaced,
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+            },
+            {
+                label: 'Correct',
+                data: data.correct,
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+            },
+            {
+                label: 'Incorrect',
+                data: data.incorrect,
+                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+            },
+            {
+                label: 'Not Attempted',
+                data: data.notAttempted,
+                backgroundColor: 'rgba(201, 203, 207, 0.6)',
+            }
+        ];
+        difficultyComparisonChart.update();
+    }
+
+    // Function to update type chart
+    function updateTypeChart(type) {
+        const data = typeData[type];
+        typeComparisonChart.data.datasets = [
+            {
+                label: 'Total Faced',
+                data: data.totalFaced,
+                backgroundColor: 'rgba(255, 206, 86, 0.6)',
+            },
+            {
+                label: 'Correct',
+                data: data.correct,
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+            },
+            {
+                label: 'Incorrect',
+                data: data.incorrect,
+                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+            },
+            {
+                label: 'Not Attempted',
+                data: data.notAttempted,
+                backgroundColor: 'rgba(201, 203, 207, 0.6)',
+            }
+        ];
+        typeComparisonChart.update();
+    }
+    // Add event listeners to difficulty buttons
+    document.getElementById('easyButton').addEventListener('click', function () {
+        updateDifficultyChart('Easy');
+    });
+
+    document.getElementById('mediumButton').addEventListener('click', function () {
+        updateDifficultyChart('Medium');
+    });
+
+    document.getElementById('toughButton').addEventListener('click', function () {
+        updateDifficultyChart('Tough');
+    });
+
+    // Add event listeners to type buttons
+    document.getElementById('clinicalButton').addEventListener('click', function () {
+        updateTypeChart('Clinical');
+    });
+
+    document.getElementById('imageButton').addEventListener('click', function () {
+        updateTypeChart('Image');
+    });
+
+    document.getElementById('generalButton').addEventListener('click', function () {
+        updateTypeChart('General');
+    });
+
+    // Average Time Data (for demonstration purposes)
+    const difficultyTimeData = {
+        Easy: {{ difficulty_stats.Easy.average_time|safe }},
+        Medium: {{ difficulty_stats.Medium.average_time|safe }},
+        Tough: {{ difficulty_stats.Tough.average_time|safe }}
+    };
+    
+    const typeTimeData = {
+        Clinical: {{ type_stats.Clinical.average_time|safe }},
+        Image: {{ type_stats.Image.average_time|safe }},
+        General: {{ type_stats.General.average_time|safe }}
+    };
+
+    // Difficulty-wise time chart
+    const difficultyTimeCtx = document.getElementById('difficultyTimeChart').getContext('2d');
+    let difficultyTimeChart = new Chart(difficultyTimeCtx, {
+        type: 'line',
+        data: {
+            labels: topicLabels,
+            datasets: []
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Difficulty-Wise Average Time Spent Per Question'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Time (seconds)'
+                    }
+                }
+            }
+        }
+    });
+
+    // Type-wise time chart
+    const typeTimeCtx = document.getElementById('typeTimeChart').getContext('2d');
+    let typeTimeChart = new Chart(typeTimeCtx, {
+        type: 'line',
+        data: {
+            labels: topicLabels,
+            datasets: []
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Type-Wise Average Time Spent Per Question'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Time (seconds)'
+                    }
+                }
+            }
+        }
+    });
+
+    // Function to update difficulty time chart
+    function updateDifficultyTimeChart(difficulty) {
+        difficultyTimeChart.data.datasets = [
+            {
+                label: `${difficulty} - Time`,
+                data: difficultyTimeData[difficulty],
+                borderColor: 'rgba(54, 162, 235, 1)',
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                fill: true
+            }
+        ];
+        difficultyTimeChart.update();
+    }
+
+    // Function to update type time chart
+    function updateTypeTimeChart(type) {
+        typeTimeChart.data.datasets = [
+            {
+                label: `${type} - Time`,
+                data: typeTimeData[type],
+                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                fill: true
+            }
+        ];
+        typeTimeChart.update();
+    }
+
+    // Add event listeners to difficulty time buttons
+    function showChart(canvasId, updateFunction) {
+    const canvas = document.getElementById(canvasId);
+    const containers = document.getElementsByClassName('chart-container');
+
+    // Hide all chart containers
+    
+
+    // Set height and display for the specific canvas and its container
+    canvas.parentElement.style.display = 'block'; // Show the container
+    canvas.style.height = '250px'; // Set the height for the chart
+    canvas.style.display = 'block'; // Show the canvas
+    updateFunction(); // Update the chart
+}
+
+            // Add event listeners to buttons
+            document.getElementById('easyButton').addEventListener('click', function () {
+        showChart('difficultyComparisonChart', () => updateDifficultyChart('Easy'));
+    });
+
+    document.getElementById('mediumButton').addEventListener('click', function () {
+        showChart('difficultyComparisonChart', () => updateDifficultyChart('Medium'));
+    });
+
+    document.getElementById('toughButton').addEventListener('click', function () {
+        showChart('difficultyComparisonChart', () => updateDifficultyChart('Tough'));
+    });
+
+    // Type buttons
+    document.getElementById('clinicalButton').addEventListener('click', function () {
+        showChart('typeComparisonChart', () => updateTypeChart('Clinical'));
+    });
+
+    document.getElementById('imageButton').addEventListener('click', function () {
+        showChart('typeComparisonChart', () => updateTypeChart('Image'));
+    });
+
+    document.getElementById('generalButton').addEventListener('click', function () {
+        showChart('typeComparisonChart', () => updateTypeChart('General'));
+    });
+
+    // Difficulty Time buttons
+    document.getElementById('easyTimeButton').addEventListener('click', function () {
+        showChart('difficultyTimeChart', () => updateDifficultyTimeChart('Easy'));
+    });
+
+    document.getElementById('mediumTimeButton').addEventListener('click', function () {
+        showChart('difficultyTimeChart', () => updateDifficultyTimeChart('Medium'));
+    });
+
+    document.getElementById('toughTimeButton').addEventListener('click', function () {
+        showChart('difficultyTimeChart', () => updateDifficultyTimeChart('Tough'));
+    });
+
+    // Type Time buttons
+    document.getElementById('clinicalTimeButton').addEventListener('click', function () {
+        showChart('typeTimeChart', () => updateTypeTimeChart('Clinical'));
+    });
+
+    document.getElementById('imageTimeButton').addEventListener('click', function () {
+        showChart('typeTimeChart', () => updateTypeTimeChart('Image'));
+    });
+
+    document.getElementById('generalTimeButton').addEventListener('click', function () {
+        showChart('typeTimeChart', () => updateTypeTimeChart('General'));
+    });
+});
+
+    </script>
+    {% endblock %}
+
+    {% block pp %}
+      <li class="dropdown">
+        <a href="javascript:void(0)" class="dropbtn">
+          <i class="fas fa-user-circle profile-icon"></i>
+          {{ user.username }}
+        </a>
+        <div class="dropdown-content">
+          <a href="#">Settings</a>
+          <a href="{% url 'logout' %}">Logout</a>
+        </div>
+      </li>
+    {% endblock %}
+    

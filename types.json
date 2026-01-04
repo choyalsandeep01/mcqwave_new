@@ -1,0 +1,29 @@
+[
+{
+    "model": "mcqs.mcq_types",
+    "pk": "17c9993d-cb58-458d-b956-b9b324518ea7",
+    "fields": {
+        "created_at": "2024-08-16T09:09:58.506Z",
+        "updated_at": "2024-08-16T09:09:58.506Z",
+        "types": "General"
+    }
+},
+{
+    "model": "mcqs.mcq_types",
+    "pk": "94dde794-9cd0-4ab4-ac70-29d3f6b7c960",
+    "fields": {
+        "created_at": "2024-08-16T09:09:55.554Z",
+        "updated_at": "2024-08-16T09:09:55.554Z",
+        "types": "Image"
+    }
+},
+{
+    "model": "mcqs.mcq_types",
+    "pk": "a3ba13d1-6a13-4685-80c6-ebc03994ac55",
+    "fields": {
+        "created_at": "2024-08-16T09:09:51.621Z",
+        "updated_at": "2024-08-16T09:09:51.621Z",
+        "types": "Clinical"
+    }
+}
+]

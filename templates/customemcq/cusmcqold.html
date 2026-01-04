@@ -1,0 +1,1368 @@
+{% extends 'base/base.html' %}
+{% block title %}Practice MCQs{% endblock title %}
+
+{% block content %}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dynamic Dropdowns with Additional Segments</title>
+<link rel="stylesheet" href="/media/css/cusmcq.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@100..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+    .mini-stats-strip {
+        background: linear-gradient(90deg, #1e3c72, #dc143c);
+        padding: 0.5rem;
+        border-radius: 8px 8px 0 0;
+        margin: 10px 0 0 0;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .mini-stats-grid {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        gap: 1rem;
+        max-width: 100%;
+    }
+    
+    .mini-stat {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .mini-stat i {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.9rem;
+    }
+    
+    .mini-stat-number {
+        color: white;
+        font-weight: bold;
+        font-size: 0.9rem;
+        margin-right: 0.2rem;
+    }
+    
+    .mini-stat-label {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 0.8rem;
+    }
+    
+    .stats-note {
+        background: rgba(30, 60, 114, 0.05);
+        border: 1px solid rgba(30, 60, 114, 0.1);
+        border-top: none;
+        padding: 0.3rem 0.5rem;
+        font-size: 0.7rem;
+        color: #666;
+        text-align: center;
+        border-radius: 0 0 8px 8px;
+        margin-bottom: 10px;
+    }
+    
+    .stats-note i {
+        color: #1e3c72;
+        font-size: 0.7rem;
+        margin-right: 0.2rem;
+    }
+    
+    @media (max-width: 480px) {
+        .mini-stats-grid {
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+        }
+        
+        .mini-stat {
+            font-size: 0.8rem;
+        }
+    }
+    </style>
+<style>
+    .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(3px);
+        z-index: 1000;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.show {
+        opacity: 1;
+    }
+
+    .modal-content {
+        position: absolute;
+        top: 45%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.8);
+        width: 90%;
+        max-width: 800px;
+        padding: 20px;
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+
+    .modal-overlay.show .modal-content {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    .cancel-btn {
+        position: absolute;
+        top: -40px;
+        right: 0;
+        background: #ff4444;
+        color: white;
+        border: none;
+        padding: 8px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .cancel-btn:hover {
+        background: #ff0000;
+        transform: translateY(-2px);
+    }
+
+    .cancel-btn:active {
+        transform: translateY(0);
+    }
+
+    .cancel-btn::before {
+        content: '✕';
+        font-size: 14px;
+    }
+    .cards-container {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .mode-card {
+        flex: 1;
+        min-width: 280px;
+        max-width: 350px;
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        user-select: none; /* Standard for modern browsers */
+        -webkit-user-select: none; /* Chrome, Safari, and other WebKit browsers */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+    }
+
+    .mode-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, #2196F3, #4CAF50);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.3s ease;
+    }
+
+    .mode-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .mode-card:hover::before {
+        transform: scaleX(1);
+    }
+
+    .mode-card h3 {
+        margin: 0 0 15px 0;
+        color: #333;
+        font-size: 24px;
+    }
+
+    .mode-card p {
+        margin: 0;
+        color: #666;
+        line-height: 1.6;
+    }
+
+    .mode-card .icon {
+        font-size: 48px;
+        margin-bottom: 20px;
+        color: #2196F3;
+    }
+
+    .test-card .icon {
+        color: #2196F3;
+    }
+
+    .instant-card .icon {
+        color: #4CAF50;
+    }
+
+    @media (max-width: 768px) {
+        .mode-card {
+            min-width: 100%;
+        }
+        .cancel-btn {
+            top: 100%;
+            right: 50%;
+            transform: translateX(50%);
+            padding: 20px 117px;
+        }
+    }
+
+    @keyframes cardPulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.02); }
+        100% { transform: scale(1); }
+    }
+
+    .mode-card:active {
+        animation: cardPulse 0.3s ease;
+    }
+</style>
+<style>
+    .search-container {
+        margin-bottom: 20px;
+        position: relative;
+    }
+    
+    .search-box {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+    
+    .search-results {
+        position: absolute;
+        width: 100%;
+        max-height: 200px;
+        overflow-y: auto;
+        background: white;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        display: none;
+        z-index: 1000;
+    }
+    
+    .search-result-item {
+        padding: 8px 12px;
+        cursor: pointer;
+    }
+    
+    .search-result-item:hover {
+        background-color: #f0f0f0;
+    }
+    </style>
+    <style>
+        .mode-toggle {
+            margin-bottom: 1rem;
+        }
+        .selected-tags-list{
+            margin:10px;
+        }
+        #selectedTagsContainer{
+            margin-top:10px;
+        }
+        .tag-mode-btn {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tag-mode-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+        }
+        
+        .tag-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .tag-modal.show {
+            opacity: 1;
+        }
+        
+        .tag-modal-content {
+            position: relative;
+            background: white;
+            width: 90%;
+            max-width: 900px;
+            margin: 2rem auto;
+            border-radius: 12px;
+            padding: 2rem;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tag-modal.show .tag-modal-content {
+            transform: translateY(0);
+        }
+        
+        .tag-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tag-search {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tag-search input {
+            width: 100%;
+            padding: 1rem 3rem 1rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .tag-search input:focus {
+            border-color: #6366f1;
+            outline: none;
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+        }
+        
+        .tag-categories {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+        
+        .category-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            background: white;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+        
+        .category-btn.active {
+            background: #6366f1;
+            color: white;
+            border-color: #6366f1;
+        }
+        
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tag {
+            padding: 0.5rem 1rem;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+        }
+        
+        .tag.selected {
+            background: #6366f1;
+            color: white;
+            border-color: #6366f1;
+        }
+        
+        .selected-tags-preview {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+        
+        .tag-modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .cancel-tags-btn, .apply-tags-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .cancel-tags-btn {
+            background: white;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .apply-tags-btn {
+            background: #6366f1;
+            color: white;
+            border: none;
+        }
+        
+        @media (max-width: 768px) {
+            .tag-modal-content {
+                width: 95%;
+                padding: 1rem;
+                margin: 1rem auto;
+            }
+            
+            .tag-categories {
+                flex-wrap: nowrap;
+            }
+        }
+        </style>
+        <style>
+            /* Add these styles to your existing CSS */
+            .mode-toggle {
+                display: flex;
+                gap: 1rem;
+                margin-bottom: 1rem;
+            }
+            
+            .exit-tag-mode-btn {
+                background: #ef4444;
+                color: white;
+                padding: 0.75rem 1.5rem;
+                border: none;
+                border-radius: 8px;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            
+            .exit-tag-mode-btn:hover {
+                background: #dc2626;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+            }
+            
+            .tag-mode-active .default-interface {
+                display: none;
+            }
+            
+            .selected-tags-display {
+                background: #f8fafc;
+                padding: 1rem;
+                border-radius: 8px;
+                margin-bottom: 1.5rem;
+            }
+            
+            .selected-tags-list {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                margin-top: 0.5rem;
+            }
+            
+            .selected-tags-list .tag {
+                background: #6366f1;
+                color: white;
+                padding: 0.5rem 1rem;
+                border-radius: 20px;
+                font-size: 0.875rem;
+            }
+            .advanced-settings-btn {
+                background: white;
+                color: blue;
+                border: none;
+                padding: 12px 24px;
+                border-radius: 6px;
+                font-size: 16px;
+                font-weight: 500;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin: 20px 0;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                transition: transform 0.2s, box-shadow 0.2s;
+            }
+            
+            .advanced-settings-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            }
+            
+            .advanced-settings-btn i {
+                transition: transform 0.3s ease;
+            }
+            
+            .advanced-settings-btn.active i {
+                transform: rotate(180deg);
+            }
+            
+            .advanced-settings-container {
+                background: white;
+                border-radius: 8px;
+                padding: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                opacity: 0;
+                
+                margin: 0 0 20px 0;
+            }
+            
+            .advanced-settings-container.show {
+                max-height: 1000px;
+                opacity: 1;
+                padding: 20px;
+            }
+            
+            .advanced-settings-container h2 {
+                color: #2c3e50;
+                font-size: 1.5rem;
+                margin-top: 0;
+                padding-bottom: 10px;
+                border-bottom: 2px solid #e0e0e0;
+            }
+            
+            .advanced-settings-container select,
+            .advanced-settings-container input {
+                width: 100%;
+                padding: 10px;
+                margin: 8px 0 20px 0;
+                border: 2px solid #e0e0e0;
+                border-radius: 6px;
+                font-size: 14px;
+                transition: border-color 0.3s;
+            }
+            
+            .advanced-settings-container select:focus,
+            .advanced-settings-container input:focus {
+                border-color: #4a90e2;
+                outline: none;
+            }
+            
+            .advanced-settings-container label {
+                display: block;
+                font-weight: 500;
+                color: #4a5568;
+                margin-bottom: 6px;
+            }
+            .tag-mode-btn.disabled {
+                pointer-events: none; /* Prevent clicking */
+                opacity: 0.9; /* Reduce visibility */
+                position: relative;
+            }
+            .tag-mode-btn.disabled::before {
+                content: "\f023"; /* Unicode for FontAwesome lock icon */
+                font-family: "Font Awesome 6 Free";
+                font-weight: 900;
+                font-size: 24px;
+                color: white;
+                opacity: 0.6;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            .settings-group {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: all 0.3s ease;
+            }
+            
+            .advanced-settings-container.show .settings-group {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            
+            @media (max-width: 768px) {
+                .advanced-settings-container {
+                    margin: 0 10px 20px 10px;
+                }
+                
+                .advanced-settings-btn {
+                    margin: 20px 10px;
+                }
+            }
+            </style>
+            
+            <div class="mini-stats-strip">
+                <div class="mini-stats-grid">
+                    <div class="mini-stat">
+                        <i class="fas fa-clipboard-list nfas"></i>
+                        <span class="mini-stat-number" id="totalCounter">0</span>
+                        <span class="mini-stat-label">Total</span>
+                    </div>
+                    
+                    <div class="mini-stat">
+                        <i class="fas fa-stethoscope nfas"></i>
+                        <span class="mini-stat-number" id="clinicalCounter">0</span>
+                        <span class="mini-stat-label">Clinical</span>
+                    </div>
+                    
+                    <div class="mini-stat">
+                        <i class="fas fa-image nfas"></i>
+                        <span class="mini-stat-number" id="imageCounter">0</span>
+                        <span class="mini-stat-label">Image</span>
+                    </div>
+                </div>
+            </div>
+            <div class="stats-note">
+                <i class="fas fa-sync-alt fa-spin nfas"></i>Our team is continuously adding new high-yield MCQs to enhance your learning experience
+            </div>
+
+            
+    <div class="container">
+        {% include "base/alert.html" %}
+        <div class="mode-toggle">
+            <button id="tagModeButton" class="tag-mode-btn disabled">
+                <i class="fas fa-tags nfas"></i> Tag Mode
+                
+            </button>
+            <button id="exitTagMode" class="exit-tag-mode-btn" style="display: none;">
+                <i class="fas fa-times nfas"></i> Exit Tag Mode
+            </button>
+        </div>
+        <div id="tagSelectionModal" class="tag-modal">
+            <div class="tag-modal-content">
+                <div class="tag-header">
+                    <h2>Select Tags</h2>
+                    <button class="close-tag-modal">&times;</button>
+                </div>
+                <div class="tag-search">
+                    <input type="text" id="tagSearchInput" placeholder="Search tags...">
+                    <i class="fas fa-search search-icon nfas"></i>
+                </div>
+                <div class="tag-categories">
+                    <button class="category-btn active" data-category="all">All</button>
+                    <button class="category-btn" data-category="diseases">Diseases</button>
+                    <button class="category-btn" data-category="symptoms">Symptoms</button>
+                    <button class="category-btn" data-category="treatments">Treatments</button>
+                </div>
+                <div class="selected-tags-preview">
+                    <h3>Selected Tags (<span id="selectedCount">0</span>)</h3>
+                    <div id="selectedTagsContainer"></div>
+                </div>
+                <div class="tags-container" id="tagsContainer">
+                    <!-- Tags will be dynamically added here -->
+                </div>
+                <div class="tag-modal-footer">
+                    <button class="cancel-tags-btn">Cancel</button>
+                    <button class="apply-tags-btn">Apply Selected Tags</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Segment 1: Dynamic Dropdowns -->
+        <h2  id="h_sel_tp">Select Topics</h2>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search for topics..." class="search-box">
+            <div id="searchResults" class="search-results"></div>
+        </div>
+    <div class="dropdowns">
+        <select id="subjectDropdown" onchange="handleSubjectChange()">
+            <option value="">Select Subject</option>
+            {% for subject, units in data.items %}
+                <option value="{{ subject }}">{{ subject }}</option>
+            {% endfor %}
+        </select>
+
+        <select id="unitDropdown" onchange="handleUnitChange()">
+            <option value="">Select Unit</option>
+        </select>
+
+        <select id="chapterDropdown" onchange="handleChapterChange()">
+            <option value="">Select Chapter</option>
+        </select>
+
+        <select id="topicDropdown" onchange="handleTopicChange()">
+            <option value="">Select Topic</option>
+        </select>
+    </div>
+
+        <button onclick="addSelection()" id="add-btn" class="add-btn">Add Selection</button>
+
+        <ul id="selectionList">
+            <!-- Selections will appear here -->
+        </ul>
+        <button class="advanced-settings-btn" id="advancedSettingsBtn">
+            <span>Advanced Settings</span>
+            <i class="fas fa-chevron-down nfas"></i>
+        </button>
+        <!-- Segment 2: Question Type Options -->
+        <div class="advanced-settings-container" id="advancedSettingsContainer">
+            <div class="settings-group">
+                <h2>Question Type</h2>
+                <div class="question-type">
+                    <label>Select Question Type:</label>
+                    <select id="questionType">
+                        <option value="mixed">Mixed</option>
+                        <option value="clinical">Clinical</option>
+                        <option value="image">Image</option>
+                        <option value="general">General</option>
+                    </select>
+                </div>
+        
+                <h2>Difficulty Level</h2>
+                <div class="difficulty-options">
+                    <label>Select Difficulty:</label>
+                    <select id="difficultyLevel">
+                        <option value="mixed">Mixed</option>
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="tough">Tough</option>
+                    </select>
+                </div>
+        
+                <h2>Question Availability</h2>
+                <div class="question-availability">
+                    <label>Select Question Availability:</label>
+                    <select id="questionAvailability">
+                        <option value="new">New Questions</option>
+                        <option value="new+old">New + Old (Solved) Questions</option>
+                    </select>
+                </div>
+        
+                <h2>Quiz Settings</h2>
+                <div class="quiz-settings">
+                    <label for="numQuestions">Enter Number of Questions (max 40):</label>
+                    <input type="number" id="numQuestions" name="numQuestions" min="1" max="40">
+        
+                    <label for="timePerQuestion">Enter Time per Question (in minutes):</label>
+                    <input type="number" id="timePerQuestion" name="timePerQuestion" min="10" max="300">
+                </div>
+            </div>
+        </div>
+        
+            
+      
+
+        <!-- Segment 5: Difficulty Options -->
+        
+
+        <!-- Segment 6: Start Test Button -->
+        
+    </div>
+   <div id="modeModal" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-content">
+            
+            <div class="cards-container">
+                <div class="mode-card test-card" onclick="startTestWithMode('test')">
+                    <div class="icon">📝</div>
+                    <h3>Test Mode</h3>
+                    <p>Take a complete test with timed questions and get your score at the end. Perfect for exam preparation and assessment.</p>
+                </div>
+                
+                <div class="mode-card instant-card" onclick="startTestWithMode('instant')">
+                    <div class="icon">⚡</div>
+                    <h3>Instant Check</h3>
+                    <p>Get immediate feedback after each question. Great for learning and understanding concepts better.</p>
+                </div>
+            </div>
+            <button class="cancel-btn" onclick="closeModal(event)">Cancel</button>
+        </div>
+    </div>
+    <div class="bottom-button-container">
+        <button onclick="showModal()" class="start-test-btn">START TEST</button>
+    </div>
+    <script>
+        function animateNumber(element, target, duration = 1000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                start += increment;
+                element.textContent = Math.floor(start);
+                if (start >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                }
+            }, 16);
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const totalElement = document.getElementById('totalCounter');
+            const clinicalElement = document.getElementById('clinicalCounter');
+            const imageElement = document.getElementById('imageCounter');
+            
+            animateNumber(totalElement, {{ total_mcqs }});
+            animateNumber(clinicalElement, {{ clinical_mcqs }});
+            animateNumber(imageElement, {{ image_mcqs }});
+        });
+        </script>
+        
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const advancedSettingsBtn = document.getElementById('advancedSettingsBtn');
+            const advancedSettingsContainer = document.getElementById('advancedSettingsContainer');
+            
+            advancedSettingsBtn.addEventListener('click', function() {
+                const isExpanded = advancedSettingsContainer.classList.contains('show');
+                
+                // Toggle button state
+                this.classList.toggle('active');
+                
+                // Toggle container visibility with animation
+                if (isExpanded) {
+                    advancedSettingsContainer.classList.remove('show');
+                } else {
+                    advancedSettingsContainer.classList.add('show');
+                }
+            });
+        });
+        </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const tagModeButton = document.getElementById('tagModeButton');
+        const exitTagModeButton = document.getElementById('exitTagMode');
+        const tagModal = document.getElementById('tagSelectionModal');
+        const closeBtn = document.querySelector('.close-tag-modal');
+        const cancelBtn = document.querySelector('.cancel-tags-btn');
+        const applyBtn = document.querySelector('.apply-tags-btn');
+        const searchInput = document.getElementById('tagSearchInput');
+        const tagsContainer = document.getElementById('tagsContainer');
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const selectedTagsContainer = document.getElementById('selectedTagsContainer');
+        const selectedCountElement = document.getElementById('selectedCount');
+        const normalSearchContainer = document.querySelector('.search-container');
+        const dropdownsContainer = document.querySelector('.dropdowns');
+        const add_sel = document.querySelector('.add-btn');
+        const h_sel_tp = document.getElementById('h_sel_tp');
+        
+        let selectedTags = new Set();
+        let isTagMode = false;
+    
+        // Function to toggle interface elements
+        function toggleInterface(showTagMode) {
+            isTagMode = showTagMode;
+            
+            // Toggle buttons
+            tagModeButton.style.display = showTagMode ? 'none' : 'flex';
+            exitTagModeButton.style.display = showTagMode ? 'flex' : 'none';
+            
+            // Toggle original interface elements
+            if (normalSearchContainer) normalSearchContainer.style.display = showTagMode ? 'none' : 'block';
+            if (dropdownsContainer) dropdownsContainer.style.display = showTagMode ? 'none' : 'block';
+            if (add_sel) add_sel.style.display = showTagMode ? 'none' : 'block';
+            if (h_sel_tp) h_sel_tp.style.display = showTagMode ? 'none' : 'block';
+            
+            // Show/hide selected tags display
+            const existingTagsDisplay = document.querySelector('.selected-tags-display');
+            if (existingTagsDisplay) {
+                existingTagsDisplay.style.display = showTagMode ? 'block' : 'none';
+            }
+        }
+    
+        // Enter tag mode
+        tagModeButton.addEventListener('click', function() {
+            tagModal.style.display = 'block';
+            setTimeout(() => {
+                tagModal.classList.add('show');
+            }, 10);
+            toggleInterface(true);
+        });
+    
+        // Exit tag mode
+        exitTagModeButton.addEventListener('click', function() {
+            toggleInterface(false);
+            selectedTags.clear();
+            updateSelectedTagsPreview();
+            
+            // Remove the selected tags display if it exists
+            const existingTagsDisplay = document.querySelector('.selected-tags-display');
+            if (existingTagsDisplay) {
+                existingTagsDisplay.remove();
+            }
+            
+            // Show the original interface elements
+            if (dropdownsContainer) dropdownsContainer.style.display = 'block';
+            if (normalSearchContainer) normalSearchContainer.style.display = 'block';
+            if (add_sel) add_sel.style.display = 'block';
+            if (h_sel_tp) h_sel_tp.style.display = 'block';
+        });
+    
+        // Close modal functions
+        function closeModal() {
+            tagModal.classList.remove('show');
+            setTimeout(() => {
+                tagModal.style.display = 'none';
+            }, 300);
+            
+            // If no tags are selected, exit tag mode
+            if (selectedTags.size === 0) {
+                toggleInterface(false);
+                // Show the original interface elements
+                if (normalSearchContainer) normalSearchContainer.style.display = 'block';
+                if (dropdownsContainer) dropdownsContainer.style.display = 'block';
+                if (add_sel) add_sel.style.display = 'block';
+                if (h_sel_tp) h_sel_tp.style.display = 'block';
+            }
+        }
+    
+        closeBtn.addEventListener('click', closeModal);
+        cancelBtn.addEventListener('click', closeModal);
+    
+        // Category filtering
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                filterTags();
+            });
+        });
+    
+        // Search functionality
+        searchInput.addEventListener('input', filterTags);
+    
+        function filterTags() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const selectedCategory = document.querySelector('.category-btn.active').dataset.category;
+            
+            const filteredTags = mockTags.filter(tag => {
+                const matchesSearch = tag.name.toLowerCase().includes(searchTerm);
+                const matchesCategory = selectedCategory === 'all' || tag.category === selectedCategory;
+                return matchesSearch && matchesCategory;
+            });
+    
+            renderTags(filteredTags);
+        }
+    
+        // Apply selected tags
+        applyBtn.addEventListener('click', function() {
+            const selectedTagsList = Array.from(selectedTags);
+            
+            if (selectedTagsList.length > 0) {
+                updateMainInterface(selectedTagsList);
+                toggleInterface(true);
+            } else {
+                toggleInterface(false);
+            }
+            
+            closeModal();
+        });
+    
+        // Mock tags for demonstration
+        const mockTags = [
+            { id: 1, name: 'Diabetes', category: 'diseases' },
+            { id: 2, name: 'Hypertension', category: 'diseases' },
+            { id: 3, name: 'Headache', category: 'symptoms' }
+            // Add more mock tags as needed
+        ];
+    
+        function renderTags(tags) {
+            tagsContainer.innerHTML = '';
+            tags.forEach(tag => {
+                const tagElement = document.createElement('div');
+                tagElement.className = `tag ${selectedTags.has(tag.name) ? 'selected' : ''}`;
+                tagElement.textContent = tag.name;
+                tagElement.addEventListener('click', () => toggleTag(tag.name, tagElement));
+                tagsContainer.appendChild(tagElement);
+            });
+        }
+    
+        function toggleTag(tagName, element) {
+            if (selectedTags.has(tagName)) {
+                selectedTags.delete(tagName);
+                element.classList.remove('selected');
+            } else {
+                selectedTags.add(tagName);
+                element.classList.add('selected');
+            }
+            updateSelectedTagsPreview();
+        }
+    
+        function updateSelectedTagsPreview() {
+            selectedTagsContainer.innerHTML = '';
+            selectedTags.forEach(tag => {
+                const tagElement = document.createElement('span');
+                tagElement.className = 'tag selected';
+                tagElement.textContent = tag;
+                selectedTagsContainer.appendChild(tagElement);
+            });
+            selectedCountElement.textContent = selectedTags.size;
+        }
+    
+        function updateMainInterface(selectedTags) {
+            if (selectedTags.length === 0) {
+                toggleInterface(false);
+                return;
+            }
+    
+            // Create a new container to display selected tags
+            const selectedTagsDisplay = document.createElement('div');
+            selectedTagsDisplay.className = 'selected-tags-display';
+            selectedTagsDisplay.innerHTML = `
+                <h3>Selected Tags:</h3>
+                <div class="selected-tags-list">
+                    ${selectedTags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                </div>
+            `;
+            
+            // Check if selected tags display already exists
+            const existingTagsDisplay = document.querySelector('.selected-tags-display');
+            
+            if (existingTagsDisplay) {
+                // Update existing tags display
+                existingTagsDisplay.parentNode.replaceChild(selectedTagsDisplay, existingTagsDisplay);
+            } else {
+                // Insert after the mode toggle buttons
+                const modeToggle = document.querySelector('.mode-toggle');
+                modeToggle.insertAdjacentElement('afterend', selectedTagsDisplay);
+            }
+        }
+    
+        // Initialize interface
+        toggleInterface(false);
+        renderTags(mockTags);
+    });
+        </script>
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+
+        const data = {{ data|safe }};
+        function searchTopics(term) {
+            const results = [];
+            const termLower = term.toLowerCase();
+            
+            Object.entries(data).forEach(([subject, units]) => {
+                Object.entries(units).forEach(([unit, chapters]) => {
+                    Object.entries(chapters).forEach(([chapter, topics]) => {
+                        topics.forEach(topic => {
+                            const path = [subject, unit, chapter, topic];
+                            const fullPath = path.join('->');
+                            
+                            let matchIndex = -1;
+                            path.forEach((item, index) => {
+                                if (item.toLowerCase().includes(termLower)) {
+                                    matchIndex = index;
+                                }
+                            });
+        
+                            if (matchIndex !== -1) {
+                                results.push(path.slice(0, matchIndex + 1).join('->'));
+                            }
+                        });
+                    });
+                });
+            });
+        
+            return [...new Set(results)];
+        }
+            
+    function handleSubjectChange() {
+        const subjectDropdown = document.getElementById("subjectDropdown");
+        const unitDropdown = document.getElementById("unitDropdown");
+        const chapterDropdown = document.getElementById("chapterDropdown");
+        const topicDropdown = document.getElementById("topicDropdown");
+
+        const selectedSubject = subjectDropdown.value;
+        unitDropdown.innerHTML = '<option value="">Select Unit</option>';
+        chapterDropdown.innerHTML = '<option value="">Select Chapter</option>';
+        topicDropdown.innerHTML = '<option value="">Select Topic</option>';
+
+        if (selectedSubject && data[selectedSubject]) {
+            Object.keys(data[selectedSubject]).forEach(unit => {
+                unitDropdown.innerHTML += `<option value="${unit}">${unit}</option>`;
+            });
+        }
+    }
+    function displayResults(results) {
+        searchResults.innerHTML = '';
+        
+        if (results.length > 0) {
+            results.forEach(result => {
+                const div = document.createElement('div');
+                div.className = 'search-result-item';
+                div.textContent = result;
+                div.onclick = () => handleResultClick(result);
+                searchResults.appendChild(div);
+            });
+            searchResults.style.display = 'block';
+        } else {
+            searchResults.style.display = 'none';
+        }
+    }
+    function handleResultClick(result) {
+        const selectionList = document.getElementById("selectionList");
+        const currentSelections = selectionList.querySelectorAll("li").length;
+    
+        if (currentSelections >= 5) {
+            alert("Maximum 5 selections are possible at a time.");
+            return;
+        }
+    
+        if (!isAddressInList(result)) {
+            const li = document.createElement("li");
+            li.innerHTML = `${result} <button class="remove-btn" onclick="removeSelection(this)">Remove</button>`;
+            selectionList.appendChild(li);
+        }
+    
+        searchInput.value = '';
+        searchResults.style.display = 'none';
+    }
+    
+    searchInput.addEventListener('input', (e) => {
+        const term = e.target.value.trim();
+        if (term) {
+            const results = searchTopics(term);
+            displayResults(results);
+        } else {
+            searchResults.style.display = 'none';
+        }
+    });
+    
+    // Close search results when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+            searchResults.style.display = 'none';
+        }
+    });
+    function handleUnitChange() {
+        const subjectDropdown = document.getElementById("subjectDropdown");
+        const unitDropdown = document.getElementById("unitDropdown");
+        const chapterDropdown = document.getElementById("chapterDropdown");
+        const topicDropdown = document.getElementById("topicDropdown");
+
+        const selectedSubject = subjectDropdown.value;
+        const selectedUnit = unitDropdown.value;
+        chapterDropdown.innerHTML = '<option value="">Select Chapter</option>';
+        topicDropdown.innerHTML = '<option value="">Select Topic</option>';
+
+        if (selectedSubject && selectedUnit && data[selectedSubject][selectedUnit]) {
+            Object.keys(data[selectedSubject][selectedUnit]).forEach(chapter => {
+                chapterDropdown.innerHTML += `<option value="${chapter}">${chapter}</option>`;
+            });
+        }
+    }
+
+    function handleChapterChange() {
+        const subjectDropdown = document.getElementById("subjectDropdown");
+        const unitDropdown = document.getElementById("unitDropdown");
+        const chapterDropdown = document.getElementById("chapterDropdown");
+        const topicDropdown = document.getElementById("topicDropdown");
+
+        const selectedSubject = subjectDropdown.value;
+        const selectedUnit = unitDropdown.value;
+        const selectedChapter = chapterDropdown.value;
+        topicDropdown.innerHTML = '<option value="">Select Topic</option>';
+
+        if (selectedSubject && selectedUnit && selectedChapter && data[selectedSubject][selectedUnit][selectedChapter]) {
+            data[selectedSubject][selectedUnit][selectedChapter].forEach(topic => {
+                topicDropdown.innerHTML += `<option value="${topic}">${topic}</option>`;
+            });
+        }
+    }
+
+    function handleTopicChange() {
+        addSelection();
+    }
+
+    function addSelection() {
+        const subjectDropdown = document.getElementById("subjectDropdown");
+        const unitDropdown = document.getElementById("unitDropdown");
+        const chapterDropdown = document.getElementById("chapterDropdown");
+        const topicDropdown = document.getElementById("topicDropdown");
+    
+        const selectedSubject = subjectDropdown.value;
+        const selectedUnit = unitDropdown.value;
+        const selectedChapter = chapterDropdown.value;
+        const selectedTopic = topicDropdown.value;
+    
+        const selectionList = document.getElementById("selectionList");
+        const currentSelections = selectionList.querySelectorAll("li").length;
+    
+        // Check if there are already 5 selections
+        if (currentSelections >= 5) {
+            alert("Maximum 5 selections are possible at a time.");
+            return;
+        }
+    
+        let address = selectedSubject;
+    
+        if (selectedUnit) address += `->${selectedUnit}`;
+        if (selectedChapter) address += `->${selectedChapter}`;
+        if (selectedTopic) address += `->${selectedTopic}`;
+    
+        if (address && !isAddressInList(address)) {
+            const li = document.createElement("li");
+            li.innerHTML = `${address} <button class="remove-btn" onclick="removeSelection(this)">Remove</button>`;
+            selectionList.appendChild(li);
+        }
+    }
+    
+    function isAddressInList(address) {
+        const listItems = document.querySelectorAll('#selectionList li');
+        for (let item of listItems) {
+            if (item.textContent.includes(address)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    function removeSelection(button) {
+        const li = button.parentElement;
+        li.remove();
+    }
+    function clearAllSelections() {
+        const selectionList = document.getElementById("selectionList");
+        while (selectionList.firstChild) {
+            selectionList.removeChild(selectionList.firstChild);
+        }
+    }
+    function showModal() {
+        const modal = document.getElementById('modeModal');
+        modal.style.display = 'block';
+        // Trigger reflow
+        modal.offsetHeight;
+        modal.classList.add('show');
+    }
+    function closeModal(event) {
+        // Check if clicked element is modal overlay or cancel button
+        if (event.target === document.getElementById('modeModal') || 
+            event.target.classList.contains('cancel-btn')) {
+            const modal = document.getElementById('modeModal');
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+    }
+
+    function startTestWithMode(mode) {
+        // Get all your existing parameters
+        const selections = [];
+        document.querySelectorAll('#selectionList li').forEach((li) => {
+            selections.push(li.textContent.replace(' Remove', ''));
+        });
+
+        const questionType = document.getElementById("questionType").value;
+        const questionAvailability = document.getElementById("questionAvailability").value;
+        const numQuestions = document.getElementById("numQuestions").value;
+        const timePerQuestion = document.getElementById("timePerQuestion").value;
+        const difficultyLevel = document.getElementById("difficultyLevel").value;
+
+        // Add the mode parameter to your query string
+        const queryString = new URLSearchParams({
+            selections: JSON.stringify(selections),
+            questionType,
+            questionAvailability,
+            numQuestions,
+            timePerQuestion,
+            difficultyLevel,
+            mode: mode // Add the selected mode
+        }).toString();
+
+        console.log(queryString);
+        window.location.href = `test/?${queryString}`;
+    }
+
+    </script>
+    <script>
+        window.addEventListener("pageshow", function(event) {
+            if (event.persisted) {
+                // Clear all selections
+                clearAllSelections();
+                
+                // Reset dropdown selections
+                const dropdowns = [
+                    "subjectDropdown",
+                    "unitDropdown",
+                    "chapterDropdown",
+                    "topicDropdown"
+                ];
+                
+                dropdowns.forEach(dropdownId => {
+                    const dropdown = document.getElementById(dropdownId);
+                    if (dropdown) {
+                        dropdown.selectedIndex = 0;
+                    }
+                });
+        
+                // Handle modal closing
+                const modal = document.getElementById('modeModal');
+                if (modal && modal.style.display !== 'none') {
+                    modal.classList.remove('show');
+                    modal.style.display = 'none';
+                }
+            }
+        });
+    </script>  
+    {%endblock%}
+    {%block pp%}
+
+<li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">
+      
+        <i class="fas fa-user-circle profile-icon"></i>
+      
+      {{ user.username }}
+      
+    </a>
+    <div class="dropdown-content">
+      <a href="#">Settings</a>
+      <a href={% url 'logout' %}>Logout</a>
+    </div>
+  </li>
+
+
+{%endblock%} 
+{% block footer %}
+    <!-- Leaving this block empty to remove the footer -->
+{% endblock %}

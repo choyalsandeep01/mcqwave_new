@@ -1,0 +1,254 @@
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #121212;
+  color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  flex-direction: column;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.container {
+  text-align: center;
+  max-width: 800px;
+}
+
+/* Heading Animation */
+h1 {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  color: #00ff99;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 0.15em solid #00ff99;
+  letter-spacing: 0.1em;
+  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+.description {
+  font-size: 1.2rem;
+  color: #c9c9c9;
+  margin-bottom: 50px;
+  line-height: 1.6;
+}
+
+/* Image Section with Animation */
+.image-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  position: relative;
+}
+
+.teacup-img {
+  width: 350px;
+  max-width: 100%;
+  animation: float 5s ease-in-out infinite, glow 2s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px #00ff99);
+}
+
+/* Floating Animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+/* Glowing Animation */
+@keyframes glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 20px #00ff99);
+  }
+  50% {
+    filter: drop-shadow(0 0 40px #00ff99);
+  }
+}
+
+/* Typing and Caret Animation for Heading */
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: #00ff99; }
+}
+
+/* 3D Model Section */
+.model-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+canvas {
+  width: 100%;
+  height: auto;
+  max-width: 600px;
+}
+
+/* General chat-section styles */
+.chat-section {
+  width: 30%; /* Default for larger screens */
+  max-height: 50vh;
+  overflow-y: auto;
+  position: absolute;
+  top: 5%;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-right: 10px;
+  z-index: 1;
+  scrollbar-width: thin;
+  scrollbar-color: #00ff99 transparent;
+}
+
+/* Chat bubbles */
+.chat-bubble {
+  background: rgba(0, 255, 153, 0.1);
+  border: 1px solid rgba(0, 255, 153, 0.5);
+  color: #00ff99;
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  max-width: 85%;
+  font-size: 1rem;
+  animation: fadeInUp 0.5s ease-out forwards, bounce 0.5s ease-out forwards;
+  box-shadow: 0 0 15px rgba(0, 255, 153, 0.4);
+}
+
+.chat-bubble.ai {
+  align-self: flex-start;
+}
+
+/* New Bounce Animation for Chat Bubbles */
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* Sci-Fi button */
+.restart-chat {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 10%; /* Adjust to fit below the teacup image */
+  left: -70px; /* Move button to the left side */
+  z-index: 2;
+}
+
+.restart-chat.hidden {
+  display: none;
+}
+
+.sci-fi-button {
+  background-color: rgba(0, 255, 153, 0.2);
+  color: #00ff99;
+  border: 2px solid #00ff99;
+  font-size: 1.2rem;
+  padding: 15px 30px;
+  border-radius: 30px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  box-shadow: 0 0 15px rgba(0, 255, 153, 0.5);
+  animation: glow-button 2s infinite alternate;
+  position: relative;
+}
+
+/* Button Hover State */
+.sci-fi-button:hover {
+  background-color: rgba(0, 255, 153, 0.4);
+  transform: scale(1.1);
+  box-shadow: 0 0 30px rgba(0, 255, 153, 1);
+}
+
+/* Button Animation */
+@keyframes glow-button {
+  from {
+    box-shadow: 0 0 15px rgba(0, 255, 153, 0.5);
+  }
+  to {
+    box-shadow: 0 0 30px rgba(0, 255, 153, 1);
+  }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  .description {
+    font-size: 1rem;
+  }
+
+  .teacup-img {
+    width: 250px; /* Reduce size on smaller screens */
+  }
+
+  canvas {
+    max-width: 300px;
+  }
+
+  /* Adjust image and chat section */
+  .image-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .chat-section {
+    position: relative; /* Let the chat section flow with the page layout */
+    margin-top: 20px;
+    width: 100%;
+    padding: 10px; /* Added padding for mobile */
+  }
+
+  .chat-bubble {
+    max-width: 95%; /* Make bubbles fill most of the screen */
+    font-size: 0.9rem; /* Slightly smaller text for mobile */
+    padding: 10px 15px; /* Adjust padding */
+    margin-bottom: 5px; /* Reduce space between bubbles */
+  }
+
+  /* Sci-Fi button positioning for mobile */
+  .restart-chat {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    width: 100%;
+    margin-top: 10px;
+    justify-content: center;
+  }
+
+  .sci-fi-button {
+    font-size: 1rem;
+    padding: 10px 20px;
+    width: auto;
+  }
+}

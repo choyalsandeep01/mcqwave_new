@@ -1,0 +1,800 @@
+USER OVERALL RANKINGS REPORT
+===========================
+
+Total Users: 99
+Average Overall Score: 45.74%
+
+RANKINGS BY OVERALL PERCENTAGE
+=============================
+
+Rank #1
+Username: kush
+Total Score: 11.0/13.0
+Overall Percentage: 84.62%
+Tests Taken: 1
+Average Time per Test: 232.00 seconds
+--------------------------------------------------
+
+Rank #2
+Username: rahulkumar40
+Total Score: 12.0/15.0
+Overall Percentage: 80.00%
+Tests Taken: 1
+Average Time per Test: 177.00 seconds
+--------------------------------------------------
+
+Rank #3
+Username: saku
+Total Score: 12.0/16.0
+Overall Percentage: 75.00%
+Tests Taken: 1
+Average Time per Test: 303.00 seconds
+--------------------------------------------------
+
+Rank #4
+Username: anjushree
+Total Score: 15.0/20.0
+Overall Percentage: 75.00%
+Tests Taken: 1
+Average Time per Test: 455.00 seconds
+--------------------------------------------------
+
+Rank #5
+Username: 8855092218
+Total Score: 14.0/19.0
+Overall Percentage: 73.68%
+Tests Taken: 1
+Average Time per Test: 232.00 seconds
+--------------------------------------------------
+
+Rank #6
+Username: s
+Total Score: 127.0/181.0
+Overall Percentage: 70.17%
+Tests Taken: 8
+Average Time per Test: 410.00 seconds
+--------------------------------------------------
+
+Rank #7
+Username: vishalbastia
+Total Score: 7.0/10.0
+Overall Percentage: 70.00%
+Tests Taken: 1
+Average Time per Test: 257.00 seconds
+--------------------------------------------------
+
+Rank #8
+Username: aaquib
+Total Score: 17.0/25.0
+Overall Percentage: 68.00%
+Tests Taken: 1
+Average Time per Test: 469.00 seconds
+--------------------------------------------------
+
+Rank #9
+Username: 8459416337
+Total Score: 17.0/25.0
+Overall Percentage: 68.00%
+Tests Taken: 1
+Average Time per Test: 551.00 seconds
+--------------------------------------------------
+
+Rank #10
+Username: topibazyash
+Total Score: 17.0/25.0
+Overall Percentage: 68.00%
+Tests Taken: 1
+Average Time per Test: 567.00 seconds
+--------------------------------------------------
+
+Rank #11
+Username: dpatel
+Total Score: 17.0/25.0
+Overall Percentage: 68.00%
+Tests Taken: 1
+Average Time per Test: 693.00 seconds
+--------------------------------------------------
+
+Rank #12
+Username: avanipatel
+Total Score: 17.0/25.0
+Overall Percentage: 68.00%
+Tests Taken: 1
+Average Time per Test: 772.00 seconds
+--------------------------------------------------
+
+Rank #13
+Username: gangasirvi
+Total Score: 27.0/40.0
+Overall Percentage: 67.50%
+Tests Taken: 2
+Average Time per Test: 362.50 seconds
+--------------------------------------------------
+
+Rank #14
+Username: ramsa
+Total Score: 2.0/3.0
+Overall Percentage: 66.67%
+Tests Taken: 1
+Average Time per Test: 129.00 seconds
+--------------------------------------------------
+
+Rank #15
+Username: pathik
+Total Score: 10.0/15.0
+Overall Percentage: 66.67%
+Tests Taken: 1
+Average Time per Test: 531.00 seconds
+--------------------------------------------------
+
+Rank #16
+Username: mahi05
+Total Score: 26.0/40.0
+Overall Percentage: 65.00%
+Tests Taken: 2
+Average Time per Test: 749.00 seconds
+--------------------------------------------------
+
+Rank #17
+Username: rutuja
+Total Score: 32.0/50.0
+Overall Percentage: 64.00%
+Tests Taken: 3
+Average Time per Test: 515.67 seconds
+--------------------------------------------------
+
+Rank #18
+Username: garima18
+Total Score: 16.0/25.0
+Overall Percentage: 64.00%
+Tests Taken: 1
+Average Time per Test: 589.00 seconds
+--------------------------------------------------
+
+Rank #19
+Username: garvit
+Total Score: 16.0/25.0
+Overall Percentage: 64.00%
+Tests Taken: 1
+Average Time per Test: 733.00 seconds
+--------------------------------------------------
+
+Rank #20
+Username: meghnasre
+Total Score: 31.0/50.0
+Overall Percentage: 62.00%
+Tests Taken: 2
+Average Time per Test: 310.00 seconds
+--------------------------------------------------
+
+Rank #21
+Username: 10manav
+Total Score: 40.0/65.0
+Overall Percentage: 61.54%
+Tests Taken: 3
+Average Time per Test: 612.67 seconds
+--------------------------------------------------
+
+Rank #22
+Username: 7509000736
+Total Score: 476.0/785.0
+Overall Percentage: 60.64%
+Tests Taken: 39
+Average Time per Test: 435.87 seconds
+--------------------------------------------------
+
+Rank #23
+Username: yashvijadav
+Total Score: 6.0/10.0
+Overall Percentage: 60.00%
+Tests Taken: 1
+Average Time per Test: 116.00 seconds
+--------------------------------------------------
+
+Rank #24
+Username: tirthapatel14
+Total Score: 6.0/10.0
+Overall Percentage: 60.00%
+Tests Taken: 1
+Average Time per Test: 149.00 seconds
+--------------------------------------------------
+
+Rank #25
+Username: aakss
+Total Score: 12.0/20.0
+Overall Percentage: 60.00%
+Tests Taken: 2
+Average Time per Test: 209.00 seconds
+--------------------------------------------------
+
+Rank #26
+Username: anuja2004
+Total Score: 15.0/25.0
+Overall Percentage: 60.00%
+Tests Taken: 1
+Average Time per Test: 584.00 seconds
+--------------------------------------------------
+
+Rank #27
+Username: anuragsingh
+Total Score: 9.0/15.0
+Overall Percentage: 60.00%
+Tests Taken: 1
+Average Time per Test: 595.00 seconds
+--------------------------------------------------
+
+Rank #28
+Username: jeslymaria
+Total Score: 27.0/45.0
+Overall Percentage: 60.00%
+Tests Taken: 2
+Average Time per Test: 649.00 seconds
+--------------------------------------------------
+
+Rank #29
+Username: popda
+Total Score: 15.0/25.0
+Overall Percentage: 60.00%
+Tests Taken: 1
+Average Time per Test: 674.00 seconds
+--------------------------------------------------
+
+Rank #30
+Username: priyadarsh
+Total Score: 9.0/15.0
+Overall Percentage: 60.00%
+Tests Taken: 1
+Average Time per Test: 691.00 seconds
+--------------------------------------------------
+
+Rank #31
+Username: simarsingh
+Total Score: 23.0/39.0
+Overall Percentage: 58.97%
+Tests Taken: 2
+Average Time per Test: 369.00 seconds
+--------------------------------------------------
+
+Rank #32
+Username: yashv4602
+Total Score: 32.0/55.0
+Overall Percentage: 58.18%
+Tests Taken: 3
+Average Time per Test: 500.67 seconds
+--------------------------------------------------
+
+Rank #33
+Username: itstushar21
+Total Score: 25.0/43.0
+Overall Percentage: 58.14%
+Tests Taken: 3
+Average Time per Test: 579.00 seconds
+--------------------------------------------------
+
+Rank #34
+Username: amisha25
+Total Score: 34.0/59.0
+Overall Percentage: 57.63%
+Tests Taken: 5
+Average Time per Test: 133.80 seconds
+--------------------------------------------------
+
+Rank #35
+Username: tanveer111
+Total Score: 25.0/44.0
+Overall Percentage: 56.82%
+Tests Taken: 2
+Average Time per Test: 490.00 seconds
+--------------------------------------------------
+
+Rank #36
+Username: sadananddubey22
+Total Score: 14.0/25.0
+Overall Percentage: 56.00%
+Tests Taken: 1
+Average Time per Test: 405.00 seconds
+--------------------------------------------------
+
+Rank #37
+Username: jdesai4
+Total Score: 11.0/20.0
+Overall Percentage: 55.00%
+Tests Taken: 1
+Average Time per Test: 299.00 seconds
+--------------------------------------------------
+
+Rank #38
+Username: harsha
+Total Score: 18.0/33.0
+Overall Percentage: 54.55%
+Tests Taken: 3
+Average Time per Test: 280.33 seconds
+--------------------------------------------------
+
+Rank #39
+Username: riya
+Total Score: 8.0/15.0
+Overall Percentage: 53.33%
+Tests Taken: 1
+Average Time per Test: 273.00 seconds
+--------------------------------------------------
+
+Rank #40
+Username: isha
+Total Score: 42.0/79.0
+Overall Percentage: 53.16%
+Tests Taken: 4
+Average Time per Test: 407.75 seconds
+--------------------------------------------------
+
+Rank #41
+Username: adityasatvara2005
+Total Score: 10.0/19.0
+Overall Percentage: 52.63%
+Tests Taken: 1
+Average Time per Test: 293.00 seconds
+--------------------------------------------------
+
+Rank #42
+Username: aradhanachauhan
+Total Score: 50.0/95.0
+Overall Percentage: 52.63%
+Tests Taken: 4
+Average Time per Test: 433.25 seconds
+--------------------------------------------------
+
+Rank #43
+Username: gruhit
+Total Score: 31.0/60.0
+Overall Percentage: 51.67%
+Tests Taken: 4
+Average Time per Test: 236.00 seconds
+--------------------------------------------------
+
+Rank #44
+Username: 110
+Total Score: 5.0/10.0
+Overall Percentage: 50.00%
+Tests Taken: 1
+Average Time per Test: 114.00 seconds
+--------------------------------------------------
+
+Rank #45
+Username: sefaliverma24
+Total Score: 17.0/34.0
+Overall Percentage: 50.00%
+Tests Taken: 7
+Average Time per Test: 155.14 seconds
+--------------------------------------------------
+
+Rank #46
+Username: ramjishiv
+Total Score: 5.0/10.0
+Overall Percentage: 50.00%
+Tests Taken: 1
+Average Time per Test: 252.00 seconds
+--------------------------------------------------
+
+Rank #47
+Username: om
+Total Score: 5.0/10.0
+Overall Percentage: 50.00%
+Tests Taken: 1
+Average Time per Test: 270.00 seconds
+--------------------------------------------------
+
+Rank #48
+Username: jaynishpatel
+Total Score: 9.0/18.0
+Overall Percentage: 50.00%
+Tests Taken: 1
+Average Time per Test: 363.00 seconds
+--------------------------------------------------
+
+Rank #49
+Username: sonam
+Total Score: 25.0/50.0
+Overall Percentage: 50.00%
+Tests Taken: 2
+Average Time per Test: 548.00 seconds
+--------------------------------------------------
+
+Rank #50
+Username: bishnoi
+Total Score: 17.0/35.0
+Overall Percentage: 48.57%
+Tests Taken: 2
+Average Time per Test: 474.50 seconds
+--------------------------------------------------
+
+Rank #51
+Username: rahul01
+Total Score: 15.0/31.0
+Overall Percentage: 48.39%
+Tests Taken: 2
+Average Time per Test: 388.50 seconds
+--------------------------------------------------
+
+Rank #52
+Username: ghost09
+Total Score: 12.0/25.0
+Overall Percentage: 48.00%
+Tests Taken: 1
+Average Time per Test: 482.00 seconds
+--------------------------------------------------
+
+Rank #53
+Username: aishwaryarajbongshi
+Total Score: 12.0/25.0
+Overall Percentage: 48.00%
+Tests Taken: 1
+Average Time per Test: 579.00 seconds
+--------------------------------------------------
+
+Rank #54
+Username: aksolanki
+Total Score: 12.0/25.0
+Overall Percentage: 48.00%
+Tests Taken: 1
+Average Time per Test: 1396.00 seconds
+--------------------------------------------------
+
+Rank #55
+Username: jpbhai
+Total Score: 20.0/42.0
+Overall Percentage: 47.62%
+Tests Taken: 2
+Average Time per Test: 622.50 seconds
+--------------------------------------------------
+
+Rank #56
+Username: hritik
+Total Score: 7.0/15.0
+Overall Percentage: 46.67%
+Tests Taken: 1
+Average Time per Test: 53.00 seconds
+--------------------------------------------------
+
+Rank #57
+Username: vaibhavisonar
+Total Score: 19.0/41.0
+Overall Percentage: 46.34%
+Tests Taken: 2
+Average Time per Test: 991.50 seconds
+--------------------------------------------------
+
+Rank #58
+Username: nehasr
+Total Score: 20.0/45.0
+Overall Percentage: 44.44%
+Tests Taken: 2
+Average Time per Test: 426.50 seconds
+--------------------------------------------------
+
+Rank #59
+Username: gayatrisuthar24
+Total Score: 57.0/129.0
+Overall Percentage: 44.19%
+Tests Taken: 7
+Average Time per Test: 176.57 seconds
+--------------------------------------------------
+
+Rank #60
+Username: utkarsh
+Total Score: 450.0/1020.0
+Overall Percentage: 44.12%
+Tests Taken: 76
+Average Time per Test: 239.39 seconds
+--------------------------------------------------
+
+Rank #61
+Username: herry114
+Total Score: 11.0/25.0
+Overall Percentage: 44.00%
+Tests Taken: 1
+Average Time per Test: 541.00 seconds
+--------------------------------------------------
+
+Rank #62
+Username: dhanrajpatel
+Total Score: 65.0/151.0
+Overall Percentage: 43.05%
+Tests Taken: 8
+Average Time per Test: 230.75 seconds
+--------------------------------------------------
+
+Rank #63
+Username: rkrathod278
+Total Score: 5.0/12.0
+Overall Percentage: 41.67%
+Tests Taken: 2
+Average Time per Test: 302.50 seconds
+--------------------------------------------------
+
+Rank #64
+Username: veersinghsooryavanshi
+Total Score: 10.0/25.0
+Overall Percentage: 40.00%
+Tests Taken: 1
+Average Time per Test: 79.00 seconds
+--------------------------------------------------
+
+Rank #65
+Username: patelkevna
+Total Score: 6.0/15.0
+Overall Percentage: 40.00%
+Tests Taken: 1
+Average Time per Test: 102.00 seconds
+--------------------------------------------------
+
+Rank #66
+Username: khanbhai
+Total Score: 8.0/20.0
+Overall Percentage: 40.00%
+Tests Taken: 1
+Average Time per Test: 386.00 seconds
+--------------------------------------------------
+
+Rank #67
+Username: nahsguy
+Total Score: 10.0/25.0
+Overall Percentage: 40.00%
+Tests Taken: 1
+Average Time per Test: 464.00 seconds
+--------------------------------------------------
+
+Rank #68
+Username: anirudh7paliwal
+Total Score: 20.0/50.0
+Overall Percentage: 40.00%
+Tests Taken: 2
+Average Time per Test: 555.50 seconds
+--------------------------------------------------
+
+Rank #69
+Username: manishdhaker094
+Total Score: 89.0/230.0
+Overall Percentage: 38.70%
+Tests Taken: 12
+Average Time per Test: 349.75 seconds
+--------------------------------------------------
+
+Rank #70
+Username: vishnu01
+Total Score: 27.0/70.0
+Overall Percentage: 38.57%
+Tests Taken: 4
+Average Time per Test: 341.75 seconds
+--------------------------------------------------
+
+Rank #71
+Username: shafaque
+Total Score: 5.0/13.0
+Overall Percentage: 38.46%
+Tests Taken: 2
+Average Time per Test: 193.00 seconds
+--------------------------------------------------
+
+Rank #72
+Username: tushnat
+Total Score: 51.0/135.0
+Overall Percentage: 37.78%
+Tests Taken: 7
+Average Time per Test: 370.43 seconds
+--------------------------------------------------
+
+Rank #73
+Username: jay585
+Total Score: 15.0/40.0
+Overall Percentage: 37.50%
+Tests Taken: 2
+Average Time per Test: 299.50 seconds
+--------------------------------------------------
+
+Rank #74
+Username: arpitradiya
+Total Score: 9.0/25.0
+Overall Percentage: 36.00%
+Tests Taken: 1
+Average Time per Test: 182.00 seconds
+--------------------------------------------------
+
+Rank #75
+Username: vivenptl
+Total Score: 16.0/45.0
+Overall Percentage: 35.56%
+Tests Taken: 2
+Average Time per Test: 334.50 seconds
+--------------------------------------------------
+
+Rank #76
+Username: vivekshelti
+Total Score: 68.0/199.0
+Overall Percentage: 34.17%
+Tests Taken: 11
+Average Time per Test: 190.00 seconds
+--------------------------------------------------
+
+Rank #77
+Username: hetvi26
+Total Score: 9.0/28.0
+Overall Percentage: 32.14%
+Tests Taken: 2
+Average Time per Test: 227.00 seconds
+--------------------------------------------------
+
+Rank #78
+Username: arjun107
+Total Score: 8.0/25.0
+Overall Percentage: 32.00%
+Tests Taken: 1
+Average Time per Test: 677.00 seconds
+--------------------------------------------------
+
+Rank #79
+Username: dhruv
+Total Score: 7.0/22.0
+Overall Percentage: 31.82%
+Tests Taken: 1
+Average Time per Test: 591.00 seconds
+--------------------------------------------------
+
+Rank #80
+Username: rathjaat
+Total Score: 14.0/50.0
+Overall Percentage: 28.00%
+Tests Taken: 2
+Average Time per Test: 241.00 seconds
+--------------------------------------------------
+
+Rank #81
+Username: ramu
+Total Score: 5.0/19.0
+Overall Percentage: 26.32%
+Tests Taken: 1
+Average Time per Test: 132.00 seconds
+--------------------------------------------------
+
+Rank #82
+Username: yash1901
+Total Score: 6.0/25.0
+Overall Percentage: 24.00%
+Tests Taken: 1
+Average Time per Test: 288.00 seconds
+--------------------------------------------------
+
+Rank #83
+Username: vaibhavi
+Total Score: 12.0/50.0
+Overall Percentage: 24.00%
+Tests Taken: 2
+Average Time per Test: 474.50 seconds
+--------------------------------------------------
+
+Rank #84
+Username: sandeep
+Total Score: 24.0/105.0
+Overall Percentage: 22.86%
+Tests Taken: 9
+Average Time per Test: 39.78 seconds
+--------------------------------------------------
+
+Rank #85
+Username: tokrevishal
+Total Score: 2.0/10.0
+Overall Percentage: 20.00%
+Tests Taken: 1
+Average Time per Test: 228.00 seconds
+--------------------------------------------------
+
+Rank #86
+Username: umeeeesh
+Total Score: 10.0/50.0
+Overall Percentage: 20.00%
+Tests Taken: 2
+Average Time per Test: 381.00 seconds
+--------------------------------------------------
+
+Rank #87
+Username: meet007
+Total Score: 1.0/6.0
+Overall Percentage: 16.67%
+Tests Taken: 1
+Average Time per Test: 68.00 seconds
+--------------------------------------------------
+
+Rank #88
+Username: vasusuthar
+Total Score: 1.0/6.0
+Overall Percentage: 16.67%
+Tests Taken: 1
+Average Time per Test: 360.00 seconds
+--------------------------------------------------
+
+Rank #89
+Username: kk
+Total Score: 10.0/60.0
+Overall Percentage: 16.67%
+Tests Taken: 3
+Average Time per Test: 448.33 seconds
+--------------------------------------------------
+
+Rank #90
+Username: swatipanda
+Total Score: 4.0/25.0
+Overall Percentage: 16.00%
+Tests Taken: 1
+Average Time per Test: 407.00 seconds
+--------------------------------------------------
+
+Rank #91
+Username: mcqwave9672
+Total Score: 38.0/341.0
+Overall Percentage: 11.14%
+Tests Taken: 17
+Average Time per Test: 183.35 seconds
+--------------------------------------------------
+
+Rank #92
+Username: nirtunjay
+Total Score: 38.0/344.0
+Overall Percentage: 11.05%
+Tests Taken: 17
+Average Time per Test: 50.94 seconds
+--------------------------------------------------
+
+Rank #93
+Username: sanky007
+Total Score: 1.0/10.0
+Overall Percentage: 10.00%
+Tests Taken: 1
+Average Time per Test: 217.00 seconds
+--------------------------------------------------
+
+Rank #94
+Username: infinity
+Total Score: 2.0/25.0
+Overall Percentage: 8.00%
+Tests Taken: 1
+Average Time per Test: 34.00 seconds
+--------------------------------------------------
+
+Rank #95
+Username: naresh
+Total Score: 2.0/25.0
+Overall Percentage: 8.00%
+Tests Taken: 1
+Average Time per Test: 69.00 seconds
+--------------------------------------------------
+
+Rank #96
+Username: hari
+Total Score: 1.0/25.0
+Overall Percentage: 4.00%
+Tests Taken: 1
+Average Time per Test: 88.00 seconds
+--------------------------------------------------
+
+Rank #97
+Username: tejash07
+Total Score: 0.0/16.0
+Overall Percentage: 0.00%
+Tests Taken: 1
+Average Time per Test: 52.00 seconds
+--------------------------------------------------
+
+Rank #98
+Username: bhavdiph
+Total Score: 0.0/8.0
+Overall Percentage: 0.00%
+Tests Taken: 1
+Average Time per Test: 125.00 seconds
+--------------------------------------------------
+
+Rank #99
+Username: 8347016412
+Total Score: 0.0/6.0
+Overall Percentage: 0.00%
+Tests Taken: 1
+Average Time per Test: 139.00 seconds
+--------------------------------------------------

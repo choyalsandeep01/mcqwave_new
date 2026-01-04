@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<!-- Created By CodingNepal - www.codingnepalweb.com -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>{%block title %}MCQwave{% endblock%}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/media/css/bases.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anek+Devanagari:wght@100..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <!-- Alternative formats for better cross-browser support -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/media/photos/favicon.jpg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/media/photos/favicon.jpg">
+    <link rel="icon" type="image/png" sizes="16x16" href="/media/photos/favicon.jpg">
+
+  </head>  
+  <style>
+    /* Complete CSS for Medical College Selection Component */
+/* Blue to Crimson Theme */
+
+/* Card Container */
+.college-card-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  pointer-events: none; /* Allow clicks to pass through by default */
+}
+.college-card {
+  pointer-events: auto; /* Allow interactions with the card */
+  max-width: 500px;
+  width: 90%;
+  margin: 0 auto;
+  animation: fadeInCard 0.3s ease-out;
+  background-color: #ffffff; /* Solid white background */
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(20, 20, 80, 0.25); /* Enhanced shadow for better contrast */
+}
+@keyframes fadeInCard {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Card Header */
+.college-card-header {
+  background: linear-gradient(135deg, #004aad 0%, #B91C1C 100%);
+  color: white;
+  padding: 22px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.college-card-header h3 {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.4rem;
+  letter-spacing: 0.5px;
+  font-family: 'Montserrat', sans-serif;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.8rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: all 0.3s;
+  opacity: 0.8;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.close-btn:hover {
+  transform: scale(1.1);
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Card Body */
+.college-card-body {
+  padding: 28px 25px;
+}
+
+.college-card-body p {
+  margin-top: 0;
+  margin-bottom: 24px;
+  color: #505a68;
+  line-height: 1.6;
+  font-size: 15px;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+/* Form Elements */
+.form-group {
+  margin-bottom: 22px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.form-group:last-child {
+  margin-bottom: 5px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 500;
+  color: #344767;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 0.2px;
+}
+
+.select-wrapper {
+  position: relative;
+  z-index: 10000;
+}
+
+.select-wrapper i {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9c27b0;
+  pointer-events: none;
+  opacity: 0.7;
+  transition: all 0.3s;
+}
+
+.select-wrapper:focus-within i {
+  opacity: 1;
+  color: #3a7bd5;
+}
+
+/* Search Input */
+.college-search {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #d1d9e6;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition: all 0.3s;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  position: relative;
+  z-index: 9999;
+  font-family: 'Roboto Condensed', sans-serif;
+  color: #344767;
+  background-color: #fff;
+}
+
+.college-search:focus {
+  border-color: #3a7bd5;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(58, 123, 213, 0.2);
+}
+
+.college-search::placeholder {
+  color: #a0aec0;
+  opacity: 0.7;
+}
+
+/* Dropdown Styling */
+.college-dropdown {
+  position: absolute;
+  width: 100%;
+  max-height: 300px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #d1d9e6;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  z-index: 10000;
+  top: calc(100% + 5px);
+  left: 0;
+  display: none;
+  opacity: 1;
+  visibility: visible;
+  transition: all 0.3s;
+}
+
+.college-dropdown::-webkit-scrollbar {
+  width: 8px;
+  background: #f5f5f5;
+}
+
+.college-dropdown::-webkit-scrollbar-track {
+  background: #f5f5f5;
+  border-radius: 10px;
+}
+
+.college-dropdown::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #3a7bd5 0%, #9c27b0 100%);
+  border-radius: 10px;
+  border: 2px solid #f5f5f5;
+}
+
+.dropdown-contentb {
+  padding: 5px 0;
+  position: relative;
+  z-index: 10000;
+}
+
+/* College Options */
+.college-option {
+  padding: 14px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f4f8;
+  transition: all 0.2s;
+}
+
+.college-option:last-child {
+  border-bottom: none;
+}
+
+.college-option:hover {
+  background-color: rgba(58, 123, 213, 0.1);
+}
+
+.college-option.active {
+  background-color: rgba(156, 39, 176, 0.1);
+  border-left: 3px solid #9c27b0;
+}
+
+.college-option .college-name {
+  font-weight: 500;
+  display: block;
+  color: #1e293b;
+  margin-bottom: 4px;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.college-option .college-location {
+  font-size: 12px;
+  color: #64748b;
+  display: block;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+.college-option.other-option {
+  background-color: rgba(58, 123, 213, 0.05);
+  border-top: 1px solid #e2e8f0;
+  font-weight: 500;
+}
+
+.college-option.other-option:hover {
+  background-color: rgba(156, 39, 176, 0.1);
+}
+
+.form-group.animated {
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Other College Input */
+#other-college,
+#other-city {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #d1d9e6;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  font-family: 'Roboto Condensed', sans-serif;
+  color: #344767;
+}
+
+#other-college:focus,
+#other-city:focus {
+  border-color: #3a7bd5;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(58, 123, 213, 0.2);
+}
+
+/* City Field */
+.city-field {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.city-field i {
+  position: absolute;
+  left: 15px;
+  color: #9c27b0;
+  opacity: 0.7;
+}
+
+#other-city {
+  padding-left: 40px;
+}
+
+/* Keyboard Navigation Hint */
+.keyboard-nav-hint {
+  margin-top: 8px;
+  color: #94a3b8;
+  font-size: 12px;
+  text-align: right;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-style: italic;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.btn-submit {
+  flex: 1;
+  background: linear-gradient(135deg, #004aad 0%, #B91C1C 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 10px rgba(156, 39, 176, 0.3);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(156, 39, 176, 0.4);
+  background: linear-gradient(135deg, #4285f4 0%, #b721ff 100%);
+}
+
+.btn-submit:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 5px rgba(156, 39, 176, 0.4);
+}
+
+.btn-later {
+  flex: 1;
+  background: transparent;
+  color: #64748b;
+  border: 1px solid #d1d9e6;
+  border-radius: 8px;
+  padding: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+}
+
+.btn-later:hover {
+  background-color: #f8f9fa;
+  border-color: #b0bec5;
+  color: #334155;
+}
+
+/* No Results Message */
+.no-results {
+  padding: 20px 15px;
+  text-align: center;
+  color: #64748b;
+  font-style: italic;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+/* Focus States and Accessibility */
+.college-search:focus,
+#other-college:focus,
+#other-city:focus,
+.btn-submit:focus,
+.btn-later:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(58, 123, 213, 0.3);
+}
+
+/* Clean Up Any Interference */
+#medical-college-card {
+  z-index: 2000; /* Higher than all other elements */
+}
+
+/* Loading State */
+.loading-colleges {
+  text-align: center;
+  padding: 15px;
+  color: #3a7bd5;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(156, 39, 176, 0.3);
+  border-radius: 50%;
+  border-top-color: #9c27b0;
+  animation: spin 1s ease-in-out infinite;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .college-card {
+    width: 95%;
+  }
+  
+  .college-card-header {
+    padding: 18px 20px;
+  }
+  
+  .college-card-header h3 {
+    font-size: 1.2rem;
+  }
+  
+  .college-card-body {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .college-card {
+    width: 100%;
+    margin: 0 10px;
+    border-radius: 10px;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .btn-submit, .btn-later {
+    width: 100%;
+  }
+  
+  .keyboard-nav-hint {
+    display: none;
+  }
+  
+  .college-card-body p {
+    font-size: 14px;
+  }
+}
+
+/* Hover Effects */
+.college-search:hover,
+#other-college:hover,
+#other-city:hover {
+  border-color: #b0bec5;
+}
+
+/* Active States */
+.college-option:active {
+  background-color: rgba(156, 39, 176, 0.15);
+}
+
+/* Animation for dropdown opening */
+@keyframes fadeInDropdown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.college-dropdown.visible {
+  display: block;
+  animation: fadeInDropdown 0.2s ease-out;
+}
+
+/* Accessibility - Screen Reader Only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+  </style>
+  <style>
+  /* Replace the entire subscription card CSS with this banner CSS */
+.subscription-banner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(135deg, #1E40AF 0%, #B91C1C 100%);
+  color: white;
+  z-index: 9999;
+  padding: 12px 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  transform: translateY(-100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.subscription-banner-overlay.show {
+  transform: translateY(0);
+}
+
+.subscription-banner-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.subscription-banner-message {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+  margin-right: 20px;
+}
+
+.subscription-banner-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.subscription-banner-upgrade-btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.subscription-banner-upgrade-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+.subscription-banner-close {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.subscription-banner-close:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 768px) {
+  .subscription-banner-overlay {
+    padding: 10px 15px;
+  }
+  
+  .subscription-banner-content {
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  
+  .subscription-banner-message {
+    margin-right: 0;
+    font-size: 13px;
+  }
+  
+  .subscription-banner-actions {
+    align-self: stretch;
+    justify-content: space-between;
+  }
+}
+
+      
+      
+      
+    
+    </style>
+  <body>
+    <header>
+    <nav>
+      <input type="checkbox" id="check">
+      
+      <a href="/" class="logo">MCQwave</a>
+
+      <label for="check" class="checkbtn">
+        <i class="fas fa-bars"></i>
+      </label>
+      <ul>
+        <li><a class="active" href="/">Home</a></li>
+
+        <li><a href="/about-us/">About</a></li>
+        
+        <li><a href="/contact/">Contact</a></li>
+        <li><a class="navfeed" href="/feedback/">Feedback</a></li>
+  
+        <li><a class = 'plans_sub' href="/payment/plans/">Plans</a></li>
+
+        {% block pp%}
+        {%endblock%}
+        {% comment %} <li class="dropdown">
+          <a href="javascript:void(0)" class="dropbtn">
+            
+              <i class="fas fa-user-circle profile-icon"></i>
+            
+            My Account
+          </a>
+          <div class="dropdown-content">
+            <a href="#">Settings</a>
+            <a href="#">Logout</a>
+          </div>
+        </li> {% endcomment %}
+        
+      </ul>
+    </nav>
+  </header>
+  <div id="medical-college-card" class="college-card-container" style="display: none;">
+    <div class="college-card">
+      <div class="college-card-header">
+        <h3>Complete Your Profile</h3>
+        <button id="close-college-card" class="close-btn">&times;</button>
+      </div>
+      <div class="college-card-body">
+        <p>Please select your medical college to personalize your MCQwave experience</p>
+        <form id="college-selection-form" method="post" action="/update-medical-college/">
+          <!-- CSRF Token Placeholder - will be added by Django -->
+          {% csrf_token %}          
+          <div class="form-group">
+            <label for="college-search">Medical College</label>
+            <div class="select-wrapper">
+              <input type="text" id="college-search" class="college-search" placeholder="Search by college name, location or state..." autocomplete="off">
+              <i class="fas fa-search nfas"></i>
+              <div id="college-dropdown" class="college-dropdown">
+                <div class="dropdown-contentb">
+                  <!-- Colleges will be populated here via JS -->
+                </div>
+              </div>
+            </div>
+            <div class="keyboard-nav-hint">Use ↑↓ to navigate, Enter to select</div>
+            <input type="hidden" id="selected-college-id" name="medical_college_id">
+          </div>
+          
+          
+          <div id="other-city-container" class="form-group" style="display: none;">
+            <label for="other-city">City</label>
+            <div class="city-field">
+              <i class="fas fa-map-marker-alt nfas"></i>
+              <input type="text" id="other-city" name="other_city" placeholder="Enter your city">
+            </div>
+          </div>
+          
+          <div class="form-actions">
+            <button type="submit" class="btn-submit">Save Profile</button>
+            <button type="button" id="remind-later" class="btn-later">Remind Me Later</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Replace the entire subscription card HTML with this banner -->
+<div id="subscription-banner" class="subscription-banner-overlay" style="display: none;">
+  <div class="subscription-banner-content">
+    <div class="subscription-banner-message" id="banner-message">
+      <!-- Dynamic message will be inserted here -->
+    </div>
+    <div class="subscription-banner-actions">
+      <a href="/payment/plans/" class="subscription-banner-upgrade-btn" id="banner-upgrade-btn">
+        Upgrade Now
+      </a>
+      <button class="subscription-banner-close" id="banner-close-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+          <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+  <!-- JS for the medical college selection card -->
+  <script>
+    // Replace the existing JavaScript for the dropdown functionality with this updated version
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check if user is logged in and if medical_college and other_medical_college are both blank
+      const userProfile = {% if user_profile %}true{% else %}false{% endif %};
+      const hasMedicalCollege = {% if user_profile.medical_college or user_profile.other_medical_college %}true{% else %}false{% endif %};
+      
+      // College data will be loaded from API
+      let collegeData = [];
+      let filteredColleges = [];
+      const collegeCard = document.getElementById('medical-college-card');
+      const collegeSearch = document.getElementById('college-search');
+      const collegeDropdown = document.getElementById('college-dropdown');
+      const dropdownContent = collegeDropdown.querySelector('.dropdown-contentb');
+      const selectedCollegeInput = document.getElementById('selected-college-id');
+      const otherCollegeContainer = document.getElementById('other-college-container');
+      const otherCityContainer = document.getElementById('other-city-container');
+      const otherCollegeInput = document.getElementById('other-college');
+      const collegeForm = document.getElementById('college-selection-form');
+      
+      // Initialize
+      initializeCollegeSelector();
+      
+      function initializeCollegeSelector() {
+        // Ensure dropdown is initially hidden
+        hideDropdown();
+        
+        // Show the card if user is logged in but has no medical college set
+        if (userProfile && !hasMedicalCollege) {
+          collegeCard.style.display = 'flex';
+          fetchMedicalColleges();
+        }else {
+          collegeCard.style.display = 'none';
+        }
+        
+        // Set up event listeners
+        setupEventListeners();
+      }
+      
+      function setupEventListeners() {
+        // Close button functionality
+        document.getElementById('close-college-card').addEventListener('click', function() {
+          collegeCard.style.display = 'none';
+        });
+        
+        // Remind Later button functionality
+        document.getElementById('remind-later').addEventListener('click', function() {
+          collegeCard.style.display = 'none';
+          
+          // Set a cookie to not show the card again for 24 hours
+          const expiryDate = new Date();
+          expiryDate.setTime(expiryDate.getTime() + (24 * 60 * 60 * 1000));
+          document.cookie = "hide_college_card=true; expires=" + expiryDate.toUTCString() + "; path=/";
+        });
+        
+        // Make dropdown visible on focus and load data
+        collegeSearch.addEventListener('focus', function() {
+          if (collegeData.length > 0) {
+            updateDropdown(collegeData);
+            showDropdown();
+          } else {
+            // Show loading if we don't have data yet
+            showLoadingInDropdown();
+            showDropdown();
+          }
+        });
+        
+        // Make dropdown visible on click
+        collegeSearch.addEventListener('click', function(e) {
+          e.stopPropagation(); // Prevent click from bubbling
+          
+          if (collegeData.length > 0) {
+            updateDropdown(collegeData);
+            showDropdown();
+          } else {
+            // Show loading if we don't have data yet
+            showLoadingInDropdown();
+            showDropdown();
+          }
+        });
+        
+        // Search input functionality
+        collegeSearch.addEventListener('input', function() {
+          const searchTerm = this.value.toLowerCase();
+          
+          if (collegeData.length === 0) {
+            return; // Skip filtering if data isn't loaded yet
+          }
+          
+          if (searchTerm.length > 0) {
+            // Filter colleges by search term (name, location, state)
+            filteredColleges = collegeData.filter(college => 
+              college.name.toLowerCase().includes(searchTerm) || 
+              college.location.toLowerCase().includes(searchTerm) || 
+              college.state.toLowerCase().includes(searchTerm)
+            );
+          } else {
+            filteredColleges = collegeData;
+          }
+          
+          // Always show dropdown when typing
+          updateDropdown(filteredColleges);
+          showDropdown();
+        });
+        
+        // Keyboard navigation for dropdown
+        collegeSearch.addEventListener('keydown', function(e) {
+          if (collegeDropdown.classList.contains('visible')) {
+            const options = dropdownContent.querySelectorAll('.college-option');
+            let activeOption = dropdownContent.querySelector('.college-option.active');
+            let activeIndex = Array.from(options).indexOf(activeOption);
+            
+            switch(e.key) {
+              case 'ArrowDown':
+                e.preventDefault();
+                if (activeOption) {
+                  activeOption.classList.remove('active');
+                  activeIndex = (activeIndex + 1) % options.length;
+                } else {
+                  activeIndex = 0;
+                }
+                options[activeIndex].classList.add('active');
+                options[activeIndex].scrollIntoView({ block: 'nearest' });
+                break;
+                
+              case 'ArrowUp':
+                e.preventDefault();
+                if (activeOption) {
+                  activeOption.classList.remove('active');
+                  activeIndex = (activeIndex - 1 + options.length) % options.length;
+                } else {
+                  activeIndex = options.length - 1;
+                }
+                options[activeIndex].classList.add('active');
+                options[activeIndex].scrollIntoView({ block: 'nearest' });
+                break;
+                
+              case 'Enter':
+                e.preventDefault();
+                if (activeOption) {
+                  activeOption.click();
+                }
+                break;
+                
+              case 'Escape':
+                hideDropdown();
+                break;
+            }
+          }
+        });
+        
+        // Close dropdown when clicking outside, but be more precise
+        document.addEventListener('click', function(e) {
+          // Only hide dropdown if we're clicking outside both the search input and the dropdown
+          if (collegeDropdown.classList.contains('visible') && 
+              !collegeSearch.contains(e.target) && 
+              !collegeDropdown.contains(e.target)) {
+            hideDropdown();
+          }
+        });
+        
+        // Form submission handler
+        // Update the fetch request in your form submit handler
+      collegeForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Validate the form
+        if (!validateForm()) {
+          return;
+        }
+        
+        // Get form data
+        const formData = new FormData(collegeForm);
+        
+        // Send AJAX request to update profile
+        fetch('/update-medical-college/', {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+          },
+          // Add credentials to ensure cookies (including CSRF) are sent
+          credentials: 'same-origin'
+        })
+        .then(response => {
+          // First check if response is ok
+          if (!response.ok) {
+            throw new Error('Server error: ' + response.status);
+          }
+          // Check content type to handle potential HTML responses
+          const contentType = response.headers.get('content-type');
+          if (contentType && contentType.includes('application/json')) {
+            return response.json();
+          } else {
+            throw new Error('Received non-JSON response from server');
+          }
+        })
+        .then(data => {
+          if (data.success) {
+            collegeCard.style.display = 'none';
+            // Show success message
+            showSuccessMessage("Profile updated successfully!");
+          } else {
+            showErrorMessage(data.error || "An error occurred while updating your profile.");
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          showErrorMessage("An error occurred while updating your profile. Please try again later.");
+        });
+      });
+      }
+      
+      function validateForm() {
+        // Check if a college is selected or "Other" is filled in
+        const isCollegeSelected = selectedCollegeInput.value !== "";
+        const isOtherCollege = collegeSearch.value === 'Other';
+        const isOtherCityFilled = document.getElementById('other-city').value.trim() !== "";
+        
+        // If "Other" is selected, make sure other college and city are filled
+        if (isOtherCollege) {
+          
+          
+          if (!isOtherCityFilled) {
+            showErrorMessage("Please enter your city.");
+            document.getElementById('other-city').focus();
+            return false;
+          }
+          
+          return true;
+        }
+        
+        // If not "Other", ensure a college is selected
+        if (!isCollegeSelected && !isOtherCollege) {
+          showErrorMessage("Please select your medical college.");
+          collegeSearch.focus();
+          return false;
+        }
+        
+        return true;
+      }
+      
+      function showSuccessMessage(message) {
+        // You can implement a toast or any message display method here
+        alert(message); // Simple fallback
+      }
+      
+      function showErrorMessage(message) {
+        // You can implement a toast or any message display method here
+        alert(message); // Simple fallback
+      }
+      
+      function showLoadingInDropdown() {
+        dropdownContent.innerHTML = `
+          <div class="loading-colleges">
+            <span class="loading-spinner"></span>
+            Loading colleges...
+          </div>
+        `;
+      }
+      
+      // Helper function to show dropdown with proper styling
+      function showDropdown() {
+        collegeDropdown.style.display = 'block';
+        collegeDropdown.classList.add('visible');
+        // Ensure high z-index to appear above other elements
+        collegeDropdown.style.zIndex = '10000';
+        // Position adjustment if needed
+        const searchRect = collegeSearch.getBoundingClientRect();
+        collegeDropdown.style.width = searchRect.width + 'px';
+      }
+      
+      // Hide dropdown helper function
+      function hideDropdown() {
+        collegeDropdown.style.display = 'none';
+        collegeDropdown.classList.remove('visible');
+      }
+      
+      // Function to update the dropdown with colleges
+      function updateDropdown(colleges) {
+        // Clear existing content
+        dropdownContent.innerHTML = '';
+        
+        if (colleges.length === 0) {
+          // Add a message if no colleges match
+          const noResults = document.createElement('div');
+          noResults.className = 'no-results';
+          noResults.textContent = 'No matches found';
+          dropdownContent.appendChild(noResults);
+        } else {
+          // Add colleges to dropdown (limit to improve performance)
+          colleges.slice(0, 50).forEach((college, index) => {
+            const option = document.createElement('div');
+            option.className = 'college-option';
+            if (index === 0) option.classList.add('active'); // Highlight first option
+            
+            option.innerHTML = `
+              <span class="college-name">${college.name}</span>
+              <span class="college-location">
+                <span class="location-info">
+                  <i class="fas fa-map-marker-alt nfas"></i>
+                  ${college.location}, ${college.state}
+                </span>
+              </span>
+            `;
+            option.setAttribute('data-id', college.id);
+            option.addEventListener('click', function() {
+              collegeSearch.value = college.name;
+              selectedCollegeInput.value = college.id;
+              otherCityContainer.style.display = 'none';
+              hideDropdown();
+            });
+            dropdownContent.appendChild(option);
+          });
+        }
+        
+        // Add "Other" option at the end
+        const otherOption = document.createElement('div');
+        otherOption.className = 'college-option other-option';
+        otherOption.innerHTML = `
+          <span class="college-name">Other (Not in the list)</span>
+          <span class="college-location">Add your medical college information</span>
+        `;
+        otherOption.addEventListener('click', function() {
+          collegeSearch.value = 'Other';
+          selectedCollegeInput.value = '';
+          // Show the other college containers with animation
+          
+          otherCityContainer.style.display = 'block';
+          otherCityContainer.classList.add('animated');
+          // Focus on the other college input
+          hideDropdown();
+        });
+        dropdownContent.appendChild(otherOption);
+      }
+      
+      // Function to fetch medical colleges from API
+      function fetchMedicalColleges() {
+        showLoadingInDropdown();
+        
+        fetch('/api/medical-colleges/')
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            collegeData = data;
+            
+            // If search is focused when data arrives, show dropdown
+            if (document.activeElement === collegeSearch) {
+              updateDropdown(collegeData);
+              showDropdown();
+            }
+          })
+          .catch(error => {
+            console.error('Error fetching medical colleges:', error);
+            // Fallback for testing - you can expand this list
+            collegeData = [
+              { id: 1, name: 'AIIMS Delhi', location: 'New Delhi', state: 'Delhi' },
+              { id: 2, name: 'JIPMER', location: 'Puducherry', state: 'Puducherry' },
+              { id: 3, name: 'CMC Vellore', location: 'Vellore', state: 'Tamil Nadu' },
+              { id: 4, name: 'KGMU', location: 'Lucknow', state: 'Uttar Pradesh' },
+              { id: 5, name: 'MGM Medical College', location: 'Indore', state: 'Madhya Pradesh' },
+              { id: 6, name: 'Maulana Azad Medical College', location: 'New Delhi', state: 'Delhi' },
+              { id: 7, name: 'Seth GS Medical College', location: 'Mumbai', state: 'Maharashtra' },
+              { id: 8, name: 'Stanley Medical College', location: 'Chennai', state: 'Tamil Nadu' },
+              { id: 9, name: 'Grant Medical College', location: 'Mumbai', state: 'Maharashtra' },
+              { id: 10, name: 'Madras Medical College', location: 'Chennai', state: 'Tamil Nadu' }
+            ];
+            
+            // If search is focused when fallback data is set, show dropdown
+            if (document.activeElement === collegeSearch) {
+              updateDropdown(collegeData);
+              showDropdown();
+            }
+          });
+      }
+    });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const checkbox = document.getElementById('check');
+      const dropbtn = document.querySelector('.dropbtn');
+      const dropdown = document.querySelector('.dropdown');
+      
+      // Handle mobile dropdown toggle
+      if (dropbtn && dropdown) {
+        dropbtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          // Only toggle in mobile view
+          if (window.innerWidth <= 858) {
+            dropdown.classList.toggle('active');
+          }
+        });
+      }
+      
+      document.addEventListener('click', function(event) {
+        // Don't close if clicking the checkbox or label itself
+        if (event.target.matches('#check') || event.target.matches('.checkbtn')) {
+          return;
+        }
+        
+        // If menu is open...
+        if (checkbox.checked) {
+          // If clicking outside nav, close it
+          if (!event.target.closest('nav')) {
+            checkbox.checked = false;
+            if (dropdown) dropdown.classList.remove('active');
+            return;
+          }
+          
+          // If clicking nav items...
+          if (event.target.closest('nav')) {
+            // Don't close if clicking dropbtn
+            if (event.target.closest('.dropbtn')) {
+              return;
+            }
+            
+            // Close for dropdown content items (Settings/Logout)
+            if (event.target.closest('.dropdown-content a')) {
+              checkbox.checked = false;
+              if (dropdown) dropdown.classList.remove('active');
+              return;
+            }
+            
+            // Close for other nav items
+            if (event.target.closest('a:not(.dropbtn)')) {
+              checkbox.checked = false;
+              if (dropdown) dropdown.classList.remove('active');
+            }
+          }
+        }
+      });
+      
+      // Close dropdown on window resize if switching to desktop
+      window.addEventListener('resize', function() {
+        if (window.innerWidth > 858 && dropdown) {
+          dropdown.classList.remove('active');
+        }
+      });
+    });
+  </script>
+  <script>
+  // Replace the entire subscription JavaScript with this updated version
+document.addEventListener('DOMContentLoaded', function() {
+  // Get user authentication and subscription status
+  const isAuthenticated = {% if user.is_authenticated %}true{% else %}false{% endif %};
+  
+  const hasActiveSubscription = {% if user.is_authenticated %}
+    {% if active_subscriptions %}true{% else %}false{% endif %}
+  {% else %}false{% endif %};
+  
+  const freeMcqsRemaining = {% if user_profile %}{{ user_profile.free_mcqs_remaining|default:0 }}{% else %}0{% endif %};
+  
+  // Get DOM elements
+  const subscriptionBanner = document.getElementById('subscription-banner');
+  const closeBtn = document.getElementById('banner-close-btn');
+  const upgradeBtn = document.getElementById('banner-upgrade-btn');
+  const messageElement = document.getElementById('banner-message');
+  
+  let autoCloseTimer = null;
+  
+  // Initialize subscription banner
+  initializeSubscriptionBanner();
+  
+  function initializeSubscriptionBanner() {
+    if (!subscriptionBanner || !messageElement) {
+      return;
+    }
+    
+    const currentPath = window.location.pathname;
+    
+    const targetUrlPatterns = [
+      /^\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\/?$/i,
+      /^\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\/mcq\/?$/i,
+      /^\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\/pyqs\/?$/i,
+    ];
+    
+    const isTargetPage = targetUrlPatterns.some(pattern => pattern.test(currentPath));
+    
+    if (!isTargetPage) {
+      return;
+    }
+    
+    // Show banner if user is authenticated but has no active subscription
+    if (isAuthenticated && !hasActiveSubscription) {
+      updateBannerMessage();
+      showSubscriptionBanner();
+    }
+    
+    setupEventListeners();
+  }
+  
+  function updateBannerMessage() {
+    if (!messageElement) return;
+    
+    let message = '';
+    
+    if (freeMcqsRemaining > 0) {
+      message = `⚡ ${freeMcqsRemaining} free MCQ${freeMcqsRemaining > 1 ? 's' : ''} remaining. Unlock unlimited practice with our premium plans!`;
+    } else {
+      message = "⚡ Free MCQs exhausted. Upgrade now for unlimited practice and premium features!";
+    }
+    
+    messageElement.textContent = message;
+  }
+  
+  function showSubscriptionBanner() {
+    if (subscriptionBanner) {
+      subscriptionBanner.style.display = 'block';
+      
+      // Trigger animation
+      setTimeout(() => {
+        subscriptionBanner.classList.add('show');
+      }, 10);
+      
+      // Auto-close after 4 seconds
+      autoCloseTimer = setTimeout(() => {
+        hideSubscriptionBanner();
+      }, 4000);
+    }
+  }
+  
+  function hideSubscriptionBanner() {
+    if (subscriptionBanner) {
+      subscriptionBanner.classList.remove('show');
+      
+      setTimeout(() => {
+        subscriptionBanner.style.display = 'none';
+      }, 300);
+      
+      if (autoCloseTimer) {
+        clearTimeout(autoCloseTimer);
+        autoCloseTimer = null;
+      }
+    }
+  }
+  
+  function setupEventListeners() {
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        hideSubscriptionBanner();
+      });
+    }
+    
+    // Pause auto-close on hover
+    if (subscriptionBanner) {
+      subscriptionBanner.addEventListener('mouseenter', function() {
+        if (autoCloseTimer) {
+          clearTimeout(autoCloseTimer);
+          autoCloseTimer = null;
+        }
+      });
+      
+      subscriptionBanner.addEventListener('mouseleave', function() {
+        if (subscriptionBanner.classList.contains('show')) {
+          autoCloseTimer = setTimeout(() => {
+            hideSubscriptionBanner();
+          }, 2000); // Resume with 2 seconds
+        }
+      });
+    }
+  }
+});
+</script>
+    {% block content %}
+    {% endblock  %}
+  
+{% block footer %}
+    
+    
+<footer>
+  <div class="footer-container">
+      <div class="footer-content">
+          <p class="footer-text">© 2025 MCQwave. All rights reserved.</p>
+      </div>
+  </div>
+</footer>
+    {% endblock %}
+    
+  </body>
+</html>

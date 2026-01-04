@@ -1,0 +1,30 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Resend Email Verification Link{% endblock title %}
+
+{% block content %}
+<link rel="stylesheet" href="/media/css/resend_email.css">
+<style>
+    .navfeed{
+        display: none;
+    }
+
+</style>
+<div class="resend_main">
+    <div class="resend-container">
+        <h2>Resend Email Verification Link</h2>
+<form method="POST" >
+    {% include "base/alert.html" %}
+    {% csrf_token %}
+    <div class="form-group">
+    <label for="email">Enter your email address to resend verification link:</label>
+    <input type="email" id="email" name="email" required>
+</div>
+    <button type="submit">Resend Verification Link</button>
+    
+</form>
+</div>
+</div>
+  {% include 'ads/banner_ad.html' %}
+
+{% endblock %}

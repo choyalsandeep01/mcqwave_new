@@ -1,0 +1,129 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto Condensed", sans-serif;
+}
+
+body {
+    background-color: #f3f6fb;
+    color: #333;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* Internet Explorer/Edge */
+    user-select: none;         /* Non-prefixed version, modern browsers */
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 5px;
+    text-align: center;
+}
+
+.container h1 {
+    font-size: 32px;
+    color: #004aad;
+    margin-bottom: 30px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Table */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    animation: fadeInUp 1s ease-in-out;
+}
+
+.styled-table thead tr {
+    background-color: #004aad;
+    color: #ffffff;
+    text-align: left;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 15px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+    transition: background-color 0.3s ease-in-out, transform 0.2s;
+    cursor: pointer;
+    position: relative;
+}
+
+.styled-table tbody tr:hover {
+    background-color: #004aad;
+    color: white;
+    transform: scale(1.02);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+.styled-table tbody tr:hover td {
+    color: white;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #004aad;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .styled-table th,
+    .styled-table td {
+        font-size: 11px;
+        padding: 8px;
+    }
+
+    .container h1 {
+        font-size: 20px;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@media (hover: none) and (pointer: coarse) {
+    .styled-table tbody tr:hover,
+    .styled-table tbody tr:active {
+        background-color: #004aad;
+        color: white;
+        transform: scale(1.02);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    }
+}

@@ -1,0 +1,149 @@
+{% extends 'base/base.html' %}
+
+{% block title %}MCQwave-Login{% endblock title %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+    .navfeed{
+        display: none;
+    }
+</style>
+<link rel="stylesheet" href="/media/css/login.css">
+<div class="signup-container">
+    <div class="signup-box">
+        <div class="login-header">
+            <h2>Welcome Back</h2>
+            <p class="subtitle">Please enter your details to sign in</p>
+        </div>
+        <div class="error-message" id="errorMessage">
+            <i class="fas fa-exclamation-circle "></i>
+            <span id="errorText"></span>
+        </div>
+        <form id="loginForm" method="POST" class="login-form">
+            {% csrf_token %}
+            {% include "base/alert.html" %}
+            
+            <div class="form-group">
+                <div class="input-group">
+                    <i class="fas fa-user input-icon li"></i>
+                    <input type="text" id="username" name="username" placeholder="Email or username" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="input-group">
+                    <i class="fas fa-lock input-icon li"></i>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    <i class="far fa-eye-slash toggle-password" id="togglePassword"></i>
+                </div>
+            </div>
+            
+            <button type="submit" class="login-btn" id="loginBtn">
+                <span>Login</span>
+                <div class="spinner" id="spinner"></div>
+                <i class="fas fa-arrow-right nfas" id="btnArrow"></i>
+            </button>
+            
+            <div class="additional-links">
+                <p>Don't have an account? <a href="/signup" class="highlight-link">Sign up</a></p>
+                <p>Forgot Password? <a href="password-reset" class="highlight-link">Reset Password</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+  {% include 'ads/banner_ad.html' %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get all required elements
+        const loginForm = document.getElementById('loginForm');
+        const loginBtn = document.getElementById('loginBtn');
+        const spinner = document.getElementById('spinner');
+        const errorMessage = document.getElementById('errorMessage');
+        const errorText = document.getElementById('errorText');
+        const btnArrow = document.getElementById('btnArrow');
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+        const usernameInput = document.getElementById('username');
+
+        // Debug logging to check which elements are missing
+        const elements = {
+            loginForm,
+            loginBtn,
+            spinner,
+            errorMessage,
+            errorText,
+            btnArrow,
+            togglePassword,
+            passwordInput
+        };
+    
+        // Log which elements are missing
+        Object.entries(elements).forEach(([name, element]) => {
+            if (!element) {
+                console.error(`Missing element: ${name}`);
+            }
+        });
+    
+        // Check if all elements exist before adding event listeners
+        if (!loginForm || !loginBtn || !spinner || !errorMessage || 
+            !errorText || !btnArrow || !togglePassword || !passwordInput) {
+            console.error('Some required elements are missing from the DOM');
+            return;
+        }
+    
+        // Password toggle functionality
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+    
+        // Form submission
+        loginForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // No need for trim in frontend as we'll handle it in the backend
+            // But we can keep it for visual consistency during input
+            
+            // Show loading state
+            loginBtn.disabled = true;
+            spinner.style.display = 'block';
+            btnArrow.style.display = 'none';
+            errorMessage.style.display = 'none';
+            
+            try {
+                const formData = new FormData(loginForm);
+                const response = await fetch(window.location.href, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    window.location.href = data.redirect_url;
+                } else {
+                    errorText.textContent = data.message;
+                    errorMessage.style.display = 'flex';
+                    loginBtn.disabled = false;
+                    spinner.style.display = 'none';
+                    btnArrow.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                errorText.textContent = 'An error occurred. Please try again.';
+                errorMessage.style.display = 'flex';
+                loginBtn.disabled = false;
+                spinner.style.display = 'none';
+                btnArrow.style.display = 'block';
+            }
+        });
+    });
+</script>
+{% endblock %}

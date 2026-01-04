@@ -1,0 +1,887 @@
+{% extends 'base/base.html' %}
+{% block title %}Review Session{% endblock title %}
+
+{% block content %}
+    <link rel="stylesheet" href="/media/css/rev_test.css">
+    <style>
+        .session-type-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-left: 10px;
+        }
+        
+        .session-type-badge.pyq {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .session-type-badge.curated {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+        }
+        
+        .exam-info {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            margin: 10px 0;
+            display: inline-block;
+        }
+        
+        .hierarchy-info {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #007bff;
+        }
+        
+        .hierarchy-info.pyq {
+            border-left-color: #667eea;
+        }
+        
+        .hierarchy-info.curated {
+            border-left-color: #1e3c72;
+        }
+        
+        .question-type-indicator {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-right: 10px;
+            text-transform: uppercase;
+        }
+        
+        .question-type-indicator.pyq {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            border: 1px solid #667eea;
+        }
+        
+        .question-type-indicator.curated {
+            background: rgba(30, 60, 114, 0.1);
+            color: #1e3c72;
+            border: 1px solid #1e3c72;
+        }
+        
+        /* Existing styles from original file */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 1000;
+        }
+        
+        .status-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 0;
+            border-radius: 8px;
+            max-width: 400px;
+            width: 90%;
+            z-index: 1001;
+            display: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .status-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .status-close {
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #666;
+            padding: 4px;
+        }
+        
+        .status-close:hover {
+            color: #333;
+        }
+        
+        .status-content {
+            padding: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            background: #f8f9fa;
+            border: 1px solid #eee;
+        }
+        
+        .status-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .status-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        .success-icon {
+            background: #28a745;
+            color: white;
+        }
+        
+        .error-icon {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .status-details {
+            flex-grow: 1;
+        }
+        
+        .status-username {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .status-message {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .feedback-toggle-btn {
+            padding: 8px 16px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .feedback-toggle-btn:hover {
+            background: #2980b9;
+        }
+        
+        .toggle-arrow {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        
+        .toggle-arrow.open {
+            transform: rotate(90deg);
+        }
+        
+        .feedback-container {
+            max-width: 500px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: none;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        
+        .feedback-container.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .feedback-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .feedback-type-select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .feedback-textarea {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-height: 100px;
+            font-size: 14px;
+            resize: vertical;
+        }
+        
+        .feedback-submit-btn {
+            padding: 10px 20px;
+            background: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+        
+        .feedback-submit-btn:hover {
+            background: #27ae60;
+        }
+        
+        .feedback-submit-btn:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        .feedback-type-select:focus,
+        .feedback-textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+
+        .feedback-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        
+        .feedback-modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+        }
+        
+        .feedback-success {
+            color: #4CAF50;
+            text-align: center;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        
+        .close-modal-btn {
+            background: #666;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .error-message {
+            color: #ff4444;
+            font-size: 0.9em;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .feedback-modal.show {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        .correct { background-color: green; color: white; font-weight: bold; }
+        .incorrect { background-color: red; color: white; font-weight: bold; }
+        .correct-option { background-color: blue; color: white; font-weight: bold; }
+        .mcq-card { margin-bottom: 30px; padding: 15px; border-radius: 8px; border: 1px solid #e0e0e0; }
+        .options li { padding: 8px; margin: 5px 0; border-radius: 5px; cursor: pointer; list-style: none; }
+        .mcq-image { max-width: 100%; height: auto; margin-bottom: 10px; border-radius: 8px; }
+        
+        .share-icon {
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+        .share-icon img {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
+        .pom-icon {
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 20px;
+        }
+        .pom-icon img {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
+        .share-icon1 {
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+        .share-icon1 img {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .test-overview {
+                padding: 15px;
+            }
+            
+            .mcq-card {
+                padding: 12px;
+                margin-bottom: 20px;
+            }
+            
+            .share-icon img, .pom-icon img, .share-icon1 img {
+                width: 24px;
+                height: 24px;
+            }
+            
+            .session-type-badge {
+                font-size: 0.7rem;
+                padding: 4px 8px;
+            }
+            
+            .question-type-indicator {
+                font-size: 0.6rem;
+                padding: 3px 6px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .test-overview p {
+                font-size: 0.9rem;
+                margin-bottom: 8px;
+            }
+            
+            .hierarchy-info {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+            
+            .feedback-modal-content {
+                width: 95%;
+                padding: 15px;
+            }
+        }
+    </style>
+
+    <div class="container">
+        <div class="test-overview">
+            <h2>
+                Test Overview
+                {% if test_session.pyq %}
+                    <span class="session-type-badge pyq">
+                        <i class="fas fa-history nfas"></i> PYQ Session
+                    </span>
+                {% else %}
+                    <span class="session-type-badge curated">
+                        <i class="fas fa-graduation-cap nfas"></i> Curated MCQ
+                    </span>
+                {% endif %}
+            </h2>
+            
+            <p><strong>Test Created At:</strong> <span id="localTime"></span></p>
+            <p><strong>Selections:</strong> {{ test_session.selections|join:", " }}</p>
+            <p><strong>Total Questions:</strong> {{ test_session.total_questions|floatformat:0 }}</p>
+            <p><strong>Score:</strong> {{ test_session.score|floatformat:0 }}</p>
+            <p><strong>Total Time Taken:</strong> {{ test_session.timetaken_minutes }} minutes</p>
+            <p><strong>Mode:</strong> {{ test_session.mode|title }}</p>
+            
+            <div class="share-icon" title="Share Test" onclick="openPopup()" data-id="{{ test_session.test_id }}" data-type="test">
+                <img src="/media/photos/hive.png" alt="Share Test Icon">
+            </div>
+            <div class="pom-icon" title="Performance Analysis" onclick="analyzeTest('{{ test_session.test_id }}')" data-type="ana">
+                <img src="/media/photos/pom.png" alt="Analysis Icon">
+            </div>
+        </div>
+
+        <div id="question-section">
+            <h2>
+                {% if test_session.pyq %}
+                    PYQ Questions
+                {% else %}
+                    MCQ Questions
+                {% endif %}
+            </h2>
+            
+            {% for question in question_data %}
+                <div class="mcq-card">
+                    <div class="question-header">
+                        <span class="question-type-indicator {{ question.is_pyq|yesno:'pyq,curated' }}">
+                            {% if question.is_pyq %}
+                                <i class="fas fa-history nfas"></i> PYQ
+                            {% else %}
+                                <i class="fas fa-graduation-cap nfas"></i> Curated
+                            {% endif %}
+                        </span>
+                        
+                        {% if question.is_pyq and question.exam_type != 'N/A' %}
+                            <div class="exam-info">
+                                <i class="fas fa-calendar-alt nfas"></i>
+                                {{ question.exam_type }}
+                                {% if question.exam_month != 'N/A' %}{{ question.exam_month }}{% endif %}
+                                {% if question.exam_year != 'N/A' %}{{ question.exam_year }}{% endif %}
+                                {% if question.pyq_code != 'N/A' %}({{ question.pyq_code }}){% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <h3>{{ question.question_text }}</h3>
+                    
+                    <!-- Display the question image if present -->
+                    {% if question.image %}
+                        <img src="{{ question.image }}" alt="Question Image" class="mcq-image">
+                    {% endif %}
+                    
+                    <ul class="options">
+                        {% for option in question.options %}
+                            <li class="{% if option.correct and option.selected %}correct
+                                       {% elif not option.correct and option.selected %}incorrect
+                                       {% elif option.correct and not option.selected and not question.is_attempted %}correct-option
+                                       {% elif option.correct and not option.selected and question.is_attempted and not question.correct %}correct-option
+                                       {% endif %}">
+                                {{ option.text }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    
+                    <p><strong>Correct Answer:</strong> 
+                        {% for option in question.options %}
+                            {% if option.correct %}
+                                {{ option.text }}
+                            {% endif %}
+                        {% endfor %}
+                    </p>
+                    
+                    <p><strong>Explanation:</strong> {{ question.explanation|linebreaksbr }}</p>
+                    
+                    <div class="hierarchy-info {{ question.is_pyq|yesno:'pyq,curated' }}">
+                        {% if question.is_pyq %}
+                            <p><strong>Subject:</strong> {{ question.subject }}</p>
+                            <p><strong>Unit:</strong> {{ question.unit }}</p>
+                            {% if question.topic != 'N/A' %}
+                                <p><strong>Topic:</strong> {{ question.topic }}</p>
+                            {% endif %}
+                        {% else %}
+                            <p><strong>Hierarchy:</strong> {{ question.subject }} → {{ question.unit }} → {{ question.chapter }} → {{ question.topic }}</p>
+                        {% endif %}
+                        <p><strong>Difficulty:</strong> {{ question.difficulty }}</p>
+                        <p><strong>Type:</strong> {{ question.type }}</p>
+                        <p><strong>Time Spent:</strong> {{ question.time_spent }} seconds</p>
+                        
+                        <!-- Status Logic -->
+                        <p><strong>Status:</strong> 
+                            {% if question.is_attempted %}
+                                {% if question.correct %}
+                                    <span style="color: green; font-weight: bold;">✓ Correct</span>
+                                {% else %}
+                                    <span style="color: red; font-weight: bold;">✗ Incorrect</span>
+                                {% endif %}
+                            {% else %}
+                                <span style="color: orange; font-weight: bold;">⚬ Not Attempted</span>
+                            {% endif %}
+                        </p>
+                    </div>
+                    
+                    <div class="share-icon1" title="Share Question" onclick="openPopup()" data-id="{{ question.question_uid }}" data-type="mcq"> 
+                        <img src="/media/photos/hive.png" alt="Share Question Icon">
+                    </div>
+                    
+                    <button class="feedback-toggle-btn">
+                        Feedback
+                        <span class="toggle-arrow">›</span>
+                    </button>
+                    
+                    <div class="feedback-container">
+                        <form class="feedback-form" data-mcq-id="{{ question.question_uid }}">
+                            <select class="feedback-type-select" required>
+                                <option value="">Select Feedback Type</option>
+                                <option value="incorrect_answer">Incorrect Answer</option>
+                                <option value="unclear_question">Unclear Question</option>
+                                <option value="wrong_explanation">Wrong Explanation</option>
+                                <option value="typo">Typo/Grammar</option>
+                                <option value="image_issue">Image Issue</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <textarea class="feedback-textarea" placeholder="Please provide detailed feedback..." required></textarea>
+                            <div class="error-message"></div>
+                            <button type="submit" class="feedback-submit-btn">Submit Feedback</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Share Popup -->
+    <div class="popup1" id="sharePopup">
+        <div class="popup-content1">
+            <h3>Select Connected Users to Share</h3>
+            <div class="connected-users">
+                {% for user in connected_users %}
+                <label>
+                    <input type="checkbox" class="user-checkbox" value="{{ user.id }}">
+                    {{ user.username }}
+                </label>
+                {% endfor %}
+            </div>
+            <div class="button-group">
+                <button class="share-button" onclick="closePopup()">Share</button>
+                <button class="cancel-button" onclick="closePopup()">Cancel</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="overlay" id="overlay" aria-hidden="true"></div>
+    
+    <!-- Feedback Modal -->
+    <div class="feedback-modal">
+        <div class="feedback-modal-content">
+            <div class="feedback-success">
+                <i class="fas fa-check-circle nfas"></i>
+                Thank you for your feedback!
+            </div>
+            <p>Your feedback has been submitted successfully and will be reviewed by our team.</p>
+            <button class="close-modal-btn">Close</button>
+        </div>
+    </div>
+    
+    <!-- Status Modal -->
+    <div class="modal-overlay" id="statusOverlay"></div>
+    <div class="status-modal" id="statusModal">
+        <div class="status-header">
+            <span class="modal-title">Sharing Results</span>
+            <button class="status-close" onclick="closeStatusModal()">✕</button>
+        </div>
+        <div class="status-content" id="statusContent"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const utcTime = '{{ test_session.created_at|date:"c" }}';
+            const date = new Date(utcTime);
+            const formattedDate = `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear().toString().slice(-2)}`;
+            const formattedTime = date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+            document.getElementById('localTime').textContent = `${formattedDate} ${formattedTime}`;
+        });
+        
+        function analyzeTest(test_id) {
+            console.log(test_id);
+            const url = `rev_test_pom/?test_id=${test_id}`;
+            window.location.href = url;
+        }
+
+        // Feedback functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const mcqCards = document.querySelectorAll('.mcq-card');
+            
+            mcqCards.forEach(mcqCard => {
+                const toggleBtn = mcqCard.querySelector('.feedback-toggle-btn');
+                const container = mcqCard.querySelector('.feedback-container');
+                const arrow = mcqCard.querySelector('.toggle-arrow');
+         
+                if (toggleBtn) {
+                    toggleBtn.addEventListener('click', () => {
+                        container.classList.toggle('show');
+                        arrow.classList.toggle('open');
+                    });
+                }
+            });
+         
+            document.querySelectorAll('.feedback-form').forEach(form => {
+                form.addEventListener('submit', handleFeedbackSubmit);
+            });
+         
+            document.querySelectorAll('.close-modal-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelector('.feedback-modal').classList.remove('show');
+                });
+            });
+        });
+        
+        function handleFeedbackSubmit(e) {
+            e.preventDefault();
+            const form = e.target;
+            const mcqId = form.dataset.mcqId;
+            const feedbackType = form.querySelector('.feedback-type-select').value;
+            const feedbackText = form.querySelector('.feedback-textarea').value;
+            const errorDiv = form.querySelector('.error-message');
+            const submitBtn = form.querySelector('.feedback-submit-btn');
+        
+            if (!feedbackType || !feedbackText.trim()) {
+                errorDiv.textContent = 'Please fill in all fields';
+                errorDiv.style.display = 'block';
+                return;
+            }
+        
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+        
+            fetch('/mcqs/feedback/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({
+                    mcq_id: mcqId,
+                    feedback_type: feedbackType,
+                    feedback_text: feedbackText,
+                    question_text: form.closest('.mcq-card').querySelector('h3').textContent.trim()
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.querySelector('.feedback-modal').classList.add('show');
+                form.reset();
+                errorDiv.style.display = 'none';
+            })
+            .catch(error => {
+                errorDiv.textContent = 'Error submitting feedback. Please try again.';
+                errorDiv.style.display = 'block';
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Feedback';
+            });
+        }
+
+        // Share functionality
+        function openPopup() {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('sharePopup').style.display = 'block';
+            document.getElementById('overlay').setAttribute('aria-hidden', 'false');
+            document.getElementById('sharePopup').setAttribute('aria-hidden', 'false');
+        }
+        
+        function closePopup() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('sharePopup').style.display = 'none';
+            document.getElementById('overlay').setAttribute('aria-hidden', 'true');
+            document.getElementById('sharePopup').setAttribute('aria-hidden', 'true');
+        }
+
+        function formatLocalDateTime(isoString) {
+            const date = new Date(isoString);
+            return date.toLocaleString(undefined, {
+                day: '2-digit',
+                month: '2-digit',
+                year: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            });
+        }
+        
+        function showStatusModal(response) {
+            const modal = document.getElementById('statusModal');
+            const overlay = document.getElementById('statusOverlay');
+            const content = document.getElementById('statusContent');
+            
+            content.innerHTML = '';
+            
+            response.details.forEach(detail => {
+                const statusItem = document.createElement('div');
+                statusItem.className = 'status-item';
+                
+                const icon = document.createElement('div');
+                icon.className = `status-icon ${detail.success ? 'success-icon' : 'error-icon'}`;
+                icon.innerHTML = detail.success ? '✓' : '✕';
+                
+                const details = document.createElement('div');
+                details.className = 'status-details';
+                
+                const username = document.createElement('div');
+                username.className = 'status-username';
+                username.textContent = detail.username;
+                
+                const message = document.createElement('div');
+                message.className = 'status-message';
+                
+                if (detail.shared_at) {
+                    const localTime = formatLocalDateTime(detail.shared_at);
+                    message.textContent = `Already shared on ${localTime}`;
+                } else {
+                    message.textContent = detail.message;
+                }
+                
+                details.appendChild(username);
+                details.appendChild(message);
+                
+                statusItem.appendChild(icon);
+                statusItem.appendChild(details);
+                content.appendChild(statusItem);
+            });
+            
+            modal.style.display = 'block';
+            overlay.style.display = 'block';
+        }
+        
+        function closeStatusModal() {
+            const modal = document.getElementById('statusModal');
+            const overlay = document.getElementById('statusOverlay');
+            modal.style.display = 'none';
+            overlay.style.display = 'none';
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            function handleShare() {
+                const shareButtons = document.querySelectorAll('.share-icon, .share-icon1');
+                const sharePopup = document.getElementById("sharePopup");
+                const shareButton = document.querySelector('.share-button');
+                const cancelButton = document.querySelector(".cancel-button");
+                let currentId;
+                let currentType;
+        
+                shareButtons.forEach(button => {
+                    button.addEventListener("click", () => {
+                        currentId = button.getAttribute("data-id");
+                        currentType = button.getAttribute("data-type");
+                        sharePopup.style.display = "block";
+                    });
+                });
+        
+                cancelButton.addEventListener("click", () => {
+                    sharePopup.style.display = "none";
+                });
+        
+                shareButton.addEventListener("click", async () => {
+                    const selectedUsers = Array.from(document.querySelectorAll(".user-checkbox:checked")).map(cb => cb.value);
+        
+                    let fetchUrl;
+                    if (currentType === 'test') {
+                        fetchUrl = `/hive/share-test/${currentId}/`;
+                    } else if (currentType === 'mcq') {
+                        fetchUrl = `/hive/share-bookmark/${currentId}/`;
+                    } else {
+                        alert('Invalid share type!');
+                        return;
+                    }
+        
+                    try {
+                        const response = await fetch(fetchUrl, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRFToken': getCookie('csrftoken'),
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ users: selectedUsers })
+                        });
+        
+                        const result = await response.json();
+                        closePopup();
+                        showStatusModal(result);
+                    } catch (error) {
+                        showStatusModal({
+                            error: true,
+                            details: [{
+                                username: 'Error',
+                                success: false,
+                                message: 'An error occurred while sharing.'
+                            }]
+                        });
+                    }
+                });
+            }
+        
+            handleShare();
+        });
+        
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+{% endblock %}
+
+{% block pp %}
+<li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">
+        <i class="fas fa-user-circle profile-icon"></i>
+        {{ user.username }}
+    </a>
+    <div class="dropdown-content">
+        <a href="#">Settings</a>
+        <a href={% url 'logout' %}>Logout</a>
+    </div>
+</li>
+{% endblock %}

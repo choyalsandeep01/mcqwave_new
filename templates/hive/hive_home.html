@@ -1,0 +1,194 @@
+{% extends 'base/base.html' %}
+{% block title %}MCQwave-HIVE{% endblock %}
+
+{% block content %}
+    <link rel="stylesheet" href="/media/css/hive/hive_home.css">
+    
+    <div class="header">
+        <div class="header-content">
+            <div class="logo-container">
+                <img src="/media/photos/hive.png" alt="MCQwave Logo" class="logo1">
+            </div>
+            <div class="text-container">
+                <h1>HIVE</h1>
+                <p>Connect and share your test sessions, bookmarked MCQs and other solved MCQs with other users!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Connect Section -->
+    <section class="connect-section">
+        <h2>Connect</h2>
+        <div class="connect-box">
+            <input type="text" id="username" placeholder="Enter username to connect">
+            <button id="connect-btn">Connect</button>
+        </div>
+    </section>
+
+    <!-- User List Section -->
+    <section class="user-list-section">
+        <h2>Connected Users</h2>
+        <div class="user-list" id="user-list">
+            {% for user in connected_users %}
+            <div class="connected-user" data-user-id="{{ user.id }}">{{ user.username }}</div>
+            {% empty %}
+                <p>No connected users yet.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Requests Section -->
+    <section class="requests-section">
+        <h2>Pending Requests</h2>
+        <div id="requests-list" class="requests-list">
+            {% for request in pending_requests %}
+                <div id="request-{{ request.from_user.username }}">
+                    <p>{{ request.from_user.username }} wants to connect with you</p>
+                    <button class="accept-btn btnn" data-username="{{ request.from_user.username }}">Accept</button>
+                    <button class="decline-btn btnn" data-username="{{ request.from_user.username }}">Decline</button>
+                </div>
+            {% empty %}
+                <p>No pending requests.</p>
+            {% endfor %}
+        </div>
+    </section>
+  {% include 'ads/banner_ad.html' %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle connection request form
+            document.getElementById('connect-btn').addEventListener('click', function() {
+                const usernameInput = document.getElementById('username').value.trim();
+                if (usernameInput) {
+                    sendConnectionRequest(usernameInput);
+                } else {
+                    alert('Please enter a valid username.');
+                }
+            });
+        
+            // Send connection request via AJAX
+            function sendConnectionRequest(username) {
+                const csrfToken = getCSRFToken();
+                fetch('/hive/connect/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken
+                    },
+                    body: JSON.stringify({ username: username })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(`Connection request sent to ${username}`);
+                    } else {
+                        alert(data.error);
+                    }
+                });
+            }
+        
+            // Function to get CSRF token
+            function getCSRFToken() {
+                const cookieValue = document.cookie
+                    .split('; ')
+                    .find(row => row.startsWith('csrftoken='))
+                    ?.split('=')[1];
+                return cookieValue || '';
+            }
+
+            // Handle accept/decline connection request
+            
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to get the CSRF token for AJAX
+            function getCSRFToken() {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, 10) === 'csrftoken=') {
+                            cookieValue = decodeURIComponent(cookie.substring(10));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+        
+            // Add event listeners to all accept and decline buttons
+            document.querySelectorAll('.accept-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const username = button.getAttribute('data-username');
+                    handleRequestAction(username, 'accept');
+                });
+            });
+        
+            document.querySelectorAll('.decline-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const username = button.getAttribute('data-username');
+                    handleRequestAction(username, 'decline');
+                });
+            });
+        
+            // Handle connection request action (accept/decline)
+            function handleRequestAction(fromUsername, action) {
+                const csrfToken = getCSRFToken();
+        
+                fetch('/hive/handle-connection-request/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrfToken
+                    },
+                    body: JSON.stringify({ from_username: fromUsername, action: action })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        window.location.reload();  // Reload the page after action
+                    } else {
+                        alert(data.error);
+                    }
+                });
+            }
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click event listener to all connected users
+            document.querySelectorAll('.connected-user').forEach(userDiv => {
+                userDiv.addEventListener('click', function() {
+                    const userId = this.getAttribute('data-user-id'); // Get the user ID from the clicked element
+                    redirectToChatPage(userId);
+                });
+            });
+        
+            // Function to redirect to the chat page for the selected user
+            function redirectToChatPage(userId) {
+                // Construct the URL by appending the userId
+                const chatUrl = `/hive/shared/${userId}/`;
+                
+                // Redirect the user to the constructed URL
+                window.location.href = chatUrl;
+            }
+        });
+    </script>
+{% endblock %}
+{%block pp%}
+
+<li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">
+      
+        <i class="fas fa-user-circle profile-icon"></i>
+      
+      {{ user.username }}
+      
+    </a>
+    <div class="dropdown-content">
+      <a href="#">Settings</a>
+      <a href={% url 'logout' %}>Logout</a>
+    </div>
+  </li>
+
+
+{%endblock%} 
